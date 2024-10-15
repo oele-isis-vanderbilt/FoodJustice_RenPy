@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Mouse Cursors &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/mouse.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Text Shaders" href="textshaders.html" />
+    <link rel="prev" title="Store Variables" href="store_variables.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Custom Mouse Cursors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hardware-mouse-cursor">Hardware Mouse Cursor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#displayable-mouse-cursor">Displayable Mouse Cursor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#MouseDisplayable"><code class="docutils literal notranslate"><span class="pre">MouseDisplayable</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#MouseDisplayable.add"><code class="docutils literal notranslate"><span class="pre">MouseDisplayable.add()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-mouse-cursors">Using Mouse Cursors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Custom Mouse Cursors</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/mouse.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="custom-mouse-cursors">
+<h1>Custom Mouse Cursors<a class="headerlink" href="#custom-mouse-cursors" title="Link to this heading"></a></h1>
+<p>Ren'Py has two systems for creating custom mouse cursors. The first takes
+advantage of the hardware mouse cursor, while the second uses Ren'Py to
+draw a displayable as the mouse cursor.</p>
+<p>The hardware mouse cursor has the advantages:</p>
+<ul class="simple">
+<li><p>It is very fast.</p></li>
+<li><p>It is very low overhead, leaving Ren'Py time to do other things.</p></li>
+</ul>
+<p>And the limitation:</p>
+<ul class="simple">
+<li><p>Cursors are limited to small sizes. 32x32 is guaranteed, while 64x64
+seems to work widely.</p></li>
+<li><p>Cursors are limited to sequences of image files.</p></li>
+</ul>
+<p>Using Ren'Py to draw a displayable as a cursor inverts these restrictions.
+While the cursors can be anything Ren'Py can draw, Ren'Py needs to do
+the drawing. When triple buffering is enabled on a computer, a lag can
+be present that isn't for the harware cursor.</p>
+<section id="hardware-mouse-cursor">
+<h2>Hardware Mouse Cursor<a class="headerlink" href="#hardware-mouse-cursor" title="Link to this heading"></a></h2>
+<p>The hardware cursor is controlled by the <a class="reference internal" href="config.html#var-config.mouse"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.mouse</span></code></a> variable. This
+variable consists of a dictionary, that maps mouse names to a list of frames.
+Each frame is a 3-component tuple that contains an image file, and then
+X and Y offsets within that image.</p>
+<p>For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="na">mouse</span> <span class="o">=</span> <span class="p">{</span> <span class="p">}</span>
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="na">mouse</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span> <span class="s2">&quot;gui/arrow.png&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">]</span>
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="na">mouse</span><span class="p">[</span><span class="s1">&#39;spin&#39;</span> <span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span> <span class="s2">&quot;gui/spin0.png&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span> <span class="p">),</span>
+    <span class="p">(</span> <span class="s2">&quot;gui/spin1.png&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span> <span class="p">),</span>
+    <span class="p">(</span> <span class="s2">&quot;gui/spin2.png&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span> <span class="p">),</span>
+    <span class="p">(</span> <span class="s2">&quot;gui/spin3.png&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span> <span class="p">),</span>
+    <span class="p">(</span> <span class="s2">&quot;gui/spin4.png&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span> <span class="p">),</span>
+    <span class="p">(</span> <span class="s2">&quot;gui/spin5.png&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span> <span class="p">),</span>
+    <span class="p">(</span> <span class="s2">&quot;gui/spin6.png&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span> <span class="p">),</span>
+    <span class="p">(</span> <span class="s2">&quot;gui/spin7.png&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span> <span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>When an animation consists of multiple frames, the frames are played back
+at 20fps. Ren'Py will only change the cursor when the image or offsets
+change.</p>
+<p>The following table lists the various states that the cursor can be in
+and the corresponding usage:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>State</p></th>
+<th class="head"><p>Usage</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">default</span></code></p></td>
+<td><p>Used at all times unless another state is specified. It should always be present, as it is used when a more specific key is absent</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">say</span></code></p></td>
+<td><p>Used when the player is on the &quot;Say&quot; screen.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">with</span></code></p></td>
+<td><p>Used during transitions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">menu</span></code></p></td>
+<td><p>Used when the player is in a menu (for example, choice).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">prompt</span></code></p></td>
+<td><p>Used when the player is prompted for input.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">imagemap</span></code></p></td>
+<td><p>Used on an imagemap.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">button</span></code></p></td>
+<td><p>Used when the player is hovering over a button/imagebutton.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pause</span></code></p></td>
+<td><p>Used during pause, renpy.pause()</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mainmenu</span></code></p></td>
+<td><p>Used in the main menu.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gamemenu</span></code></p></td>
+<td><p>Used in the game menu.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Every key can have an optional <code class="docutils literal notranslate"><span class="pre">pressed_</span></code> prefix, which indicates the
+cursor to use when the mouse is pressed. For instance, <code class="docutils literal notranslate"><span class="pre">pressed_button</span></code>
+is used when the user clicks on a button. To define a default pressed
+cursor style, use <code class="docutils literal notranslate"><span class="pre">pressed_default</span></code> key. It is used when no other
+pressed cursor is defined.</p>
+<p>For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="na">mouse</span> <span class="o">=</span> <span class="p">{</span> <span class="p">}</span>
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="na">mouse</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span> <span class="s2">&quot;gui/arrow.png&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">]</span>
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="na">mouse</span><span class="p">[</span><span class="s1">&#39;pressed_default&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span> <span class="s2">&quot;gui/arrow_pressed.png&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">]</span>
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="na">mouse</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span> <span class="s2">&quot;gui/arrow_button.png&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">]</span>
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="na">mouse</span><span class="p">[</span><span class="s1">&#39;pressed_button&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span> <span class="s2">&quot;gui/arrow_button_pressed.png&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">]</span>
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="na">mouse</span><span class="p">[</span><span class="s1">&#39;menu&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span> <span class="s2">&quot;gui/arrow_menu.png&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">]</span> <span class="c1"># This cursor will be used when the player is in a menu</span>
+<span class="c1"># Since there is no &quot;pressed_menu&quot; cursor, &quot;pressed_default&quot; cursor will be used instead</span>
+</pre></div>
+</div>
+</section>
+<section id="displayable-mouse-cursor">
+<h2>Displayable Mouse Cursor<a class="headerlink" href="#displayable-mouse-cursor" title="Link to this heading"></a></h2>
+<p>A displayable cursor uses the <a class="reference internal" href="config.html#var-config.mouse_displayable"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.mouse_displayable</span></code></a> variable,
+and the MouseDisplayable displayable. As an example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="na">mouse</span> <span class="n">spin</span><span class="p">:</span>
+    <span class="s2">&quot;gui/spin0.png&quot;</span>
+    <span class="na">rotate</span> <span class="mf">0.0</span>
+    <span class="n">linear</span> <span class="mf">1.0</span> <span class="na">rotate</span> <span class="mf">360.0</span>
+
+    <span class="c1"># Pause so image prediction can happen.</span>
+    <span class="k">pause</span> <span class="mf">1.0</span>
+
+    <span class="k">repeat</span>
+
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="n">mouse_displayable</span> <span class="o">=</span> <span class="n">MouseDisplayable</span><span class="p">(</span>
+    <span class="s2">&quot;gui/arrow.png&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="k">add</span><span class="p">(</span><span class="s2">&quot;spin&quot;</span><span class="p">,</span> <span class="s2">&quot;mouse spin&quot;</span><span class="p">,</span> <span class="mf">9.9</span><span class="p">,</span> <span class="mf">9.9</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="MouseDisplayable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MouseDisplayable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MouseDisplayable" title="Link to this definition"></a></dt>
+<dd><p>A displayable that wraps a mouse cursor displayable, and causes
+it to move across the screen when the player moves their mouse.</p>
+<dl class="simple">
+<dt><cite>cursor</cite></dt><dd><p>A displayable that is used to draw the mouse.</p>
+</dd>
+<dt><cite>x</cite>, <cite>y</cite></dt><dd><p>The coordinates of the hotspot, relative to the upper left
+corner of the mouse, in virtual pixels.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="MouseDisplayable.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MouseDisplayable.add" title="Link to this definition"></a></dt>
+<dd><p>This adds a second cursor, that is used when the <cite>name</cite>
+mouse is displayed. This returns the MouseDisplayable,
+so that calls to this method can be chained.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="using-mouse-cursors">
+<h2>Using Mouse Cursors<a class="headerlink" href="#using-mouse-cursors" title="Link to this heading"></a></h2>
+<p>The usual way to use a mouse cursor is to provide the <code class="docutils literal notranslate"><span class="pre">mouse</span></code> property,
+giving the name of the cursor, to something that can be focused in a
+screen. (A button or bar.) For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">screen</span> <span class="n">test</span><span class="p">():</span>
+    <span class="k">textbutton</span> <span class="s2">&quot;Mouse Test&quot;</span> <span class="na">action</span> <span class="n">NullAction</span><span class="p">()</span> <span class="na">mouse</span> <span class="s2">&quot;spin&quot;</span>
+</pre></div>
+</div>
+<p>It's also possible to use <a class="reference internal" href="store_variables.html#var-default_mouse"><code class="xref std std-var docutils literal notranslate"><span class="pre">default_mouse</span></code></a> to set the mouse cursor
+globally:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">$</span> <span class="n">default_mouse</span> <span class="o">=</span> <span class="s2">&quot;spin&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="store_variables.html" class="btn btn-neutral float-left" title="Store Variables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="textshaders.html" class="btn btn-neutral float-right" title="Text Shaders" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

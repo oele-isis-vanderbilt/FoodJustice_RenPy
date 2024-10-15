@@ -1,0 +1,26 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+  File "game/script.rpy", line 67, in script
+    $ renpy.log(timestamp + ", Player name: " + name)
+  File "game/script.rpy", line 67, in <module>
+    $ renpy.log(timestamp + ", Player name: " + name)
+TypeError: unsupported operand type(s) for +: 'datetime.datetime' and 'str'
+
+-- Full Traceback ------------------------------------------------------------
+
+Full traceback:
+  File "game/script.rpy", line 67, in script
+    $ renpy.log(timestamp + ", Player name: " + name)
+  File "/Users/mahumbur/Desktop/renpy-8.3.2-sdk/renpy/ast.py", line 821, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "/Users/mahumbur/Desktop/renpy-8.3.2-sdk/renpy/python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 67, in <module>
+    $ renpy.log(timestamp + ", Player name: " + name)
+TypeError: unsupported operand type(s) for +: 'datetime.datetime' and 'str'
+
+macOS-10.16-x86_64-i386-64bit x86_64
+Ren'Py 8.3.2.24090902
+SciStory Pollinators 1.0
+Wed Sep 25 17:48:44 2024

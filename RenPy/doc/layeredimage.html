@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Layered Images &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/layeredimage.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3D Stage" href="3dstage.html" />
+    <link rel="prev" title="Matrixcolor" href="matrixcolor.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Layered Images</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#defining-layered-images">Defining Layered Images</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#layeredimage">Layeredimage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#always">Always</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#if">If</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#attribute">Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#group">Group</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pattern-and-format-function">Pattern and format function</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#layeredimage.format_function"><code class="docutils literal notranslate"><span class="pre">layeredimage.format_function()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#proxying-layered-images">Proxying Layered Images</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#LayeredImageProxy"><code class="docutils literal notranslate"><span class="pre">LayeredImageProxy</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#selecting-attributes-to-display">Selecting attributes to display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advice">Advice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Layered Images</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/layeredimage.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="layered-images">
+<h1>Layered Images<a class="headerlink" href="#layered-images" title="Link to this heading"></a></h1>
+<p>When a sprite-set gets to a certain level of complexity, defining every
+possible combination may become unwieldy. For example, a character with
+4 outfits, 4 hairstyles, and 6 emotions already has 96 possible
+combinations. Creating static images for each possible combination would
+consume a lot of disk space and programmer time.</p>
+<p>To address this use case, Ren'Py introduces a way of defining an image
+consisting of multiple sprites, organized in layers. (For the purpose of this,
+consider layers to be the layers in a paint program like Photoshop or the GIMP,
+and not the layers used elsewhere in Ren'Py.) Elements of these layers can be
+selected by <a class="reference internal" href="displaying_images.html#concept-image"><span class="std std-ref">attributes</span></a> provided to the image, or by
+conditions that are evaluated at runtime.</p>
+<p>These images can be declared using the <code class="docutils literal notranslate"><span class="pre">layeredimage</span></code> statement, using a
+specific language. The <a class="reference internal" href="statement_equivalents.html#LayeredImage" title="LayeredImage"><code class="xref py py-func docutils literal notranslate"><span class="pre">LayeredImage()</span></code></a> object is its Python alternative,
+it's not a <a class="reference internal" href="displayables.html"><span class="doc">displayable</span></a> but can be assigned to an image
+statement and used like one.</p>
+<p>The bottom of this page contains advice and examples of use.</p>
+<section id="defining-layered-images">
+<h2>Defining Layered Images<a class="headerlink" href="#defining-layered-images" title="Link to this heading"></a></h2>
+<p>The language used to define layered images consists of only a few statements,
+to introduce the layers. Here is an example which, while not making much
+practical sense, is technically correct and outlines the layeredimage syntax:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">layeredimage</span> <span class="n">augustina</span><span class="p">:</span>
+    <span class="na">zoom</span> <span class="mf">1.4</span>
+    <span class="k">at</span> <span class="n">recolor_transform</span>
+
+    <span class="k">always</span><span class="p">:</span>
+        <span class="s2">&quot;augustina_base&quot;</span>
+
+    <span class="k">attribute</span> <span class="n">base2</span> <span class="k">default</span>
+
+    <span class="k">group</span> <span class="n">outfit</span><span class="p">:</span>
+        <span class="k">attribute</span> <span class="n">dress</span> <span class="k">default</span><span class="p">:</span>
+            <span class="s2">&quot;augustina_dress&quot;</span>
+        <span class="k">attribute</span> <span class="n">uniform</span>
+
+    <span class="k">group</span> <span class="n">face</span> <span class="k">auto</span><span class="p">:</span>
+        <span class="na">pos</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="k">attribute</span> <span class="n">neutral</span> <span class="k">default</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+    <span class="k">show</span> <span class="n">augustina</span> <span class="c1"># displaying dress and neutral</span>
+    <span class="n">aug</span> <span class="s2">&quot;I like this dress.&quot;</span>
+
+    <span class="k">show</span> <span class="n">augustina</span> <span class="n">happy</span> <span class="c1"># auto-defined in the auto group</span>
+    <span class="n">aug</span> <span class="s2">&quot;But what I like even more...&quot;</span>
+
+    <span class="k">show</span> <span class="n">augustina</span> <span class="n">uniform</span> <span class="o">-</span><span class="n">happy</span> <span class="c1"># uniform replaces dress, neutral replaces happy</span>
+    <span class="n">aug</span> <span class="s2">&quot;Is this uniform !&quot;</span>
+</pre></div>
+</div>
+<section id="layeredimage">
+<span id="layeredimage-statement"></span><h3>Layeredimage<a class="headerlink" href="#layeredimage" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">layeredimage</span></code> statements opens the show. The statement is part of the
+Ren'Py script language, and runs at <a class="reference internal" href="lifecycle.html#init-phase"><span class="std std-ref">init time</span></a>. Like the
+<a class="reference internal" href="transforms.html#atl-image-statement"><span class="std std-ref">Image Statement with ATL Block</span></a>, it takes an image name and opens a block, although
+what's in the block differs greatly. The image name may contain spaces, just
+like any other image name in Ren'Py.</p>
+<p>Inside the block will fit the statements described further down, as well as the
+following optional properties.</p>
+<dl>
+<dt><cite>image_format</cite></dt><dd><p>When a given image is a string, and this is supplied, the image name
+is interpolated into <cite>image_format</cite> to make an image file. For example,
+&quot;sprites/eileen/{image}.png&quot; will look for the image in a subdirectory
+of sprites. (This is not used by auto groups, which look for defined images
+and not for image files.)</p>
+</dd>
+<dt><cite>format_function</cite></dt><dd><p>A function that is used instead of <a class="reference internal" href="#layeredimage.format_function" title="layeredimage.format_function"><code class="xref py py-func docutils literal notranslate"><span class="pre">layeredimage.format_function()</span></code></a> to
+format the image information into a displayable, during the image definition
+at init time.</p>
+</dd>
+<dt><cite>attribute_function</cite></dt><dd><p>A function or callable that is used to tweak what attributes end up being
+displayed. It is called with a set of attributes supplied to the image, and
+should return the set of attributes that should be used to select layers.
+It can be used to express complex dependencies between attributes, or to
+select attributes at random. See <a class="reference internal" href="#attribute-selection-process"><span class="std std-ref">Selecting attributes to display</span></a> for more
+information about when and how this is called.</p>
+</dd>
+<dt><cite>at</cite></dt><dd><p>A transform or list of transforms that are applied to the layered image.</p>
+</dd>
+<dt><a class="reference internal" href="transform_properties.html#id1"><span class="std std-ref">transform properties</span></a></dt><dd><p>If given, these are used to construct a transform that is applied to the
+displayable.</p>
+</dd>
+<dt><cite>offer_screen</cite></dt><dd><p>If this is True, the layeredimage will place its children, and size its
+children with variable size, like it was given an area matching the whole
+screen of the game. If it is False, the said behaviors will be done while
+taking into account the available area, which for example will be smaller
+in an hbox containing other elements, and the display of the layeredimage
+will not be consistent every time it is shown.</p>
+<p>If None, the default, falls back to <a class="reference internal" href="config.html#var-config.layeredimage_offer_screen"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.layeredimage_offer_screen</span></code></a>,
+which defaults to True.</p>
+</dd>
+</dl>
+</section>
+<section id="always">
+<h3>Always<a class="headerlink" href="#always" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">always</span></code> statement declares an image that is always shown inside the
+layeredimage, and which will not be attached to an attribute. It
+must be supplied a displayable, and can also take properties. Both can
+be placed on the same line or inside a block.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">always</span></code> statement takes the following properties:</p>
+<dl class="simple">
+<dt><cite>if_all</cite></dt><dd><p>A string or list of strings giving the names of attributes. If this is
+given, this layer is only displayed if all of the named attributes
+are present.</p>
+</dd>
+<dt><cite>if_any</cite></dt><dd><p>A string or list of strings giving the names of attributes. If this is
+given, this layer is only displayed if any of the named attributes
+are present.</p>
+</dd>
+<dt><cite>if_not</cite></dt><dd><p>A string or list of strings giving the names of attributes. If this is
+given, this layer is only displayed if none of the named attributes are
+present.</p>
+</dd>
+<dt><a class="reference internal" href="transform_properties.html#id1"><span class="std std-ref">transform properties</span></a></dt><dd><p>If given, these are used to construct a transform that is applied
+to the displayable.</p>
+</dd>
+<dt><cite>at</cite></dt><dd><p>A transform or list of transforms that are applied to the provided
+displayable.</p>
+</dd>
+</dl>
+<section id="if">
+<h4>If<a class="headerlink" href="#if" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">if</span></code> statement (or more fully the if-elif-else statement) allows you
+to supply one or more conditions that are evaluated at runtime. Each
+condition is associated with a displayable, with the first true condition
+being the one that is shown. If no condition is true, the <code class="docutils literal notranslate"><span class="pre">else</span></code> layer
+is shown if given.</p>
+<p>A more complete example of an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement might look like:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">glasses</span> <span class="o">==</span> <span class="s2">&quot;evil&quot;</span><span class="p">:</span>
+    <span class="s2">&quot;augustina_glasses_evil&quot;</span>
+<span class="k">elif</span> <span class="n">glasses</span> <span class="o">==</span> <span class="s2">&quot;normal&quot;</span><span class="p">:</span>
+    <span class="s2">&quot;augustina_glasses&quot;</span>
+<span class="k">elif</span> <span class="n">glasses</span> <span class="o">==</span> <span class="s2">&quot;funky&quot;</span><span class="p">:</span>
+    <span class="s2">&quot;augustina_glasses_clown&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="s2">&quot;augustina_nose_mark&quot;</span>
+</pre></div>
+</div>
+<p>Each clause must be given a displayable. It can also be given these properties:</p>
+<dl class="simple">
+<dt><cite>if_all</cite></dt><dd><p>A string or list of strings giving the names of attributes. If this is
+given, this condition is only considered if all of the named attributes
+are present.</p>
+</dd>
+<dt><cite>if_any</cite></dt><dd><p>A string or list of strings giving the names of attributes. If this is
+given, this condition is only considered if any of the named attributes
+are present.</p>
+</dd>
+<dt><cite>if_not</cite></dt><dd><p>A string or list of strings giving the names of attributes. If this is
+given, this condition is only considered if none of the named attributes are
+present.</p>
+</dd>
+<dt><a class="reference internal" href="transform_properties.html#id1"><span class="std std-ref">transform properties</span></a></dt><dd><p>If present, these are used to construct a transform that is applied
+to the displayable.</p>
+</dd>
+<dt><cite>at</cite></dt><dd><p>A transform or list of transforms that are applied to the displayable.</p>
+</dd>
+</dl>
+<p>The <code class="docutils literal notranslate"><span class="pre">if</span></code> statement is transformed to a <a class="reference internal" href="displayables.html#ConditionSwitch" title="ConditionSwitch"><code class="xref py py-func docutils literal notranslate"><span class="pre">ConditionSwitch()</span></code></a> when the
+<code class="docutils literal notranslate"><span class="pre">layeredimage</span></code> statement runs.</p>
+<dl class="std var">
+<dt class="sig sig-object std" id="var-layeredimage.predict_all">
+<span class="sig-name descname"><span class="pre">layeredimage.predict_all</span></span> <span class="pre">=</span> <span class="pre">None</span><a class="headerlink" href="#var-layeredimage.predict_all" title="Link to this definition"></a></dt>
+<dd><p>Sets the value of <cite>predict_all</cite> for the ConditionSwitches produced
+by layeredimages' <code class="docutils literal notranslate"><span class="pre">if</span></code> statements.</p>
+</dd></dl>
+
+<p>When <code class="docutils literal notranslate"><span class="pre">predict_all</span></code> is not true, changing the condition of the if statement
+should be avoided while the layered image is shown or about to be shown,
+as it would lead to an unpredicted image load. It's intended for use for
+character customization options that don't change often.</p>
+</section>
+</section>
+<section id="attribute">
+<h3>Attribute<a class="headerlink" href="#attribute" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">attribute</span></code> statement adds a displayable that is part of the resulting
+image when the given attribute is used to display it. For example, using the
+previous example, calling <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">augustina</span> <span class="pre">dress</span></code> will cause the
+&quot;augustina_dress&quot; to be shown as part of the &quot;augustina&quot; image.</p>
+<p>An <code class="docutils literal notranslate"><span class="pre">attribute</span></code> clause takes an attribute name, which is one word. It can also
+take two keywords. The <code class="docutils literal notranslate"><span class="pre">default</span></code> keyword indicates that the attribute should
+be present by default unless an attribute in the same group is called. The
+<code class="docutils literal notranslate"><span class="pre">null</span></code> keyword prevents this clause from getting attached a displayable, which
+can be useful for bookkeeping and to build conditional display conditions using
+<cite>if_all</cite>, <cite>if_any</cite>, <cite>if_not</cite>, <cite>attribute_function</cite>,
+<a class="reference internal" href="config.html#var-config.adjust_attributes"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.adjust_attributes</span></code></a> or <code class="xref std std-var docutils literal notranslate"><span class="pre">config.default_attributes</span></code>.</p>
+<p>The same attribute name
+can be used in multiple <code class="docutils literal notranslate"><span class="pre">attribute</span></code> clauses (and in auto-defined attributes as
+part of <code class="docutils literal notranslate"><span class="pre">auto</span></code> groups, more about that later), with all the corresponding
+displayables being shown at the same time (the <cite>if_all</cite>, <cite>if_any</cite>, and <cite>if_not</cite>
+properties can tweak this).</p>
+<p>If the displayable is not explicitly given, it will be computed from the name
+of the layeredimage, the group (if any), the group's variant (if any), and the
+attribute. See the <a class="reference internal" href="#layeredimage-pattern"><span class="std std-ref">pattern</span></a> section for more
+details.</p>
+<p>The attribute statement takes the following properties:</p>
+<dl class="simple">
+<dt><cite>if_all</cite></dt><dd><p>A string or list of strings giving the names of attributes. If this is
+present, this layer is only displayed if all of the named attributes
+are present.</p>
+</dd>
+<dt><cite>if_any</cite></dt><dd><p>A string or list of strings giving the names of attributes. If this is
+present, this layer is only displayed if any of the named attributes
+are present.</p>
+</dd>
+<dt><cite>if_not</cite></dt><dd><p>A string or list of strings giving the names of attributes. If this is
+present, this layer is only displayed if none of the named attributes are
+present.</p>
+</dd>
+<dt><a class="reference internal" href="transform_properties.html#id1"><span class="std std-ref">transform properties</span></a></dt><dd><p>If present, these are used to construct a transform that is applied
+to the layer.</p>
+</dd>
+<dt><cite>at</cite></dt><dd><p>A transform or list of transforms that are applied to the layer.</p>
+</dd>
+</dl>
+<p>The <cite>if_*</cite> clauses' test is based upon the list of attributes of the resulting
+image, as explained <a class="reference internal" href="displaying_images.html#concept-image"><span class="std std-ref">here</span></a>, but it <strong>does not change</strong> that
+list.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">layeredimage</span> <span class="n">eileen</span><span class="p">:</span>
+    <span class="k">attribute</span> <span class="n">a</span>
+    <span class="k">attribute</span> <span class="n">b</span> <span class="k">default</span> <span class="n">if_not</span> <span class="s2">&quot;a&quot;</span>
+    <span class="k">attribute</span> <span class="n">c</span> <span class="k">default</span> <span class="n">if_not</span> <span class="s2">&quot;b&quot;</span>
+</pre></div>
+</div>
+<p>In this example, the <code class="docutils literal notranslate"><span class="pre">b</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span></code> attributes are <em>always</em> part of the attributes
+list (because of their <code class="docutils literal notranslate"><span class="pre">default</span></code> clause). When calling <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">eileen</span> <span class="pre">a</span></code>, the
+<code class="docutils literal notranslate"><span class="pre">a</span></code> attribute will be displayed as requested, and the <code class="docutils literal notranslate"><span class="pre">b</span></code> attribute will not,
+due to its <code class="docutils literal notranslate"><span class="pre">if_not</span></code> property. But even if not displayed, the <code class="docutils literal notranslate"><span class="pre">b</span></code> attribute will
+still be part of the attributes list, which means the <code class="docutils literal notranslate"><span class="pre">c</span></code> attribute will still not
+display.</p>
+</section>
+<section id="group">
+<h3>Group<a class="headerlink" href="#group" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">group</span></code> statement groups attributes together, making them mutually
+exclusive. Unless the group is <code class="docutils literal notranslate"><span class="pre">multiple</span></code>, when attributes <cite>a</cite> and <cite>b</cite> are in
+the same group, it is an error to include both of the attributes at the same
+time, with <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">eileen</span> <span class="pre">a</span> <span class="pre">b</span></code> for example. In the same example, calling
+attribute <cite>a</cite> will hide attribute <cite>b</cite>, and vice versa. However, note that it's
+fine for several <code class="docutils literal notranslate"><span class="pre">attribute</span></code> clauses to be passed the same name, <em>even within
+the same group</em>. In that case, they will be considered as one attribute
+containing several sprites - more about that at the end of this section.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">group</span></code> statement takes a name. The name isn't used for very much, except
+to generate the default names of attributes inside the group. That is not the
+case for <code class="docutils literal notranslate"><span class="pre">multiple</span></code> groups in which the name doesn't have any use or impact.</p>
+<p>The name may be followed by the <code class="docutils literal notranslate"><span class="pre">auto</span></code> keyword. If it's present, after any
+attributes in the group have been declared, Ren'Py will scan its list of images
+for those that match the group's pattern (see <a class="reference internal" href="#layeredimage-pattern"><span class="std std-ref">below</span></a>),
+with the specificity that in that case, a multiple group's name <em>is</em> part if the
+pattern, and that the <code class="docutils literal notranslate"><span class="pre">format_function</span></code> passed to the layeredimage is ignored.
+Any images that are found, except those corresponding to explicitly declared
+attributes, are then added to the group as if declared using the <code class="docutils literal notranslate"><span class="pre">attribute</span></code>
+statement inside the group's block. See the <a class="reference internal" href="#layeredimage-examples"><span class="std std-ref">Examples</span></a> section
+for a practical demo.</p>
+<p>This can be followed by the <code class="docutils literal notranslate"><span class="pre">multiple</span></code> keyword. If present, no incompatibility
+is applied to the attributes declared inside the block. This is useful to have a
+group auto-define multiple attributes that are not exclusive, or to apply the
+same properties to a set of attributes at once. This conflicts with the
+<code class="docutils literal notranslate"><span class="pre">default</span></code> keyword being given to one of the attributes. Note that <code class="docutils literal notranslate"><span class="pre">multiple</span></code>
+groups are very different from other, normal groups, and that most of what's
+true about groups doesn't apply to them.</p>
+<p>After these optional keywords, properties can then be declared on the first line
+of the group, and it can take a block containing properties and attributes.</p>
+<p>The group statement takes the properties <code class="docutils literal notranslate"><span class="pre">attribute</span></code> does - such as
+<code class="docutils literal notranslate"><span class="pre">if_any</span></code>, <code class="docutils literal notranslate"><span class="pre">at</span></code> and so on. Properties supplied to the group are passed to
+the attributes inside the group, unless overridden by the same property of the
+attribute itself. In addition, there are two properties which are specific to
+groups:</p>
+<dl class="simple">
+<dt><cite>variant</cite></dt><dd><p>If given, this should be a string. If present, it adds an element that becomes
+part of automatically-generated image names, and of the pattern used to search
+for images when automatically defining attributes in <code class="docutils literal notranslate"><span class="pre">auto</span></code> groups.</p>
+</dd>
+<dt><cite>prefix</cite></dt><dd><p>If given, this is a prefix that is concatenated using an underscore with the
+manually or automatically defined attribute names. So if prefix is &quot;leftarm&quot;,
+and the attribute name &quot;hip&quot; is encountered, <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">eileen</span> <span class="pre">leftarm_hip</span></code>
+will display it.</p>
+</dd>
+</dl>
+<p>An attribute may also be part of several groups, in which case the attribute is
+incompatible with every other attribute in every group it's part of. This can be
+useful for example for a <cite>dress</cite> attribute, to make it hide both any top and any
+pants that may be showing when it gets displayed:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">layeredimage</span> <span class="n">eileen</span><span class="p">:</span>
+    <span class="k">attribute</span> <span class="n">base</span> <span class="k">default</span>
+    <span class="k">group</span> <span class="n">bottom</span><span class="p">:</span>
+        <span class="k">attribute</span> <span class="n">jeans</span> <span class="k">default</span>
+        <span class="k">attribute</span> <span class="n">dress</span> <span class="k">null</span>
+    <span class="k">group</span> <span class="n">top</span><span class="p">:</span>
+        <span class="k">attribute</span> <span class="n">shirt</span> <span class="k">default</span>
+        <span class="k">attribute</span> <span class="n">dress</span>
+</pre></div>
+</div>
+<p>When several <code class="docutils literal notranslate"><span class="pre">group</span></code> blocks with the same name are defined in the same
+layeredimage, they are considered to be different parts of a single group. For
+example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">layeredimage</span> <span class="n">eileen</span> <span class="n">sitting</span><span class="p">:</span>
+    <span class="k">attribute</span> <span class="n">base</span> <span class="k">default</span>
+    <span class="k">group</span> <span class="n">arms</span> <span class="na">variant</span> <span class="s2">&quot;behind&quot;</span><span class="p">:</span>
+        <span class="k">attribute</span> <span class="n">on_hips</span>
+        <span class="k">attribute</span> <span class="n">on_knees</span>
+        <span class="k">attribute</span> <span class="n">mixed</span>
+    <span class="k">attribute</span> <span class="n">table</span> <span class="k">default</span>
+    <span class="k">group</span> <span class="n">arms</span> <span class="na">variant</span> <span class="s2">&quot;infront&quot;</span><span class="p">:</span>
+        <span class="k">attribute</span> <span class="n">on_table</span> <span class="k">default</span>
+        <span class="k">attribute</span> <span class="n">holding_margarita</span>
+        <span class="k">attribute</span> <span class="n">mixed</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">eileen_sitting_arms_behind_mixed.png</span></code> will contain her
+left arm behind the table, and <code class="docutils literal notranslate"><span class="pre">eileen_sitting_arms_infront_mixed.png</span></code> will
+contain her right arm on the table. When calling <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">eileen</span> <span class="pre">sitting</span> <span class="pre">mixed</span></code>,
+the two images will be shown at the same time, respectively behind and in front
+of the table. In this example, the <cite>on_hips</cite> attribute is incompatible with the
+<cite>on_table</cite> attribute, because even though they are not declared in the same
+block, they are both in the same group.</p>
+</section>
+</section>
+<section id="pattern-and-format-function">
+<span id="layeredimage-pattern"></span><h2>Pattern and format function<a class="headerlink" href="#pattern-and-format-function" title="Link to this heading"></a></h2>
+<p>The pattern, used to find images for attributes when they are not explicitly
+given one, consists of:</p>
+<ul class="simple">
+<li><p>The name of the layeredimage, with spaces replaced with underscores.</p></li>
+<li><p>The name of the group, if any and if the group is not <code class="docutils literal notranslate"><span class="pre">multiple</span></code>.</p></li>
+<li><p>The name of the variant, if there is one.</p></li>
+<li><p>The name of the attribute.</p></li>
+</ul>
+<p>all combined with underscores. For example, if we have a layered image with the
+name &quot;augustina work&quot;, and the group &quot;eyes&quot;, this will match images that match
+the pattern augustina_work_eyes_<cite>attribute</cite>. With a <cite>variant</cite> of <cite>blue</cite>, it
+would match the pattern augustina_work_eyes_blue_<cite>attribute</cite>. In the
+following example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">layeredimage</span> <span class="n">augustina</span> <span class="n">work</span><span class="p">:</span>
+    <span class="k">group</span> <span class="n">eyes</span> <span class="na">variant</span> <span class="s2">&quot;blue&quot;</span><span class="p">:</span>
+        <span class="k">attribute</span> <span class="n">closed</span>
+</pre></div>
+</div>
+<p>The attribute is linked to the image &quot;augustina_work_eyes_blue_closed&quot;. That
+can resolve to an image file named <code class="file docutils literal notranslate"><span class="pre">augustina_work_eyes_blue_closed.png</span></code>, but it
+can also be defined explicitly using the <a class="reference internal" href="displaying_images.html#image-statement"><span class="std std-ref">Image Statement</span></a> for example.</p>
+<p>If you want a <code class="docutils literal notranslate"><span class="pre">multiple</span></code> group's name to be included in the pattern, you can
+use the following syntax:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">group</span> <span class="n">addons</span> <span class="n">multiple</span> <span class="na">variant</span> <span class="s2">&quot;addons&quot;</span>
+</pre></div>
+</div>
+<p>All of the pattern behavior can be changed using a <cite>format_function</cite>:
+<a class="reference internal" href="#layeredimage.format_function" title="layeredimage.format_function"><code class="xref py py-func docutils literal notranslate"><span class="pre">layeredimage.format_function()</span></code></a> is the function used under the hood to
+implement the behavior described above. You can see what arguments it takes, in
+case you want to supply your own <cite>format_function</cite> to replace it.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="layeredimage.format_function">
+<span class="sig-prename descclassname"><span class="pre">layeredimage.</span></span><span class="sig-name descname"><span class="pre">format_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">what</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variant</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attribute</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_format</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#layeredimage.format_function" title="Link to this definition"></a></dt>
+<dd><p>This is called to format the information about an attribute
+or condition into a displayable. This can be replaced by a
+creator, but the new function should ignore unknown kwargs.</p>
+<dl class="simple">
+<dt><cite>what</cite></dt><dd><p>A string giving a description of the thing being formatted,
+which is used to create better error messages.</p>
+</dd>
+<dt><cite>name</cite></dt><dd><p>The name of the layeredimage.</p>
+</dd>
+<dt><cite>group</cite></dt><dd><p>The group of an attribute, None if not supplied or if it's
+part of a condition.</p>
+</dd>
+<dt><cite>variant</cite></dt><dd><p>The variant argument to the group, or None if it is not
+supplied.</p>
+</dd>
+<dt><cite>attribute</cite></dt><dd><p>The attribute itself.</p>
+</dd>
+<dt><cite>image</cite></dt><dd><p>Either a displayable or string.</p>
+</dd>
+<dt><cite>image_format</cite></dt><dd><p>The image_format argument of the LayeredImage.</p>
+</dd>
+</dl>
+<p>If <cite>image</cite> is None, then <cite>name</cite>, <cite>group</cite> (if not None), <cite>variant</cite> (if not None),
+and <cite>attribute</cite> are combined with underscores to create <cite>image</cite>, which
+will then be a string.</p>
+<p>If <cite>images</cite> is a string, and <cite>image_format</cite> is not None, <cite>image</cite> is formatted
+into the string to get the final displayable.</p>
+<p>So if <cite>name</cite> is &quot;eileen&quot;, <cite>group</cite> is &quot;expression&quot;, and
+<cite>attribute</cite> is &quot;happy&quot;, <cite>image</cite> would be set to &quot;eileen_expression_happy&quot;.
+If <cite>image_format</cite> is &quot;images/{image}.png&quot;,
+the final image Ren'Py finds is &quot;images/eileen_expression_happy.png&quot;.
+But note that it would have found the same image without the format
+argument.</p>
+</dd></dl>
+
+</section>
+<section id="proxying-layered-images">
+<h2>Proxying Layered Images<a class="headerlink" href="#proxying-layered-images" title="Link to this heading"></a></h2>
+<p>Sometimes, it can be useful (and even necessary) to proxy a layered image, to
+use the same layered image in multiple places. One reason for this would be to
+have a transformed version of a given layeredimage, while another would be to
+use it as a side image.</p>
+<p>The <a class="reference internal" href="#LayeredImageProxy" title="LayeredImageProxy"><code class="xref py py-func docutils literal notranslate"><span class="pre">LayeredImageProxy()</span></code></a> object does this, taking one layered image and
+duplicating it somewhere else. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">dupe</span> <span class="o">=</span> <span class="n">LayeredImageProxy</span><span class="p">(</span><span class="s2">&quot;augustina&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>creates a duplicate of the image that can be displayed independently. This
+also takes a transform argument that makes it useful to position a side
+image, like this:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="k">side</span> <span class="n">augustina</span> <span class="o">=</span> <span class="n">LayeredImageProxy</span><span class="p">(</span><span class="s2">&quot;augustina&quot;</span><span class="p">,</span> <span class="n">Transform</span><span class="p">(</span><span class="na">crop</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">362</span><span class="p">,</span> <span class="mi">362</span><span class="p">),</span> <span class="na">xoffset</span><span class="o">=-</span><span class="mi">80</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>See the difference:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">sepia_augustina_one</span> <span class="o">=</span> <span class="n">Transform</span><span class="p">(</span><span class="s2">&quot;augustina&quot;</span><span class="p">,</span> <span class="na">matrixcolor</span><span class="o">=</span><span class="n">SepiaMatrix</span><span class="p">())</span>
+<span class="k">image</span> <span class="n">sepia_augustina_two</span> <span class="o">=</span> <span class="n">LayeredImageProxy</span><span class="p">(</span><span class="s2">&quot;augustina&quot;</span><span class="p">,</span> <span class="n">Transform</span><span class="p">(</span><span class="na">matrixcolor</span><span class="o">=</span><span class="n">SepiaMatrix</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">sepia_augustina_one</span></code> will be a sepia version of the <em>original version</em> of the
+&quot;augustina&quot; layeredimage, in other words what's shown when you don't provide it
+any attribute. On the contrary, <code class="docutils literal notranslate"><span class="pre">sepia_augustina_two</span></code> will take any attribute
+&quot;augustina&quot; does, and then apply the sepia effect onto the result. If you can do
+this:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">augustina</span> <span class="n">happy</span> <span class="n">eyes_blue</span> <span class="n">dress</span>
+</pre></div>
+</div>
+<p>then:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">sepia_augustina_one</span> <span class="n">happy</span> <span class="n">eyes_blue</span> <span class="n">dress</span>
+<span class="c1"># won&#39;t work, because Transform doesn&#39;t take attributes</span>
+
+<span class="k">show</span> <span class="n">sepia_augustina_two</span> <span class="n">happy</span> <span class="n">eyes_blue</span> <span class="n">dress</span>
+<span class="c1"># will work, and show &quot;augustina happy eyes_blue dress&quot; in sepia effect</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="LayeredImageProxy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LayeredImageProxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#LayeredImageProxy" title="Link to this definition"></a></dt>
+<dd><p>This is an image-like object that proxies attributes passed to it to
+another layered image.</p>
+<dl class="simple">
+<dt><cite>name</cite></dt><dd><p>A string giving the name of the layeredimage to proxy to.</p>
+</dd>
+<dt><cite>transform</cite></dt><dd><p>If given, a transform or list of transforms that are applied to the
+image after it has been proxied.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="selecting-attributes-to-display">
+<span id="attribute-selection-process"></span><h2>Selecting attributes to display<a class="headerlink" href="#selecting-attributes-to-display" title="Link to this heading"></a></h2>
+<p>Several factors influence what gets displayed following a given
+<a class="reference internal" href="displaying_images.html#show-statement"><span class="std std-ref">Show Statement</span></a>. To provide more clarity as to what happens in which
+order, this section showcases the life of a set of attributes, from the show
+statement to the on-screen display.</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">show</span></code> statement provides the initial set of attributes, following the
+image tag.</p></li>
+<li><p>If a <a class="reference internal" href="config.html#var-config.adjust_attributes"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.adjust_attributes</span></code></a> function exists to match
+the image tag, it is called, and returns a potentially different set of
+attributes. If so, it replaces the former set, which is forgotten.</p></li>
+<li><p>If a <a class="reference internal" href="config.html#var-config.default_attribute_callbacks"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.default_attribute_callbacks</span></code></a> function exists and if its
+trigger conditions are met, it is called and potentially adds attributes to
+the set.</p></li>
+</ul>
+<p>The previous stages are not specific to layeredimages, because it is only after
+this stage that renpy determines which image or layeredimage will be called to
+display. For that reason, the given set of attributes must lead to one, and only
+one, defined image (or layeredimage, Live2D...), using the behavior described in
+the <a class="reference internal" href="displaying_images.html#show-statement"><span class="std std-ref">show statement section</span></a>.</p>
+<ul class="simple">
+<li><p>Then, the provided attributes are combined with the attributes defined in the
+layeredimage, discarding some previously shown attributes and conserving
+others. This is also the point when unrecognized attributes are detected and
+related errors are raised. If no such error is raised, the new attributes,
+along with those which were not discarded, will be recognized by renpy as the
+set of attributes associated with that image tag. This computing takes some
+of the incompatibility constraints into account, but not all. For instance
+incompatibilities due to attributes being in the same non-multiple group will
+trigger at this point in time, but the if_any/if_all/if_not clauses will not.
+That's why an attribute called but negated by such a clause will be considered
+active by renpy, and will for example become visible without having to be
+called again, if at some point the condition of the if_x clause is no longer
+fulfilled.</p></li>
+<li><p>If an <code class="docutils literal notranslate"><span class="pre">attribute_function</span></code> has been provided to the layeredimage, it is
+called with the set of remaining attributes. It returns a potentially
+different set of attributes.</p></li>
+<li><p>This set is once again confronted with the incompatibility constraints of the
+layeredimage, this time in full. That is the final stage, and remaining
+attributes are called into display.</p></li>
+</ul>
+</section>
+<section id="advice">
+<h2>Advice<a class="headerlink" href="#advice" title="Link to this heading"></a></h2>
+<p><strong>Use underscores in image filenames.</strong></p>
+<p>By default, Ren'Py's layered images use underscores to separate sections
+of image names. It might be tempting to use images with spaces between
+sections, but that could lead to problems later on.</p>
+<p>Ren'Py has a rule that if you show an image with the exact name as one
+that's being shown, it's shown instead. This can bypass the layered image
+you defined and show the sprite directly on its own, which can lead to weird problems
+like a pair of eyes floating in space.</p>
+<p>By having each sprite have a different tag from the main image, this is no
+longer a problem.</p>
+<p><strong>Cropping layers isn't necessary.</strong></p>
+<p>Ren'Py optimizes images by cropping them to the bounding box of the
+non-transparent pixels before loading them into RAM. As a result, assuming
+the images are being predicted properly, it generally won't improve
+performance or image size much to crop the images yourself.</p>
+<p><strong>Layered images shouldn't use data that changes at runtime.</strong></p>
+<p>Note that with the exception of the conditions in the <code class="docutils literal notranslate"><span class="pre">if</span></code> statement, all
+expressions written in a <code class="docutils literal notranslate"><span class="pre">layeredimage</span></code> block are evaluated at init time, when
+the layered image is first defined. This is not the case for ATL transforms for
+example, or for anything occurring in <a class="reference internal" href="config.html#var-config.adjust_attributes"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.adjust_attributes</span></code></a>,
+<code class="xref std std-var docutils literal notranslate"><span class="pre">config.default_attributes</span></code> or <code class="docutils literal notranslate"><span class="pre">attribute_function</span></code>, but it is the case
+for <code class="docutils literal notranslate"><span class="pre">format_function</span></code> which is also only called at layeredimage definition.</p>
+<p><strong>Choosing what syntax to use</strong></p>
+<p>If you want a sprite to be always visible, use either the <code class="docutils literal notranslate"><span class="pre">always</span></code> clause or
+the <code class="docutils literal notranslate"><span class="pre">attribute</span> <span class="pre">x</span> <span class="pre">default</span></code> syntax. <code class="docutils literal notranslate"><span class="pre">always</span></code> will require you to provide the
+displayable explicitly (automatic attribution using the
+<a class="reference internal" href="#layeredimage-pattern"><span class="std std-ref">pattern</span></a> will not be available), but <code class="docutils literal notranslate"><span class="pre">attribute</span></code>
+will spend the &quot;x&quot; attribute name which will always be active for that
+layeredimage.</p>
+<p>If you want it to appear depending on the attributes being passed to the
+layeredimage at the moment of the <code class="docutils literal notranslate"><span class="pre">show</span></code> statement, for example
+<code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">eileen</span> <span class="pre">happy</span></code> instead of <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">eileen</span> <span class="pre">jeans</span></code>, use the <code class="docutils literal notranslate"><span class="pre">attribute</span></code>
+statement, in or out of a <code class="docutils literal notranslate"><span class="pre">group</span></code> block (or implicitly defined in an <code class="docutils literal notranslate"><span class="pre">auto</span></code>
+group).</p>
+<p>If you want it to appear depending on a python variable or condition, use the
+<code class="docutils literal notranslate"><span class="pre">if</span></code> statement.</p>
+<p>If you want it to depend on both (for example for <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">eileen</span> <span class="pre">ribbon</span></code> to show
+either a blue or red ribbon depending on a variable, but no ribbon appearing
+unless you ask for it with the <code class="docutils literal notranslate"><span class="pre">ribbon</span></code> attribute), declare all versions as
+attributes and use a dedicated <a class="reference internal" href="config.html#var-config.adjust_attributes"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.adjust_attributes</span></code></a> function.</p>
+</section>
+<section id="examples">
+<span id="layeredimage-examples"></span><h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<p><strong>Pattern and auto groups</strong></p>
+<p>From the following files in the images/ directory (or one of its subfolders) and
+written code:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>francis_base.png
+francis_face_neutral.png
+francis_face_angry.png
+francis_face_happy.png
+francis_face_very_happy.png
+francis_face annoyed.png
+francis_supersad.png
+</pre></div>
+</div>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">layeredimage</span> <span class="n">francis</span><span class="p">:</span>
+    <span class="k">attribute</span> <span class="n">base</span> <span class="k">default</span>
+    <span class="k">group</span> <span class="n">face</span> <span class="k">auto</span>
+        <span class="k">attribute</span> <span class="n">neutral</span> <span class="k">default</span>
+    <span class="k">attribute</span> <span class="n">supersad</span><span class="p">:</span>
+        <span class="n">Solid</span><span class="p">(</span><span class="s2">&quot;#00c3&quot;</span><span class="p">,</span> <span class="na">xysize</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">francis</span></code> layeredimage will declare the (defaulted) <code class="docutils literal notranslate"><span class="pre">base</span></code> attribute,
+and associate it the &quot;francis_base&quot; (auto-defined) image using the
+<a class="reference internal" href="#layeredimage-pattern"><span class="std std-ref">pattern</span></a> : the layeredimage name (&quot;francis&quot;), the
+group name (none here), the variant name (none here) and the attribute name
+(&quot;base&quot;), separated with underscores.</p>
+<p>Then, in the <code class="docutils literal notranslate"><span class="pre">face</span></code> group, the explicit <code class="docutils literal notranslate"><span class="pre">neutral</span></code> attribute gets associated
+the &quot;francis_face_neutral&quot; image, following the same pattern but using &quot;face&quot;
+as the group name and &quot;neutral&quot; as the attribute name.</p>
+<p>After all explicit attributes receive their images, <code class="docutils literal notranslate"><span class="pre">face</span></code> being an <code class="docutils literal notranslate"><span class="pre">auto</span></code>
+group, existing images (auto-defined or not) are scanned for a match with the
+pattern. Here, three are found : &quot;francis_face_angry&quot;, &quot;francis_face_happy&quot; and
+&quot;francis_face_very_happy&quot;. They are associated with the <code class="docutils literal notranslate"><span class="pre">angry</span></code>, <code class="docutils literal notranslate"><span class="pre">happy</span></code> and
+<code class="docutils literal notranslate"><span class="pre">very_happy</span></code> attributes respectively, using the same pattern as before. No
+<code class="docutils literal notranslate"><span class="pre">annoyed</span></code> attribute is defined however, since the &quot;francis_face annoyed&quot; image
+contains a space where the pattern expected an underscore.</p>
+<p>Finally, the <code class="docutils literal notranslate"><span class="pre">supersad</span></code> attribute is declared, but since a displayable is
+explicitly provided, the pattern does not look for a matching image.</p>
+<p>The &quot;francis_supersad&quot; and &quot;francis_face annoyed&quot; images get auto-defined from
+the filename as part of Ren'Py's ordinary <a class="reference internal" href="displaying_images.html#images-directory"><span class="std std-ref">protocol</span></a>,
+but these sprites don't find a match with any attribute or auto group, so they
+end up not being used in the <code class="docutils literal notranslate"><span class="pre">francis</span></code> layeredimage.</p>
+<p>As you can see, using the pattern to associate images to attributes and using
+auto groups shrinks the code considerably. The same layeredimage would have
+taken 13 lines if everything was declared explicitly (try it!), and this syntax
+allows for geometric growth of the sprite set - adding any number of new faces
+wouldn't require any change to the code, for example.</p>
+<p><strong>Dynamism in attributes</strong></p>
+<p>Here is an example for defining attributes depending on variables (as mentioned
+in the Advice section):</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">layeredimage</span> <span class="n">eileen</span><span class="p">:</span>
+    <span class="k">attribute</span> <span class="n">base</span> <span class="k">default</span>
+    <span class="k">group</span> <span class="n">outfit</span> <span class="k">auto</span>
+    <span class="k">group</span> <span class="n">ribbon</span> <span class="na">prefix</span> <span class="s2">&quot;ribbon&quot;</span><span class="p">:</span>
+        <span class="k">attribute</span> <span class="n">red</span>
+        <span class="k">attribute</span> <span class="n">blue</span>
+
+<span class="k">default</span> <span class="n">eileen_ribbon_color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+
+<span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">eileen_adjuster</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
+        <span class="n">atts</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="k">if</span> <span class="s2">&quot;ribbon&quot;</span> <span class="k">in</span> <span class="n">atts</span><span class="p">:</span>
+            <span class="n">atts</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;ribbon&quot;</span><span class="p">)</span>
+            <span class="n">atts</span><span class="o">.</span><span class="k">add</span><span class="p">(</span><span class="s2">&quot;ribbon_&quot;</span> <span class="o">+</span> <span class="n">eileen_ribbon_color</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">*</span><span class="n">atts</span>
+
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="n">adjust_attributes</span><span class="p">[</span><span class="s2">&quot;eileen&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">eileen_adjuster</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="matrixcolor.html" class="btn btn-neutral float-left" title="Matrixcolor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="3dstage.html" class="btn btn-neutral float-right" title="3D Stage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

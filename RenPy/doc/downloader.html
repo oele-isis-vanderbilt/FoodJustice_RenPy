@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Downloader for Large Games on Mobile &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/downloader.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Gestures" href="gesture.html" />
+    <link rel="prev" title="HTTPS/HTTP Updater" href="updater.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Downloader for Large Games on Mobile</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-it-works">How it Works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-and-uploading-the-main-game">Building and Uploading the Main Game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#making-a-downloader-game">Making a Downloader Game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#downloader-screen">Downloader Screen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#downloader-functions">Downloader Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#updater.continue_game_download"><code class="docutils literal notranslate"><span class="pre">updater.continue_game_download()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updater.start_game_download"><code class="docutils literal notranslate"><span class="pre">updater.start_game_download()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Downloader for Large Games on Mobile</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/downloader.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="downloader-for-large-games-on-mobile">
+<h1>Downloader for Large Games on Mobile<a class="headerlink" href="#downloader-for-large-games-on-mobile" title="Link to this heading"></a></h1>
+<p>Platforms like Android and iOS have a limit on the size of an app that can
+be downloaded from their app stores. To support larger games, Ren'Py supports
+a downloader, which is a small game that downloads the main game.</p>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<p>To make this work, you'll need a web hosting service that is reasonably
+capable. Uploader services like mega or game hosting sites like itch.io won't work.
+The downloader has been tested with a Digital Ocean droplet that
+runs Nginx, and also with Cloudflare's R2, which is free to host 10GB on.</p>
+<p>Specifically, the web server needs to support downloading files, and it will
+work better if it supports many HTTP Range requests at once.</p>
+</section>
+<section id="how-it-works">
+<h2>How it Works<a class="headerlink" href="#how-it-works" title="Link to this heading"></a></h2>
+<p>To use the downloader, you'll need to build two games. The first is the
+downloader game, which contains the Ren'Py engine and the downloader,
+and is what the user will get delivered to their phone.</p>
+<p>The second is the main game, the visual novel they want to play. This
+will be downloaded by the downloader game, and will be installed onto
+the device, if present.</p>
+<p>Both need to be built with the same version of Ren'Py - if there is a
+mismatch, the downloader will update the main game. Other than that,
+it's up to the main game to update itself, which is possible now that
+the Ren'Py updater works on mobile platforms.</p>
+<p>When the downloader game starts, it checks to see if the main game is
+installed. If it is, and the versions are right, the main game will
+start. Otherwise the downloader will run and prompt the player to
+download the main game.</p>
+</section>
+<section id="building-and-uploading-the-main-game">
+<h2>Building and Uploading the Main Game<a class="headerlink" href="#building-and-uploading-the-main-game" title="Link to this heading"></a></h2>
+<p>The main change you need to make to your main game is to add the line:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">build</span><span class="o">.</span><span class="n">game_only_update</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>to the top of your options.rpy file. That will add a new option that shows
+up to the launcher's Build Distributions screen, &quot;Game-Only Update for Mobile&quot;.</p>
+<p>In &quot;Build Distributions&quot;, check &quot;Game-Only Update for Mobile&quot;. Uncheck all other
+build packages. Under &quot;Options&quot;, make sure &quot;Build Updates&quot; is set, and that
+the other options are set as you like. The defaults are fine.</p>
+<p>Then run the build process.</p>
+<p>When the game is finished building, you'll have everything you need. You'll
+want to upload the <code class="docutils literal notranslate"><span class="pre">updates.json</span></code>, <code class="docutils literal notranslate"><span class="pre">updates.ecdsa</span></code>, and everything in the
+<code class="docutils literal notranslate"><span class="pre">rpu</span></code> directory to your web server. (Make sure that the rpu directory is next to
+the two update files, and the .rpu files are inside the <code class="docutils literal notranslate"><span class="pre">rpu</span></code> directory.)</p>
+</section>
+<section id="making-a-downloader-game">
+<h2>Making a Downloader Game<a class="headerlink" href="#making-a-downloader-game" title="Link to this heading"></a></h2>
+<p>The downloader game is a Ren'Py game, but it should stay well under 100MB
+in size. You can do anything you can in a small game - have an opening
+scene, play music, etc. You will need to make it separately, and build
+it for Android or iOS using the usual techniques.</p>
+<p>At the same time, it should ask the player if they want to download, mention
+that this can cost money if they're not on WiFi, and then download the the
+game.</p>
+<p>Here's an example script for a downloader game, using assets from the
+tutorial game:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># The url to updates.json, on your web server.</span>
+<span class="k">define</span> <span class="n">URL</span> <span class="o">=</span> <span class="s2">&quot;https://www.domain.com/game-updates/updates.json&quot;</span>
+
+<span class="c1"># Disable saving in the downloader game.</span>
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="n">save</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="k">define</span> <span class="n">e</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Eileen&quot;</span><span class="p">,</span> <span class="k">image</span><span class="o">=</span><span class="s2">&quot;eileen&quot;</span><span class="p">)</span>
+
+<span class="k">label</span> <span class="n">splashscreen</span><span class="p">:</span>
+
+    <span class="k">scene</span> <span class="n">bg</span> <span class="n">washington</span>
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">left</span>
+
+    <span class="k">$</span> <span class="n">downloader</span> <span class="o">=</span> <span class="n">updater</span><span class="o">.</span><span class="n">start_game_download</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
+
+    <span class="n">e</span> <span class="s2">&quot;Welcome to the downloader game.&quot;</span>
+
+    <span class="n">e</span> <span class="s2">&quot;This will download the main game onto your phone, so you can play it.&quot;</span>
+
+    <span class="k">if</span> <span class="n">downloader</span><span class="o">.</span><span class="n">download_total</span><span class="p">:</span>
+        <span class="k">$</span> <span class="n">download_mb</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">downloader</span><span class="o">.</span><span class="n">download_total</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+        <span class="n">e</span> <span class="s2">&quot;To play this game, you&#39;ll need to download [download_mb] megabytes of data. If you&#39;re not on WiFi, you could be charged for it. Tap the screen to proceed.&quot;</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="n">e</span> <span class="s2">&quot;To play this game, you&#39;ll need to download some data. If you&#39;re not on WiFi, you could be charged for it. Tap the screen to proceed.&quot;</span>
+
+    <span class="k">$</span> <span class="n">updater</span><span class="o">.</span><span class="n">continue_game_download</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This is pretty simple, but there are a few things. The first is that it sets
+<a class="reference internal" href="config.html#var-config.save"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.save</span></code></a> to False. This is important, as it disables saving and
+loading, including preferences, so the downloader's saves don't influence
+the main game.</p>
+<p>It's also all happening in the splashscreen, to start immediately and to
+disable entering the game menu.</p>
+<p>Early on, the game calls <a class="reference internal" href="#updater.start_game_download" title="updater.start_game_download"><code class="xref py py-func docutils literal notranslate"><span class="pre">updater.start_game_download()</span></code></a>, to gather information
+about the download. After this, the game kills some time, having Eileen
+say some things as the game checks to find out the size of the download.</p>
+<p>After the player makes multiple clicks, the game may know the size of the
+download, or it may not, so we use a conditional to check the download
+size. If the real number is known, it's converted to megabytes and displayed.
+If not, more general text is displayed. (It would also hard-code an estimate
+of the download size into the game.)</p>
+<p>Finally, <a class="reference internal" href="#updater.continue_game_download" title="updater.continue_game_download"><code class="xref py py-func docutils literal notranslate"><span class="pre">updater.continue_game_download()</span></code></a> is called, which starts the download
+process. A screen will show up, and you can't do much - but music will play,
+and ATL will keep running.</p>
+<p>When the download is complete, the main game will automatically start. If it
+fails, the downloader will restart, and the player will be able to try again</p>
+</section>
+<section id="downloader-screen">
+<h2>Downloader Screen<a class="headerlink" href="#downloader-screen" title="Link to this heading"></a></h2>
+<p>The downloader is a screen that shows the progress of the download. A default
+screen is in <code class="file docutils literal notranslate"><span class="pre">renpy/common/00updater.rpy</span></code>, and can be customized by
+creating a copy in your game directory.</p>
+<p>Here's the default:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">screen</span> <span class="n">downloader</span><span class="p">(</span><span class="n">u</span><span class="p">):</span>
+
+    <span class="na">style_prefix</span> <span class="s2">&quot;downloader&quot;</span>
+
+    <span class="k">frame</span><span class="p">:</span>
+
+        <span class="k">has</span> <span class="k">vbox</span>
+
+        <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">u</span><span class="o">.</span><span class="n">CHECKING</span> <span class="k">or</span> <span class="n">u</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">u</span><span class="o">.</span><span class="n">PREPARING</span><span class="p">:</span>
+            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Preparing to download the game data.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">u</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">u</span><span class="o">.</span><span class="n">DOWNLOADING</span> <span class="k">or</span> <span class="n">u</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">u</span><span class="o">.</span><span class="n">UNPACKING</span><span class="p">:</span>
+            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Downloading the game data.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">u</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">u</span><span class="o">.</span><span class="n">FINISHING</span> <span class="k">or</span> <span class="n">u</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">u</span><span class="o">.</span><span class="n">DONE</span><span class="p">:</span>
+            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;The game data has been downloaded.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># An error or unknown state.</span>
+            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;An error occured when trying to download game data:&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">message</span> <span class="k">is</span> <span class="k">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">text</span> <span class="s2">&quot;[u.message!q]&quot;</span>
+
+            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;This game cannot be run until the game data has been downloaded.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">progress</span> <span class="k">is</span> <span class="k">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">null</span> <span class="na">height</span> <span class="n">gui</span><span class="o">.</span><span class="n">_scale</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+            <span class="k">bar</span> <span class="na">value</span> <span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">progress</span> <span class="k">or</span> <span class="mf">0.0</span><span class="p">)</span> <span class="na">range</span> <span class="mf">1.0</span>
+
+        <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">can_proceed</span><span class="p">:</span>
+            <span class="k">textbutton</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Retry&quot;</span><span class="p">)</span> <span class="na">action</span> <span class="n">u</span><span class="o">.</span><span class="n">proceed</span>
+
+<span class="k">style</span> <span class="n">downloader_frame</span><span class="p">:</span>
+    <span class="na">xalign</span> <span class="mf">0.5</span>
+    <span class="na">xsize</span> <span class="mf">0.5</span>
+    <span class="na">xpadding</span> <span class="n">gui</span><span class="o">.</span><span class="n">_scale</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="na">ypos</span> <span class="mf">.25</span>
+    <span class="na">ypadding</span> <span class="n">gui</span><span class="o">.</span><span class="n">_scale</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="k">style</span> <span class="n">downloader_vbox</span><span class="p">:</span>
+    <span class="na">xfill</span> <span class="kc">True</span>
+    <span class="na">spacing</span> <span class="n">gui</span><span class="o">.</span><span class="n">_scale</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="k">style</span> <span class="n">downloader_text</span><span class="p">:</span>
+    <span class="na">xalign</span> <span class="mf">0.5</span>
+    <span class="na">text_align</span> <span class="mf">0.5</span>
+    <span class="na">layout</span> <span class="s2">&quot;subtitle&quot;</span>
+
+<span class="k">style</span> <span class="n">downloader_label</span><span class="p">:</span>
+    <span class="na">xalign</span> <span class="mf">0.5</span>
+
+<span class="k">style</span> <span class="n">downloader_button</span><span class="p">:</span>
+    <span class="na">xalign</span> <span class="mf">0.5</span>
+</pre></div>
+</div>
+</section>
+<section id="downloader-functions">
+<h2>Downloader Functions<a class="headerlink" href="#downloader-functions" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="updater.continue_game_download">
+<span class="sig-prename descclassname"><span class="pre">updater.</span></span><span class="sig-name descname"><span class="pre">continue_game_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'downloader'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#updater.continue_game_download" title="Link to this definition"></a></dt>
+<dd><p>Continues downloading the game data. This will loop until the
+download is complete, or the user exits the game.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="updater.start_game_download">
+<span class="sig-prename descclassname"><span class="pre">updater.</span></span><span class="sig-name descname"><span class="pre">start_game_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#updater.start_game_download" title="Link to this definition"></a></dt>
+<dd><p>Starts downloading the game data from <cite>url</cite>. This begins the process
+of determining what needs to be downloaded, and returns an Update object.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="updater.html" class="btn btn-neutral float-left" title="HTTPS/HTTP Updater" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gesture.html" class="btn btn-neutral float-right" title="Gestures" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

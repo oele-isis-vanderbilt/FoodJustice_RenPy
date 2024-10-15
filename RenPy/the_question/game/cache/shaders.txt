@@ -1,0 +1,11 @@
+renpy.texture
+renpy.alpha renpy.texture
+renpy.geometry renpy.texture
+renpy.alpha renpy.geometry renpy.texture
+renpy.solid
+renpy.dissolve renpy.geometry
+renpy.texture textshader.zoom renpy.texture textshader.zoom
+renpy.geometry renpy.texture textshader.zoom
+renpy.geometry renpy.solid
+renpy.dissolve renpy.dissolve
+renpy.ftl

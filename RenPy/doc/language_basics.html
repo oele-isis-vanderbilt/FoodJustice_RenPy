@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Language Basics &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/language_basics.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Labels &amp; Control Flow" href="label.html" />
+    <link rel="prev" title="GUI Customization Guide" href="gui.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Language Basics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#files">Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#base-directory">Base Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game-directory">Game Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#comments">Comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logical-lines">Logical Lines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#indentation-and-blocks">Indentation and Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#elements-of-statements">Elements of Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-statement-syntax">Common Statement Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-expression-syntax">Python Expression Syntax</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sample"><code class="docutils literal notranslate"><span class="pre">Sample()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Language Basics</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/language_basics.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="language-basics">
+<h1>Language Basics<a class="headerlink" href="#language-basics" title="Link to this heading"></a></h1>
+<p>Before we can describe the Ren'Py language, we must first describe the
+structure of a Ren'Py script. This includes how files are broken into
+blocks made up of lines, and how those lines are broken into the
+elements that make up statements.</p>
+<section id="files">
+<h2>Files<a class="headerlink" href="#files" title="Link to this heading"></a></h2>
+<p>The script of a Ren'Py game is made up of all the files found under the
+<code class="file docutils literal notranslate"><span class="pre">game/</span></code> directory ending with the <code class="file docutils literal notranslate"><span class="pre">.rpy</span></code> extension. Ren'Py will
+consider each of these files (in the Unicode order of their paths), and will
+use the contents of the files as the script.</p>
+<p>Generally, there's no difference between a script written in one big file and a
+script broken into multiple files. Control can be transferred within the script
+(including between files) by jumping to or calling a <a class="reference internal" href="label.html"><span class="doc">label</span></a> in
+another file. This makes the division of a script up into files a matter of
+personal style : some game creators prefer to have small files (like one
+per event, or one per day), while others prefer to have one big script.</p>
+<p>To speed up loading time, Ren'Py will compile the <code class="file docutils literal notranslate"><span class="pre">.rpy</span></code> files into
+<code class="file docutils literal notranslate"><span class="pre">.rpyc</span></code> files when it starts up. When a <code class="file docutils literal notranslate"><span class="pre">.rpy</span></code> file is changed, the
+<code class="file docutils literal notranslate"><span class="pre">.rpyc</span></code> file will be updated when Ren'Py starts up. However, if a
+<code class="file docutils literal notranslate"><span class="pre">.rpyc</span></code> file exists without a corresponding <code class="file docutils literal notranslate"><span class="pre">.rpy</span></code> file, the
+<code class="file docutils literal notranslate"><span class="pre">.rpyc</span></code> file will be used. This can lead to problems if a <code class="file docutils literal notranslate"><span class="pre">.rpy</span></code>
+file is deleted, or renamed, or moved, without deleting the <code class="file docutils literal notranslate"><span class="pre">.rpyc</span></code>
+file : the script it contains will still get executed.</p>
+<p>Filenames must begin with a letter or number, but may not begin with
+&quot;00&quot;, as Ren'Py uses such files for its own purposes.</p>
+<section id="base-directory">
+<h3>Base Directory<a class="headerlink" href="#base-directory" title="Link to this heading"></a></h3>
+<p>The base directory is the directory that contains all files that are
+distributed with the game (even though not all the files in the base directory
+are usually distributed). See also : <a class="reference internal" href="build.html"><span class="doc">Building Distributions</span></a>. Things like README files
+should be placed in the base directory.</p>
+<p>The base directory is created within the &quot;Projects Directory&quot;, which can be set
+in the Launcher, when you create a new game. For example, if your Projects
+Directory is named <code class="file docutils literal notranslate"><span class="pre">renpygames</span></code>, and your game is named &quot;HelloWorld&quot;, your
+base directory will be <code class="file docutils literal notranslate"><span class="pre">renpygames/HelloWorld</span></code>.</p>
+</section>
+<section id="game-directory">
+<h3>Game Directory<a class="headerlink" href="#game-directory" title="Link to this heading"></a></h3>
+<p>The game directory is a directory named &quot;game&quot; inside the base directory. For
+example, if your base directory is <code class="file docutils literal notranslate"><span class="pre">renpygames/HelloWorld</span></code>, your game
+directory will be <code class="file docutils literal notranslate"><span class="pre">renpygames/HelloWorld/game</span></code>.</p>
+<p>The game directory contains all the files used by the game. It, including all
+subdirectories, is scanned for <code class="file docutils literal notranslate"><span class="pre">.rpy</span></code> and <code class="file docutils literal notranslate"><span class="pre">.rpyc</span></code> files, and those
+are combined to form the game script. It is scanned for <code class="file docutils literal notranslate"><span class="pre">.rpa</span></code> archive
+files, and those are automatically used by the game. Finally, when Ren'Py takes
+or considers a path to a file, the path is (with very few exceptions) relative
+to the game directory (but note that <a class="reference internal" href="config.html#var-config.searchpath"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.searchpath</span></code></a> can change this).</p>
+</section>
+</section>
+<section id="comments">
+<h2>Comments<a class="headerlink" href="#comments" title="Link to this heading"></a></h2>
+<p>A Ren'Py script file may contain comments. A comment begins with a
+hash mark (<code class="docutils literal notranslate"><span class="pre">#</span></code>), and ends at the end of the line containing the
+comment. As an exception, a comment may not be part of a string.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a comment.</span>
+<span class="k">show</span> <span class="n">black</span> <span class="c1"># this is also a comment.</span>
+
+<span class="s2">&quot;# This isn&#39;t a comment, since it&#39;s part of a string.&quot;</span>
+</pre></div>
+</div>
+<p>Ren'Py ignores comments, so the script is treated like the comment
+wasn't there.</p>
+</section>
+<section id="logical-lines">
+<h2>Logical Lines<a class="headerlink" href="#logical-lines" title="Link to this heading"></a></h2>
+<p>A script file is broken up into <em class="dfn">logical lines</em>. A logical line
+always begins at the start of a line in the file. A logical line ends
+at the end of a line, unless:</p>
+<ul class="simple">
+<li><p>The last character on the line is a backslash (<code class="docutils literal notranslate"><span class="pre">\</span></code>).</p></li>
+<li><p>The line contains an open parenthesis character (<code class="docutils literal notranslate"><span class="pre">(</span></code>, <code class="docutils literal notranslate"><span class="pre">{</span></code>, or <code class="docutils literal notranslate"><span class="pre">[</span></code>),
+that hasn't been matched by the cooresponding closing parenthesis
+character (<code class="docutils literal notranslate"><span class="pre">)</span></code>, <code class="docutils literal notranslate"><span class="pre">}</span></code>, or <code class="docutils literal notranslate"><span class="pre">]</span></code>, respectively).</p></li>
+<li><p>The end of the line occurs during a string - <em>any</em> string, even with single
+quotes, as opposed to Python rules.</p></li>
+</ul>
+<p>Once a logical line ends, the next logical line begins at the start of
+the next line.</p>
+<p>Most statements in the Ren'Py language consist of a single logical line.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;This is one logical line&quot;</span>
+
+<span class="s2">&quot;Since this line contains a string, it continues</span>
+ <span class="n">even</span> <span class="n">when</span> <span class="n">the</span> <span class="n">line</span> <span class="n">ends</span><span class="o">.</span><span class="s2">&quot;</span>
+
+<span class="k">$</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;Because of parenthesis, this line also&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;spans more than one line.&quot;</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>Empty lines are ignored and do not count as logical lines.</p>
+</section>
+<section id="indentation-and-blocks">
+<h2>Indentation and Blocks<a class="headerlink" href="#indentation-and-blocks" title="Link to this heading"></a></h2>
+<p><em class="dfn">Indentation</em> is the name we give to the space at the start of
+each logical line that's used to line up Ren'Py statements. In
+Ren'Py, indentation must consist only of spaces.</p>
+<p>Indentation is used to group statements into <em class="dfn">blocks</em>. A block is
+a group of lines, and often a group of statements. The rules for
+dividing a file into blocks are:</p>
+<ul class="simple">
+<li><p>A block is open at the start of a file.</p></li>
+<li><p>A new block is started whenever a logical line is indented past the
+previous logical line.</p></li>
+<li><p>All logical lines inside a block must have the same indentation.</p></li>
+<li><p>A block ends when a non-empty logical line is encountered with less
+indentation than the lines in the block.</p></li>
+</ul>
+<p>Indentation is very important in Ren'Py, as it is in Python, and it can cause
+syntax or logical errors when it's incorrect. At the same time, the use of
+indentation to express the block structure is far simpler than other languages
+using other delimiters.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;This statement, and the if statement that follows, are part of a block.&quot;</span>
+
+<span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
+
+    <span class="s2">&quot;But this statement is part of a new block.&quot;</span>
+
+    <span class="s2">&quot;This is also part of that new block.&quot;</span>
+
+<span class="s2">&quot;This is part of the first block, again.&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="elements-of-statements">
+<span id="id1"></span><h2>Elements of Statements<a class="headerlink" href="#elements-of-statements" title="Link to this heading"></a></h2>
+<p>Ren'Py statements are made of a few basic parts.</p>
+<dl>
+<dt><em class="dfn">Keyword</em></dt><dd><p>A keyword is a word that must literally appear in the script of the game.
+Keywords are typically used to introduce statements and properties.</p>
+</dd>
+<dt><em class="dfn">Name</em></dt><dd><p>A name begins with a letter or underscore, which is followed by
+zero or more letters, numbers, and underscores. For our purpose,
+Unicode characters between U+00a0 and U+fffd are considered to be
+letters.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Names beginning with a single underscore (_) are reserved for
+Ren'Py internal use, unless otherwise documented.</p>
+<p>When a name begins with two underscores (__) but doesn't end with two
+underscores, it is changed to a file-specific version of that name.</p>
+</div>
+</dd>
+<dt><em class="dfn">Image Name</em></dt><dd><p>An <em class="dfn">image name</em> consists of one or more components, separated by
+spaces. The first component of the image name is called the
+<em class="dfn">image tag</em>. The second and later components of the name are
+the <em class="dfn">image attributes</em>. An image component consists of a
+string of letters, numbers, and underscores.</p>
+<p>For example, take the image name <code class="docutils literal notranslate"><span class="pre">mary</span> <span class="pre">beach</span> <span class="pre">night</span> <span class="pre">happy</span></code>. The
+image tag is <code class="docutils literal notranslate"><span class="pre">mary</span></code>, while the image attributes are,
+<code class="docutils literal notranslate"><span class="pre">beach</span></code>, <code class="docutils literal notranslate"><span class="pre">night</span></code>, and <code class="docutils literal notranslate"><span class="pre">happy</span></code>.</p>
+<p>The words <code class="docutils literal notranslate"><span class="pre">at</span></code>, <code class="docutils literal notranslate"><span class="pre">as</span></code>, <code class="docutils literal notranslate"><span class="pre">behind</span></code>, <code class="docutils literal notranslate"><span class="pre">onlayer</span></code>, <code class="docutils literal notranslate"><span class="pre">with</span></code>, and <code class="docutils literal notranslate"><span class="pre">zorder</span></code>, may
+not be used as parts of an image name.</p>
+</dd>
+<dt><em class="dfn">String</em></dt><dd><p>A string begins with a quote character (one of &quot;, ', or `), contains some
+sequence of characters, and ends with the same quote character.</p>
+<p>The backslash character (\) is used to escape quotes, special
+characters such as % (written as \%), [ (written as \[), and
+{ (written as \{). It's also used to include newlines, using the \n
+sequence.</p>
+<p>Inside a Ren'Py string, consecutive sequences of whitespace and line
+breaks are compressed into a single whitespace character, unless a space is
+preceded by a backslash.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;Strings can</span><span class="se">\&#39;</span><span class="s1">t contain their delimiter, unless you escape it.&#39;</span>
+
+<span class="s2">&quot;There will be a space between the two following</span>
+ <span class="n">words</span><span class="o">.</span><span class="s2">&quot;</span>
+
+<span class="s2">&quot;There will be a line break between</span><span class="se">\n</span><span class="s2">these.&quot;</span>
+
+<span class="s2">&quot;And there will be three spaces between\ \ \ these.&quot;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">r</span></code> prefix is supported, and follow more or less the same rules as in
+Python. Other prefixes, like <code class="docutils literal notranslate"><span class="pre">u</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code> or <code class="docutils literal notranslate"><span class="pre">f</span></code>, are not supported.
+Triple-quoted strings are generally not accepted in places where a normal
+string is expected, and when they are, they usually yield a different
+result - see <a class="reference internal" href="dialogue.html#monologue-mode"><span class="std std-ref">Monologue Mode</span></a> for an example.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This applies to strings found <em>directly</em> in Ren'Py script, such as in
+<a class="reference internal" href="dialogue.html#say-statement"><span class="std std-ref">Say Statement</span></a> or <a class="reference internal" href="menus.html"><span class="doc">In-Game Menus</span></a>. Strings found inside
+<a class="reference internal" href="python.html#python-statement"><span class="std std-ref">python statements</span></a>, or in expressions (see
+below), follow ordinary Python rules.</p>
+</div>
+</dd>
+<dt><em class="dfn">Simple Expression</em></dt><dd><p>A simple expression is a Python expression, used to include Python
+in some parts of the Ren'Py script. A simple expression begins
+with:</p>
+<ul class="simple">
+<li><p>A name.</p></li>
+<li><p>A string.</p></li>
+<li><p>A number.</p></li>
+<li><p>Any Python expression, in parenthesis.</p></li>
+</ul>
+<p>This can be followed by any number of:</p>
+<ul class="simple">
+<li><p>A dot followed by a name.</p></li>
+<li><p>A parenthesised Python expression.</p></li>
+</ul>
+<p>As an example, <code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">(3</span> <span class="pre">+</span> <span class="pre">4)</span></code>, <code class="docutils literal notranslate"><span class="pre">foo.bar</span></code>, and <code class="docutils literal notranslate"><span class="pre">foo(42)</span></code>
+are all simple expressions. But <code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">+</span> <span class="pre">4</span></code> is not, as the
+expression ends at the end of a string.</p>
+</dd>
+<dt><em class="dfn">Python Expression</em></dt><dd><p>A Python expression is an arbitrary Python expression, that may not include
+a colon. These are used to express the conditions in the
+<a class="reference internal" href="conditional.html#if-statement"><span class="std std-ref">if</span></a> and <a class="reference internal" href="conditional.html#while-statement"><span class="std std-ref">while</span></a> statements.</p>
+</dd>
+</dl>
+</section>
+<section id="common-statement-syntax">
+<h2>Common Statement Syntax<a class="headerlink" href="#common-statement-syntax" title="Link to this heading"></a></h2>
+<p>Most Ren'Py statements share a common syntax. With the exception of the
+<a class="reference internal" href="dialogue.html#say-statement"><span class="std std-ref">Say Statement</span></a>, they begin with a keyword that introduces the statement.
+This keyword is followed by a parameter, if the statement takes one.</p>
+<p>The parameter is then followed by one or more properties. Properties
+may be supplied in any order, provided each property is only supplied
+once. A property starts off with a keyword. For most properties, the
+property name is followed by one of the syntax elements given above.</p>
+<p>If the statement takes a block, the line ends with a colon (:). Otherwise, the
+line just ends.</p>
+</section>
+<section id="python-expression-syntax">
+<span id="python-basics"></span><h2>Python Expression Syntax<a class="headerlink" href="#python-expression-syntax" title="Link to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It may not be necessary to read this section thoroughly right
+now. Instead, skip ahead, and if you find yourself unable to figure
+out an example, or want to figure out how things actually work, you
+can go back and review this.</p>
+</div>
+<p>Many portions of Ren'Py take Python expressions. For example, defining
+a new Character involves a call to the <a class="reference internal" href="dialogue.html#Character" title="Character"><code class="xref py py-func docutils literal notranslate"><span class="pre">Character()</span></code></a> function. While
+Python expressions are very powerful, only a fraction of that power is
+necessary to write a basic Ren'Py game.</p>
+<p>Here's a synopsis of Python expressions.</p>
+<dl>
+<dt><em class="dfn">Integer</em></dt><dd><p>An integer is a number without a decimal point. <code class="docutils literal notranslate"><span class="pre">3</span></code> and <code class="docutils literal notranslate"><span class="pre">42</span></code>
+are integers.</p>
+</dd>
+<dt><em class="dfn">Float</em></dt><dd><p>A float (short for floating-point number) is a number with a
+decimal point. <code class="docutils literal notranslate"><span class="pre">.5</span></code>, <code class="docutils literal notranslate"><span class="pre">7.</span></code>, and <code class="docutils literal notranslate"><span class="pre">9.0</span></code> are all floats.</p>
+</dd>
+<dt><em class="dfn">String</em></dt><dd><p>Python strings begin with &quot; or ', and end with the same
+character. \ is used to escape the end character, and to
+introduce special characters like newlines (\n). Unlike Ren'Py
+strings, Python strings can't span several lines, or be delimited with `.</p>
+</dd>
+<dt><em class="dfn">True, False, None</em></dt><dd><p>There are three special values. <code class="docutils literal notranslate"><span class="pre">True</span></code> is a true value, <code class="docutils literal notranslate"><span class="pre">False</span></code> is
+a false value. <code class="docutils literal notranslate"><span class="pre">None</span></code> represents the absence of a value.</p>
+</dd>
+<dt><em class="dfn">Tuple</em></dt><dd><p>Tuples are used to represent containers where the number of items
+is important. For example, one might use a 2-tuple (also called a
+pair) to represent width and height, or a 4-tuple (x, y, width,
+height) to represent a rectangle.</p>
+<p>Tuples begin with a left-parenthesis <code class="docutils literal notranslate"><span class="pre">(</span></code>, consist of zero or
+more comma-separated Python expressions, and end with a
+right-parenthesis <code class="docutils literal notranslate"><span class="pre">)</span></code>. As a special case, the one-item tuple
+must have a comma following the item. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="p">()</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;#555&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt><em class="dfn">List</em></dt><dd><p>Lists are used to represent containers where the number of items
+may vary. A list begins with a <code class="docutils literal notranslate"><span class="pre">[</span></code>, contains a comma-separated
+list of expressions, and ends with <code class="docutils literal notranslate"><span class="pre">]</span></code>. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="p">[]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd>
+<dt><em class="dfn">Variable</em></dt><dd><p>Python expressions can use variables, that store values defined using the
+<a class="reference internal" href="python.html#define-statement"><span class="std std-ref">Define Statement</span></a> or the <a class="reference internal" href="python.html#default-statement"><span class="std std-ref">Default Statement</span></a>. A variable name
+follows the rules of a <em class="dfn">name</em> as explained in
+<a class="reference internal" href="#elements-of-statements"><span class="std std-ref">Elements of Statements</span></a>. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">playername</span>
+<span class="n">love_love_points</span>
+<span class="n">trebuchet2_range</span>
+</pre></div>
+</div>
+</dd>
+<dt><em class="dfn">Field Access</em></dt><dd><p>Python modules and objects have fields, which can be accessed by following
+an expression (usually a variable) with a dot and the field name.
+For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">screen_width</span>
+</pre></div>
+</div>
+<p>consists of a variable (config) followed by a field access
+(screen_width).</p>
+</dd>
+<dt><em class="dfn">Call</em></dt><dd><p>Python expressions can call a function which returns a value. They
+begin with an expression (usually a variable), followed by a
+left-parenthesis, a comma-separated list of arguments, and a
+right-parenthesis. The argument list begins with the position
+arguments, which are Python expressions. These are followed by
+keyword arguments, which consist of the argument name, an equals
+sign, and an expression. In this example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Eileen&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">adv</span><span class="p">,</span> <span class="na">color</span><span class="o">=</span><span class="s2">&quot;#0f0&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>we call the <a class="reference internal" href="dialogue.html#Character" title="Character"><code class="xref py py-func docutils literal notranslate"><span class="pre">Character()</span></code></a> function. It's given one positional
+argument, the string &quot;Eileen&quot;. It's given two keyword argument:
+<code class="docutils literal notranslate"><span class="pre">type</span></code> with the value of the <code class="docutils literal notranslate"><span class="pre">adv</span></code> variable, and <code class="docutils literal notranslate"><span class="pre">color</span></code>
+with a string value of <code class="docutils literal notranslate"><span class="pre">&quot;#0f0&quot;</span></code>.</p>
+<p>Other objects than functions can be called, and are widely known as
+<em class="dfn">callables</em>.</p>
+</dd>
+</dl>
+<p>When reading this documentation, you might see a function signature
+like:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Sample">
+<span class="sig-name descname"><span class="pre">Sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">properties</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Sample" title="Link to this definition"></a></dt>
+<dd><p>A sample function that doesn't actually exist in Ren'Py, but
+is used only in documentation.</p>
+</dd></dl>
+
+<p>This function:</p>
+<ul class="simple">
+<li><p>Has the name &quot;Sample&quot;</p></li>
+<li><p>Has two positional parameters, a name and a delay. In a real
+function, the types of these parameters would be made clear
+from the documentation.</p></li>
+<li><p>Has one keyword argument, position, which has a default value
+of (0, 0).</p></li>
+</ul>
+<p>Since the functions ends with <code class="docutils literal notranslate"><span class="pre">**properties</span></code>, it means that it can
+take <a class="reference internal" href="style_properties.html"><span class="doc">style properties</span></a> as additional keyword
+arguments. Other special entries are <code class="docutils literal notranslate"><span class="pre">*args</span></code>, which means that it takes
+an arbitrary number of positional parameters, and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>, which means
+that it takes a wide range of keyword parameters which are usually explained
+in the function's documentation.</p>
+<p>When you see a <code class="docutils literal notranslate"><span class="pre">/</span></code> symbol on its own in a function signature, it means that
+the parameters before it are positional-only, and should not be passed by
+keyword. When you see a <code class="docutils literal notranslate"><span class="pre">*</span></code> symbol on its own, conversely, it means that the
+parameters <em>after</em> it are keyword-only, which means that they should only be
+passed using the <code class="docutils literal notranslate"><span class="pre">name=value</span></code> syntax.</p>
+<p>Python is a lot more powerful than we have space for in this manual. To learn
+Python in more detail, we recommend starting with the Python tutorial, which is
+available from <a class="reference external" href="https://docs.python.org/tutorial/index.html">python.org</a>.
+While a deep knowledge of Python is not necessary to work with Ren'Py, knowing
+the basics of Python statements and expressions is often helpful.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gui.html" class="btn btn-neutral float-left" title="GUI Customization Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="label.html" class="btn btn-neutral float-right" title="Labels &amp; Control Flow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transforms &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/transforms.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Transform Properties" href="transform_properties.html" />
+    <link rel="prev" title="Displayables" href="displayables.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Transforms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#applying-transforms-to-displayables-in-python">Applying transforms to displayables in Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#At"><code class="docutils literal notranslate"><span class="pre">At()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#built-in-transforms">Built-in Transforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#atl-animation-and-transformation-language">ATL - Animation and Transformation Language</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ren-py-script-statements">Ren'Py script statements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#transform-statement">Transform Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#image-statement-with-atl-block">Image Statement with ATL Block</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scene-and-show-statements-with-atl-block">Scene and Show Statements with ATL Block</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#atl-syntax-and-statements">ATL Syntax and Statements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#inline-contains-statement">Inline Contains Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#number-statement">Number Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#properties-statement">Properties Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interpolation-statement">Interpolation Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pass-statement">Pass Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repeat-statement">Repeat Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#block-statement">Block Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parallel-statement">Parallel Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#choice-statement">Choice Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#animation-statement">Animation Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#on-statement">On Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transform-expression-statement">Transform Expression Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#displayable-statement">Displayable Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#contains-block-statement">Contains Block Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#function-statement">Function Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#time-statement">Time Statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#event-statement">Event Statement</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#external-events">External events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#atl-curry-and-partial-parameter-passing">ATL curry and partial parameter passing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#special-child-parameter">Special Child Parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#warpers">Warpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#replacing-transforms">Replacing Transforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-transform-class">The Transform Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Transform"><code class="docutils literal notranslate"><span class="pre">Transform</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Transform.function"><code class="docutils literal notranslate"><span class="pre">Transform.function()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Transform.hide_request"><code class="docutils literal notranslate"><span class="pre">Transform.hide_request</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Transform.hide_response"><code class="docutils literal notranslate"><span class="pre">Transform.hide_response</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Transform.set_child"><code class="docutils literal notranslate"><span class="pre">Transform.set_child()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Transform.update"><code class="docutils literal notranslate"><span class="pre">Transform.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#callables-as-transforms">Callables as transforms</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Transforms</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/transforms.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="transforms">
+<span id="id1"></span><h1>Transforms<a class="headerlink" href="#transforms" title="Link to this heading"></a></h1>
+<p>Transforms are used in order to turn a <a class="reference internal" href="displayables.html"><span class="doc">displayable</span></a> into
+another displayable. There are several kinds of transforms, and various ways to
+create them. The built-in transforms are used to control where an image is
+placed on the screen, while user-defined transforms can cause more complex
+effects, like motion, zoom, rotation, up to complex color effects.</p>
+<p>Transforms can be applied to images by passing them to the <code class="docutils literal notranslate"><span class="pre">at</span></code> clause of the
+<a class="reference internal" href="displaying_images.html#show-statement"><span class="std std-ref">show</span></a> or scene statements. The following applies the
+<code class="docutils literal notranslate"><span class="pre">right</span></code> transform to the <code class="docutils literal notranslate"><span class="pre">eileen</span> <span class="pre">happy</span></code> image:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">right</span>
+</pre></div>
+</div>
+<p>Multiple transforms can be applied by separating them with commas. These
+transforms are applied from left-to-right.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">halfsize</span><span class="p">,</span> <span class="n">right</span>
+</pre></div>
+</div>
+<section id="applying-transforms-to-displayables-in-python">
+<h2>Applying transforms to displayables in Python<a class="headerlink" href="#applying-transforms-to-displayables-in-python" title="Link to this heading"></a></h2>
+<p>There are several ways to apply transform <code class="docutils literal notranslate"><span class="pre">t</span></code> to displayable <code class="docutils literal notranslate"><span class="pre">d</span></code> in Python:</p>
+<ol class="arabic simple">
+<li><p>The most universal and most recommended way is <code class="docutils literal notranslate"><span class="pre">At(d,</span> <span class="pre">t)</span></code> (see below). It
+works with all transforms.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d(child=t)</span></code> works with all <a class="reference internal" href="#atl"><span class="std std-ref">ATL transforms</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t(d)</span></code> works with all <a class="reference internal" href="#transforms-python"><span class="std std-ref">Python transforms</span></a>, as well
+as with ATL transforms that don't have any positional parameters.</p></li>
+</ol>
+<dl class="py function">
+<dt class="sig sig-object py" id="At">
+<span class="sig-name descname"><span class="pre">At</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#At" title="Link to this definition"></a></dt>
+<dd><p>Given a displayable <cite>d</cite>, applies each of the transforms in <cite>args</cite>
+to it. The transforms are applied in left-to-right order, so that
+the outermost transform is the rightmost argument.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">transform</span> <span class="n">birds_transform</span><span class="p">:</span>
+    <span class="na">xpos</span> <span class="o">-</span><span class="mi">200</span>
+    <span class="n">linear</span> <span class="mi">10</span> <span class="na">xpos</span> <span class="mi">800</span>
+    <span class="k">pause</span> <span class="mi">20</span>
+    <span class="k">repeat</span>
+
+<span class="k">image</span> <span class="n">birds</span> <span class="o">=</span> <span class="n">At</span><span class="p">(</span><span class="s2">&quot;birds.png&quot;</span><span class="p">,</span> <span class="n">birds_transform</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The resulting value may not be able to be displayed, if there remains
+parameters of the transform that have not been given a value, as can be the
+case with transforms defined using the <a class="reference internal" href="#transform-statement"><span class="std std-ref">Transform Statement</span></a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The resulting value may still be a transform that can be applied to yet
+another displayable (overriding its previous child) ; that's the case with
+ATL transforms which are still usable as transforms even when having their
+child set.</p>
+</div>
+</section>
+<section id="built-in-transforms">
+<h2>Built-in Transforms<a class="headerlink" href="#built-in-transforms" title="Link to this heading"></a></h2>
+<p>Ren'Py ships with a number of transforms defined by default. These transforms
+position things on the screen. Here's a depiction of where each built-in
+transform will position an image.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>             +-----------------------------------------------------------+
+             |topleft, reset               top                   topright|
+             |                                                           |
+             |                                                           |
+             |                                                           |
+             |                                                           |
+             |                          truecenter                       |
+             |                                                           |
+             |                                                           |
+             |                                                           |
+             |                                                           |
+offscreenleft|left                   center, default                right|offscreenright
+             +-----------------------------------------------------------+
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="#var-offscreenleft"><code class="xref std std-var docutils literal notranslate"><span class="pre">offscreenleft</span></code></a> and <a class="reference internal" href="#var-offscreenright"><code class="xref std std-var docutils literal notranslate"><span class="pre">offscreenright</span></code></a> transforms position images
+off the edges of the screen. These transforms can be used to move things off
+the screen (remember to hide them afterwards, to ensure that they do not consume
+resources).</p>
+<p>The transforms are:</p>
+<dl class="std var">
+<dt class="sig sig-object std" id="var-center">
+<span class="sig-name descname"><span class="pre">center</span></span><a class="headerlink" href="#var-center" title="Link to this definition"></a></dt>
+<dd><p>Centers horizontally, and aligns to the bottom of the screen.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-default">
+<span class="sig-name descname"><span class="pre">default</span></span><a class="headerlink" href="#var-default" title="Link to this definition"></a></dt>
+<dd><p>Centers horizontally, and aligns to the bottom of the screen. This can be
+redefined via <a class="reference internal" href="config.html#var-config.default_transform"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.default_transform</span></code></a> to change the default
+placement of images shown with the show or scene statements.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-left">
+<span class="sig-name descname"><span class="pre">left</span></span><a class="headerlink" href="#var-left" title="Link to this definition"></a></dt>
+<dd><p>Aligns to the bottom-left corner of the screen.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-offscreenleft">
+<span class="sig-name descname"><span class="pre">offscreenleft</span></span><a class="headerlink" href="#var-offscreenleft" title="Link to this definition"></a></dt>
+<dd><p>Places the displayable off the left side of the screen, aligned to the
+bottom of the screen.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-offscreenright">
+<span class="sig-name descname"><span class="pre">offscreenright</span></span><a class="headerlink" href="#var-offscreenright" title="Link to this definition"></a></dt>
+<dd><p>Places the displayable off the left side of the screen, aligned to the
+bottom of the screen.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><a class="headerlink" href="#var-reset" title="Link to this definition"></a></dt>
+<dd><p>Resets the transform. Places the displayable in the top-left corner of the
+screen, and also eliminates any zoom, rotation, or other effects.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-right">
+<span class="sig-name descname"><span class="pre">right</span></span><a class="headerlink" href="#var-right" title="Link to this definition"></a></dt>
+<dd><p>Aligns to the bottom-right corner of the screen.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-top">
+<span class="sig-name descname"><span class="pre">top</span></span><a class="headerlink" href="#var-top" title="Link to this definition"></a></dt>
+<dd><p>Centers horizontally, and aligns to the top of the screen.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-topleft">
+<span class="sig-name descname"><span class="pre">topleft</span></span><a class="headerlink" href="#var-topleft" title="Link to this definition"></a></dt>
+<dd><p>Aligns to the top-left corner of the screen.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-topright">
+<span class="sig-name descname"><span class="pre">topright</span></span><a class="headerlink" href="#var-topright" title="Link to this definition"></a></dt>
+<dd><p>Aligns to the top-right corner of the screen.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-truecenter">
+<span class="sig-name descname"><span class="pre">truecenter</span></span><a class="headerlink" href="#var-truecenter" title="Link to this definition"></a></dt>
+<dd><p>Centers both horizontally and vertically.</p>
+</dd></dl>
+
+</section>
+<section id="atl-animation-and-transformation-language">
+<span id="atl"></span><h2>ATL - Animation and Transformation Language<a class="headerlink" href="#atl-animation-and-transformation-language" title="Link to this heading"></a></h2>
+<p>The Animation and Transformation Language (ATL) is a high-level language which
+can create animations, move displayables across the screen, set their position,
+apply transformations, and more. These can be changed over time, and in response
+to events.</p>
+<p>ATL transform objects, which are created using the <a class="reference internal" href="#transform-statement"><span class="std std-ref">Transform Statement</span></a>
+down below, are displayables and can be used as such (even though they will be
+transparent when their child displayable is not set) : they can be passed to a
+screen's <a class="reference internal" href="screens.html#sl-add"><span class="std std-ref">Add</span></a> element, or to a <a class="reference internal" href="displaying_images.html#show-expression-statement"><span class="std std-ref">Show expression</span></a>
+statement, or to the <a class="reference internal" href="statement_equivalents.html#renpy.show" title="renpy.show"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.show()</span></code></a> function.</p>
+<section id="ren-py-script-statements">
+<h3>Ren'Py script statements<a class="headerlink" href="#ren-py-script-statements" title="Link to this heading"></a></h3>
+<p>There are three Ren'Py script statements which can include ATL code.</p>
+<section id="transform-statement">
+<span id="id2"></span><h4>Transform Statement<a class="headerlink" href="#transform-statement" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">transform</span></code> statement creates a new transform. The syntax is:</p>
+<pre>
+<strong id="grammar-token-script-atl_transform">atl_transform</strong> ::=  &quot;transform&quot; <code class="xref docutils literal notranslate"><span class="pre">qualname</span></code> ( &quot;(&quot; <code class="xref docutils literal notranslate"><span class="pre">parameters</span></code> &quot;)&quot; )? &quot;:&quot;
+                      <code class="xref docutils literal notranslate"><span class="pre">atl_block</span></code>
+</pre>
+<p>The transform statement is run at <a class="reference internal" href="lifecycle.html#init-phase"><span class="std std-ref">init time</span></a>. The transform
+may take a list of parameters, which works much the same way as a Python
+function definition, except that several kinds of parameters are currently
+forbidden, though they may be allowed in the future:</p>
+<ol class="arabic simple">
+<li><p>Positional-only parameters</p></li>
+<li><p>Keyword-only parameters without a default value</p></li>
+<li><p>Variadic positional parameters (<code class="docutils literal notranslate"><span class="pre">*args</span></code>)</p></li>
+<li><p>Variadic keyword parameters (<code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>)</p></li>
+</ol>
+<p>The created object cannot be used as a transform until and unless all its
+parameters have been given a value.</p>
+<p><em>See also :</em> <a class="reference internal" href="#atl-partial"><span class="std std-ref">ATL curry and partial parameter passing</span></a></p>
+<p><cite>qualname</cite>, the name of the transform, must be a set of dot-separated Python
+identifiers. The transform created by the ATL block will be bound to that name,
+within the provided <a class="reference internal" href="python.html#named-stores"><span class="std std-ref">store</span></a> if one was provided.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">transform</span> <span class="n">left_to_right</span><span class="p">:</span>
+    <span class="na">xalign</span> <span class="mf">0.</span>
+    <span class="n">linear</span> <span class="mi">2</span> <span class="na">xalign</span> <span class="mf">1.</span>
+    <span class="k">repeat</span>
+
+<span class="k">transform</span> <span class="n">ariana</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+    <span class="na">xalign</span> <span class="mf">.3</span>
+
+<span class="k">transform</span> <span class="n">animated_ariana_disp</span><span class="p">:</span>
+    <span class="s2">&quot;ariana&quot;</span>
+    <span class="k">pause</span> <span class="mf">1.</span>
+    <span class="s2">&quot;ariana_reverse&quot;</span>
+    <span class="k">pause</span> <span class="mf">1.</span>
+    <span class="k">repeat</span>
+</pre></div>
+</div>
+<p>The created object is both a transform and a displayable, but as opposed to the
+<code class="docutils literal notranslate"><span class="pre">image</span></code> statement, it is created as a variable (or a constant), rather than in
+the namespace of <a class="reference internal" href="displaying_images.html#defining-images"><span class="std std-ref">images</span></a>.</p>
+</section>
+<section id="image-statement-with-atl-block">
+<span id="atl-image-statement"></span><h4>Image Statement with ATL Block<a class="headerlink" href="#image-statement-with-atl-block" title="Link to this heading"></a></h4>
+<p>The second way to include ATL code in a script is as part of an <a class="reference internal" href="displaying_images.html#image-statement"><span class="std std-ref">image
+statement</span></a>. As its inline counterpart, it binds an image name
+(which may contain spaces) to the given transform. As there is no way to supply
+with parameters, it's only useful if the transform defines an animation. The
+syntax is:</p>
+<pre>
+<strong id="grammar-token-script-atl_image">atl_image</strong> ::=  &quot;image&quot; <code class="xref docutils literal notranslate"><span class="pre">image_name</span></code> &quot;:&quot;
+                  <code class="xref docutils literal notranslate"><span class="pre">atl_block</span></code>
+</pre>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">animated_ariana_img</span><span class="p">:</span>
+    <span class="s2">&quot;ariana&quot;</span>
+    <span class="k">pause</span> <span class="mf">1.</span>
+    <span class="s2">&quot;ariana_reverse&quot;</span>
+    <span class="k">pause</span> <span class="mf">1.</span>
+    <span class="k">repeat</span>
+</pre></div>
+</div>
+</section>
+<section id="scene-and-show-statements-with-atl-block">
+<h4>Scene and Show Statements with ATL Block<a class="headerlink" href="#scene-and-show-statements-with-atl-block" title="Link to this heading"></a></h4>
+<p>The final way to use ATL is as part of a <a class="reference internal" href="displaying_images.html#show-statement"><span class="std std-ref">show</span></a> or scene
+statement. This wraps the image that's being shown inside an ATL transformation
+which is created on the fly and applied to the image. The syntax is:</p>
+<pre>
+<strong id="grammar-token-script-atl_show">atl_show </strong> ::=  <code class="xref docutils literal notranslate"><span class="pre">stmt_show</span></code> &quot;:&quot;
+                  <code class="xref docutils literal notranslate"><span class="pre">atl_block</span></code>
+<strong id="grammar-token-script-atl_scene">atl_scene</strong> ::=  <code class="xref docutils literal notranslate"><span class="pre">stmt_scene</span></code> &quot;:&quot;
+                  <code class="xref docutils literal notranslate"><span class="pre">atl_block</span></code>
+</pre>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span><span class="p">:</span>
+    <span class="na">xalign</span> <span class="mf">1.</span>
+
+<span class="k">scene</span> <span class="n">bg</span> <span class="n">washington</span><span class="p">:</span>
+    <span class="na">zoom</span> <span class="mf">2.</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="atl-syntax-and-statements">
+<h3>ATL Syntax and Statements<a class="headerlink" href="#atl-syntax-and-statements" title="Link to this heading"></a></h3>
+<p>ATL statements may be inline, or make up a block within the ATL block in which
+it is written. With some exceptions described in the relevant statements, the
+statements in an ATL block are executed in order, from top to bottom.</p>
+<p>If an ATL statement requires an expression to be evaluated, such evaluation
+occurs when the transform is first executed (that is when using a <code class="docutils literal notranslate"><span class="pre">show</span></code>
+statement, or displaying the transform as part of a screen), and not when the
+particular ATL statement is executed.</p>
+<p>The following are the ATL statements.</p>
+<section id="inline-contains-statement">
+<span id="inline-contains-atl-statement"></span><h4>Inline Contains Statement<a class="headerlink" href="#inline-contains-statement" title="Link to this heading"></a></h4>
+<p>The inline contains statement takes a single expression evaluating to a
+<a class="reference internal" href="displayables.html"><span class="doc">displayable</span></a>.</p>
+<pre>
+<strong id="grammar-token-atl-atl_contains">atl_contains</strong> ::=  &quot;contains&quot; <code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code>
+</pre>
+<p>This statement sets (or replaces) the child of the current ATL transform to the
+value of the expression, making it useful for animation.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">transform</span> <span class="n">an_animation</span><span class="p">:</span>
+    <span class="s2">&quot;1.png&quot;</span>
+    <span class="k">pause</span> <span class="mi">2</span>
+    <span class="s2">&quot;2.png&quot;</span>
+    <span class="k">pause</span> <span class="mi">2</span>
+    <span class="k">repeat</span>
+
+<span class="k">image</span> <span class="n">move_an_animation</span><span class="p">:</span>
+    <span class="k">contains</span> <span class="n">an_animation</span>
+
+    <span class="c1"># If we didn&#39;t use contains, we&#39;d still be looping</span>
+    <span class="c1"># and would never reach here.</span>
+    <span class="na">xalign</span> <span class="mf">0.0</span>
+    <span class="n">linear</span> <span class="mf">1.0</span> <span class="na">yalign</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="#displayable-atl-statement"><span class="std std-ref">Displayable Statement</span></a> is less explicit and bears ambiguity with
+the transform expression statement, but it allows for a
+<a class="reference internal" href="transitions.html"><span class="doc">transition</span></a> to be used for replacing the child. This
+statement can be particularly useful when an ATL transform wishes to contain,
+rather than include, a second ATL transform.</p>
+</section>
+<section id="number-statement">
+<h4>Number Statement<a class="headerlink" href="#number-statement" title="Link to this heading"></a></h4>
+<p>The number statement consists of a simple expression evaluating to an integer or
+floating-point number. It can optionally be preceded by the keyword &quot;pause&quot;.</p>
+<pre>
+<strong id="grammar-token-atl-atl_number">atl_number</strong> ::=  &quot;pause&quot;? <code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code>
+</pre>
+<p>It is used as a number of seconds to pause execution for.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">atl</span> <span class="n">example</span><span class="p">:</span>
+    <span class="c1"># Displays logo_base.png</span>
+    <span class="k">contains</span> <span class="s2">&quot;logo_base.png&quot;</span>
+
+    <span class="c1"># Pause for 1.0 seconds.</span>
+    <span class="k">pause</span> <span class="mf">1.0</span>
+
+    <span class="c1"># Show logo_bw.png, with a dissolve.</span>
+    <span class="s2">&quot;logo_bw.png&quot;</span> <span class="k">with</span> <span class="n">Dissolve</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="na">alpha</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Pause for 3 seconds</span>
+    <span class="mi">3</span>
+
+    <span class="k">repeat</span>
+</pre></div>
+</div>
+</section>
+<section id="properties-statement">
+<h4>Properties Statement<a class="headerlink" href="#properties-statement" title="Link to this heading"></a></h4>
+<p>This statement sets one or more transform properties to a new value.</p>
+<pre>
+<strong id="grammar-token-atl-atl_properties">atl_properties</strong> ::=  <a class="reference internal" href="#grammar-token-atl-atl_property"><code class="xref docutils literal notranslate"><span class="pre">atl_property</span></code></a>+
+</pre>
+<pre>
+<strong id="grammar-token-atl-atl_property">atl_property</strong> ::=  <code class="xref docutils literal notranslate"><span class="pre">transform_property</span></code> <code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code>
+</pre>
+<p>The statement first gives a series (at least one) of property names, each
+followed by the new value to set it to. See <a class="reference internal" href="transform_properties.html#id1"><span class="std std-ref">List of Transform Properties</span></a> for a
+list of transform properties, their meaning and the values they take.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">transform</span> <span class="n">rightoid</span><span class="p">:</span>
+    <span class="na">xalign</span> <span class="mf">.9</span>
+
+<span class="k">transform</span> <span class="n">ariana</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+    <span class="na">xanchor</span> <span class="mf">.3</span> <span class="na">xpos</span> <span class="mi">100</span>
+</pre></div>
+</div>
+</section>
+<section id="interpolation-statement">
+<h4>Interpolation Statement<a class="headerlink" href="#interpolation-statement" title="Link to this heading"></a></h4>
+<p>The interpolation statement is the main way of getting smoothly animated
+transformations.</p>
+<pre>
+<strong id="grammar-token-atl-atl_interp">atl_interp</strong> ::=  ((<code class="xref docutils literal notranslate"><span class="pre">warper</span></code> <code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code>) | (&quot;warp&quot; <code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code> <code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code>)) (<a class="reference internal" href="#grammar-token-atl-atl_interp_target"><code class="xref docutils literal notranslate"><span class="pre">atl_interp_target</span></code></a>+ | (&quot;:&quot;
+                   <a class="reference internal" href="#grammar-token-atl-atl_interp_target"><code class="xref docutils literal notranslate"><span class="pre">atl_interp_target</span></code></a>+ ))
+</pre>
+<pre>
+<strong id="grammar-token-atl-atl_interp_target">atl_interp_target</strong> ::=  (<a class="reference internal" href="#grammar-token-atl-atl_property"><code class="xref docutils literal notranslate"><span class="pre">atl_property</span></code></a>+ (&quot;knot&quot; <code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code>)* )
+                       | <a class="reference internal" href="#grammar-token-atl-atl_transform_expression"><code class="xref docutils literal notranslate"><span class="pre">atl_transform_expression</span></code></a>
+                       | &quot;clockwise&quot;
+                       | &quot;counterclockwise&quot;
+                       | (&quot;circles&quot; <code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code>)
+</pre>
+<p>Some sample interpolations:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">logo</span> <span class="n">base</span><span class="p">:</span>
+    <span class="c1"># Show the logo at the upper right side of the screen.</span>
+    <span class="na">xalign</span> <span class="mf">1.0</span> <span class="na">yalign</span> <span class="mf">0.0</span>
+
+    <span class="c1"># Take 1.0 seconds to move things back to the left.</span>
+    <span class="n">linear</span> <span class="mf">1.0</span> <span class="na">xalign</span> <span class="mf">0.0</span>
+
+    <span class="c1"># Take 1.0 seconds to move things to the location specified in the</span>
+    <span class="c1"># truecenter transform. Use the ease warper to do this.</span>
+    <span class="n">ease</span> <span class="mf">1.0</span> <span class="n">truecenter</span>
+
+    <span class="c1"># Set the location to circle around.</span>
+    <span class="na">anchor</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="c1"># Use circular motion to bring us to spiral out to the top of</span>
+    <span class="c1"># the screen. Take 2 seconds to do so.</span>
+    <span class="n">linear</span> <span class="mf">2.0</span> <span class="na">yalign</span> <span class="mf">0.0</span> <span class="k">clockwise</span> <span class="k">circles</span> <span class="mi">3</span>
+
+    <span class="c1"># Use a spline motion to move us around the screen.</span>
+    <span class="n">linear</span> <span class="mf">2.0</span> <span class="na">align</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span> <span class="k">knot</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">.33</span><span class="p">)</span> <span class="k">knot</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">.66</span><span class="p">)</span>
+
+    <span class="c1"># Changes xalign and yalign at the same time.</span>
+    <span class="n">linear</span> <span class="mf">2.0</span> <span class="na">xalign</span> <span class="mf">1.0</span> <span class="na">yalign</span> <span class="mf">1.0</span>
+
+    <span class="c1"># The same thing, using a block.</span>
+    <span class="n">linear</span> <span class="mf">2.0</span><span class="p">:</span>
+        <span class="na">xalign</span> <span class="mf">1.0</span>
+        <span class="na">yalign</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+<p>The first part of the interpolation is used to select a function that time-warps
+the interpolation. That means, a function that maps linear time to non-linear
+time, see <a class="reference internal" href="#warpers"><span class="std std-ref">Warpers</span></a> for more information about that. Selecting a warper can
+either be done by giving the name of a registered warper, or by giving the
+keyword &quot;warp&quot; followed by an expression giving a warping function.</p>
+<p>In either case, it's followed by a number giving the number of seconds the interpolation should take.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">transform</span> <span class="n">builtin_warper</span><span class="p">:</span>
+    <span class="na">xpos</span> <span class="mi">0</span>
+    <span class="n">ease</span> <span class="mi">5</span> <span class="na">xpos</span> <span class="mi">520</span>
+
+<span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">my_warper</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">t</span><span class="o">**</span><span class="mf">4.4</span>
+
+<span class="k">define</span> <span class="n">my_warpers</span> <span class="o">=</span> <span class="p">[</span><span class="n">my_warper</span><span class="p">]</span>
+
+<span class="k">transform</span> <span class="n">accessed_as_function</span><span class="p">:</span>
+    <span class="na">xpos</span> <span class="mi">0</span>
+    <span class="n">warp</span> <span class="n">my_warpers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="mi">5</span> <span class="na">xpos</span> <span class="mi">520</span>
+    <span class="n">warp</span> <span class="n">my_warper</span> <span class="mi">3</span> <span class="na">xpos</span> <span class="mi">100</span>
+</pre></div>
+</div>
+<p>The interpolation will persist for the given amount of time, and at least one
+frame.</p>
+<p>When <a class="reference internal" href="transform_properties.html"><span class="doc">Transform Properties</span></a> are given, the value each is given is the value
+it will be set to at the end of the interpolation statement. This can be tweaked
+in several ways:</p>
+<ul class="simple">
+<li><p>If the value is followed by one or more knots, then spline motion is used. The
+starting point is the value of the property at the start of the interpolation,
+the end point is the given value, and the knots are used to control the
+spline. A quadratic curve is used for a single knot, Bezier is used when there
+are two and Catmull-Rom is used for three or more knots. In the former two
+cases, the knot or knots are simply control nodes. For Catmull-Rom, the first
+and last knot are control nodes (often outside the displayed path) and the
+other knots are points the path passes through.</p></li>
+<li><p>If the interpolation statement contains a &quot;clockwise&quot; or &quot;counterclockwise&quot;
+clause, circular motion is used. In that case, Ren'Py will compare the start
+and end locations (which are set by <a class="reference internal" href="transform_properties.html#transform-property-pos"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">pos</span></code></a>, <a class="reference internal" href="transform_properties.html#transform-property-align"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">align</span></code></a>,
+<a class="reference internal" href="transform_properties.html#transform-property-angle"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">angle</span></code></a> and <a class="reference internal" href="transform_properties.html#transform-property-radius"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">radius</span></code></a>, ...) and figure out the polar coordinate
+center (which is <a class="reference internal" href="transform_properties.html#transform-property-around"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">around</span></code></a>). Ren'Py will then compute the number of
+degrees it will take to go from the start angle to the end angle, in the
+specified direction of rotation. If the circles clause is given, Ren'Py will
+ensure that the appropriate number of circles will be made.</p></li>
+<li><p>Otherwise, the value is linearly interpolated between the start and end
+locations.</p></li>
+</ul>
+<p>It is also possible to interpolate a <a class="reference internal" href="#transform-expression-atl-statement"><span class="std std-ref">Transform Expression Statement</span></a>,
+which should in this case be an ATL transform containing only a single
+properties statement. The properties from the transform will be processed as if
+they were written directly in this interpolation.</p>
+<p>A warper may be followed by a colon (:). In that case, it may be followed by one
+or more lines, in an indented block, containing the clauses described above.
+This lets you break an interpolation of many different things up into several
+lines.</p>
+</section>
+<section id="pass-statement">
+<h4>Pass Statement<a class="headerlink" href="#pass-statement" title="Link to this heading"></a></h4>
+<pre>
+<strong id="grammar-token-atl-atl_pass">atl_pass</strong> ::=  &quot;pass&quot;
+</pre>
+<p>The <code class="docutils literal notranslate"><span class="pre">pass</span></code> statement is a simple statement that causes nothing to happen : a
+no-op. This can be used when there's a desire to separate statements, like when
+two sets of choice statements (see below) would otherwise be back-to-back. It
+can also be useful when the syntax requires a block to be created but you need
+it to be empty, for example to make one of the choice blocks not do anything.</p>
+</section>
+<section id="repeat-statement">
+<h4>Repeat Statement<a class="headerlink" href="#repeat-statement" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">repeat</span></code> statement is a simple statement that causes the block containing
+it to resume execution from the beginning.</p>
+<pre>
+<strong id="grammar-token-atl-atl_repeat">atl_repeat</strong> ::=  &quot;repeat&quot; (<code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code>)?
+</pre>
+<p>If the expression is present, then it is evaluated to give an integer number of
+times the block will execute. (So a block ending with <code class="docutils literal notranslate"><span class="pre">repeat</span> <span class="pre">2</span></code> will execute
+at most twice in total, and <code class="docutils literal notranslate"><span class="pre">repeat</span> <span class="pre">1</span></code> does not repeat.)</p>
+<p>The repeat statement must be the last statement in a block:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">logo</span> <span class="n">base</span><span class="p">:</span>
+    <span class="na">xalign</span> <span class="mf">0.0</span>
+    <span class="n">linear</span> <span class="mf">1.0</span> <span class="na">xalign</span> <span class="mf">1.0</span>
+    <span class="n">linear</span> <span class="mf">1.0</span> <span class="na">xalign</span> <span class="mf">0.0</span>
+    <span class="k">repeat</span>
+</pre></div>
+</div>
+</section>
+<section id="block-statement">
+<h4>Block Statement<a class="headerlink" href="#block-statement" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">block</span></code> statement simply contains a block of ATL statements.</p>
+<pre>
+<strong id="grammar-token-atl-atl_block_stmt">atl_block_stmt</strong> ::=  &quot;block&quot; &quot;:&quot;
+                         <code class="xref docutils literal notranslate"><span class="pre">atl_block</span></code>
+</pre>
+<p>This can be used to group statements that will repeat:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">logo</span> <span class="n">base</span><span class="p">:</span>
+    <span class="na">alpha</span> <span class="mf">0.0</span> <span class="na">xalign</span> <span class="mf">0.0</span> <span class="na">yalign</span> <span class="mf">0.0</span>
+    <span class="n">linear</span> <span class="mf">1.0</span> <span class="na">alpha</span> <span class="mf">1.0</span>
+
+    <span class="k">block</span><span class="p">:</span>
+        <span class="n">linear</span> <span class="mf">1.0</span> <span class="na">xalign</span> <span class="mf">1.0</span>
+        <span class="n">linear</span> <span class="mf">1.0</span> <span class="na">xalign</span> <span class="mf">0.0</span>
+        <span class="k">repeat</span>
+</pre></div>
+</div>
+</section>
+<section id="parallel-statement">
+<h4>Parallel Statement<a class="headerlink" href="#parallel-statement" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">parallel</span></code> statement defines a set of ATL blocks to execute in parallel.</p>
+<pre>
+<strong id="grammar-token-atl-atl_parallel">atl_parallel</strong> ::=  (&quot;parallel&quot; &quot;:&quot;
+                     <code class="xref docutils literal notranslate"><span class="pre">atl_block</span></code>)+
+</pre>
+<p>Parallel statements are greedily grouped into a parallel set when more than
+one parallel block appears consecutively in a block. The set of all parallel
+blocks are then executed simultaneously. The parallel statement terminates when
+the last block terminates.</p>
+<p>The blocks within a set should be independent of each other, and manipulate
+different <a class="reference internal" href="transform_properties.html"><span class="doc">Transform Properties</span></a>. When two blocks change the same property,
+the result is undefined.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">logo</span> <span class="n">base</span><span class="p">:</span>
+    <span class="k">parallel</span><span class="p">:</span>
+        <span class="na">xalign</span> <span class="mf">0.0</span>
+        <span class="n">linear</span> <span class="mf">1.3</span> <span class="na">xalign</span> <span class="mf">1.0</span>
+        <span class="n">linear</span> <span class="mf">1.3</span> <span class="na">xalign</span> <span class="mf">0.0</span>
+        <span class="k">repeat</span>
+    <span class="k">parallel</span><span class="p">:</span>
+        <span class="na">yalign</span> <span class="mf">0.0</span>
+        <span class="n">linear</span> <span class="mf">1.6</span> <span class="na">yalign</span> <span class="mf">1.0</span>
+        <span class="n">linear</span> <span class="mf">1.6</span> <span class="na">yalign</span> <span class="mf">0.0</span>
+        <span class="k">repeat</span>
+</pre></div>
+</div>
+</section>
+<section id="choice-statement">
+<h4>Choice Statement<a class="headerlink" href="#choice-statement" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">choice</span></code> statement defines one of a set of
+potential choices. Ren'Py will pick one of the choices in the set, and
+execute the ATL block associated with it, and then continue execution after
+the last choice in the choice set.</p>
+<pre>
+<strong id="grammar-token-atl-atl_choice">atl_choice</strong> ::=  (&quot;choice&quot; (<code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code>)? &quot;:&quot;
+                    <code class="xref docutils literal notranslate"><span class="pre">atl_block</span></code>)+
+</pre>
+<p>Choice statements are greedily grouped into a choice set when more than one
+choice statement appears consecutively in a block. If the <cite>simple_expression</cite>
+is supplied, it is a floating-point weight given to that block, otherwise 1.0
+is assumed.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">eileen</span> <span class="n">random</span><span class="p">:</span>
+    <span class="k">choice</span><span class="p">:</span>
+        <span class="s2">&quot;eileen happy&quot;</span>
+    <span class="k">choice</span><span class="p">:</span>
+        <span class="s2">&quot;eileen vhappy&quot;</span>
+    <span class="k">choice</span><span class="p">:</span>
+        <span class="s2">&quot;eileen concerned&quot;</span>
+
+    <span class="k">pause</span> <span class="mf">1.0</span>
+    <span class="k">repeat</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">pass</span></code> statement can be useful in order to break several sets of choice
+blocks into several choice statements, or to make an empty choice block.</p>
+</section>
+<section id="animation-statement">
+<h4>Animation Statement<a class="headerlink" href="#animation-statement" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">animation</span></code> statement must be the first statement in an ATL block, and
+tells Ren'Py that the block uses the animation timebase.</p>
+<pre>
+<strong id="grammar-token-atl-atl_animation">atl_animation</strong> ::=  &quot;animation&quot;
+</pre>
+<p>As compared to the normal showing timebase, the animation timebase starts when
+an image or screen with the same tag is shown. This is generally used to have
+one image replaced by a second one at the same apparent time. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="n">moving</span><span class="p">:</span>
+    <span class="k">animation</span>
+    <span class="s2">&quot;eileen happy&quot;</span>
+    <span class="na">xalign</span> <span class="mf">0.0</span>
+    <span class="n">linear</span> <span class="mf">5.0</span> <span class="na">xalign</span> <span class="mf">1.0</span>
+    <span class="k">repeat</span>
+
+<span class="k">image</span> <span class="n">eileen</span> <span class="n">vhappy</span> <span class="n">moving</span><span class="p">:</span>
+    <span class="k">animation</span>
+    <span class="s2">&quot;eileen vhappy&quot;</span>
+    <span class="na">xalign</span> <span class="mf">0.0</span>
+    <span class="n">linear</span> <span class="mf">5.0</span> <span class="na">xalign</span> <span class="mf">1.0</span>
+    <span class="k">repeat</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="n">moving</span>
+    <span class="k">pause</span>
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">vhappy</span> <span class="n">moving</span>
+    <span class="k">pause</span>
+</pre></div>
+</div>
+<p>This example will cause Eileen to change expression when the first pause
+finishes, but will not cause her position to change, as both animations share
+the same animation time, and hence will place her sprite in the same place.
+Without the animation statement, the position would reset when the player
+clicks.</p>
+</section>
+<section id="on-statement">
+<h4>On Statement<a class="headerlink" href="#on-statement" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">on</span></code> statement defines an event handler.</p>
+<pre>
+<strong id="grammar-token-atl-atl_on">atl_on</strong> ::=  &quot;on&quot; <code class="xref docutils literal notranslate"><span class="pre">name</span></code> (&quot;,&quot; <code class="xref docutils literal notranslate"><span class="pre">name</span></code>)* &quot;:&quot;
+                 <code class="xref docutils literal notranslate"><span class="pre">atl_block</span></code>
+</pre>
+<p><code class="docutils literal notranslate"><span class="pre">on</span></code> blocks are greedily grouped into a single statement. On statement can
+handle a single event name, or a comma-separated list of event names.</p>
+<p>This statement is used to handle events. When an event is handled, handling of
+any other event ends and handing of the new event immediately starts. When an
+event handler ends without another event occurring, the <code class="docutils literal notranslate"><span class="pre">default</span></code> event is
+produced (unless the <code class="docutils literal notranslate"><span class="pre">default</span></code> event is already being handled).</p>
+<p>Execution of the on statement will never naturally end. (But it can be ended
+by the time statement, or an enclosing event handler.)</p>
+<p>See the event statement for a way to produce arbitrary events, and see
+<a class="reference internal" href="#external-atl-events"><span class="std std-ref">External events</span></a> for a list of naturally-produced events.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">logo</span> <span class="n">base</span><span class="p">:</span>
+    <span class="k">on</span> <span class="k">show</span><span class="p">:</span>
+        <span class="na">alpha</span> <span class="mf">0.0</span>
+        <span class="n">linear</span> <span class="mf">.5</span> <span class="na">alpha</span> <span class="mf">1.0</span>
+    <span class="k">on</span> <span class="k">hide</span><span class="p">:</span>
+        <span class="n">linear</span> <span class="mf">.5</span> <span class="na">alpha</span> <span class="mf">0.0</span>
+
+<span class="k">transform</span> <span class="n">pulse_button</span><span class="p">:</span>
+    <span class="k">on</span> <span class="na">hover</span><span class="p">,</span> <span class="na">idle</span><span class="p">:</span>
+        <span class="n">linear</span> <span class="mf">.25</span> <span class="na">zoom</span> <span class="mf">1.25</span>
+        <span class="n">linear</span> <span class="mf">.25</span> <span class="na">zoom</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+</section>
+<section id="transform-expression-statement">
+<span id="transform-expression-atl-statement"></span><h4>Transform Expression Statement<a class="headerlink" href="#transform-expression-statement" title="Link to this heading"></a></h4>
+<p>This statement includes another ATL transform as part of the current ATL block.</p>
+<pre>
+<strong id="grammar-token-atl-atl_transform_expression">atl_transform_expression</strong> ::=  <code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code>
+</pre>
+<p>This only applies if the ATL transform has <strong>not</strong> been supplied a child (see
+the top of the page for how to do that), otherwise it will be interpreted as a
+<a class="reference internal" href="#displayable-atl-statement"><span class="std std-ref">Displayable Statement</span></a>. The contents of the provided ATL transform
+are included at the location of this statement.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">transform</span> <span class="n">move_right</span><span class="p">:</span>
+    <span class="n">linear</span> <span class="mf">1.0</span> <span class="na">xalign</span> <span class="mf">1.0</span>
+
+<span class="k">image</span> <span class="n">atl</span> <span class="n">example</span><span class="p">:</span>
+    <span class="c1"># Display logo_base.png</span>
+    <span class="s2">&quot;logo_base.png&quot;</span>
+
+    <span class="c1"># Run the move_right transform.</span>
+    <span class="n">move_right</span>
+</pre></div>
+</div>
+</section>
+<section id="displayable-statement">
+<span id="displayable-atl-statement"></span><h4>Displayable Statement<a class="headerlink" href="#displayable-statement" title="Link to this heading"></a></h4>
+<p>The displayable statement consists of a simple Python expression evaluating to
+a <a class="reference internal" href="displayables.html"><span class="doc">displayable</span></a>, optionally followed by a with clause
+containing a second simple expression.</p>
+<pre>
+<strong id="grammar-token-atl-atl_displayable">atl_displayable</strong> ::=  <code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code> (&quot;with&quot; <code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code>)?
+</pre>
+<p>It is used to set or replace the child of the transform when the statement
+executes.</p>
+<p>If a <code class="docutils literal notranslate"><span class="pre">with</span></code> clause is present, the second expression is evaluated as a
+<a class="reference internal" href="transitions.html"><span class="doc">transition</span></a>, and the transition is applied between the old
+child and the new child. Be careful in that not all transitions will work in
+this situation, notably <a class="reference internal" href="transitions.html#dict-transitions"><span class="std std-ref">Dict Transitions</span></a> and <a class="reference internal" href="transitions.html#var-move"><code class="xref std std-var docutils literal notranslate"><span class="pre">move-</span></code></a> and
+<a class="reference internal" href="transitions.html#var-ease"><code class="xref std std-var docutils literal notranslate"><span class="pre">ease-</span></code></a> transitions.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">atl</span> <span class="n">example</span><span class="p">:</span>
+    <span class="c1"># Displays logo_base.png</span>
+    <span class="s2">&quot;logo_base.png&quot;</span>
+
+    <span class="c1"># Pause for 1.0 seconds.</span>
+    <span class="mf">1.0</span>
+
+    <span class="c1"># Show logo_bw.png, with a dissolve.</span>
+    <span class="s2">&quot;logo_bw.png&quot;</span> <span class="k">with</span> <span class="n">Dissolve</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="na">alpha</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If passing any child-less transform is pointless as it will make the
+transform transparent and ineffective, passing child-less ATL transforms may
+be interpreted as a <a class="reference internal" href="#transform-expression-atl-statement"><span class="std std-ref">Transform Expression Statement</span></a>, which will
+yield different results.</p>
+</div>
+<p>If the expression evaluates to an ATL transform <strong>with</strong> a child, the execution
+of this ATL block will only continue after the includee's ATL code runs.</p>
+</section>
+<section id="contains-block-statement">
+<h4>Contains Block Statement<a class="headerlink" href="#contains-block-statement" title="Link to this heading"></a></h4>
+<p>The contains block, like its
+<a class="reference internal" href="#inline-contains-atl-statement"><span class="std std-ref">inline counterpart</span></a>, sets the child of the
+transform but in a different way.</p>
+<pre>
+<strong id="grammar-token-atl-atl_counts">atl_counts</strong> ::=  &quot;contains&quot; &quot;:&quot;
+                   <code class="xref docutils literal notranslate"><span class="pre">atl_block</span></code>
+</pre>
+<p>One or more contains blocks will be greedily grouped together inside a single
+contains statement, wrapped inside a <a class="reference internal" href="displayables.html#Fixed" title="Fixed"><code class="xref py py-func docutils literal notranslate"><span class="pre">Fixed()</span></code></a>, and set as the child of the
+transform.</p>
+<p>Each block should define a displayable to use, otherwise an error will occur.
+The contains statement executes instantaneously, without waiting for the
+children to complete.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">test</span> <span class="n">double</span><span class="p">:</span>
+    <span class="k">contains</span><span class="p">:</span>
+        <span class="s2">&quot;logo.png&quot;</span>
+        <span class="na">xalign</span> <span class="mf">0.0</span>
+        <span class="n">linear</span> <span class="mf">1.0</span> <span class="na">xalign</span> <span class="mf">1.0</span>
+        <span class="k">repeat</span>
+
+    <span class="k">contains</span><span class="p">:</span>
+        <span class="s2">&quot;logo.png&quot;</span>
+        <span class="na">xalign</span> <span class="mf">1.0</span>
+        <span class="n">linear</span> <span class="mf">1.0</span> <span class="na">xalign</span> <span class="mf">0.0</span>
+        <span class="k">repeat</span>
+</pre></div>
+</div>
+</section>
+<section id="function-statement">
+<h4>Function Statement<a class="headerlink" href="#function-statement" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">function</span></code> statement allows ATL to use Python code.</p>
+<pre>
+<strong id="grammar-token-atl-atl_function">atl_function</strong> ::=  &quot;function&quot; <code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code>
+</pre>
+<p>The functions have the same signature as those used with <a class="reference internal" href="#Transform" title="Transform"><code class="xref py py-func docutils literal notranslate"><span class="pre">Transform()</span></code></a>:</p>
+<ul class="simple">
+<li><p>The first argument is a transform object. <a class="reference internal" href="transform_properties.html"><span class="doc">Transform Properties</span></a> can be
+set as attributes on this object.</p></li>
+<li><p>The second argument is the shown timebase, the number of seconds since the
+function began executing.</p></li>
+<li><p>The third argument is the animation timebase, which is the number of
+seconds something with the same tag has been on the screen.</p></li>
+<li><p>If the function returns a number, it will be called again after that number of
+seconds has elapsed. (0 seconds means to call the function as soon as
+possible.) If the function returns None, control will pass to the next ATL
+statement.</p></li>
+</ul>
+<p>This function should not have side effects other than changing the transform
+object in the first argument, and may be called at any time with any value as
+part of prediction.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">function</span></code> is not a transform property, and that it doesn't have the
+exact same behavior as <a class="reference internal" href="#Transform" title="Transform"><code class="xref py py-func docutils literal notranslate"><span class="pre">Transform()</span></code></a>'s <cite>function</cite> parameter.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">slide_vibrate</span><span class="p">(</span><span class="n">trans</span><span class="p">,</span> <span class="n">st</span><span class="p">,</span> <span class="k">at</span><span class="p">,</span> <span class="o">/</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">st</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="n">trans</span><span class="o">.</span><span class="na">xalign</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="n">trans</span><span class="o">.</span><span class="na">yoffset</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">trans</span><span class="o">.</span><span class="na">xalign</span> <span class="o">=</span> <span class="n">st</span>
+            <span class="n">trans</span><span class="o">.</span><span class="na">yoffset</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+    <span class="k">show</span> <span class="n">logo</span> <span class="n">base</span><span class="p">:</span>
+        <span class="k">function</span> <span class="n">slide_vibrate</span>
+        <span class="k">pause</span> <span class="mf">1.0</span>
+        <span class="k">repeat</span>
+</pre></div>
+</div>
+</section>
+<section id="time-statement">
+<h4>Time Statement<a class="headerlink" href="#time-statement" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">time</span></code> statement is a control statement.</p>
+<pre>
+<strong id="grammar-token-atl-atl_time">atl_time</strong> ::=  &quot;time&quot; <code class="xref docutils literal notranslate"><span class="pre">simple_expression</span></code>
+</pre>
+<p>It contains a single expression, which is evaluated to give a time expressed as
+seconds from the start of execution of the containing block. When the time given
+in the statement is reached, the following statement begins to execute. This
+transfer of control occurs even if a previous statement is still executing, and
+causes any such prior statement to immediately terminate.</p>
+<p>Time statements are implicitly preceded by a pause statement with an infinite
+time. This means that if control would otherwise reach the time statement, it
+waits until the time statement would take control.</p>
+<p>When there are multiple time statements in a block, they must strictly
+increase in order.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">backgrounds</span><span class="p">:</span>
+    <span class="s2">&quot;bg band&quot;</span>
+    <span class="na">xoffset</span> <span class="mi">0</span>
+    <span class="k">block</span><span class="p">:</span>
+        <span class="n">linear</span> <span class="mi">1</span> <span class="na">xoffset</span> <span class="mi">10</span>
+        <span class="n">linear</span> <span class="mi">1</span> <span class="na">xoffset</span> <span class="mi">0</span>
+        <span class="k">repeat</span> <span class="c1"># control would never exit this block</span>
+
+    <span class="k">time</span> <span class="mf">2.0</span>
+    <span class="na">xoffset</span> <span class="mi">0</span>
+    <span class="s2">&quot;bg whitehouse&quot;</span>
+
+    <span class="k">time</span> <span class="mf">4.0</span>
+    <span class="s2">&quot;bg washington&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="event-statement">
+<h4>Event Statement<a class="headerlink" href="#event-statement" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">event</span></code> statement is a simple statement that causes an event with the
+given name to be produced.</p>
+<pre>
+<strong id="grammar-token-atl-atl_event">atl_event</strong> ::=  &quot;event&quot; <code class="xref docutils literal notranslate"><span class="pre">name</span></code>
+</pre>
+<p>When an event is produced inside a block, the block is checked to see if an
+event handler for the given name exists. If it does, control is transferred
+to the event handler. Otherwise, the event propagates to any containing event
+handler.</p>
+</section>
+</section>
+<section id="external-events">
+<span id="external-atl-events"></span><h3>External events<a class="headerlink" href="#external-events" title="Link to this heading"></a></h3>
+<p>The following events are triggered automatically within an ATL transform:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">start</span></code></dt><dd><p>A pseudo-event, triggered on entering an <code class="docutils literal notranslate"><span class="pre">on</span></code> statement, if no event of
+higher priority has happened.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">show</span></code></dt><dd><p>Triggered when the transform is shown using the show or scene statement, and
+no image with the given tag exists.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">replace</span></code></dt><dd><p>Triggered when transform is shown using the <code class="docutils literal notranslate"><span class="pre">show</span></code> statement, replacing an
+image with the given tag.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">hide</span></code></dt><dd><p>Triggered when the transform is hidden using the <code class="docutils literal notranslate"><span class="pre">hide</span></code> statement or its
+Python equivalent.</p>
+<p>Note that this isn't triggered when the transform is eliminated via the
+<a class="reference internal" href="displaying_images.html#scene-statement"><span class="std std-ref">Scene Statement</span></a> or exiting the <a class="reference internal" href="label.html#context"><span class="std std-ref">Contexts</span></a> it exists in, such as
+when exiting the game menu.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">replaced</span></code></dt><dd><p>Triggered when the transform is replaced by another. The image will not
+actually hide until the ATL block finishes.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">update</span></code></dt><dd><p>Triggered when a screen is updated without being shown or replacing another
+screen. This happens in rare but possible cases, such as when the game is
+loaded and when styles or translations change.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">hover</span></code>, <code class="docutils literal notranslate"><span class="pre">idle</span></code>, <code class="docutils literal notranslate"><span class="pre">selected_hover</span></code>, <code class="docutils literal notranslate"><span class="pre">selected_idle</span></code>, <code class="docutils literal notranslate"><span class="pre">insensitive</span></code>, <code class="docutils literal notranslate"><span class="pre">selected_insensitive</span></code></dt><dd><p>Triggered when a button containing this transform, or a button contained by
+this transform, enters the named state.</p>
+</dd>
+</dl>
+</section>
+<section id="atl-curry-and-partial-parameter-passing">
+<span id="atl-partial"></span><h3>ATL curry and partial parameter passing<a class="headerlink" href="#atl-curry-and-partial-parameter-passing" title="Link to this heading"></a></h3>
+<p>An ATL transform defined using the <a class="reference internal" href="#transform-statement"><span class="std std-ref">Transform Statement</span></a> can have its
+parameters set at different times. When calling an ATL transform like a
+function, the resulting value is still a transform, and the parameters that were
+passed a value are treated as though the value is the new default value of the
+parameter.</p>
+<p>For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">transform</span> <span class="n">screamer</span><span class="p">(</span><span class="na">child</span><span class="p">,</span> <span class="n">screamee</span><span class="p">,</span> <span class="n">wait_time</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">flash_time</span><span class="o">=</span><span class="mf">.1</span><span class="p">):</span>
+    <span class="na">child</span>
+    <span class="k">pause</span> <span class="n">wait_time</span>
+    <span class="n">screamee</span>
+    <span class="k">pause</span> <span class="n">flash_time</span>
+    <span class="na">child</span>
+
+<span class="c1"># doing this doesn&#39;t raise an error (it would if it were a Python function)</span>
+<span class="k">define</span> <span class="n">shorter_screamer</span> <span class="o">=</span> <span class="n">screamer</span><span class="p">(</span><span class="n">wait_time</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">define</span> <span class="n">eileen_excited_screamer</span> <span class="o">=</span> <span class="n">screamer</span><span class="p">(</span><span class="n">screamee</span><span class="o">=</span><span class="s2">&quot;eileen excited&quot;</span><span class="p">,</span> <span class="n">flash_time</span><span class="o">=</span><span class="mf">.2</span><span class="p">)</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+    <span class="k">show</span> <span class="n">hhannahh</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">screamer</span><span class="p">(</span><span class="n">screamee</span><span class="o">=</span><span class="s2">&quot;hhannahh surprised&quot;</span><span class="p">,</span> <span class="n">wait_time</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+    <span class="s2">&quot;Here is one way&quot;</span>
+
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">vhappy</span> <span class="k">at</span> <span class="n">eileen_excited_screamer</span>
+    <span class="s2">&quot;Here is another&quot;</span>
+
+    <span class="k">show</span> <span class="n">patricia</span> <span class="n">sad</span> <span class="k">at</span> <span class="n">eileen_excited_screamer</span><span class="p">(</span><span class="n">screamee</span><span class="o">=</span><span class="s2">&quot;patricia wow&quot;</span><span class="p">)</span>
+    <span class="s2">&quot;And you can also do this&quot;</span>
+</pre></div>
+</div>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">shorter_screamer</span></code> transform, just as the <code class="docutils literal notranslate"><span class="pre">screamer</span></code>
+transform, cannot be used directly like <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">eileen</span> <span class="pre">at</span> <span class="pre">screamer</span></code>, since their
+<code class="docutils literal notranslate"><span class="pre">screamee</span></code> parameters do not have a value.</p>
+<p>Note also that, like labels and screens, the default values of the parameters of
+a transform directly created by the <a class="reference internal" href="#transform-statement"><span class="std std-ref">Transform Statement</span></a> will be evaluated
+at the time when the transform is <em>called</em>, not at the time when it is
+<em>defined</em>.</p>
+<p>However, the transform resulting from calling another transform (such as
+<code class="docutils literal notranslate"><span class="pre">shorter_screamer</span></code> in the example above, or also the transform applied to
+patricia) has all the default values of its parameters already evaluated,
+whether they come from the evaluation of the default values in the original
+transform (such as <code class="docutils literal notranslate"><span class="pre">shorter_screamer</span></code>'s <cite>flash_time</cite> parameter, or
+patricia's transform's <cite>wait_time</cite> parameter), or from values passed to it in a
+call earlier in the line (such as <code class="docutils literal notranslate"><span class="pre">shorter_screamer</span></code>'s <cite>wait_time</cite>
+parameter, or patricia's transform's <cite>screamee</cite> and <cite>flash_time</cite> parameters).</p>
+</section>
+<section id="special-child-parameter">
+<span id="atl-child-param"></span><h3>Special Child Parameter<a class="headerlink" href="#special-child-parameter" title="Link to this heading"></a></h3>
+<p>If an ATL transform has a parameter named &quot;child&quot; and that parameter receives a
+value, <strong>regardless of the kind of parameter or the way it receives a value</strong>
+(by a positional argument or by keyword, and even if the parameter is
+positional-only or keyword-only, and defaulted or required), then in parallel
+the child of the transform is set to the value of the parameter.</p>
+<p>Note that the default value of the parameter doesn't count, the parameter has to
+receive a value from the outside.</p>
+<p>Conversely, when that ATL transform is used as a transform, the <code class="docutils literal notranslate"><span class="pre">child=</span></code>
+keyword argument will be passed, and so in addition to setting the child, if a
+parameter is there to receive it (excluding positional-only parameters, since it
+is passed by keyword), it will have the child's value when the transform
+executes.</p>
+<p>For example, this enables to swap between the supplied child and another
+displayable:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">transform</span> <span class="n">lucy_jump_scare</span><span class="p">(</span><span class="na">child</span><span class="p">):</span>
+    <span class="c1"># the child is implicitly set as the child of the transform</span>
+    <span class="k">pause</span> <span class="mi">5</span>
+
+    <span class="c1"># Jump scare</span>
+    <span class="s2">&quot;lucy mad&quot;</span>
+    <span class="k">pause</span> <span class="mf">.2</span>
+
+    <span class="c1"># Go back to the original child</span>
+    <span class="na">child</span>
+</pre></div>
+</div>
+<p>It can also be used to place the original child inside a <code class="docutils literal notranslate"><span class="pre">contains</span></code> block:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">transform</span> <span class="n">marquee</span><span class="p">(</span><span class="na">width</span><span class="p">,</span> <span class="na">height</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="na">child</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="na">xcenter</span> <span class="mf">0.5</span>
+    <span class="na">ycenter</span> <span class="mf">0.5</span>
+
+    <span class="na">crop</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+    <span class="k">contains</span><span class="p">:</span>
+        <span class="na">child</span>
+        <span class="na">xanchor</span> <span class="mf">0.0</span> <span class="na">xpos</span> <span class="mf">1.0</span>
+        <span class="n">linear</span> <span class="n">duration</span> <span class="na">xanchor</span> <span class="mf">1.0</span> <span class="na">xpos</span> <span class="mf">0.0</span>
+</pre></div>
+</div>
+<p>The <cite>old_widget</cite> and <cite>new_widget</cite> keyword-able parameters (meaning that they
+should not be positional-only) have a special use as part of
+<a class="reference internal" href="transitions.html#atl-transitions"><span class="std std-ref">ATL Transitions</span></a>.</p>
+</section>
+</section>
+<section id="warpers">
+<span id="id3"></span><h2>Warpers<a class="headerlink" href="#warpers" title="Link to this heading"></a></h2>
+<p>A warper is a function that can change the amount of time an interpolation
+statement considers to have elapsed. They are defined as functions from t to t',
+where t and t' are floating point numbers, with t ranging from 0.0 to 1.0 over
+the given amount of time. (If the statement has 0 duration, then t is 1.0 when
+it runs.) t' should start at 0.0 and end at 1.0, but can be greater or less. The
+following warpers are defined by default.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">pause</span></code></dt><dd><p>Pause, then jump to the new value. If <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">==</span> <span class="pre">1.0</span></code>, <code class="docutils literal notranslate"><span class="pre">t'</span> <span class="pre">=</span> <span class="pre">1.0</span></code>. Otherwise,
+<code class="docutils literal notranslate"><span class="pre">t'</span> <span class="pre">=</span> <span class="pre">0.0</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">linear</span></code></dt><dd><p>Linear interpolation. <code class="docutils literal notranslate"><span class="pre">t'</span> <span class="pre">=</span> <span class="pre">t</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ease</span></code></dt><dd><p>Start slow, speed up, then slow down. <code class="docutils literal notranslate"><span class="pre">t'</span> <span class="pre">=</span> <span class="pre">.5</span> <span class="pre">-</span> <span class="pre">math.cos(math.pi</span> <span class="pre">*</span> <span class="pre">t)</span> <span class="pre">/</span> <span class="pre">2.0</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">easein</span></code></dt><dd><p>Start fast, then slow down. <code class="docutils literal notranslate"><span class="pre">t'</span> <span class="pre">=</span> <span class="pre">math.cos((1.0</span> <span class="pre">-</span> <span class="pre">t)</span> <span class="pre">*</span> <span class="pre">math.pi</span> <span class="pre">/</span> <span class="pre">2.0)</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">easeout</span></code></dt><dd><p>Start slow, then speed up. <code class="docutils literal notranslate"><span class="pre">t'</span> <span class="pre">=</span> <span class="pre">1.0</span> <span class="pre">-</span> <span class="pre">math.cos(t</span> <span class="pre">*</span> <span class="pre">math.pi</span> <span class="pre">/</span> <span class="pre">2.0)</span></code></p>
+</dd>
+</dl>
+<p>In addition, most of Robert Penner's easing functions are supported. To
+make the names match those above, the functions have been renamed
+somewhat. Graphs of these standard functions can be found at
+<a class="reference external" href="http://www.easings.net/">http://www.easings.net/</a>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Ren'Py Name</p></th>
+<th class="head"><p>easings.net Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ease_back</p></td>
+<td><p>easeInOut_back</p></td>
+</tr>
+<tr class="row-odd"><td><p>ease_bounce</p></td>
+<td><p>easeInOut_bounce</p></td>
+</tr>
+<tr class="row-even"><td><p>ease_circ</p></td>
+<td><p>easeInOut_circ</p></td>
+</tr>
+<tr class="row-odd"><td><p>ease_cubic</p></td>
+<td><p>easeInOut_cubic</p></td>
+</tr>
+<tr class="row-even"><td><p>ease_elastic</p></td>
+<td><p>easeInOut_elastic</p></td>
+</tr>
+<tr class="row-odd"><td><p>ease_expo</p></td>
+<td><p>easeInOut_expo</p></td>
+</tr>
+<tr class="row-even"><td><p>ease_quad</p></td>
+<td><p>easeInOut_quad</p></td>
+</tr>
+<tr class="row-odd"><td><p>ease_quart</p></td>
+<td><p>easeInOut_quart</p></td>
+</tr>
+<tr class="row-even"><td><p>ease_quint</p></td>
+<td><p>easeInOut_quint</p></td>
+</tr>
+<tr class="row-odd"><td><p>easein_back</p></td>
+<td><p>easeOut_back</p></td>
+</tr>
+<tr class="row-even"><td><p>easein_bounce</p></td>
+<td><p>easeOut_bounce</p></td>
+</tr>
+<tr class="row-odd"><td><p>easein_circ</p></td>
+<td><p>easeOut_circ</p></td>
+</tr>
+<tr class="row-even"><td><p>easein_cubic</p></td>
+<td><p>easeOut_cubic</p></td>
+</tr>
+<tr class="row-odd"><td><p>easein_elastic</p></td>
+<td><p>easeOut_elastic</p></td>
+</tr>
+<tr class="row-even"><td><p>easein_expo</p></td>
+<td><p>easeOut_expo</p></td>
+</tr>
+<tr class="row-odd"><td><p>easein_quad</p></td>
+<td><p>easeOut_quad</p></td>
+</tr>
+<tr class="row-even"><td><p>easein_quart</p></td>
+<td><p>easeOut_quart</p></td>
+</tr>
+<tr class="row-odd"><td><p>easein_quint</p></td>
+<td><p>easeOut_quint</p></td>
+</tr>
+<tr class="row-even"><td><p>easeout_back</p></td>
+<td><p>easeIn_back</p></td>
+</tr>
+<tr class="row-odd"><td><p>easeout_bounce</p></td>
+<td><p>easeIn_bounce</p></td>
+</tr>
+<tr class="row-even"><td><p>easeout_circ</p></td>
+<td><p>easeIn_circ</p></td>
+</tr>
+<tr class="row-odd"><td><p>easeout_cubic</p></td>
+<td><p>easeIn_cubic</p></td>
+</tr>
+<tr class="row-even"><td><p>easeout_elastic</p></td>
+<td><p>easeIn_elastic</p></td>
+</tr>
+<tr class="row-odd"><td><p>easeout_expo</p></td>
+<td><p>easeIn_expo</p></td>
+</tr>
+<tr class="row-even"><td><p>easeout_quad</p></td>
+<td><p>easeIn_quad</p></td>
+</tr>
+<tr class="row-odd"><td><p>easeout_quart</p></td>
+<td><p>easeIn_quart</p></td>
+</tr>
+<tr class="row-even"><td><p>easeout_quint</p></td>
+<td><p>easeIn_quint</p></td>
+</tr>
+</tbody>
+</table>
+<p>These warpers can be accessed in the <code class="docutils literal notranslate"><span class="pre">_warper</span></code> read-only module, which contains
+the functions listed above. It is useful for things in Ren'Py which take a
+time-warping function, such as <a class="reference internal" href="transitions.html#Dissolve" title="Dissolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">Dissolve()</span></code></a>, which you can use like:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Dissolve</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">time_warp</span><span class="o">=</span><span class="n">_warper</span><span class="o">.</span><span class="n">easein_quad</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>New warpers can be defined using the <code class="docutils literal notranslate"><span class="pre">renpy.atl_warper</span></code> decorator, in a <code class="docutils literal notranslate"><span class="pre">python</span>
+<span class="pre">early</span></code> block. It should be placed in a file that is parsed before any file
+that uses the warper. This looks like:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">python</span> <span class="n">early</span> <span class="k">hide</span><span class="p">:</span>
+
+    <span class="nd">@renpy</span><span class="o">.</span><span class="n">atl_warper</span>
+    <span class="k">def</span> <span class="nf">linear</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">t</span>
+</pre></div>
+</div>
+</section>
+<section id="replacing-transforms">
+<span id="id4"></span><h2>Replacing Transforms<a class="headerlink" href="#replacing-transforms" title="Link to this heading"></a></h2>
+<p>When an ATL transform, a built-in transform or a transform defined using the
+<a class="reference internal" href="#Transform" title="Transform"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transform</span></code></a> class is replaced by another transform of these categories,
+the properties of the outgoing transform are inherited by the incoming
+transform. That inheritance doesn't apply for other kinds of transforms.</p>
+<p>When the <a class="reference internal" href="displaying_images.html#show-statement"><span class="std std-ref">show statement</span></a> has multiple transforms in the
+<code class="docutils literal notranslate"><span class="pre">at</span></code> list, the transforms are matched from last to first, until one list runs
+out. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span>
+<span class="s2">&quot;Dialogue !&quot;</span>
+<span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">c</span></code> transform will be replaced by <code class="docutils literal notranslate"><span class="pre">e</span></code>, the <code class="docutils literal notranslate"><span class="pre">b</span></code> transform will be
+replaced by <code class="docutils literal notranslate"><span class="pre">d</span></code>, and nothing replaces the <code class="docutils literal notranslate"><span class="pre">a</span></code> transform.</p>
+<p>At the moment of replacement, if both transforms are of suitable kinds, the
+values of the properties of the old transform are copied to the new transform.
+If the old transform was animated, the current intermediate value is inherited.
+For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">transform</span> <span class="n">bounce</span><span class="p">:</span>
+    <span class="n">linear</span> <span class="mf">3.0</span> <span class="na">xalign</span> <span class="mf">1.0</span>
+    <span class="n">linear</span> <span class="mf">3.0</span> <span class="na">xalign</span> <span class="mf">0.0</span>
+    <span class="k">repeat</span>
+
+<span class="k">transform</span> <span class="n">headright</span><span class="p">:</span>
+    <span class="n">linear</span> <span class="mi">15</span> <span class="na">xalign</span> <span class="mf">1.0</span>
+
+<span class="k">label</span> <span class="n">example</span><span class="p">:</span>
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">bounce</span>
+    <span class="k">pause</span>
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">headright</span>
+    <span class="k">pause</span>
+</pre></div>
+</div>
+<p>In this example, the image will bounce from left to right and back until the
+player clicks. When that happens, the <code class="docutils literal notranslate"><span class="pre">xalign</span></code> property of the <code class="docutils literal notranslate"><span class="pre">bounce</span></code>
+transform will be used to initialize the <code class="docutils literal notranslate"><span class="pre">xalign</span></code> property of the
+<code class="docutils literal notranslate"><span class="pre">headright</span></code> transform, and so the image will move from where it was when the
+player first clicked.</p>
+<p>The position properties (<a class="reference internal" href="transform_properties.html#transform-property-xpos"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">xpos</span></code></a>, <a class="reference internal" href="transform_properties.html#transform-property-ypos"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">ypos</span></code></a>, <a class="reference internal" href="transform_properties.html#transform-property-xanchor"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">xanchor</span></code></a>,
+<a class="reference internal" href="transform_properties.html#transform-property-yanchor"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">yanchor</span></code></a>, and properties setting them such as <a class="reference internal" href="transform_properties.html#transform-property-xalign"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">xalign</span></code></a> or
+<a class="reference internal" href="transform_properties.html#transform-property-radius"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">radius</span></code></a>/ <a class="reference internal" href="transform_properties.html#transform-property-angle"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">angle</span></code></a>) have a special rule for inheritance : a value
+set in the child will override a value set in the parent. That is because a
+displayable may have only one position, and a position that is actively set
+takes precedence.</p>
+<p>Finally, when a <code class="docutils literal notranslate"><span class="pre">show</span></code> statement does not include an <code class="docutils literal notranslate"><span class="pre">at</span></code> clause, the same
+transforms are used, so no inheritance is necessary. To reset all transform
+properties, hide and then show the displayable again. To break the animations
+applied to a displayable (but keep the position), you can use:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">some_animation</span>
+<span class="s2">&quot;Wow, so this is what antigravity feels like !&quot;</span>
+
+<span class="k">show</span> <span class="n">eileen</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="s2">&quot;But I&#39;m happy when it settles down.&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="the-transform-class">
+<h2>The Transform Class<a class="headerlink" href="#the-transform-class" title="Link to this heading"></a></h2>
+<p>One equivalent to to the simplest ATL transforms is the Transform class.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="Transform">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">properties</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Transform" title="Link to this definition"></a></dt>
+<dd><p>Creates a transform which applies operations such as cropping, rotation,
+scaling or alpha-blending to its child. A transform object has fields
+corresponding to the <a class="reference internal" href="transform_properties.html"><span class="doc">transform properties</span></a>,
+which it applies to its child.</p>
+<dl class="simple">
+<dt><cite>child</cite></dt><dd><p>The child the transform applies to.</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="Transform.function">
+<span class="sig-name descname"><span class="pre">function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trans</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#Transform" title="Transform"><span class="pre">Transform</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">st</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#Transform.function" title="Link to this definition"></a></dt>
+<dd><p>If not None, this function will be called when the transform is
+rendered, with three positional arguments:</p>
+<ul class="simple">
+<li><p>The transform object.</p></li>
+<li><p>The shown timebase, in seconds.</p></li>
+<li><p>The animation timebase, in seconds.</p></li>
+</ul>
+<p>The function should return a delay, in seconds, after which it will be
+called again, or None to be called again at the start of the next
+interaction.</p>
+<p>This function should not have side effects other than changing the
+Transform object in the first argument, and may be called at any time
+with any value as a part of prediction.</p>
+</dd></dl>
+
+<p>Additional keyword arguments are values that transform properties are set
+to. These particular transform properties will be set each time the
+transform is drawn, and so may not be changed after the Transform object is
+created. Fields corresponding to other transform properties, however, can be
+set and changed afterwards, either within the function passed as the
+<cite>function</cite> parameter, or immediately before calling the <a class="reference internal" href="#Transform.update" title="Transform.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a>
+method.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Transform.hide_request">
+<span class="sig-name descname"><span class="pre">hide_request</span></span><a class="headerlink" href="#Transform.hide_request" title="Link to this definition"></a></dt>
+<dd><p>This attribute is set to true when the function is called, to indicate
+that the transform is being hidden.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Transform.hide_response">
+<span class="sig-name descname"><span class="pre">hide_response</span></span><a class="headerlink" href="#Transform.hide_response" title="Link to this definition"></a></dt>
+<dd><p>If <code class="docutils literal notranslate"><span class="pre">hide_request</span></code> is true, this can be set to false to prevent the
+transform from being hidden.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Transform.set_child">
+<span class="sig-name descname"><span class="pre">set_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Transform.set_child" title="Link to this definition"></a></dt>
+<dd><p>Call this method with a new <cite>child</cite> to change the child of this
+transform.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Transform.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Transform.update" title="Link to this definition"></a></dt>
+<dd><p>This should be called when a transform property field is updated outside
+of the function passed as the <cite>function</cite> argument, to ensure that the
+change takes effect.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="callables-as-transforms">
+<span id="transforms-python"></span><h2>Callables as transforms<a class="headerlink" href="#callables-as-transforms" title="Link to this heading"></a></h2>
+<p>Finally, simple Python callables can be used as transforms. These callables
+should take a single <a class="reference internal" href="displayables.html"><span class="doc">displayable</span></a> as an argument, and
+return a new Displayable. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+
+    <span class="c1"># this transform uses the right and left transforms</span>
+    <span class="k">def</span> <span class="nf">right_or_left</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">switch</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">At</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">At</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">left</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That means that certain builtins which take a displayable and return a displayable,
+such as <a class="reference internal" href="displayables.html#Flatten" title="Flatten"><code class="xref py py-func docutils literal notranslate"><span class="pre">Flatten()</span></code></a>, are also transforms and can be used as such.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="displayables.html" class="btn btn-neutral float-left" title="Displayables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="transform_properties.html" class="btn btn-neutral float-right" title="Transform Properties" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

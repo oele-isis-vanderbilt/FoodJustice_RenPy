@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Default Shader Parts &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/shader_parts.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Default Shader Parts</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/shader_parts.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="default-shader-parts">
+<h1>Default Shader Parts<a class="headerlink" href="#default-shader-parts" title="Link to this heading"></a></h1>
+<p>Shader parts are used by <a class="reference internal" href="model.html"><span class="doc">Model-Based Rendering</span></a> and <a class="reference internal" href="textshaders.html"><span class="doc">Text Shaders</span></a>. This file
+contains an index of parts by priority, and the source of each shader
+part.</p>
+<section id="vertex-part-priorities">
+<h2>Vertex Part Priorities<a class="headerlink" href="#vertex-part-priorities" title="Link to this heading"></a></h2>
+<p>How Ren'Py uses vertex part priorities:</p>
+<ul class="simple">
+<li><p>Priority 0 sets up gl_Position.</p></li>
+<li><p>Priority 10 is used to capture gl_Position in virtual or drawable coordinates before adjustment.</p></li>
+<li><p>Priorities 20-80 adjust gl_Position in virtual or drawable coordinates.</p></li>
+<li><p>Priority 90 is used to capture gl_Position in virtual or drawable coordinates after adjustment.</p></li>
+<li><p>Priority 100 transforms gl_Position to viewport coordinates.</p></li>
+<li><p>Priority 200 stores more information in varying variables, without touching gl_Position.</p></li>
+</ul>
+<p>In order:</p>
+<div class="line-block">
+<div class="line">0. <a class="reference internal" href="#shader-renpy-geometry"><span class="std std-ref">renpy.geometry</span></a></div>
+<div class="line">10. <a class="reference internal" href="#shader-textshader-linetexture"><span class="std std-ref">textshader.linetexture</span></a></div>
+<div class="line">10. <a class="reference internal" href="#shader-textshader-texture"><span class="std std-ref">textshader.texture</span></a></div>
+<div class="line">20. <a class="reference internal" href="#shader-textshader-flip"><span class="std std-ref">textshader.flip</span></a></div>
+<div class="line">25. <a class="reference internal" href="#shader-textshader-zoom"><span class="std std-ref">textshader.zoom</span></a></div>
+<div class="line">30. <a class="reference internal" href="#shader-textshader-jitter"><span class="std std-ref">textshader.jitter</span></a></div>
+<div class="line">35. <a class="reference internal" href="#shader-textshader-offset"><span class="std std-ref">textshader.offset</span></a></div>
+<div class="line">40. <a class="reference internal" href="#shader-textshader-wave"><span class="std std-ref">textshader.wave</span></a></div>
+<div class="line">100. <a class="reference internal" href="#shader-renpy-geometry"><span class="std std-ref">renpy.geometry</span></a></div>
+<div class="line">200. <a class="reference internal" href="#shader-renpy-alpha-mask"><span class="std std-ref">renpy.alpha_mask</span></a></div>
+<div class="line">200. <a class="reference internal" href="#shader-renpy-blur"><span class="std std-ref">renpy.blur</span></a></div>
+<div class="line">200. <a class="reference internal" href="#shader-renpy-dissolve"><span class="std std-ref">renpy.dissolve</span></a></div>
+<div class="line">200. <a class="reference internal" href="#shader-renpy-imagedissolve"><span class="std std-ref">renpy.imagedissolve</span></a></div>
+<div class="line">200. <a class="reference internal" href="#shader-renpy-mask"><span class="std std-ref">renpy.mask</span></a></div>
+<div class="line">200. <a class="reference internal" href="#shader-renpy-texture"><span class="std std-ref">renpy.texture</span></a></div>
+<div class="line">200. <a class="reference internal" href="#shader-textshader-dissolve"><span class="std std-ref">textshader.dissolve</span></a></div>
+<div class="line">200. <a class="reference internal" href="#shader-textshader-typewriter"><span class="std std-ref">textshader.typewriter</span></a></div>
+</div>
+</section>
+<section id="fragment-part-priorities">
+<h2>Fragment Part Priorities<a class="headerlink" href="#fragment-part-priorities" title="Link to this heading"></a></h2>
+<p>How Ren'Py uses fragment part priorities:</p>
+<ul class="simple">
+<li><p>Priority 200 determines an original color and stores it in gl_FragColor.</p></li>
+<li><p>Priority 300 multiplies that color with a second texture.</p></li>
+<li><p>Priority 325 stores alpha before the text shaders adjust it.</p></li>
+<li><p>Priority 350 applies text shaders that adjust alpha.</p></li>
+<li><p>Priority 375 can undo part of the effect of these text shaders.</p></li>
+<li><p>Priority 400 adjusts the color, applying Transform and displayable-based changes.</p></li>
+<li><p>Priority 500 adjusts the alpha channel, applying Transform and displayable-based changes.</p></li>
+</ul>
+<p>In order:</p>
+<div class="line-block">
+<div class="line">200. <a class="reference internal" href="#shader-renpy-blur"><span class="std std-ref">renpy.blur</span></a></div>
+<div class="line">200. <a class="reference internal" href="#shader-renpy-dissolve"><span class="std std-ref">renpy.dissolve</span></a></div>
+<div class="line">200. <a class="reference internal" href="#shader-renpy-imagedissolve"><span class="std std-ref">renpy.imagedissolve</span></a></div>
+<div class="line">200. <a class="reference internal" href="#shader-renpy-mask"><span class="std std-ref">renpy.mask</span></a></div>
+<div class="line">200. <a class="reference internal" href="#shader-renpy-solid"><span class="std std-ref">renpy.solid</span></a></div>
+<div class="line">200. <a class="reference internal" href="#shader-renpy-texture"><span class="std std-ref">renpy.texture</span></a></div>
+<div class="line">300. <a class="reference internal" href="#shader-textshader-linetexture"><span class="std std-ref">textshader.linetexture</span></a></div>
+<div class="line">300. <a class="reference internal" href="#shader-textshader-texture"><span class="std std-ref">textshader.texture</span></a></div>
+<div class="line">325. <a class="reference internal" href="#shader-textshader-slowalpha"><span class="std std-ref">textshader.slowalpha</span></a></div>
+<div class="line">350. <a class="reference internal" href="#shader-textshader-dissolve"><span class="std std-ref">textshader.dissolve</span></a></div>
+<div class="line">350. <a class="reference internal" href="#shader-textshader-typewriter"><span class="std std-ref">textshader.typewriter</span></a></div>
+<div class="line">375. <a class="reference internal" href="#shader-textshader-slowalpha"><span class="std std-ref">textshader.slowalpha</span></a></div>
+<div class="line">400. <a class="reference internal" href="#shader-renpy-matrixcolor"><span class="std std-ref">renpy.matrixcolor</span></a></div>
+<div class="line">500. <a class="reference internal" href="#shader-renpy-alpha"><span class="std std-ref">renpy.alpha</span></a></div>
+<div class="line">500. <a class="reference internal" href="#shader-renpy-alpha-mask"><span class="std std-ref">renpy.alpha_mask</span></a></div>
+</div>
+</section>
+<section id="renpy-alpha">
+<span id="shader-renpy-alpha"></span><h2>renpy.alpha<a class="headerlink" href="#renpy-alpha" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_renpy_alpha</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_renpy_over</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 500):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">u_renpy_alpha</span><span class="p">,</span><span class="w"> </span><span class="n">u_renpy_alpha</span><span class="p">,</span><span class="w"> </span><span class="n">u_renpy_alpha</span><span class="p">,</span><span class="w"> </span><span class="n">u_renpy_alpha</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_renpy_over</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="renpy-alpha-mask">
+<span id="shader-renpy-alpha-mask"></span><h2>renpy.alpha_mask<a class="headerlink" href="#renpy-alpha-mask" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">tex0</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">tex1</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">a_tex_coord</span><span class="p">;</span>
+<span class="k">varying</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">v_tex_coord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_tex_coord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 500):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">vec4</span><span class="w"> </span><span class="n">src</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">tex0</span><span class="p">,</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">.</span><span class="n">xy</span><span class="p">);</span>
+<span class="kt">vec4</span><span class="w"> </span><span class="n">mask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">tex1</span><span class="p">,</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">.</span><span class="n">xy</span><span class="p">);</span>
+
+<span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">mask</span><span class="p">.</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">.</span><span class="n">g</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">mask</span><span class="p">.</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">.</span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">mask</span><span class="p">.</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">mask</span><span class="p">.</span><span class="n">r</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="renpy-blur">
+<span id="shader-renpy-blur"></span><h2>renpy.blur<a class="headerlink" href="#renpy-blur" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">tex0</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">a_tex_coord</span><span class="p">;</span>
+<span class="k">varying</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_renpy_blur_log2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">v_tex_coord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_tex_coord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="mf">0.</span><span class="p">);</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">renpy_blur_norm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="p">;</span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">5.</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">1.</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">1.</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">renpy_blur_weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pow</span><span class="p">(</span><span class="n">u_renpy_blur_log2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="mf">2.</span><span class="p">));</span>
+<span class="w">    </span><span class="n">renpy_blur_norm</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">renpy_blur_weight</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">renpy_blur_norm</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">tex0</span><span class="p">,</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span><span class="w"> </span><span class="mf">0.</span><span class="p">);</span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">14.</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">1.</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">u_renpy_blur_log2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">5.</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">renpy_blur_weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pow</span><span class="p">(</span><span class="n">u_renpy_blur_log2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="mf">2.</span><span class="p">));</span>
+<span class="w">    </span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">renpy_blur_weight</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">tex0</span><span class="p">,</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+<span class="w">    </span><span class="n">renpy_blur_norm</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">renpy_blur_weight</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">renpy_blur_norm</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">renpy_blur_norm</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">tex0</span><span class="p">,</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="renpy-dissolve">
+<span id="shader-renpy-dissolve"></span><h2>renpy.dissolve<a class="headerlink" href="#renpy-dissolve" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_lod_bias</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">tex0</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">tex1</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_renpy_dissolve</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">a_tex_coord</span><span class="p">;</span>
+<span class="k">varying</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">v_tex_coord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_tex_coord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">vec4</span><span class="w"> </span><span class="n">color0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">tex0</span><span class="p">,</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">.</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">u_lod_bias</span><span class="p">);</span>
+<span class="kt">vec4</span><span class="w"> </span><span class="n">color1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">tex1</span><span class="p">,</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">.</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">u_lod_bias</span><span class="p">);</span>
+
+<span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mix</span><span class="p">(</span><span class="n">color0</span><span class="p">,</span><span class="w"> </span><span class="n">color1</span><span class="p">,</span><span class="w"> </span><span class="n">u_renpy_dissolve</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="renpy-geometry">
+<span id="shader-renpy-geometry"></span><h2>renpy.geometry<a class="headerlink" href="#renpy-geometry" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">u_transform</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">a_position</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 0):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_position</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 100):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_transform</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">gl_Position</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="renpy-imagedissolve">
+<span id="shader-renpy-imagedissolve"></span><h2>renpy.imagedissolve<a class="headerlink" href="#renpy-imagedissolve" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_lod_bias</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">tex0</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">tex1</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">tex2</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_renpy_dissolve_offset</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_renpy_dissolve_multiplier</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">a_tex_coord</span><span class="p">;</span>
+<span class="k">varying</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">v_tex_coord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_tex_coord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">vec4</span><span class="w"> </span><span class="n">color0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">tex0</span><span class="p">,</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">.</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">u_lod_bias</span><span class="p">);</span>
+<span class="kt">vec4</span><span class="w"> </span><span class="n">color1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">tex1</span><span class="p">,</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">.</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">u_lod_bias</span><span class="p">);</span>
+<span class="kt">vec4</span><span class="w"> </span><span class="n">color2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">tex2</span><span class="p">,</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">.</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">u_lod_bias</span><span class="p">);</span>
+
+<span class="kt">float</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clamp</span><span class="p">((</span><span class="n">color0</span><span class="p">.</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">u_renpy_dissolve_offset</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_renpy_dissolve_multiplier</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mix</span><span class="p">(</span><span class="n">color1</span><span class="p">,</span><span class="w"> </span><span class="n">color2</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="renpy-mask">
+<span id="shader-renpy-mask"></span><h2>renpy.mask<a class="headerlink" href="#renpy-mask" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_lod_bias</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">tex0</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">tex1</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_renpy_mask_multiplier</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_renpy_mask_offset</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">a_tex_coord</span><span class="p">;</span>
+<span class="k">varying</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">v_tex_coord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_tex_coord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">vec4</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">tex0</span><span class="p">,</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">.</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">u_lod_bias</span><span class="p">);</span>
+<span class="kt">vec4</span><span class="w"> </span><span class="n">mask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">tex1</span><span class="p">,</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">.</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">u_lod_bias</span><span class="p">);</span>
+
+<span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">mask</span><span class="p">.</span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_renpy_mask_multiplier</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">u_renpy_mask_offset</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="renpy-matrixcolor">
+<span id="shader-renpy-matrixcolor"></span><h2>renpy.matrixcolor<a class="headerlink" href="#renpy-matrixcolor" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">u_renpy_matrixcolor</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 400):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_renpy_matrixcolor</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">gl_FragColor</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="renpy-solid">
+<span id="shader-renpy-solid"></span><h2>renpy.solid<a class="headerlink" href="#renpy-solid" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">u_renpy_solid_color</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_renpy_solid_color</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="renpy-texture">
+<span id="shader-renpy-texture"></span><h2>renpy.texture<a class="headerlink" href="#renpy-texture" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_lod_bias</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">tex0</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">a_tex_coord</span><span class="p">;</span>
+<span class="k">varying</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">v_tex_coord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_tex_coord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">tex0</span><span class="p">,</span><span class="w"> </span><span class="n">v_tex_coord</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span><span class="w"> </span><span class="n">u_lod_bias</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="textshader-dissolve">
+<span id="shader-textshader-dissolve"></span><h2>textshader.dissolve<a class="headerlink" href="#textshader-dissolve" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_textshader_dissolve_duration</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_slow_duration</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_slow_time</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">a_text_time</span><span class="p">;</span>
+<span class="k">varying</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">v_text_time</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">v_text_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_text_time</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 350):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="n">l_textshader_dissolve_duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_textshader_dissolve_duration</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_text_slow_duration</span><span class="p">;</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">l_textshader_dissolve_done</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">l_textshader_dissolve_duration</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">l_textshader_dissolve_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clamp</span><span class="p">((</span><span class="n">u_text_slow_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v_text_time</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">l_textshader_dissolve_duration</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">l_textshader_dissolve_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v_text_time</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">u_text_slow_time</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">l_textshader_dissolve_done</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="textshader-flip">
+<span id="shader-textshader-flip"></span><h2>textshader.flip<a class="headerlink" href="#textshader-flip" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_textshader_flip_duration</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_slow_duration</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_slow_time</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">a_text_center</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">a_text_min_time</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 20):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="n">l_textshader_flip_duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_textshader_flip_duration</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_text_slow_duration</span><span class="p">;</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">l_textshader_flip_done</span><span class="p">;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">l_textshader_flip_duration</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">l_textshader_flip_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clamp</span><span class="p">((</span><span class="n">u_text_slow_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a_text_min_time</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">l_textshader_flip_duration</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">l_textshader_flip_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_text_min_time</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">u_text_slow_time</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">gl_Position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mix</span><span class="p">(</span><span class="n">a_text_center</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="nb">gl_Position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a_text_center</span><span class="p">.</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="nb">gl_Position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">l_textshader_flip_done</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="textshader-jitter">
+<span id="shader-textshader-jitter"></span><h2>textshader.jitter<a class="headerlink" href="#textshader-jitter" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">u_textshader_jitter_jitter</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">u_random</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_to_drawable</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 30):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">vec2</span><span class="w"> </span><span class="n">l_textshader_jitter_jitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_textshader_jitter_jitter</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_text_to_drawable</span><span class="p">;</span>
+<span class="nb">gl_Position</span><span class="p">.</span><span class="n">xy</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">l_textshader_jitter_jitter</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_random</span><span class="p">.</span><span class="n">xy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">l_textshader_jitter_jitter</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.0</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="textshader-linetexture">
+<span id="shader-textshader-linetexture"></span><h2>textshader.linetexture<a class="headerlink" href="#textshader-linetexture" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">u_textshader_linetexture_texture</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">u_textshader_linetexture_scale</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">u_textshader_linetexture_texture_res</span><span class="p">;</span>
+
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_to_virtual</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_main</span><span class="p">;</span>
+
+<span class="k">attribute</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">a_text_center</span><span class="p">;</span>
+<span class="k">varying</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">v_textshader_linetexture_coord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 10):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">v_textshader_linetexture_coord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec2</span><span class="p">(</span><span class="w"> </span><span class="nb">gl_Position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nb">gl_Position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a_text_center</span><span class="p">.</span><span class="n">y</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">u_textshader_linetexture_scale</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_text_to_virtual</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">u_textshader_linetexture_texture_res</span><span class="p">;</span>
+<span class="n">v_textshader_linetexture_coord</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 300):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">u_text_main</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">u_textshader_linetexture_texture</span><span class="p">,</span><span class="w"> </span><span class="n">v_textshader_linetexture_coord</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">gl_FragColor</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="textshader-offset">
+<span id="shader-textshader-offset"></span><h2>textshader.offset<a class="headerlink" href="#textshader-offset" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">u_textshader_offset_offset</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_to_drawable</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 35):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="nb">gl_Position</span><span class="p">.</span><span class="n">xy</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">u_textshader_offset_offset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_text_to_drawable</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="textshader-slowalpha">
+<span id="shader-textshader-slowalpha"></span><h2>textshader.slowalpha<a class="headerlink" href="#textshader-slowalpha" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_textshader_slowalpha_alpha</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 325):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">vec4</span><span class="w"> </span><span class="n">l_textshader_slowalpha_color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">gl_FragColor</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 375):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mix</span><span class="p">(</span><span class="nb">gl_FragColor</span><span class="p">,</span><span class="w"> </span><span class="n">l_textshader_slowalpha_color</span><span class="p">,</span><span class="w"> </span><span class="n">u_textshader_slowalpha_alpha</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="textshader-texture">
+<span id="shader-textshader-texture"></span><h2>textshader.texture<a class="headerlink" href="#textshader-texture" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">u_textshader_texture_texture</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">u_textshader_texture_texture_res</span><span class="p">;</span>
+
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_to_virtual</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_main</span><span class="p">;</span>
+<span class="k">varying</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">v_textshader_texture_coord</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 10):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">v_textshader_texture_coord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_text_to_virtual</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">gl_Position</span><span class="p">.</span><span class="n">xy</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">u_textshader_texture_texture_res</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 300):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">u_text_main</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture2D</span><span class="p">(</span><span class="n">u_textshader_texture_texture</span><span class="p">,</span><span class="w"> </span><span class="n">v_textshader_texture_coord</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">gl_FragColor</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="textshader-typewriter">
+<span id="shader-textshader-typewriter"></span><h2>textshader.typewriter<a class="headerlink" href="#textshader-typewriter" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_slow_time</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">a_text_min_time</span><span class="p">;</span>
+<span class="k">varying</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">v_text_min_time</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 200):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="n">v_text_min_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_text_min_time</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Fragment shader (priority 350):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="n">l_textshader_typewriter_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v_text_min_time</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">u_text_slow_time</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">l_textshader_typewriter_done</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="textshader-wave">
+<span id="shader-textshader-wave"></span><h2>textshader.wave<a class="headerlink" href="#textshader-wave" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_textshader_wave_amplitude</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_textshader_wave_frequency</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_textshader_wave_wavelength</span><span class="p">;</span>
+
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_time</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_to_drawable</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">a_text_index</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 40):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="nb">gl_Position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="mf">2.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">3.14159265359</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">a_text_index</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">u_textshader_wave_wavelength</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">u_time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_textshader_wave_frequency</span><span class="p">))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_textshader_wave_amplitude</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_text_to_drawable</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="textshader-zoom">
+<span id="shader-textshader-zoom"></span><h2>textshader.zoom<a class="headerlink" href="#textshader-zoom" title="Link to this heading"></a></h2>
+<p>Variables:</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_textshader_zoom_zoom</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_textshader_zoom_duration</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_slow_duration</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">u_text_slow_time</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">a_text_center</span><span class="p">;</span>
+<span class="k">attribute</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">a_text_min_time</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Vertex shader (priority 25):</p>
+<div class="highlight-glsl notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="n">l_textshader_zoom_duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_textshader_zoom_duration</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_text_slow_duration</span><span class="p">;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">l_textshader_zoom_duration</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">l_textshader_zoom_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clamp</span><span class="p">((</span><span class="n">u_text_slow_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a_text_min_time</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">l_textshader_zoom_duration</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">    </span><span class="nb">gl_Position</span><span class="p">.</span><span class="n">xy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mix</span><span class="p">(</span><span class="n">a_text_center</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nb">gl_Position</span><span class="p">.</span><span class="n">xy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a_text_center</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_textshader_zoom_zoom</span><span class="p">,</span><span class="w"> </span><span class="nb">gl_Position</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span><span class="w"> </span><span class="n">l_textshader_zoom_done</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building Distributions &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/build.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Android" href="android.html" />
+    <link rel="prev" title="Screenshots" href="screenshot.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Building Distributions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-configuration">Basic Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#special-files">Special Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#classifying-and-ignoring-files">Classifying and Ignoring Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#packages">Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archives">Archives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-old-game-directory">The Old-game Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-functions">Build Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#build.archive"><code class="docutils literal notranslate"><span class="pre">build.archive()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build.classify"><code class="docutils literal notranslate"><span class="pre">build.classify()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build.clear"><code class="docutils literal notranslate"><span class="pre">build.clear()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build.documentation"><code class="docutils literal notranslate"><span class="pre">build.documentation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build.executable"><code class="docutils literal notranslate"><span class="pre">build.executable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build.package"><code class="docutils literal notranslate"><span class="pre">build.package()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#build-info">Build Info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-configuration">Advanced Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Building Distributions</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/build.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="building-distributions">
+<h1>Building Distributions<a class="headerlink" href="#building-distributions" title="Link to this heading"></a></h1>
+<p>Ren'Py includes support for building game distributions. Upon choosing
+&quot;Build Distributions&quot; in the launcher, Ren'Py will scan itself and the
+project to determine the files to include in the distribution, will
+create any archives that are necessary, and will build package and
+update files.</p>
+<p>With no configuration, Ren'Py is able to build the following kinds of
+packages:</p>
+<dl class="simple">
+<dt>PC: Windows and Linux</dt><dd><p>A zip file targeting Windows x86_64 and Linux x86_64</p>
+</dd>
+<dt>Linux</dt><dd><p>A tar.bz2 file targeting Linux x86_64. This will also include
+the 32-bit and 64-bit ARM version of Ren'Py, if present. (These
+are found in the sdkarm Ren'Py package.)</p>
+</dd>
+<dt>Macintosh</dt><dd><p>A zip file containing a Macintosh application targeting macOS
+OS X on Intel and Apple Silicon processors. Game data will be
+included inside the application, which appears to the user
+as a single file. The updater does not work with this package.</p>
+</dd>
+<dt>Windows</dt><dd><p>A zip file targeting Windows x86_64.</p>
+</dd>
+<dt>Windows, Mac, and Linux for Markets</dt><dd><p>A distribution that contains the information required to run on
+software markets like itch.io and Steam. This isn't meant to be
+run directly (and probably won't work on the Mac), but should be
+fed to the app store upload process.</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The zip and tar.bz2 files that Ren'Py produces contain permissions
+information that must be present for Ren'Py to run on Linux and
+Macintosh.</p>
+<p>Unpacking and re-packing a zip file on Windows and then running it
+on Linux or Macintosh is not supported.</p>
+</div>
+<section id="basic-configuration">
+<h2>Basic Configuration<a class="headerlink" href="#basic-configuration" title="Link to this heading"></a></h2>
+<p>The build process can be configured by setting variables and calling
+function that live in the build namespace. This must be done from
+inside an <code class="docutils literal notranslate"><span class="pre">init</span> <span class="pre">python</span></code> block. The default settings for these configurations are
+set in <code class="file docutils literal notranslate"><span class="pre">options.rpy</span></code>.</p>
+<p>There are a few basic variables and functions that many games will
+use.</p>
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.name">
+<span class="sig-name descname"><span class="pre">build.name</span></span> <span class="pre">=</span> <span class="pre">&quot;...&quot;</span><a class="headerlink" href="#var-build.name" title="Link to this definition"></a></dt>
+<dd><p>This is used to automatically generate build.directory_name
+and build.executable_name, if neither is set. This should not
+contain spaces, colons, or semicolons.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.directory_name">
+<span class="sig-name descname"><span class="pre">build.directory_name</span></span> <span class="pre">=</span> <span class="pre">&quot;...&quot;</span><a class="headerlink" href="#var-build.directory_name" title="Link to this definition"></a></dt>
+<dd><p>This is used to create the names of directories in the archive
+files. For example, if this is set to &quot;mygame-1.0&quot;, the Linux
+version of the project will unpack to &quot;mygame-1.0-linux&quot;.</p>
+<p>This is also used to determine the name of the directory in
+which the package files are placed. For example, if you set
+build.directory_name to mygame-1.0, the archive files will
+be placed in mygame-1.0-dists in the directory above the base
+directory.</p>
+<p>This variable should not contain special characters like spaces,
+colons, and semicolons. If not set, it defaults to <a class="reference internal" href="#var-build.name"><code class="xref std std-var docutils literal notranslate"><span class="pre">build.name</span></code></a>
+a dash, and <a class="reference internal" href="config.html#var-config.version"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.version</span></code></a>.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.executable_name">
+<span class="sig-name descname"><span class="pre">build.executable_name</span></span> <span class="pre">=</span> <span class="pre">&quot;...&quot;</span><a class="headerlink" href="#var-build.executable_name" title="Link to this definition"></a></dt>
+<dd><p>This variable controls the name of the executables that the user
+clicks on to start the game.</p>
+<p>This variable should not contain special characters like spaces,
+colons, and semicolons. If not set, it defaults to <a class="reference internal" href="#var-build.name"><code class="xref std std-var docutils literal notranslate"><span class="pre">build.name</span></code></a>.</p>
+<p>For example, if this is set to &quot;mygame&quot;, the user will be able
+to run mygame.exe on Windows, mygame.app on Macintosh, and
+mygame.sh on Linux.</p>
+</dd></dl>
+
+</section>
+<section id="special-files">
+<span id="id1"></span><h2>Special Files<a class="headerlink" href="#special-files" title="Link to this heading"></a></h2>
+<p>There are two files that can be included in your game's base directory
+to customize the build.</p>
+<dl class="simple">
+<dt><code class="file docutils literal notranslate"><span class="pre">icon.ico</span></code></dt><dd><p>The icon that is used on Windows.</p>
+</dd>
+<dt><code class="file docutils literal notranslate"><span class="pre">icon.icns</span></code></dt><dd><p>The icon that is used on Macintosh.</p>
+</dd>
+</dl>
+<p>These icon files must be in specific formats. You'll need to use a
+program or web service (such as <a class="reference external" href="https://anyconv.com/png-to-ico-converter/">https://anyconv.com/png-to-ico-converter/</a> and
+<a class="reference external" href="https://anyconv.com/png-to-icns-converter/">https://anyconv.com/png-to-icns-converter/</a> ) to convert them.</p>
+</section>
+<section id="classifying-and-ignoring-files">
+<h2>Classifying and Ignoring Files<a class="headerlink" href="#classifying-and-ignoring-files" title="Link to this heading"></a></h2>
+<p>The build process works by first classifying files in the Ren'Py
+distribution and your game into file lists. These file lists are then
+added to package files.</p>
+<p>The classification is done by the build.classify function. It takes a
+patterns and a space-separated list of filenames. Patterns are matched
+from first to last, with the first match taking precedence (even if a
+more-specific pattern follows.) Patterns are matched with and without
+a leading /. Patterns may include the following special characters:</p>
+<dl class="simple">
+<dt>/</dt><dd><p>The directory separator.</p>
+</dd>
+<dt>*</dt><dd><p>Matches all characters except for the directory separator.</p>
+</dd>
+<dt>**</dt><dd><p>Matches all characters.</p>
+</dd>
+</dl>
+<p>For example:</p>
+<dl class="simple">
+<dt>**.txt</dt><dd><p>Matches all txt files.</p>
+</dd>
+<dt>game/*.txt</dt><dd><p>Matches txt files in the game directory.</p>
+</dd>
+</dl>
+<p>There are seven file lists that files can be classified into by
+default. (Ren'Py places its own files into the first six of these.)</p>
+<dl class="simple">
+<dt>all</dt><dd><p>These files will be included in all packages, and in Android
+builds.</p>
+</dd>
+<dt>linux</dt><dd><p>These files will be included in packages targeting Linux.</p>
+</dd>
+<dt>mac</dt><dd><p>These files will be included in packages targeting Macintosh.</p>
+</dd>
+<dt>windows</dt><dd><p>These files will be included in packages targeting Windows.</p>
+</dd>
+<dt>renpy</dt><dd><p>These files will be included in packages that require the Ren'Py
+engine files. (Linux, Macintosh, and Windows.)</p>
+</dd>
+<dt>android</dt><dd><p>These files will be included in Android builds.</p>
+</dd>
+</dl>
+<p>This set of valid file lists can be expanded by passing
+<a class="reference internal" href="#build.classify" title="build.classify"><code class="xref py py-func docutils literal notranslate"><span class="pre">build.classify()</span></code></a> new names as its <code class="docutils literal notranslate"><span class="pre">file_list</span></code> argument.</p>
+<p>Files can also be classified in archives. By default, the &quot;archive&quot;
+archive is declared:</p>
+<dl class="simple">
+<dt>archive</dt><dd><p>These files will be included in the archive.rpa archive.</p>
+</dd>
+</dl>
+<p>The set of archives can also be expanded, using the <a class="reference internal" href="#build.archive" title="build.archive"><code class="xref py py-func docutils literal notranslate"><span class="pre">build.archive()</span></code></a>
+function.</p>
+<p>Files that are not otherwise classified are placed in the &quot;all&quot; file
+list.</p>
+<p>To exclude files from distribution, classify them as None or the
+empty string. In this case, * and ** at the end of the pattern
+must match at least one character.</p>
+<p>For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># Include README.txt</span>
+<span class="n">build</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="s2">&quot;README.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span>
+
+<span class="c1"># But exclude all other txt files.</span>
+<span class="n">build</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="s2">&quot;**.txt&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># Add png and jpg files in the game directory into an archive.</span>
+<span class="n">build</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="s2">&quot;game/**.png&quot;</span><span class="p">,</span> <span class="s2">&quot;archive&quot;</span><span class="p">)</span>
+<span class="n">build</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="s2">&quot;game/**.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;archive&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h2>
+<p>Calling the build.documentation function with patterns marks files
+matching those patterns as documentation. Documentation files are
+included twice in a Macintosh application – both inside and outside
+of the application itself.</p>
+<p>For example, to mark all txt and html files in the base directory as
+documentation, call:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">build</span><span class="o">.</span><span class="n">documentation</span><span class="p">(</span><span class="s2">&quot;*.txt&quot;</span><span class="p">)</span>
+<span class="n">build</span><span class="o">.</span><span class="n">documentation</span><span class="p">(</span><span class="s2">&quot;*.html&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="packages">
+<span id="id2"></span><h2>Packages<a class="headerlink" href="#packages" title="Link to this heading"></a></h2>
+<p>It's also possible to add new types of packages to the Ren'Py build
+process. This is done by calling the build.package function with a
+package name, type, and a string containing the file lists to
+include.</p>
+<p>Say we wanted to build a normal version of our game, and one
+containing bonus material. We could classify the bonus files in to a
+&quot;bonus&quot; file list, and then declare an all-premium package with:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># Declare a new archive belonging to a new &quot;bonus&quot; file list.</span>
+<span class="n">build</span><span class="o">.</span><span class="n">archive</span><span class="p">(</span><span class="s2">&quot;bonus_archive&quot;</span><span class="p">,</span> <span class="s2">&quot;bonus&quot;</span><span class="p">)</span>
+
+<span class="c1"># Put the bonus files into the new archive.</span>
+<span class="n">build</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="s2">&quot;game/bonus/**&quot;</span><span class="p">,</span> <span class="s2">&quot;bonus_archive&quot;</span><span class="p">)</span>
+
+<span class="c1"># Declare the package.</span>
+<span class="n">build</span><span class="o">.</span><span class="n">package</span><span class="p">(</span><span class="s2">&quot;all-premium&quot;</span><span class="p">,</span> <span class="s2">&quot;zip&quot;</span><span class="p">,</span> <span class="s2">&quot;windows mac linux renpy all bonus&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Supported package types are &quot;zip&quot; and &quot;tar.bz2&quot; to generate files in
+those formats, and &quot;directory&quot; to create a directory filled with
+files.</p>
+</section>
+<section id="archives">
+<h2>Archives<a class="headerlink" href="#archives" title="Link to this heading"></a></h2>
+<p>Ren'Py supports combining files into a simple archive format. While
+not very secure, this protects files from casual copying.</p>
+<p>By default, all files classified into the &quot;archive&quot; file list will be
+placed in an archive.rpa archive, which is included in the all file
+list.</p>
+<p>By calling build.archive, it's possible to declare a new archives and
+the file lists they will be included in. (It's rare to use anything
+but the all file list, however.) To use an archive, classify files
+into a list with its name.</p>
+<p>For example, the following will archive images in <code class="file docutils literal notranslate"><span class="pre">images.rpa</span></code>, and
+game scripts into <code class="file docutils literal notranslate"><span class="pre">scripts.rpa</span></code>:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># Declare two archives.</span>
+<span class="n">build</span><span class="o">.</span><span class="n">archive</span><span class="p">(</span><span class="s2">&quot;scripts&quot;</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span>
+<span class="n">build</span><span class="o">.</span><span class="n">archive</span><span class="p">(</span><span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span>
+
+<span class="c1"># Put script files into the scripts archive.</span>
+<span class="n">build</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="s2">&quot;game/**.rpy&quot;</span><span class="p">,</span> <span class="s2">&quot;scripts&quot;</span><span class="p">)</span>
+<span class="n">build</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="s2">&quot;game/**.rpyc&quot;</span><span class="p">,</span> <span class="s2">&quot;scripts&quot;</span><span class="p">)</span>
+
+<span class="c1"># Put images into the images archive.</span>
+<span class="n">build</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="s2">&quot;game/**.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;images&quot;</span><span class="p">)</span>
+<span class="n">build</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="s2">&quot;game/**.png&quot;</span><span class="p">,</span> <span class="s2">&quot;images&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If an archive file is empty, it will not be built.</p>
+<p>Please think twice about archiving your game. Keeping files open will
+help others run your game on future platforms – platforms that may not
+exist until after you're gone.</p>
+</section>
+<section id="the-old-game-directory">
+<span id="old-game"></span><h2>The Old-game Directory<a class="headerlink" href="#the-old-game-directory" title="Link to this heading"></a></h2>
+<p>When making multiple releases, like when a game is distributed through
+early access or platforms like Patreon, it's necessary to keep the
+old .rpyc files around. The .rpyc files contain information that is
+necessary to ensure that saves can be loaded, and omitting these
+files can cause problems.</p>
+<p>At the same time, Ren'Py will update the .rpyc files in the game
+directory when these files are changed, making the files unsuitable
+for inclusion in version control.</p>
+<p>To solve this problem, Ren'Py allows you to place the .rpyc files from
+a previous distribution into the old-game directory, which is alongside
+the game directory. The directory structure of <code class="file docutils literal notranslate"><span class="pre">old-game/</span></code> should match
+the directory structure of <code class="file docutils literal notranslate"><span class="pre">game/</span></code>. For example, <code class="file docutils literal notranslate"><span class="pre">game/scripts/day1.rpyc</span></code>
+should be moved to <code class="file docutils literal notranslate"><span class="pre">old-game/scripts/day1.rpyc</span></code>. Files in old-game that are
+not .rpyc files are ignored.</p>
+<p>The advantage of using old-game is that the old-game .rpyc files can be
+checked in, and that Ren'Py will always start from a known source when
+generating .rpyc files. While this might not be necessary for a
+single-developer game with minor changes, old-game is useful for large
+multiple developer games.</p>
+<p>More information about how .rpyc files help with loading saves into changed
+games can be found at:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.patreon.com/posts/under-hood-rpyc-23035810">Under the hood: .rpyc files</a></p></li>
+<li><p><a class="reference external" href="https://www.patreon.com/posts/renpy-developer-48146908">Ren'Py developer update: February 2021</a></p></li>
+</ul>
+</section>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<p>Some stores ask the requirements for Ren'Py applications to run. While
+this varies from game to game, here's a set of minimums for a generic
+visual novel.</p>
+<p><strong>Windows</strong></p>
+<ul class="simple">
+<li><p>Version: Windows 7 or higher.</p></li>
+<li><p>CPU: 2.0 Ghz 64-bit Intel-compatible</p></li>
+<li><p>RAM: 2.0 GB</p></li>
+<li><p>Graphics: OpenGL 3.0 or DirectX 11</p></li>
+</ul>
+<p><strong>macOS</strong></p>
+<ul class="simple">
+<li><p>Version: 10.10+</p></li>
+<li><p>CPU: 2.0 Ghz 64-bit Intel-compatible (Apple silicon supported through Rosetta 2)</p></li>
+<li><p>RAM: 2.0 GB</p></li>
+<li><p>Graphics: OpenGL 3.0</p></li>
+</ul>
+<p><strong>Linux</strong></p>
+<ul class="simple">
+<li><p>Version: Ubuntu 16.04+</p></li>
+<li><p>CPU: 2.0 Ghz 64-bit Intel-compatible</p></li>
+<li><p>RAM: 2.0 GB</p></li>
+<li><p>Graphics: OpenGL 3.0</p></li>
+</ul>
+<p>The amount of disk space required is entirely determined by the assets in your
+game, and the amount of CPU and RAM needed may also vary. Ren'Py will also run
+under OpenGL 2 with certain extensions available.</p>
+</section>
+<section id="build-functions">
+<h2>Build Functions<a class="headerlink" href="#build-functions" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="build.archive">
+<span class="sig-prename descclassname"><span class="pre">build.</span></span><span class="sig-name descname"><span class="pre">archive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#build.archive" title="Link to this definition"></a></dt>
+<dd><p>Declares the existence of an archive, whose <cite>name</cite> is added to the
+list of available archive names, which can be passed to
+<a class="reference internal" href="#build.classify" title="build.classify"><code class="xref py py-func docutils literal notranslate"><span class="pre">build.classify()</span></code></a>.</p>
+<p>If one or more files are classified with <cite>name</cite>, <cite>name</cite>.rpa is
+built as an archive, and then distributed in packages including
+the <cite>file_list</cite> given here.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">build</span><span class="o">.</span><span class="n">archive</span><span class="p">(</span><span class="s2">&quot;secret&quot;</span><span class="p">,</span> <span class="s2">&quot;windows&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If any file is included in the &quot;secret&quot; archive using the
+<a class="reference internal" href="#build.classify" title="build.classify"><code class="xref py py-func docutils literal notranslate"><span class="pre">build.classify()</span></code></a> function, the file will be included inside
+the secret.rpa archive in the windows builds.</p>
+<p>As with the <a class="reference internal" href="#build.classify" title="build.classify"><code class="xref py py-func docutils literal notranslate"><span class="pre">build.classify()</span></code></a> function, if the name given as
+<cite>file_list</cite> doesn't exist as a file list name, it is created and
+added to the set of valid file lists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="build.classify">
+<span class="sig-prename descclassname"><span class="pre">build.</span></span><span class="sig-name descname"><span class="pre">classify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#build.classify" title="Link to this definition"></a></dt>
+<dd><p>Classifies files that match <cite>pattern</cite> into <cite>file_list</cite>, which can
+also be an archive name.</p>
+<p>If the name given as <cite>file_list</cite> doesn't exist as an archive or file
+list name, it is created and added to the set of valid file lists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="build.clear">
+<span class="sig-prename descclassname"><span class="pre">build.</span></span><span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#build.clear" title="Link to this definition"></a></dt>
+<dd><p>Clears the list of patterns used to classify files.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="build.documentation">
+<span class="sig-prename descclassname"><span class="pre">build.</span></span><span class="sig-name descname"><span class="pre">documentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#build.documentation" title="Link to this definition"></a></dt>
+<dd><p>Declares a pattern that matches documentation. In a mac app build,
+files matching the documentation pattern are stored twice - once
+inside the app package, and again outside of it.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="build.executable">
+<span class="sig-prename descclassname"><span class="pre">build.</span></span><span class="sig-name descname"><span class="pre">executable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#build.executable" title="Link to this definition"></a></dt>
+<dd><p>Adds a pattern marking files as executable on platforms that support it.
+(Linux and Macintosh)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="build.package">
+<span class="sig-prename descclassname"><span class="pre">build.</span></span><span class="sig-name descname"><span class="pre">package</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_lists</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dlc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#build.package" title="Link to this definition"></a></dt>
+<dd><p>Declares a package that can be built by the packaging
+tool.</p>
+<dl>
+<dt><cite>name</cite></dt><dd><p>The name of the package.</p>
+</dd>
+<dt><cite>format</cite></dt><dd><p>The format of the package. A string containing a space separated
+list of:</p>
+<dl class="simple">
+<dt>zip</dt><dd><p>A zip file.</p>
+</dd>
+<dt>tar.bz2</dt><dd><p>A tar.bz2 file.</p>
+</dd>
+<dt>directory</dt><dd><p>A directory containing the files.</p>
+</dd>
+<dt>dmg</dt><dd><p>A Macintosh DMG containing the files.</p>
+</dd>
+<dt>app-zip</dt><dd><p>A zip file containing a macintosh application. This format
+doesn't support the Ren'Py updater.</p>
+</dd>
+<dt>app-directory</dt><dd><p>A directory containing the mac app. This format
+doesn't support the Ren'Py updater.</p>
+</dd>
+<dt>app-dmg</dt><dd><p>A macintosh drive image containing a dmg. (Mac only.) This format
+doesn't support the Ren'Py updater.</p>
+</dd>
+<dt>bare-zip</dt><dd><p>A zip file without <a class="reference internal" href="#var-build.directory_name"><code class="xref std std-var docutils literal notranslate"><span class="pre">build.directory_name</span></code></a>
+prepended.</p>
+</dd>
+<dt>bare-tar.bz2</dt><dd><p>A zip file without <a class="reference internal" href="#var-build.directory_name"><code class="xref std std-var docutils literal notranslate"><span class="pre">build.directory_name</span></code></a>
+prepended.</p>
+</dd>
+<dt>null</dt><dd><p>Used to produce only updates, without the main package.</p>
+</dd>
+</dl>
+<p>The empty string will not build any package formats (this
+makes dlc possible).</p>
+</dd>
+<dt><cite>file_lists</cite></dt><dd><p>A list containing the file lists that will be included
+in the package.</p>
+</dd>
+<dt><cite>description</cite></dt><dd><p>An optional description of the package to be built.</p>
+</dd>
+<dt><cite>update</cite></dt><dd><p>If true and updates are being built, an update will be
+built for this package.</p>
+</dd>
+<dt><cite>dlc</cite></dt><dd><p>If true, any zip or tar.bz2 file will be built in
+standalone DLC mode, without an update directory.</p>
+</dd>
+<dt><cite>hidden</cite></dt><dd><p>If true, this will be hidden from the list of packages in
+the launcher.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="build-info">
+<h2>Build Info<a class="headerlink" href="#build-info" title="Link to this heading"></a></h2>
+<p>There are two variables that can be used to provide information about
+the build. This information is used to generate the game/cache/build_info.json
+file, which is loaded as Ren'Py starts.</p>
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.time">
+<span class="sig-name descname"><span class="pre">build.time</span></span> <span class="pre">=</span> <span class="pre">None</span><a class="headerlink" href="#var-build.time" title="Link to this definition"></a></dt>
+<dd><p>This variable defaults to None, but if your game has been built,
+it will be set to the time the game was built, in seconds since
+January 1, 1970.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.info">
+<span class="sig-name descname"><span class="pre">build.info</span></span> <span class="pre">=</span> <span class="pre">{</span> <span class="pre">}</span><a class="headerlink" href="#var-build.info" title="Link to this definition"></a></dt>
+<dd><p>This variable lets you store information that will be placed into
+the game/cache/build_info.json file in the built game. When the built
+game starts, game/cache/build_info.json is loaded and the contents
+placed into this variable.</p>
+<p>Generally, you'll want to check that a field does not exist, and
+set it, using setdefault.</p>
+<p>For example, this stores the name of the computer that built the
+game in the build_info.json file:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">python</span> <span class="k">hide</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">socket</span>
+    <span class="n">build</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;build_host&quot;</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The information in this variable needs to be of types that can be
+placed in JSON files. (That is, None, booleans, strings,
+numbers, lists, and dictionaries)</p>
+</dd></dl>
+
+</section>
+<section id="advanced-configuration">
+<h2>Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Link to this heading"></a></h2>
+<p>The following variables provide further control of the build process:</p>
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.allow_integrated_gpu">
+<span class="sig-name descname"><span class="pre">build.allow_integrated_gpu</span></span> <span class="pre">=</span> <span class="pre">True</span><a class="headerlink" href="#var-build.allow_integrated_gpu" title="Link to this definition"></a></dt>
+<dd><p>Allows Ren'Py to run on the integrated GPU on platforms that have both
+integrated and discrete GPUs. Right now, this is only supported on Mac
+OS X.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.destination">
+<span class="sig-name descname"><span class="pre">build.destination</span></span> <span class="pre">=</span> <span class="pre">&quot;{directory_name}-dists&quot;</span><a class="headerlink" href="#var-build.destination" title="Link to this definition"></a></dt>
+<dd><p>Gives the path to the directory the archive files will be placed in. This
+may be an absolute or a relative path. A relative path is considered to
+be relative to the projects directory.</p>
+<p>The following values are substituted in using Python's <code class="docutils literal notranslate"><span class="pre">str.format</span></code> function.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">{directory_name}</span></code></dt><dd><p>The value of build.directory_name.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">{executable_name}</span></code></dt><dd><p>The value of build.executable_name.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">{version}</span></code></dt><dd><p>The value of build.version.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.change_icon_i686">
+<span class="sig-name descname"><span class="pre">build.change_icon_i686</span></span> <span class="pre">=</span> <span class="pre">True</span><a class="headerlink" href="#var-build.change_icon_i686" title="Link to this definition"></a></dt>
+<dd><p>If True, and icon.ico exists, the icon of the 32-bit Windows executable
+will be changed. If False, the icon will not be changed. Setting this
+to False may prevent some antivirus programs from producing a false
+positive for your game.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.exclude_empty_directories">
+<span class="sig-name descname"><span class="pre">build.exclude_empty_directories</span></span> <span class="pre">=</span> <span class="pre">True</span><a class="headerlink" href="#var-build.exclude_empty_directories" title="Link to this definition"></a></dt>
+<dd><p>If true, empty directories (including directories left empty by
+file archiving) will be removed from generated packages. If false,
+empty directories will be included.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.include_i686">
+<span class="sig-name descname"><span class="pre">build.include_i686</span></span> <span class="pre">=</span> <span class="pre">True</span><a class="headerlink" href="#var-build.include_i686" title="Link to this definition"></a></dt>
+<dd><p>If true, files necessary to run on 32-bit x86 processors will be included
+in the Linux and Mac builds. If False, these files will not be included.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.include_old_themes">
+<span class="sig-name descname"><span class="pre">build.include_old_themes</span></span> <span class="pre">=</span> <span class="pre">True</span><a class="headerlink" href="#var-build.include_old_themes" title="Link to this definition"></a></dt>
+<dd><p>When true, files required to support themes that existed before Ren'Py
+6.99.9 will be included in the build. When false, such files are excluded.</p>
+<p>This is set to False when <a class="reference internal" href="gui_advanced.html#gui.init" title="gui.init"><code class="xref py py-func docutils literal notranslate"><span class="pre">gui.init()</span></code></a> is called.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.include_update">
+<span class="sig-name descname"><span class="pre">build.include_update</span></span> <span class="pre">=</span> <span class="pre">False</span><a class="headerlink" href="#var-build.include_update" title="Link to this definition"></a></dt>
+<dd><p>When true, Ren'Py will produce the files required for the <a class="reference internal" href="updater.html"><span class="doc">updater</span></a>
+to work.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.itch_project">
+<span class="sig-name descname"><span class="pre">build.itch_project</span></span> <span class="pre">=</span> <span class="pre">None</span><a class="headerlink" href="#var-build.itch_project" title="Link to this definition"></a></dt>
+<dd><p>Setting this allows the Ren'Py launcher to upload your project to
+itch.io. This should be set to the name of a project registered
+with itch. (For example, &quot;renpytom/the-question&quot;).</p>
+<p>Once this is set, after the distributions have been built, you can
+click &quot;Build distributions&quot;, &quot;Upload to itch.io&quot; to cause an upload
+to occur.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.itch_channels">
+<span class="sig-name descname"><span class="pre">build.itch_channels</span></span> <span class="pre">=</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span><a class="headerlink" href="#var-build.itch_channels" title="Link to this definition"></a></dt>
+<dd><p>This maps a filename pattern (such as &quot;*-win.zip&quot;) to a string giving
+the itch channel the file should be uploaded to. This defaults to:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;*-all.zip&quot;</span> <span class="p">:</span> <span class="s2">&quot;win-osx-linux&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;*-market.zip&quot;</span> <span class="p">:</span> <span class="s2">&quot;win-osx-linux&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;*-pc.zip&quot;</span> <span class="p">:</span> <span class="s2">&quot;win-linux&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;*-win.zip&quot;</span> <span class="p">:</span> <span class="s2">&quot;win&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;*-mac.zip&quot;</span> <span class="p">:</span> <span class="s2">&quot;osx&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;*-linux.tar.bz2&quot;</span> <span class="p">:</span> <span class="s2">&quot;linux&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;*-release.apk&quot;</span> <span class="p">:</span> <span class="s2">&quot;android&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.mac_info_plist">
+<span class="sig-name descname"><span class="pre">build.mac_info_plist</span></span> <span class="pre">=</span> <span class="pre">{</span> <span class="pre">}</span><a class="headerlink" href="#var-build.mac_info_plist" title="Link to this definition"></a></dt>
+<dd><p>This is a dictionary mapping strings to strings, that can be used to
+add or override keys in the mac's Info.plist file.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.update_formats">
+<span class="sig-name descname"><span class="pre">build.update_formats</span></span> <span class="pre">=</span> <span class="pre">[</span> <span class="pre">&quot;rpu&quot;</span> <span class="pre">]</span><a class="headerlink" href="#var-build.update_formats" title="Link to this definition"></a></dt>
+<dd><p>This is a list of formats that the updater will build. The default,
+&quot;rpu&quot; is supported from Ren'Py 7.7 and 8.2 on. If you need to support
+updating using the earlier zsync-based updates, add &quot;zsync' to the
+list.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-build.game_only_update">
+<span class="sig-name descname"><span class="pre">build.game_only_update</span></span> <span class="pre">=</span> <span class="pre">False</span><a class="headerlink" href="#var-build.game_only_update" title="Link to this definition"></a></dt>
+<dd><p>If true, <a class="reference internal" href="#var-build.include_update"><code class="xref std std-var docutils literal notranslate"><span class="pre">build.include_update</span></code></a> is enabled, and
+the &quot;Game-Only Update for Mobile&quot; package becomes available.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="screenshot.html" class="btn btn-neutral float-left" title="Screenshots" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="android.html" class="btn btn-neutral float-right" title="Android" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

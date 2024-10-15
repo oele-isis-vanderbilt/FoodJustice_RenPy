@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Labels &amp; Control Flow &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/label.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dialogue and Narration" href="dialogue.html" />
+    <link rel="prev" title="Language Basics" href="language_basics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Labels &amp; Control Flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#label-statement">Label Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jump-statement">Jump Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#call-statement">Call Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#return-statement">Return Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#special-labels">Special Labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#labels-control-flow-functions">Labels &amp; Control Flow Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.call_stack_depth"><code class="docutils literal notranslate"><span class="pre">renpy.call_stack_depth()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.dynamic"><code class="docutils literal notranslate"><span class="pre">renpy.dynamic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_all_labels"><code class="docutils literal notranslate"><span class="pre">renpy.get_all_labels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_return_stack"><code class="docutils literal notranslate"><span class="pre">renpy.get_return_stack()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.has_label"><code class="docutils literal notranslate"><span class="pre">renpy.has_label()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.mark_label_seen"><code class="docutils literal notranslate"><span class="pre">renpy.mark_label_seen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.mark_label_unseen"><code class="docutils literal notranslate"><span class="pre">renpy.mark_label_unseen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.pop_call"><code class="docutils literal notranslate"><span class="pre">renpy.pop_call()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.seen_label"><code class="docutils literal notranslate"><span class="pre">renpy.seen_label()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.set_return_stack"><code class="docutils literal notranslate"><span class="pre">renpy.set_return_stack()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#contexts">Contexts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.call_in_new_context"><code class="docutils literal notranslate"><span class="pre">renpy.call_in_new_context()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.context"><code class="docutils literal notranslate"><span class="pre">renpy.context()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.context_dynamic"><code class="docutils literal notranslate"><span class="pre">renpy.context_dynamic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.context_nesting_level"><code class="docutils literal notranslate"><span class="pre">renpy.context_nesting_level()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.invoke_in_new_context"><code class="docutils literal notranslate"><span class="pre">renpy.invoke_in_new_context()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.jump_out_of_context"><code class="docutils literal notranslate"><span class="pre">renpy.jump_out_of_context()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.reset_all_contexts"><code class="docutils literal notranslate"><span class="pre">renpy.reset_all_contexts()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Labels &amp; Control Flow</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/label.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="labels-control-flow">
+<h1>Labels &amp; Control Flow<a class="headerlink" href="#labels-control-flow" title="Link to this heading"></a></h1>
+<section id="label-statement">
+<span id="id1"></span><h2>Label Statement<a class="headerlink" href="#label-statement" title="Link to this heading"></a></h2>
+<p>Label statements allow the given name to be assigned to a program point. They
+exist solely to be called or jumped to, either from Ren'Py script, Python
+functions, or from screens.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">sample1</span><span class="p">:</span>
+    <span class="s2">&quot;Here is &#39;sample1&#39; label.&quot;</span>
+
+<span class="k">label</span> <span class="n">sample2</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">):</span>
+    <span class="s2">&quot;Here is &#39;sample2&#39; label.&quot;</span>
+    <span class="s2">&quot;a = [a]&quot;</span>
+</pre></div>
+</div>
+<p>A label statement may have a block associated with it. In that case, control
+enters the block whenever the label statement is reached, and proceeds with the
+statement after the label statement whenever the end of the block is reached:
+the following code, when jumping to the &quot;origin&quot; label, produces the &quot;a, b, c&quot;
+sequence.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">origin</span><span class="p">:</span>
+<span class="s2">&quot;a&quot;</span>
+<span class="k">label</span> <span class="n">hasblock</span><span class="p">:</span>
+    <span class="s2">&quot;b&quot;</span>
+<span class="s2">&quot;c&quot;</span>
+<span class="k">return</span>
+</pre></div>
+</div>
+<p>There are two kinds of labels: <em>global</em> and <em>local</em> labels. Global labels live
+in one global namespace shared across all project files and thus should have unique
+names per game. A local label on the other hand refer to a global label, so several
+local labels in the game can have the same name, provided they are related to
+different global labels. To declare a local label, prefix its name with a period
+<code class="docutils literal notranslate"><span class="pre">.</span></code>, and put it under a global label which it will belong to.
+For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">global_label</span><span class="p">:</span>
+    <span class="s2">&quot;Under a global label..&quot;</span>
+<span class="k">label</span> <span class="o">.</span><span class="n">local_label</span><span class="p">:</span>
+    <span class="s2">&quot;..resides a local one.&quot;</span>
+    <span class="k">jump</span> <span class="o">.</span><span class="n">another_local</span>
+<span class="k">label</span> <span class="o">.</span><span class="n">another_local</span><span class="p">:</span>
+    <span class="s2">&quot;And another !&quot;</span>
+    <span class="k">jump</span> <span class="o">.</span><span class="n">local_label</span>
+</pre></div>
+</div>
+<p>Local labels can be referenced directly inside the same global label they are
+declared in, or by their full name, consisting of global and local name parts:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">another_global</span><span class="p">:</span>
+    <span class="s2">&quot;Now lets jump inside a local label located somewhere else.&quot;</span>
+    <span class="k">jump</span> <span class="n">global_label</span><span class="o">.</span><span class="n">local_name</span>
+</pre></div>
+</div>
+<p>The label statement may take an optional list of parameters. These parameters
+are processed as described in <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0570/"><strong>PEP 570</strong></a>, with two exceptions:</p>
+<p>First, the values of default parameters are evaluated at call time.</p>
+<p>Second, the variables are scoped dynamically, rather than lexically. This means
+that when a variable gets its value from a label parameter, it will be reverted
+(to the previous value of the variable if it had one, or to the absence of the
+variable otherwise) when a return statement is reached. It also means that given
+a statement using a certain variable, that variable may or may not get its value
+from a label parameter depending on how the statement was reached ; that is not
+possible in pure Python code.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">default</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+    <span class="k">menu</span><span class="p">:</span>
+        <span class="s2">&quot;Call&quot;</span><span class="p">:</span>
+            <span class="k">call</span> <span class="n">label_with_params</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="s2">&quot;Jump&quot;</span><span class="p">:</span>
+            <span class="k">jump</span> <span class="n">label_without_params</span>
+    <span class="k">jump</span> <span class="n">start</span>
+
+<span class="k">label</span> <span class="n">label_with_params</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+<span class="k">label</span> <span class="n">label_without_params</span><span class="p">:</span>
+    <span class="n">e</span> <span class="s2">&quot;a = [a]&quot;</span> <span class="c1"># displays 5 or 3 depending on what path was taken</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p>It doesn't generally make sense to have a label with parameters be reached by a
+jump or a previous statement. For an example of labels with parameters, see the
+<a class="reference internal" href="#call-statement"><span class="std std-ref">call statement</span></a>.</p>
+</section>
+<section id="jump-statement">
+<span id="id2"></span><h2>Jump Statement<a class="headerlink" href="#jump-statement" title="Link to this heading"></a></h2>
+<p>The jump statement is used to transfer control to the given label.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">expression</span></code> keyword is present, the expression following it is
+evaluated, and the string so computed is used as the label name of the
+statement to jump to. If the <code class="docutils literal notranslate"><span class="pre">expression</span></code> keyword is not present, the label
+name of the statement to jump to must be explicitly given.</p>
+<p>A local label name can be passed, either with <code class="docutils literal notranslate"><span class="pre">expression</span></code> or without,
+and either with the global label prepended (&quot;global_label.local_label&quot;),
+or starting with a dot (&quot;.local_label&quot;).</p>
+<p>Unlike call, jump does not push the next statement onto a stack. As a
+result, there's no way to return to where you've jumped from.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">loop_start</span><span class="p">:</span>
+
+    <span class="n">e</span> <span class="s2">&quot;Oh no! It looks like we&#39;re trapped in an infinite loop.&quot;</span>
+
+    <span class="k">jump</span> <span class="n">loop_start</span>
+</pre></div>
+</div>
+</section>
+<section id="call-statement">
+<span id="id3"></span><h2>Call Statement<a class="headerlink" href="#call-statement" title="Link to this heading"></a></h2>
+<p>The call statement is used to transfer control to the given label. It
+also pushes the next statement onto the call stack, allowing the return statement
+to return control to the statement following the call.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">expression</span></code> keyword is present, the expression following it is evaluated, and the
+resulting string is used as the name of the label to call. If the
+<code class="docutils literal notranslate"><span class="pre">expression</span></code> keyword is not present, the name of the label to call must be
+explicitly given.</p>
+<p>A local label name can be passed, either with <code class="docutils literal notranslate"><span class="pre">expression</span></code> or without,
+and either with the global label prepended (&quot;global_label.local_label&quot;),
+or starting with a dot (&quot;.local_label&quot;).</p>
+<p>If the optional <code class="docutils literal notranslate"><span class="pre">from</span></code> clause is present, it has the effect of including a label
+statement with the given name as the statement immediately following the call
+statement. An explicit label helps to ensure that saved games with return
+stacks can return to the proper place when loaded on a changed script.</p>
+<p>The call statement may take arguments, which are processed as described in <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0448/"><strong>PEP 448</strong></a>.</p>
+<p>When using a call expression with an arguments list, the <code class="docutils literal notranslate"><span class="pre">pass</span></code> keyword must
+be inserted between the expression and the arguments list. Otherwise, the
+arguments list will be parsed as part of the expression, not as part of the
+call.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+
+    <span class="n">e</span> <span class="s2">&quot;First, we will call a subroutine.&quot;</span>
+
+    <span class="k">call</span> <span class="n">subroutine</span>
+
+    <span class="k">call</span> <span class="n">subroutine</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">call</span> <span class="k">expression</span> <span class="s2">&quot;sub&quot;</span> <span class="o">+</span> <span class="s2">&quot;routine&quot;</span> <span class="k">pass</span> <span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">return</span>
+
+<span class="c1"># ...</span>
+
+<span class="k">label</span> <span class="n">subroutine</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+
+    <span class="n">e</span> <span class="s2">&quot;I came here [count] time(s).&quot;</span>
+    <span class="n">e</span> <span class="s2">&quot;Next, we will return from the subroutine.&quot;</span>
+
+    <span class="k">return</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Publishing a game without <code class="docutils literal notranslate"><span class="pre">from</span></code> clauses for each <code class="docutils literal notranslate"><span class="pre">call</span></code> statement
+is dangerous, if you intend to publish updates of the game later on.
+If no such clauses are added, and if you edit the file containing the
+<code class="docutils literal notranslate"><span class="pre">call</span></code> instruction, there is a potential risk for saves made inside
+the called label to become broken.</p>
+<p>Using the &quot;Add from clauses to calls&quot; option when building a game's
+distribution can solve that issue.</p>
+</div>
+</section>
+<section id="return-statement">
+<span id="id4"></span><h2>Return Statement<a class="headerlink" href="#return-statement" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">return</span></code> statement pops the top statement off of the call stack, and transfers
+control to it. If the call stack is empty, the return statement restarts
+Ren'Py, returning control to the main menu.</p>
+<p>If the optional expression is given to return, it is evaluated, and it's result
+is stored in the <code class="docutils literal notranslate"><span class="pre">_return</span></code> variable. This variable is dynamically scoped to each
+context.</p>
+</section>
+<section id="special-labels">
+<span id="id5"></span><h2>Special Labels<a class="headerlink" href="#special-labels" title="Link to this heading"></a></h2>
+<p>The following labels are used by Ren'Py:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">start</span></code></dt><dd><p>By default, Ren'Py jumps to this label when the game starts.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">quit</span></code></dt><dd><p>If it exists, this label is called in a new context when the user
+quits the game.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">after_load</span></code></dt><dd><p>If it exists, this label is called when a game is loaded. It can be
+use to fix data when the game is updated. If data is changed by this
+label, <a class="reference internal" href="save_load_rollback.html#renpy.block_rollback" title="renpy.block_rollback"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.block_rollback()</span></code></a> should be called to prevent those
+changes from being reverted if the player rolls back past the load
+point.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">splashscreen</span></code></dt><dd><p>If it exists, this label is called when the game is first run, before
+showing the main menu. Please see <a class="reference internal" href="splashscreen_presplash.html#adding-a-splashscreen"><span class="std std-ref">Adding a Splashscreen</span></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">before_main_menu</span></code></dt><dd><p>If it exists, this label is called before the main menu. It is used in
+rare cases to set up the main menu, for example by starting a movie
+playing in the background.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">main_menu</span></code></dt><dd><p>If it exists, this label is called instead of the main menu. If it returns,
+Ren'Py will start the game at the <code class="docutils literal notranslate"><span class="pre">start</span></code> label. For example, the
+following will immediately start the game without displaying the
+main menu.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">main_menu</span><span class="p">:</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">after_warp</span></code></dt><dd><p>If it is existed, this label is called after a warp but before the warped-to
+statement executes. Please see <a class="reference internal" href="developer_tools.html#warping-to-a-line"><span class="std std-ref">Warping to a line</span></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">hide_windows</span></code></dt><dd><p>If it exists, this label is called when the player hides the windows with
+the right mouse button or the H key. If this returns true, the hide is
+cancelled (it's assumed the hide has occurred). Otherwise, the hide
+continues.</p>
+</dd>
+</dl>
+</section>
+<section id="labels-control-flow-functions">
+<h2>Labels &amp; Control Flow Functions<a class="headerlink" href="#labels-control-flow-functions" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.call_stack_depth">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">call_stack_depth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.call_stack_depth" title="Link to this definition"></a></dt>
+<dd><p>Returns the depth of the call stack of the current context - the number
+of calls that have run without being returned from or popped from the
+call stack.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.dynamic">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">dynamic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">variables</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.dynamic" title="Link to this definition"></a></dt>
+<dd><p>This can be given one or more variable names as arguments. This makes the
+variables dynamically scoped to the current call. When the call returns, the
+variables will be reset to the value they had when this function was called.</p>
+<p>Variables in <a class="reference internal" href="python.html#named-stores"><span class="std std-ref">named stores</span></a> are supported.</p>
+<p>If the variables are given as keyword arguments, the value of the argument
+is assigned to the variable name.</p>
+<p>Example calls are:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">$</span> <span class="n">renpy</span><span class="o">.</span><span class="n">dynamic</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">)</span>
+<span class="k">$</span> <span class="n">renpy</span><span class="o">.</span><span class="n">dynamic</span><span class="p">(</span><span class="s2">&quot;mystore.serial_number&quot;</span><span class="p">)</span>
+<span class="k">$</span> <span class="n">renpy</span><span class="o">.</span><span class="n">dynamic</span><span class="p">(</span><span class="n">players</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_all_labels">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_all_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_all_labels" title="Link to this definition"></a></dt>
+<dd><p>Returns the set of all labels defined in the program, including labels
+defined for internal use in the libraries.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_return_stack">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_return_stack</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_return_stack" title="Link to this definition"></a></dt>
+<dd><p>Returns a list giving the current return stack. The return stack is a
+list of statement names.</p>
+<p>The statement names will be strings (for labels), or opaque tuples (for
+non-label statements).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.has_label">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">has_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.has_label" title="Link to this definition"></a></dt>
+<dd><p>Returns true if <cite>name</cite> is a valid label in the program, or false
+otherwise.</p>
+<dl class="simple">
+<dt><cite>name</cite></dt><dd><p>Should be a string to check for the existence of a label. It can
+also be an opaque tuple giving the name of a non-label statement.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.mark_label_seen">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">mark_label_seen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.mark_label_seen" title="Link to this definition"></a></dt>
+<dd><p>Marks the named label as if it has been already executed on the current user's
+system.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.mark_label_unseen">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">mark_label_unseen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.mark_label_unseen" title="Link to this definition"></a></dt>
+<dd><p>Marks the named label as if it has not been executed on the current user's
+system yet.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.pop_call">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">pop_call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.pop_call" title="Link to this definition"></a></dt>
+<dd><p>Pops the current call from the call stack, without returning to the
+location. Also reverts the values of <a class="reference internal" href="#renpy.dynamic" title="renpy.dynamic"><code class="xref py py-func docutils literal notranslate"><span class="pre">dynamic</span></code></a>
+variables, the same way the Ren'Py return statement would.</p>
+<p>This can be used if a label that is called decides not to return
+to its caller.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.seen_label">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">seen_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.seen_label" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the named label has executed at least once on the current user's
+system, and false otherwise. This can be used to unlock scene galleries, for
+example.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.set_return_stack">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">set_return_stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stack</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.set_return_stack" title="Link to this definition"></a></dt>
+<dd><p>Sets the current return stack. The return stack is a list of statement
+names.</p>
+<p>Statement names may be strings (for labels) or opaque tuples (for
+non-label statements).</p>
+<p>The most common use of this is to use:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">renpy</span><span class="o">.</span><span class="n">set_return_stack</span><span class="p">([])</span>
+</pre></div>
+</div>
+<p>to clear the return stack.</p>
+</dd></dl>
+
+</section>
+<section id="contexts">
+<span id="context"></span><h2>Contexts<a class="headerlink" href="#contexts" title="Link to this heading"></a></h2>
+<p>Contexts are used internally by Ren'Py to manage the changeable and saveable
+state of the game. Contexts include:</p>
+<ul class="simple">
+<li><p>the currently running Ren'Py statement,</p></li>
+<li><p>the call stack, as described above, and the names and former values of dynamic
+variables created by <a class="reference internal" href="#renpy.dynamic" title="renpy.dynamic"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.dynamic()</span></code></a>,</p></li>
+<li><p>the images currently being shown (and informations about them like their attributes,
+the transforms applied to them and so on),</p></li>
+<li><p>the screens being shown, and the variables inside them,</p></li>
+<li><p>the audio that is playing or queued.</p></li>
+</ul>
+<p>Most of the time there is only one context at play, and only one instance of each
+of these elements exists. This changes when entering the main or game game menus;
+everything above can be changed, and will be restored when leaving the menu
+context. Some of these changes are automatic, like the screens layer being
+cleared when entering a context.</p>
+<p>Ren'Py also creates new contexts as part of <a class="reference internal" href="rooms.html#replay"><span class="std std-ref">Replay</span></a> and when
+<a class="reference internal" href="screen_actions.html#HideInterface" title="HideInterface"><code class="xref py py-func docutils literal notranslate"><span class="pre">hiding</span> <span class="pre">the</span> <span class="pre">interface</span></code></a>.</p>
+<p>The creation of <a class="reference internal" href="screens.html#screens"><span class="std std-ref">screen language</span></a> has considerably lessened the need
+for creating contexts.</p>
+<p>Rollback is only enabled in the base context (meaning, when there is only
+one context), and only the base context is saved, which is why the game menu
+uses a context.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.call_in_new_context">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">call_in_new_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.call_in_new_context" title="Link to this definition"></a></dt>
+<dd><p>This creates a new context, and then starts executing Ren'Py script
+from the given label in that context. Rollback is disabled in the
+new context, and saving/loading will occur in the top level
+context.</p>
+<p>Use this to begin a second interaction with the user while
+inside an interaction.</p>
+<p>This takes an optional  keyword argument:</p>
+<dl class="simple">
+<dt><cite>_clear_layers</cite></dt><dd><p>If True (the default), the layers are cleared before the new
+interaction starts. If False, the layers are not cleared. If a
+list, only the layers in the list are cleared.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.context">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.context" title="Link to this definition"></a></dt>
+<dd><p>Returns an object that is unique to the current context. The object
+is copied when entering a new context, but changes to the copy do
+not change the original.</p>
+<p>The object is saved and participates in rollback.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.context_dynamic">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">context_dynamic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">variables</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.context_dynamic" title="Link to this definition"></a></dt>
+<dd><p>This can be given one or more variable names as arguments. This makes the
+variables dynamically scoped to the current context. When returning to the
+prior context, the variables will be reset to the value they had when this
+function was called.</p>
+<p>Variables in <a class="reference internal" href="python.html#named-stores"><span class="std std-ref">named stores</span></a> are supported.</p>
+<p>Example calls are:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">$</span> <span class="n">renpy</span><span class="o">.</span><span class="n">context_dynamic</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">)</span>
+<span class="k">$</span> <span class="n">renpy</span><span class="o">.</span><span class="n">context_dynamic</span><span class="p">(</span><span class="s2">&quot;mystore.serial_number&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.context_nesting_level">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">context_nesting_level</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.context_nesting_level" title="Link to this definition"></a></dt>
+<dd><p>Returns the nesting level of the current context. This is 0 for the
+outermost context (the context that is saved, loaded, and rolled-back),
+and is non-zero in other contexts, such as menu and replay contexts.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.invoke_in_new_context">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">invoke_in_new_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.invoke_in_new_context" title="Link to this definition"></a></dt>
+<dd><p>This function creates a new context, and invokes the given Python
+callable (function) in that context. When the function returns
+or raises an exception, control returns to the original context.
+It's generally used to call a Python function that needs to display
+information to the player (like a confirmation prompt) from inside
+an event handler.</p>
+<p>Additional arguments and keyword arguments are passed to the
+callable.</p>
+<p>A context created with this function cannot execute Ren'Py script.
+Functions that would change the flow of Ren'Py script, like
+<a class="reference internal" href="statement_equivalents.html#renpy.jump" title="renpy.jump"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.jump()</span></code></a>, are handled by the outer context. If you want
+to call Ren'Py script rather than a Python function, use
+<a class="reference internal" href="#renpy.call_in_new_context" title="renpy.call_in_new_context"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.call_in_new_context()</span></code></a> instead.</p>
+<p>This takes an optional  keyword argument:</p>
+<dl class="simple">
+<dt><cite>_clear_layers</cite></dt><dd><p>If True (the default), the layers are cleared before the new
+interaction starts. If False, the layers are not cleared. If a
+list, only the layers in the list are cleared.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.jump_out_of_context">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">jump_out_of_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.jump_out_of_context" title="Link to this definition"></a></dt>
+<dd><p>Causes control to leave the current context, and then to be
+transferred in the parent context to the given label.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.reset_all_contexts">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">reset_all_contexts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.reset_all_contexts" title="Link to this definition"></a></dt>
+<dd><p>This pops all contexts off the context stack, resetting the dynamic variables
+as it does so. When this is done, a new context is created, the current statement
+ends, and the game continues from the next statement. This will put Ren'Py
+into the state it was at startup, with the exception of data and the start
+point.</p>
+<p>This can be used to reset everything about the game - shown image, playing music,
+etc, as if the game started from the beginning.</p>
+<p>Because of how completely this resets Ren'Py, this function immediately ends the
+current statement.</p>
+<p>This is mainly intended for use in an after_load label, where it can bring the
+game back to the state it was in when it started. It's then up to the game to
+re-establish the scene, music, etc, and it can then jump to the label it wants
+to continue at.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="language_basics.html" class="btn btn-neutral float-left" title="Language Basics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dialogue.html" class="btn btn-neutral float-right" title="Dialogue and Narration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

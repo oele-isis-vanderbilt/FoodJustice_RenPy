@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Displaying Images &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/displaying_images.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="In-Game Menus" href="menus.html" />
+    <link rel="prev" title="Dialogue and Narration" href="dialogue.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Displaying Images</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#concepts">Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#image">Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#layer">Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-images">Defining Images</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#images-directory">Images Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oversampling">Oversampling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#image-statement">Image Statement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#show-statement">Show Statement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#attributes-management">Attributes management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-expression">Show expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-layer">Show Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scene-statement">Scene Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hide-statement">Hide Statement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#with-statement">With Statement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#with-none">With None</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#with-clause-of-scene-show-and-hide-statements">With Clause of Scene, Show, and Hide Statements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#camera-and-show-layer-statements">Camera and Show Layer Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hide-and-show-window">Hide and Show Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#image-functions">Image Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.add_layer"><code class="docutils literal notranslate"><span class="pre">renpy.add_layer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.can_show"><code class="docutils literal notranslate"><span class="pre">renpy.can_show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.change_zorder"><code class="docutils literal notranslate"><span class="pre">renpy.change_zorder()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.check_image_attributes"><code class="docutils literal notranslate"><span class="pre">renpy.check_image_attributes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.clear_attributes"><code class="docutils literal notranslate"><span class="pre">renpy.clear_attributes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.copy_images"><code class="docutils literal notranslate"><span class="pre">renpy.copy_images()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.flush_cache_file"><code class="docutils literal notranslate"><span class="pre">renpy.flush_cache_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_attributes"><code class="docutils literal notranslate"><span class="pre">renpy.get_attributes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_available_image_tags"><code class="docutils literal notranslate"><span class="pre">renpy.get_available_image_tags()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_hidden_tags"><code class="docutils literal notranslate"><span class="pre">renpy.get_hidden_tags()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_image_bounds"><code class="docutils literal notranslate"><span class="pre">renpy.get_image_bounds()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_ordered_image_attributes"><code class="docutils literal notranslate"><span class="pre">renpy.get_ordered_image_attributes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_placement"><code class="docutils literal notranslate"><span class="pre">renpy.get_placement()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_registered_image"><code class="docutils literal notranslate"><span class="pre">renpy.get_registered_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_say_image_tag"><code class="docutils literal notranslate"><span class="pre">renpy.get_say_image_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_showing_tags"><code class="docutils literal notranslate"><span class="pre">renpy.get_showing_tags()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_zorder_list"><code class="docutils literal notranslate"><span class="pre">renpy.get_zorder_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.has_image"><code class="docutils literal notranslate"><span class="pre">renpy.has_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.list_images"><code class="docutils literal notranslate"><span class="pre">renpy.list_images()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.mark_image_seen"><code class="docutils literal notranslate"><span class="pre">renpy.mark_image_seen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.mark_image_unseen"><code class="docutils literal notranslate"><span class="pre">renpy.mark_image_unseen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.seen_image"><code class="docutils literal notranslate"><span class="pre">renpy.seen_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.showing"><code class="docutils literal notranslate"><span class="pre">renpy.showing()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.start_predict"><code class="docutils literal notranslate"><span class="pre">renpy.start_predict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.stop_predict"><code class="docutils literal notranslate"><span class="pre">renpy.stop_predict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#see-also">See also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Displaying Images</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/displaying_images.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="displaying-images">
+<span id="id1"></span><h1>Displaying Images<a class="headerlink" href="#displaying-images" title="Link to this heading"></a></h1>
+<p>The defining aspect of a visual novel, lending its name to the form, are
+the visuals. Ren'Py contains four statements that control the display of
+images, and a model that determines the order in which the images are
+displayed. This makes it convenient to display images in a manner that
+is suitable for use in visual novels and other storytelling games.</p>
+<p>The four statements that work with images are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">image</span></code> - defines a new image.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">show</span></code> - shows an image on a layer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scene</span></code> - clears a layer, and optionally shows an image on that layer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hide</span></code> - removes an image from a layer.</p></li>
+</ul>
+<p>As abrupt changes of image can be disconcerting to the user, Ren'Py
+has the <code class="docutils literal notranslate"><span class="pre">with</span></code> statement, which allows effects to be applied
+when the scene is changed.</p>
+<p>Most (if not all) of the statements listed in this page are checked by
+<a class="reference internal" href="developer_tools.html#lint"><span class="std std-ref">Lint</span></a>, which is not the case for their python equivalents.</p>
+<section id="concepts">
+<h2>Concepts<a class="headerlink" href="#concepts" title="Link to this heading"></a></h2>
+<section id="image">
+<span id="concept-image"></span><h3>Image<a class="headerlink" href="#image" title="Link to this heading"></a></h3>
+<p>An image is something that can be show to the screen using the show
+statement. An image consists of a name and a displayable. When the
+image is shown on a layer, the displayable associated with it is
+displayed on that layer.</p>
+<p>An <em class="dfn">image name</em> consists of one or more names, separated by
+spaces. The first component of the image name is called the <em class="dfn">image
+tag</em>. The second and later components of the name are the <em class="dfn">image
+attributes</em>.</p>
+<p>For example, take the image name <code class="docutils literal notranslate"><span class="pre">mary</span> <span class="pre">beach</span> <span class="pre">night</span> <span class="pre">happy</span></code>. The image
+tag is <code class="docutils literal notranslate"><span class="pre">mary</span></code>, while the image attributes are <code class="docutils literal notranslate"><span class="pre">beach</span></code>, <code class="docutils literal notranslate"><span class="pre">night</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">happy</span></code>.</p>
+<p>A displayable is something that can be shown on the screen. The most
+common thing to show is a static image, which can be specified by
+giving the filename of the image, as a string. In the example above,
+we might use <code class="file docutils literal notranslate"><span class="pre">mary_beach_night_happy.png</span></code> as the filename.
+However, an image may refer to <a class="reference internal" href="displayables.html"><span class="doc">any displayable Ren'Py supports</span></a>, not just static images. Thus, the same statements
+that are used to display images can also be used for animations, solid
+colors, and the other types of displayables.</p>
+</section>
+<section id="layer">
+<h3>Layer<a class="headerlink" href="#layer" title="Link to this heading"></a></h3>
+<p>A layer is a list of displayables that are shown on the screen. Ren'Py
+supports multiple layers, including user-defined layers. The order of
+the layers is fixed within a game (controlled by the
+<a class="reference internal" href="config.html#var-config.layers"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.layers</span></code></a> variable), while the order of displayables within
+a layer is controlled by the order in which the scene and show
+statements are called, and the properties given to those statements.</p>
+<p>The following layers are defined as part of Ren'Py:</p>
+<dl class="simple">
+<dt>master</dt><dd><p>This is the default layer that is used by the scene, show, and
+hide statements. It's generally used for backgrounds and
+character sprites.</p>
+</dd>
+<dt>transient</dt><dd><p>The default layer used by ui functions. This layer is cleared at
+the end of each interaction.</p>
+</dd>
+<dt>screens</dt><dd><p>This layer is used by the screen system.</p>
+</dd>
+<dt>overlay</dt><dd><p>The default layer used when a ui function is called from within
+an overlay function. This layer is cleared when an interaction is
+restarted.</p>
+</dd>
+</dl>
+<p>Additional layers can be defined by calling <a class="reference internal" href="#renpy.add_layer" title="renpy.add_layer"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.add_layer()</span></code></a>, and
+using the various layer-related <a class="reference internal" href="config.html"><span class="doc">configuration variables</span></a>.
+Using the <a class="reference internal" href="#camera"><span class="std std-ref">camera statement</span></a>, one or more transforms can be
+applied to a layer.</p>
+</section>
+</section>
+<section id="defining-images">
+<span id="id2"></span><h2>Defining Images<a class="headerlink" href="#defining-images" title="Link to this heading"></a></h2>
+<p>There are two ways to define images. You can either place an image file
+in the image directory, or an image can be defined using the image statement.
+The former is simple, as it involves placing properly named files in a directory,
+while the latter a allows more control over how the image is defined, and allows
+images that are not image files.</p>
+<p>Images defined using the image statement take precedence over those defined
+by the image directory.</p>
+<section id="images-directory">
+<span id="image-directory"></span><span id="id3"></span><h3>Images Directory<a class="headerlink" href="#images-directory" title="Link to this heading"></a></h3>
+<p>The image directory is named &quot;images&quot;, and is placed under the game directory.
+When a file with a .jpg, .jpeg, .jxl, .png, or .webp extension is placed underneath this directory,
+the extension is stripped, the rest of the filename is forced to lowercase,
+and the resulting filename is used as the image name if an image with that
+name has not been previously defined.</p>
+<p>This process takes place in all directories underneath the image directory. For
+example, all of these files will define the image <code class="docutils literal notranslate"><span class="pre">eileen</span> <span class="pre">happy</span></code>:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">game</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">eileen</span> <span class="n">happy</span><span class="o">.</span><span class="n">png</span>
+<span class="n">game</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">Eileen</span> <span class="n">Happy</span><span class="o">.</span><span class="n">jpg</span>
+<span class="n">game</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">eileen</span><span class="o">/</span><span class="n">eileen</span> <span class="n">happy</span><span class="o">.</span><span class="n">png</span>
+</pre></div>
+</div>
+<p>When an image filename is given, and the image is not found, the images directory
+is searched.</p>
+</section>
+<section id="oversampling">
+<span id="id4"></span><h3>Oversampling<a class="headerlink" href="#oversampling" title="Link to this heading"></a></h3>
+<p>By default, the pixel size of an image defines the size it will take up
+when displayed. For example, if an image is 1920x1080 pixels, and the
+game is configured, using <a class="reference internal" href="gui_advanced.html#gui.init" title="gui.init"><code class="xref py py-func docutils literal notranslate"><span class="pre">gui.init()</span></code></a>, to run at 1920x1080, the
+image will fill the entire screen.</p>
+<p>When oversampling is enabled, the size that the image is displayed at is
+smaller than the image size would imply. For example, if an image is 3480x2160,
+and has an oversamply of 2, then each axis will be halved, and the image would
+fill the same 1920x1080 window.</p>
+<p>This is useful when the image might be zoomed in on, and the extra detail is
+required. Oversampling is also useful in conjunction with <a class="reference internal" href="config.html#var-config.physical_width"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.physical_width</span></code></a>
+and <a class="reference internal" href="config.html#var-config.physical_height"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.physical_height</span></code></a> to allow a game to be remade with higher
+resolution graphics.</p>
+<p>Oversampling is automatically enabled if the image ends with an '&#64;' followed
+by a number, before the extension. For example, <code class="file docutils literal notranslate"><span class="pre">eileen</span> <span class="pre">happy&#64;2.png</span></code> is
+2x oversampled, and <code class="file docutils literal notranslate"><span class="pre">eileen</span> <span class="pre">happy&#64;3x.png</span></code> will be 3x oversampled. Oversampling
+can also be enabled by giving the <cite>oversample</cite> keyword argument to <a class="reference internal" href="displayables.html#Image" title="Image"><code class="xref py py-func docutils literal notranslate"><span class="pre">Image()</span></code></a>.</p>
+<p>A directory can also specify how much to oversample images inside it. For example,
+<code class="file docutils literal notranslate"><span class="pre">images/&#64;2/eileen</span> <span class="pre">happy.png</span></code> will be oversampled 2x.</p>
+</section>
+<section id="image-statement">
+<span id="id5"></span><h3>Image Statement<a class="headerlink" href="#image-statement" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">image</span></code> statement is used to define an image. An image statement
+consists of a single logical line beginning with the keyword <code class="docutils literal notranslate"><span class="pre">image</span></code>,
+followed by an image name, an equals sign <code class="docutils literal notranslate"><span class="pre">=</span></code>, and a
+displayable. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="o">=</span> <span class="s2">&quot;eileen_happy.png&quot;</span>
+<span class="k">image</span> <span class="n">black</span> <span class="o">=</span> <span class="s2">&quot;#000&quot;</span>
+<span class="k">image</span> <span class="n">bg</span> <span class="n">tiled</span> <span class="o">=</span> <span class="n">Tile</span><span class="p">(</span><span class="s2">&quot;tile.jpg&quot;</span><span class="p">)</span>
+
+<span class="k">image</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="n">question</span> <span class="o">=</span> <span class="n">VBox</span><span class="p">(</span>
+    <span class="s2">&quot;question.png&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;eileen_happy.png&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>When an image file is not directly in the game directory, you'll need to
+give the directories underneath it. For example, if the image is at
+<code class="file docutils literal notranslate"><span class="pre">game/eileen/happy.png</span></code>, then you can write:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="o">=</span> <span class="s2">&quot;eileen/happy.png&quot;</span>
+</pre></div>
+</div>
+<p>The image statement is run at init time, before the menus are shown
+or the start label runs. When not contained inside an <code class="docutils literal notranslate"><span class="pre">init</span></code> block,
+image statements are run as if they were placed inside an <code class="docutils literal notranslate"><span class="pre">init</span></code> block of
+priority 500.</p>
+<p>See also the <a class="reference internal" href="transforms.html#atl-image-statement"><span class="std std-ref">ATL variant of the image statement.</span></a></p>
+</section>
+</section>
+<section id="show-statement">
+<span id="id6"></span><h2>Show Statement<a class="headerlink" href="#show-statement" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">show</span></code> statement is used to display an image on a layer. A show
+statement consists of a single logical line beginning with the
+keyword <code class="docutils literal notranslate"><span class="pre">show</span></code>, followed by an image name, followed by zero or
+more properties.</p>
+<p>If the show statement is given the exact name of an existing image,
+that image is the one that is shown. Otherwise, Ren'Py will attempt to
+find a unique image that:</p>
+<ul class="simple">
+<li><p>Has the same tag as the one specified in the show statement.</p></li>
+<li><p>Has all of the attributes given in the show statement.</p></li>
+<li><p>If an image with the same tag is already showing, shares the largest
+number of attributes with that image.</p></li>
+</ul>
+<p>If a unique image cannot be found, an exception occurs.</p>
+<p>If an image with the same image tag is already showing on the layer,
+the new image replaces it. Otherwise, the image is placed above all
+other images in the layer. (That is, closest to the user.) This order
+may be modified by the <code class="docutils literal notranslate"><span class="pre">zorder</span></code> and <code class="docutils literal notranslate"><span class="pre">behind</span></code> properties.</p>
+<p>The show statement does not cause an interaction to occur. For the
+image to actually be displayed to the user, a statement that causes an
+interaction (like the say, menu, pause, and with statements) must be
+run.</p>
+<p>The show statement takes the following properties:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">as</span></code></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">as</span></code> property takes a name. This name is used in place of the
+image tag when the image is shown. This allows the same image
+to be on the screen twice.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">at</span></code></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">at</span></code> property takes one or more comma-separated
+simple expressions. Each expression must evaluate to a
+transform. The transforms are applied to the image in
+left-to-right order.</p>
+<p>If no at clause is given, Ren'Py will retain any existing
+transform that has been applied to the image, if they were
+created with ATL or with <a class="reference internal" href="transforms.html#Transform" title="Transform"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transform</span></code></a>. If no transform
+is specified, the image will be displayed using the <a class="reference internal" href="transforms.html#var-default"><code class="xref std std-var docutils literal notranslate"><span class="pre">default</span></code></a>
+transform.</p>
+<p>See the section on <a class="reference internal" href="transforms.html#replacing-transforms"><span class="std std-ref">replacing transforms</span></a>
+for information about how replacing the transforms associated with
+a tag can change the transform properties.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">behind</span></code></dt><dd><p>Takes a comma-separated list of one or more names. Each name is
+taken as an image tag. The image is shown behind all images with
+the given tags that are currently being shown.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">onlayer</span></code></dt><dd><p>Takes a name. Shows the image on the named layer.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">zorder</span></code></dt><dd><p>Takes an integer. The integer specifies the relative ordering of
+images within a layer, with larger numbers being closer to the
+user. This isn't generally used by Ren'Py games, but can be useful
+when porting visual novels from other engines. This can also be
+useful for displaying an image that will be above any zorder-less
+image displayed afterwards, without the burden of placing it on
+another layer.</p>
+</dd>
+</dl>
+<p>Assuming we have the following images defined:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">mary</span> <span class="n">night</span> <span class="n">happy</span> <span class="o">=</span> <span class="s2">&quot;mary_night_happy.png&quot;</span>
+<span class="k">image</span> <span class="n">mary</span> <span class="n">night</span> <span class="n">sad</span> <span class="o">=</span> <span class="s2">&quot;mary_night_sad.png&quot;</span>
+<span class="k">image</span> <span class="n">moon</span> <span class="o">=</span> <span class="s2">&quot;moon.png&quot;</span>
+</pre></div>
+</div>
+<p>Some example show statements are:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic show.</span>
+<span class="k">show</span> <span class="n">mary</span> <span class="n">night</span> <span class="n">sad</span>
+
+<span class="c1"># Since &#39;mary night sad&#39; is showing, the following statement is</span>
+<span class="c1"># equivalent to:</span>
+<span class="c1"># show mary night happy</span>
+<span class="k">show</span> <span class="n">mary</span> <span class="n">happy</span>
+
+<span class="c1"># Show an image on the right side of the screen.</span>
+<span class="k">show</span> <span class="n">mary</span> <span class="n">night</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">right</span>
+
+<span class="c1"># Show the same image twice.</span>
+<span class="k">show</span> <span class="n">mary</span> <span class="n">night</span> <span class="n">sad</span> <span class="k">as</span> <span class="n">mary2</span> <span class="k">at</span> <span class="n">left</span>
+
+<span class="c1"># Show an image behind another.</span>
+<span class="k">show</span> <span class="n">moon</span> <span class="k">behind</span> <span class="n">mary</span><span class="p">,</span> <span class="n">mary2</span>
+
+<span class="c1"># Show an image on a user-defined layer.</span>
+<span class="k">show</span> <span class="n">moon</span> <span class="k">onlayer</span> <span class="n">user_layer</span>
+</pre></div>
+</div>
+<section id="attributes-management">
+<h3>Attributes management<a class="headerlink" href="#attributes-management" title="Link to this heading"></a></h3>
+<p>As shown above, attributes can be set, added and replaced.</p>
+<p>They can also be removed using the minus sign:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># show susan being neutral</span>
+<span class="k">show</span> <span class="n">susan</span>
+
+<span class="c1"># show susan being happy</span>
+<span class="k">show</span> <span class="n">susan</span> <span class="n">happy</span>
+
+<span class="c1"># show susan being neutral again</span>
+<span class="k">show</span> <span class="n">susan</span> <span class="o">-</span><span class="n">happy</span>
+</pre></div>
+</div>
+</section>
+<section id="show-expression">
+<span id="show-expression-statement"></span><h3>Show expression<a class="headerlink" href="#show-expression" title="Link to this heading"></a></h3>
+<p>A variant of the show statement replaces the image name with the
+keyword <code class="docutils literal notranslate"><span class="pre">expression</span></code>, followed by a simple expression. The
+expression must evaluate to a displayable, and the displayable
+is shown on the layer. To hide the displayable, a tag must be
+given with the as statement.</p>
+<p>For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="k">expression</span> <span class="s2">&quot;moon.png&quot;</span> <span class="k">as</span> <span class="n">moon</span>
+</pre></div>
+</div>
+</section>
+<section id="show-layer">
+<h3>Show Layer<a class="headerlink" href="#show-layer" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">layer</span></code> statement is discussed alongside the <a class="reference internal" href="#camera"><span class="std std-ref">camera statement</span></a>,
+below.</p>
+</section>
+</section>
+<section id="scene-statement">
+<span id="id7"></span><h2>Scene Statement<a class="headerlink" href="#scene-statement" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">scene</span></code> statement removes all displayables from a layer, and then
+shows an image on that layer. It consists of the keyword <code class="docutils literal notranslate"><span class="pre">scene</span></code>,
+followed by an image name, followed by zero or more properties. The
+image is shown in the same way as in the show statement, and the scene
+statement takes the same properties as the show statement.</p>
+<p>The scene statement is often used to show an image on the background
+layer. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">scene</span> <span class="n">bg</span> <span class="n">beach</span>
+</pre></div>
+</div>
+<p><strong>Scene Expression.</strong>
+Like the show statement, the scene statement can take expressions
+instead of image names.</p>
+<p><strong>Clearing a layer.</strong>
+When the image name is omitted entirely, the scene statement clears
+all displayables from a layer without showing another
+displayable.</p>
+</section>
+<section id="hide-statement">
+<span id="id8"></span><h2>Hide Statement<a class="headerlink" href="#hide-statement" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">hide</span></code> statement removes an image from a layer. It consists of the
+keyword <code class="docutils literal notranslate"><span class="pre">hide</span></code>, followed by an image name, followed by an optional
+property. The hide statement takes the image tag from the image name,
+and then hides any image on the layer with that tag.</p>
+<p>Hide statements are rarely necessary. If a sprite represents a
+character, then a hide statement is only necessary when the character
+leaves the scene. When the character changes her emotion, it is
+preferable to use the show statement instead, as the show statement
+will automatically replace an image with the same tag.</p>
+<p>The hide statement takes the following property:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">onlayer</span></code></dt><dd><p>Takes a name. Hides the image from the named layer.</p>
+</dd>
+</dl>
+<p>For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="s2">&quot;I&#39;m out of here.&quot;</span>
+
+<span class="k">hide</span> <span class="n">eileen</span>
+</pre></div>
+</div>
+<p>You should never write:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">hide</span> <span class="n">eileen</span>
+<span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span>
+</pre></div>
+</div>
+<p>Instead, just write:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span>
+</pre></div>
+</div>
+</section>
+<section id="with-statement">
+<span id="id9"></span><h2>With Statement<a class="headerlink" href="#with-statement" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">with</span></code> statement is used to apply a transition effect when the scene
+is changed, making showing and hiding images less abrupt. The with
+statement consists of the keyword <code class="docutils literal notranslate"><span class="pre">with</span></code>, followed by a simple
+expression that evaluates either to a transition object or the special
+value <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>The transition effect is applied between the contents of the screen at
+the end of the previous interaction (with transient screens and
+displayables hidden), and the current contents of the scene, after the
+show and hide statements have executed.</p>
+<p>The with statement causes an interaction to occur. The duration of
+this interaction is controlled by the user, and the user can cause it
+to terminate early.</p>
+<p>For a full list of transitions that can be used, see the chapter on
+<a class="reference internal" href="transitions.html"><span class="doc">transitions</span></a>.</p>
+<p>An example of the with statement is:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">bg</span> <span class="n">washington</span>
+<span class="k">with</span> <span class="n">dissolve</span>
+
+<span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">left</span>
+<span class="k">show</span> <span class="n">lucy</span> <span class="n">mad</span> <span class="k">at</span> <span class="n">right</span>
+<span class="k">with</span> <span class="n">dissolve</span>
+</pre></div>
+</div>
+<p>This causes two transitions to occur. The first with statement uses
+the <code class="docutils literal notranslate"><span class="pre">dissolve</span></code> transition to change the screen from what was
+previously shown to the washington background. (The <code class="docutils literal notranslate"><span class="pre">dissolve</span></code>
+transition is, by default, defined as a .5 second dissolve.)</p>
+<p>The second transition occurs after the Eileen and Lucy images are
+shown. It causes a dissolve from the scene consisting solely of the
+background to the scene consisting of all three images – the result is
+that the two new images appear to dissolve in simultaneously.</p>
+<section id="with-none">
+<span id="id10"></span><h3>With None<a class="headerlink" href="#with-none" title="Link to this heading"></a></h3>
+<p>In the above example, there are two dissolves. But what if we wanted
+the background to appear instantly, followed by a dissolve of the two
+characters? Simply omitting the first with statement would cause all
+three images to dissolve in – we need a way to say that the first
+should be show instantly.</p>
+<p>The with statement changes behavior when given the special value
+<code class="docutils literal notranslate"><span class="pre">None</span></code>. The <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">None</span></code> statement causes an abbreviated
+interaction to occur, without changing what the user sees. When the
+next transition occurs, it will start from the scene as it appears at
+the end of this abbreviated interaction.</p>
+<p>For example, in:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">bg</span> <span class="n">washington</span>
+<span class="k">with</span> <span class="kc">None</span>
+
+<span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">left</span>
+<span class="k">show</span> <span class="n">lucy</span> <span class="n">mad</span> <span class="k">at</span> <span class="n">right</span>
+<span class="k">with</span> <span class="n">dissolve</span>
+</pre></div>
+</div>
+<p>Only a single transition occurs, from the washington background to the
+scene consisting of all three images.</p>
+</section>
+<section id="with-clause-of-scene-show-and-hide-statements">
+<h3>With Clause of Scene, Show, and Hide Statements<a class="headerlink" href="#with-clause-of-scene-show-and-hide-statements" title="Link to this heading"></a></h3>
+<p>The show, scene, and hide statements can take an optional <code class="docutils literal notranslate"><span class="pre">with</span></code> clause,
+which allows a transition to be combined with showing or hiding an
+image. This clause follows the statements at the end of the same
+logical line. It begins with the keyword <code class="docutils literal notranslate"><span class="pre">with</span></code>, followed by a
+simple expression.</p>
+<p>The with clause is equivalent to preceding the line with a <code class="docutils literal notranslate"><span class="pre">with</span>
+<span class="pre">None</span></code> statement, and following it by a <a class="reference internal" href="#with-statement"><span class="std std-ref">with statement</span></a> containing the
+text of the with clause. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">left</span> <span class="k">with</span> <span class="n">dissolve</span>
+<span class="k">show</span> <span class="n">lucy</span> <span class="n">mad</span> <span class="k">at</span> <span class="n">right</span> <span class="k">with</span> <span class="n">dissolve</span>
+</pre></div>
+</div>
+<p>is equivalent to:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="kc">None</span>
+<span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">left</span>
+<span class="k">with</span> <span class="n">dissolve</span>
+
+<span class="k">with</span> <span class="kc">None</span>
+<span class="k">show</span> <span class="n">lucy</span> <span class="n">mad</span> <span class="k">at</span> <span class="n">right</span>
+<span class="k">with</span> <span class="n">dissolve</span>
+</pre></div>
+</div>
+<p>Note that even though this applies to the <a class="reference internal" href="screens.html#show-screen-statement"><span class="std std-ref">Show Screen</span></a>
+and <a class="reference internal" href="screens.html#hide-screen-statement"><span class="std std-ref">Hide Screen</span></a> statements too,
+<a class="reference internal" href="screens.html#call-screen-statement"><span class="std std-ref">Call Screen</span></a> works a bit differently.</p>
+</section>
+</section>
+<section id="camera-and-show-layer-statements">
+<span id="camera"></span><h2>Camera and Show Layer Statements<a class="headerlink" href="#camera-and-show-layer-statements" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">camera</span></code> statement allows one to apply a transform or ATL transform to an
+entire layer (such as &quot;master&quot;), using syntax like:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">camera</span> <span class="k">at</span> <span class="n">flip</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">camera</span><span class="p">:</span>
+    <span class="na">xalign</span> <span class="mf">0.5</span> <span class="na">yalign</span> <span class="mf">0.5</span> <span class="na">rotate</span> <span class="mi">180</span>
+</pre></div>
+</div>
+<p>To stop applying transforms to the layer, use:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">camera</span>
+</pre></div>
+</div>
+<p>The camera statement takes an optional layer name, between <code class="docutils literal notranslate"><span class="pre">camera</span></code> and
+<code class="docutils literal notranslate"><span class="pre">at</span></code> or <code class="docutils literal notranslate"><span class="pre">:</span></code>.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">camera</span> <span class="n">mylayer</span> <span class="k">at</span> <span class="n">flip</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">layer</span></code> statement is an older version of <code class="docutils literal notranslate"><span class="pre">camera</span></code>, with some
+differences, that is still useful.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="na">layer</span> <span class="n">master</span><span class="p">:</span>
+    <span class="na">blur</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>The differences are:</p>
+<ul class="simple">
+<li><p>The transforms applied with <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">layer</span></code> are cleared at the
+next <code class="docutils literal notranslate"><span class="pre">scene</span></code> statement, while <code class="docutils literal notranslate"><span class="pre">camera</span></code> transforms last until
+explicitly cleared.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">layer</span></code> requires a layer name, while <code class="docutils literal notranslate"><span class="pre">camera</span></code> defaults to the
+master layer.</p></li>
+</ul>
+</section>
+<section id="hide-and-show-window">
+<h2>Hide and Show Window<a class="headerlink" href="#hide-and-show-window" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">window</span></code> statement is used to control if a window is shown when a character
+is not speaking (for example, during transitions and pauses). The <code class="docutils literal notranslate"><span class="pre">window</span> <span class="pre">show</span></code>
+statement causes the window to be shown, while the <code class="docutils literal notranslate"><span class="pre">window</span> <span class="pre">hide</span></code> statement hides
+the window.</p>
+<p>If the optional transition is given, it's used to show and hide the window.
+If not given, it defaults to <a class="reference internal" href="config.html#var-config.window_show_transition"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.window_show_transition</span></code></a> and
+<a class="reference internal" href="config.html#var-config.window_hide_transition"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.window_hide_transition</span></code></a>. Giving None as the transition prevents
+it from occurring.</p>
+<p>The window itself is displayed by calling <a class="reference internal" href="config.html#var-config.empty_window"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.empty_window</span></code></a>. It defaults to
+having the narrator say an empty string.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">bg</span> <span class="n">washington</span>
+<span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span>
+<span class="k">with</span> <span class="n">dissolve</span>
+
+<span class="k">window</span> <span class="k">show</span> <span class="n">dissolve</span>
+
+<span class="s2">&quot;I can say stuff...&quot;</span>
+
+<span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span> <span class="k">at</span> <span class="n">right</span>
+<span class="k">with</span> <span class="n">move</span>
+
+<span class="s2">&quot;... and move, while keeping the window shown.&quot;</span>
+
+<span class="k">window</span> <span class="k">hide</span> <span class="n">dissolve</span>
+</pre></div>
+</div>
+</section>
+<section id="image-functions">
+<h2>Image Functions<a class="headerlink" href="#image-functions" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.add_layer">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">add_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">above</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">below</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">menu_clear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sticky</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.add_layer" title="Link to this definition"></a></dt>
+<dd><p>Adds a new layer to the screen. If the layer already exists, this
+function does nothing.</p>
+<p>One of <cite>behind</cite> or <cite>above</cite> must be given.</p>
+<dl class="simple">
+<dt><cite>layer</cite></dt><dd><p>A string giving the name of the new layer to add.</p>
+</dd>
+<dt><cite>above</cite></dt><dd><p>If not None, a string giving the name of a layer the new layer will
+be placed above.</p>
+</dd>
+<dt><cite>below</cite></dt><dd><p>If not None, a string giving the name of a layer the new layer will
+be placed below.</p>
+</dd>
+<dt><cite>menu_clear</cite></dt><dd><p>If true, this layer will be cleared when entering the game menu
+context, and restored when leaving it.</p>
+</dd>
+<dt><cite>sticky</cite></dt><dd><p>If true, any tags added to this layer will have it become their
+default layer until they are hidden. If None, this layer will be
+sticky only if other sticky layers already exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.can_show">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">can_show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.can_show" title="Link to this definition"></a></dt>
+<dd><p>Determines if <cite>name</cite> can be used to show an image. This interprets <cite>name</cite>
+as a tag and attributes. This is combined with the attributes of the
+currently-showing image with <cite>tag</cite> on <cite>layer</cite> to try to determine a unique image
+to show. If a unique image can be show, returns the name of that image as
+a tuple. Otherwise, returns None.</p>
+<dl class="simple">
+<dt><cite>tag</cite></dt><dd><p>The image tag to get attributes from. If not given, defaults to the first
+component of <cite>name</cite>.</p>
+</dd>
+<dt><cite>layer</cite></dt><dd><p>The layer to check. If None, uses the default layer for <cite>tag</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.change_zorder">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">change_zorder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zorder</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.change_zorder" title="Link to this definition"></a></dt>
+<dd><p>Changes the zorder of <cite>tag</cite> on <cite>layer</cite> to <cite>zorder</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.check_image_attributes">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">check_image_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.check_image_attributes" title="Link to this definition"></a></dt>
+<dd><p>Checks to see if there is a unique image with the given tag and
+attributes. If there is, returns the attributes in order.
+Otherwise, returns None.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.clear_attributes">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">clear_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.clear_attributes" title="Link to this definition"></a></dt>
+<dd><p>Clears all image attributes for the <cite>tag</cite> image.
+If the tag had no attached image attributes, this does nothing.</p>
+<dl class="simple">
+<dt><cite>layer</cite></dt><dd><p>The layer to check. If None, uses the default layer for <cite>tag</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.copy_images">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">copy_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.copy_images" title="Link to this definition"></a></dt>
+<dd><p>Copies images beginning with one prefix to images beginning with
+another. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">renpy</span><span class="o">.</span><span class="n">copy_images</span><span class="p">(</span><span class="s2">&quot;eileen&quot;</span><span class="p">,</span> <span class="s2">&quot;eileen2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will create an image beginning with &quot;eileen2&quot; for every image beginning
+with &quot;eileen&quot;. If &quot;eileen happy&quot; exists, &quot;eileen2 happy&quot; will be
+created.</p>
+<dl class="simple">
+<dt><cite>old</cite></dt><dd><p>A space-separated string giving the components of the old image
+name.</p>
+</dd>
+<dt><cite>new</cite></dt><dd><p>A space-separated string giving the components of the new image
+name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.flush_cache_file">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">flush_cache_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.flush_cache_file" title="Link to this definition"></a></dt>
+<dd><p>This flushes all image cache entries that refer to the file <cite>fn</cite>.  This
+may be called when an image file changes on disk to force Ren'Py to
+use the new version.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_attributes">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_hidden</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_attributes" title="Link to this definition"></a></dt>
+<dd><p>Return a tuple giving the image attributes for the image <cite>tag</cite>. If
+the image tag has not had any attributes associated since the last
+time it was hidden, returns <cite>if_hidden</cite>.</p>
+<dl class="simple">
+<dt><cite>layer</cite></dt><dd><p>The layer to check. If None, uses the default layer for <cite>tag</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_available_image_tags">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_available_image_tags</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_available_image_tags" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of image tags that have been defined.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_hidden_tags">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_hidden_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'master'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_hidden_tags" title="Link to this definition"></a></dt>
+<dd><p>Returns the set of image tags on <cite>layer</cite> that are currently hidden, but
+still have attribute information associated with them.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_image_bounds">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_image_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_image_bounds" title="Link to this definition"></a></dt>
+<dd><p>If an image with <cite>tag</cite> exists on <cite>layer</cite>, returns the bounding box of
+that image. Returns None if the image is not found.</p>
+<p>The bounding box is an (x, y, width, height) tuple. The components of
+the tuples are expressed in pixels, and may be floating point numbers.</p>
+<dl class="simple">
+<dt><cite>width</cite>, <cite>height</cite></dt><dd><p>The width and height of the area that contains the image. If None,
+defaults the width and height of the screen, respectively.</p>
+</dd>
+<dt><cite>layer</cite></dt><dd><p>If None, uses the default layer for <cite>tag</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_ordered_image_attributes">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_ordered_image_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_ordered_image_attributes" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of image attributes, ordered in a way that makes sense to
+present to the user.</p>
+<dl class="simple">
+<dt><cite>attributes</cite></dt><dd><p>If present, only attributes that are compatible with the given
+attributes are considered. (Compatible means that the attributes
+can be in a single image at the same time.)</p>
+</dd>
+<dt><cite>sort</cite></dt><dd><p>If not None, the returned list of attributes is sorted. This is a
+one-argument function that should be used as a tiebreaker - see
+<a class="reference external" href="https://docs.python.org/3/howto/sorting.html#key-functions">this tutorial</a>
+for more information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_placement">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_placement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_placement" title="Link to this definition"></a></dt>
+<dd><p>This gets the placement of displayable d. There's very little warranty on this
+information, as it might change when the displayable is rendered, and might not
+exist until the displayable is first rendered.</p>
+<p>This returns an object with the following fields, each corresponding to a style
+property:</p>
+<ul class="simple">
+<li><p>pos</p></li>
+<li><p>xpos</p></li>
+<li><p>ypos</p></li>
+<li><p>anchor</p></li>
+<li><p>xanchor</p></li>
+<li><p>yanchor</p></li>
+<li><p>offset</p></li>
+<li><p>xoffset</p></li>
+<li><p>yoffset</p></li>
+<li><p>subpixel</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_registered_image">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_registered_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_registered_image" title="Link to this definition"></a></dt>
+<dd><p>If an image with the same name has been <a class="reference internal" href="#defining-images"><span class="std std-ref">registered</span></a>,
+returns it. Otherwise, returns None.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_say_image_tag">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_say_image_tag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_say_image_tag" title="Link to this definition"></a></dt>
+<dd><p>Returns the tag corresponding to the currently speaking character (the
+<cite>image</cite> argument given to that character). Returns None if no character
+is speaking or the current speaking character does not have a corresponding
+image tag.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_showing_tags">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_showing_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'master'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_showing_tags" title="Link to this definition"></a></dt>
+<dd><p>Returns the set of image tags that are currently being shown on <cite>layer</cite>. If
+sort is true, returns a list of the tags from back to front.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_zorder_list">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_zorder_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_zorder_list" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of (tag, zorder) pairs for <cite>layer</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.has_image">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">has_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exact</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.has_image" title="Link to this definition"></a></dt>
+<dd><p>Return true if an image with <cite>name</cite> exists, and false if no such image
+exists.</p>
+<dl class="simple">
+<dt><cite>name</cite></dt><dd><p>Either a string giving an image name, or a tuple of strings giving
+the name components.</p>
+</dd>
+<dt><cite>exact</cite></dt><dd><p>Returns true if and only if an image with the exact name exists -
+parameterized matches are not included.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.list_images">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">list_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.list_images" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of images that have been added to Ren'Py, as a list of
+strings with spaces between the name components.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.mark_image_seen">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">mark_image_seen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.mark_image_seen" title="Link to this definition"></a></dt>
+<dd><p>Marks the named image as if it has been already displayed on the current user's
+system.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.mark_image_unseen">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">mark_image_unseen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.mark_image_unseen" title="Link to this definition"></a></dt>
+<dd><p>Marks the named image as if it has not been displayed on the current user's
+system yet.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.seen_image">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">seen_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.seen_image" title="Link to this definition"></a></dt>
+<dd><p>Returns True if the named image has been seen at least once on the user's
+system. An image has been seen if it's been displayed using the show statement,
+scene statement, or <a class="reference internal" href="statement_equivalents.html#renpy.show" title="renpy.show"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.show()</span></code></a> function. (Note that there are cases
+where the user won't actually see the image, like a show immediately followed by
+a hide.)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.showing">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">showing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.showing" title="Link to this definition"></a></dt>
+<dd><p>Returns true if an image with the same tag as <cite>name</cite> is showing on
+<cite>layer</cite>.</p>
+<dl class="simple">
+<dt><cite>image</cite></dt><dd><p>May be a string giving the image name or a tuple giving each
+component of the image name. It may also be a string giving
+only the image tag.</p>
+</dd>
+<dt><cite>layer</cite></dt><dd><p>The layer to check. If None, uses the default layer for <cite>tag</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.start_predict">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">start_predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.start_predict" title="Link to this definition"></a></dt>
+<dd><p>This function takes one or more displayables as arguments. It causes
+Ren'Py to predict those displayables during every interaction until
+the displayables are removed by <a class="reference internal" href="#renpy.stop_predict" title="renpy.stop_predict"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.stop_predict()</span></code></a>.</p>
+<p>If a displayable name is a string containing one or more *
+characters, the asterisks are used as a wildcard pattern. If there
+is at least one . in the string, the pattern is matched against
+filenames, otherwise it is matched against image names.</p>
+<p>For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">$</span> <span class="n">renpy</span><span class="o">.</span><span class="n">start_predict</span><span class="p">(</span><span class="s2">&quot;eileen *&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>starts predicting all images with the name eileen, while:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">$</span> <span class="n">renpy</span><span class="o">.</span><span class="n">start_predict</span><span class="p">(</span><span class="s2">&quot;images/concert*.*&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>matches all files starting with concert in the images directory.</p>
+<p>Prediction will occur during normal gameplay. To wait for prediction
+to complete, use the <cite>predict</cite> argument to <a class="reference internal" href="statement_equivalents.html#renpy.pause" title="renpy.pause"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.pause()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.stop_predict">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">stop_predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.stop_predict" title="Link to this definition"></a></dt>
+<dd><p>This function takes one or more displayables as arguments. It causes
+Ren'Py to stop predicting those displayables during every interaction.</p>
+<p>Wildcard patterns can be used as described in <a class="reference internal" href="#renpy.start_predict" title="renpy.start_predict"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.start_predict()</span></code></a>.</p>
+</dd></dl>
+
+</section>
+<section id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="statement_equivalents.html"><span class="doc">Statement Equivalents</span></a> : how to use most of the features described here in a
+python context.</p>
+<p><a class="reference internal" href="displayables.html"><span class="doc">Displayables</span></a> : other objects to display, more diverse than basic images.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="dialogue.html" class="btn btn-neutral float-left" title="Dialogue and Narration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="menus.html" class="btn btn-neutral float-right" title="In-Game Menus" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

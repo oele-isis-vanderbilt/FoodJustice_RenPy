@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drag and Drop &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/drag_drop.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sprites" href="sprites.html" />
+    <link rel="prev" title="Image Gallery, Music Room, and Replay Actions" href="rooms.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Drag and Drop</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dropping">Dropping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#displayables">Displayables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Drag"><code class="docutils literal notranslate"><span class="pre">Drag</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Drag.bottom"><code class="docutils literal notranslate"><span class="pre">Drag.bottom()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Drag.set_child"><code class="docutils literal notranslate"><span class="pre">Drag.set_child()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Drag.snap"><code class="docutils literal notranslate"><span class="pre">Drag.snap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Drag.top"><code class="docutils literal notranslate"><span class="pre">Drag.top()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#DragGroup"><code class="docutils literal notranslate"><span class="pre">DragGroup</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#DragGroup.add"><code class="docutils literal notranslate"><span class="pre">DragGroup.add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#DragGroup.get_child_by_name"><code class="docutils literal notranslate"><span class="pre">DragGroup.get_child_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#DragGroup.remove"><code class="docutils literal notranslate"><span class="pre">DragGroup.remove()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Drag and Drop</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/drag_drop.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="drag-and-drop">
+<span id="id1"></span><h1>Drag and Drop<a class="headerlink" href="#drag-and-drop" title="Link to this heading"></a></h1>
+<p>Ren'Py includes drag and drop displayables that allow things to be
+moved around the screen with the mouse. Some of the uses of dragging
+are:</p>
+<ul class="simple">
+<li><p>Allowing windows to be repositioned by the user, storing the window
+positions.</p></li>
+<li><p>Card games that require cards to be dragged around the screen. (For
+example, solitaire.)</p></li>
+<li><p>Inventory systems.</p></li>
+<li><p>Drag-to-reorder systems.</p></li>
+</ul>
+<p>The drag and drop displayables make it possible to implement these and
+other uses of drag and drop. There are two classes involved here. The
+Drag class represents either something that can be dragged around the
+screen, something that can have a draggable dropped onto it, or
+something that can do both. The DragGroup class represents a group of
+Drags – for a drag and drop to occur, both Drags must be part of the
+same drag group.</p>
+<p>The drag and drop system can be used either through the <a class="reference internal" href="screens.html"><span class="doc">Screen
+Language</span></a> or directly as displayables. It makes sense to use
+the screen language when you don't need to refer to the Drags that you
+create after they've been created. This might be the case if the
+draggable represents a window that the user places on the screen. If
+you need to refer to the drags after they've been created, then it's
+often better to create Drags directly, and add them to a DragGroup.</p>
+<section id="dropping">
+<h2>Dropping<a class="headerlink" href="#dropping" title="Link to this heading"></a></h2>
+<p>There are two ways Ren'Py can process a drop:</p>
+<ul class="simple">
+<li><p>If <cite>mouse_drop</cite> is true, the drag will be dropped onto the droppable
+that is directly below the mouse cursor.</p></li>
+<li><p>If <cite>mouse_drop</cite> is false, the default, the drop will occur onto
+the droppable that most fully overlaps with the drag.</p></li>
+</ul>
+<p>Unlike when starting a drag, where <cite>focus_mask</cite> is used, dropping considers
+the entire rectangular areas of the draggable and droppable, including any
+transparent pixels. You may need to design your drag and drop displayables
+to take this into account, by being generally rectangular in shape.</p>
+</section>
+<section id="displayables">
+<h2>Displayables<a class="headerlink" href="#displayables" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Drag">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Drag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drag_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draggable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">droppable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drag_raise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dragging</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dragged</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropped</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drag_handle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drag_joined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">...</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clicked</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hovered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unhovered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mouse_drop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">properties</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drag" title="Link to this definition"></a></dt>
+<dd><p>A displayable that represents an object that can be dragged around
+its enclosing area. A Drag can also represent an area that
+other Drags can be dropped on.</p>
+<p>A Drag can be moved around inside is parent. Generally, its parent
+should be either a <a class="reference internal" href="displayables.html#Fixed" title="Fixed"><code class="xref py py-func docutils literal notranslate"><span class="pre">Fixed()</span></code></a> or <a class="reference internal" href="#DragGroup" title="DragGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">DragGroup</span></code></a>.</p>
+<p>A Drag has one child. The child's state reflects the status
+of the drag and drop operation:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">selected_hover</span></code> - when it is being dragged.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">selected_idle</span></code> - when it can be dropped on.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hover</span></code> - when the draggable will be dragged when the mouse is
+clicked.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">idle</span></code> - otherwise.</p></li>
+</ul>
+<p>The drag handle is a rectangle inside the child. The mouse must be over
+a pixel inside the drag handle for dragging or clicking to occur. If the
+<a class="reference internal" href="style_properties.html#style-property-focus_mask"><code class="xref std std-propref docutils literal notranslate"><span class="pre">focus_mask</span></code></a> property is True, that pixel must not be transparent.</p>
+<p>A newly-created draggable is added to the default DragGroup. A draggable
+can only be in a single DragGroup - if it's added to a second group,
+it's removed from the first.</p>
+<p>When a Drag is first rendered, if it's position cannot be determined
+from the DragGroup it is in, the position of its upper-left corner
+is computed using the standard layout algorithm. Once that position
+has been computed, the layout properties are ignored in favor of the
+position stored inside the Drag.</p>
+<dl>
+<dt><cite>d</cite></dt><dd><p>If present, the child of this Drag. Drags use the child style
+in preference to this, if it's not None.</p>
+</dd>
+<dt><cite>drag_name</cite></dt><dd><p>If not None, the name of this draggable. This is available
+as the <cite>name</cite> property of draggable objects. If a Drag
+with the same name is or was in the DragGroup, the starting
+position of this Drag is taken from that Draggable.</p>
+</dd>
+<dt><cite>draggable</cite></dt><dd><p>If true, the Drag can be dragged around the screen with
+the mouse.</p>
+</dd>
+<dt><cite>droppable</cite></dt><dd><p>If true, other Drags can be dropped on this Drag.</p>
+</dd>
+<dt><cite>drag_raise</cite></dt><dd><p>If true, this Drag is raised to the top when it is dragged. If
+it is joined to other Drags, all joined drags are raised.</p>
+</dd>
+<dt><cite>activated</cite></dt><dd><p>A callback (or list of callbacks) that is called when the mouse
+is pressed down on the drag. It is called with one argument, a
+list of Drags that are being dragged. The return value of this
+callback is ignored.</p>
+</dd>
+<dt><cite>dragging</cite></dt><dd><p>A callback (or list of callbacks) that is called when the Drag is being
+dragged. It is called with one argument, a list of Drags that are
+being dragged. If the callback returns a value other than None, that
+value is returned as the result of the interaction.</p>
+</dd>
+<dt><cite>dragged</cite></dt><dd><p>A callback (or list of callbacks) that is called when the Drag
+has been dragged. It is called with two arguments. The first is
+a list of Drags that are being dragged. The second is either
+a Drag that is being dropped onto, or None of a drop did not
+occur. If the callback returns a value other than None, that
+value is returned as the result of the interaction.</p>
+</dd>
+<dt><cite>dropped</cite></dt><dd><p>A callback (or list of callbacks) that is called when this Drag
+is dropped onto. It is called with two arguments. The first
+is the Drag being dropped onto. The second is a list of Drags that
+are being dragged.  If the callback returns a value other than None,
+that value is returned as the result of the interaction.</p>
+<p>When a dragged and dropped callback are triggered for the same
+event, the dropped callback is only called if dragged returns
+None.</p>
+</dd>
+<dt><cite>clicked</cite></dt><dd><p>A callback that is called when the Drag is clicked without being moved.
+It is called with one argument, the Drag being clicked on. A droppable
+can also be focused and clicked. If the callback returns a value other
+than None, that value is returned as the result of the interaction.</p>
+</dd>
+<dt><cite>alternate</cite></dt><dd><p>An action that is run when the Drag is right-clicked (on the
+desktop) or long-pressed without moving (on mobile). It may
+be necessary to increase <a class="reference internal" href="config.html#var-config.longpress_duration"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.longpress_duration</span></code></a> if
+this triggers to early on mobile platforms.</p>
+</dd>
+<dt><cite>hovered</cite></dt><dd><p>An action to run when the drag gains focus.</p>
+</dd>
+<dt><cite>unhovered</cite></dt><dd><p>An action to run when the drag loses focus.</p>
+</dd>
+<dt><cite>tooltip</cite></dt><dd><p>A tooltip to display when the drag is hovered over.</p>
+</dd>
+<dt><cite>drag_handle</cite></dt><dd><p>A (x, y, width, height) tuple, giving the position of the drag
+handle within the child. This tuple takes <a class="reference internal" href="style_properties.html#term-position"><span class="xref std std-term">positions</span></a>.</p>
+</dd>
+<dt><cite>drag_joined</cite></dt><dd><p>This is called with the current Drag as an argument. It's
+expected to return a list of [ (drag, x, y) ] tuples, giving
+the draggables to drag as a unit. <cite>x</cite> and <cite>y</cite> are the offsets
+of the drags relative to each other, they are not relative
+to the corner of this drag. <cite>drag</cite> is either the Drag object
+to be joined or the drag_name of such a Drag.</p>
+</dd>
+<dt><cite>drag_offscreen</cite></dt><dd><p>Determines the conditions under which the drag is allowed
+to be dragged offscreen. Allowing offscreen dragging can be
+dangerous to use with drag_joined or drags that can change
+size, as the drags can leave the screen entirely, with no
+way to get them back on the screen.</p>
+<p>This should be one of:</p>
+<dl>
+<dt>False</dt><dd><p>To disallow dragging the drag offscreen. (The default)</p>
+</dd>
+<dt>True</dt><dd><p>To allow dragging offscreen, in any direction.</p>
+</dd>
+<dt>&quot;horizontal&quot;</dt><dd><p>To allow dragging offscreen in the horizontal direction only.</p>
+</dd>
+<dt>&quot;vertical&quot;</dt><dd><p>To allow dragging offscreen in the vertical direction only.</p>
+</dd>
+<dt>(width, height)</dt><dd><p>Both width and height must be integers. The drag can be
+dragged offscreen as long as a (width, height)-sized part
+of it remains on-screen. So, (100, 100) will ensure that
+at least a 100x100 pixel area of the displayable will
+remain on-screen even while the rest of the displayable
+can be dragged offscreen. Setting this to the width and
+height of the displayable being dragged is equivalent to
+not allowing the drag to go offscreen at all.</p>
+</dd>
+<dt>(min_x, max_x, min_y, max_y)</dt><dd><p>Where each of min_x, max_x, min_y, and max_y are integers.
+min_x is the number of pixels away from the left border,
+and max_x is the number of pixels away from the right
+border. The same goes for min_y and max_y on the top and
+bottom borders respectively. The drag can be moved until
+one of its edges hit the specified border. (0, 0, 0, 0)
+is equivalent to not allowing dragging offscreen at all.</p>
+<p>For example, (-100, 200, 0, 0) would allow the drag to be
+dragged 100 pixels off the left edge of the screen and 200
+pixels off the right edge of the screen, but does not
+allow it to be dragged offscreen at the top nor bottom.</p>
+<p>This can also be used to constrain the drag within the
+screen bounds. (200, -200, 200, -200) would only allow
+the drag within 200 pixels of the edges of the screen.</p>
+<p>You can envision this as an additional &quot;border&quot; around
+the drag, which may go outside the bounds of the screen,
+that constrains the drag to remain within it.</p>
+</dd>
+<dt>callable</dt><dd><p>A callable can be provided to drag_offscreen. It must
+take two arguments: an x and a y position which
+represents the dragged position of the top left corner of
+the drag, and it must return an (x, y) tuple which is the
+new (x, y) position the drag should be in. This callable
+is called frequently, whenever the drag is moved. For
+example, the following function snaps the drag into place
+every 300 pixels:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">drag_snap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="mi">300</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="mi">600</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">600</span>
+
+    <span class="k">return</span> <span class="mi">200</span><span class="p">,</span> <span class="n">y</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt><cite>mouse_drop</cite></dt><dd><p>If true, the drag is dropped on the first droppable under the cursor.
+If false, the default, the drag is dropped onto the droppable with
+the largest degree of overlap.</p>
+</dd>
+<dt><cite>drop_allowable</cite></dt><dd><p>A callback that is called to determine whether this drop will allow
+the current drags to be dropped onto it. It is called with two arguments.
+The first is the Drag which determines its sensitivity.
+The second is a list of Drags that are being dragged.</p>
+</dd>
+<dt><cite>snapped</cite></dt><dd><p>A callback (or list of callbacks) that is called when the Drag completes
+a snap animation. It is called with four arguments. The first is the
+Drag which was undergoing the snap animation. The second and third are
+the x and y coordinates where the Drag was set to snap to. The fourth
+is a boolean which is True if the snap animation was successfully
+completed, and False if it was interrupted (e.g. from being grabbed in
+the middle of snapping). For example, the following function sets
+the drag's start_x and start_y position to its intended end position
+if the snap animation was interrupted:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">snapped_callback</span><span class="p">(</span><span class="k">drag</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">completed</span><span class="p">):</span>
+    <span class="k">if</span> <span class="k">not</span> <span class="n">completed</span><span class="p">:</span>
+        <span class="k">drag</span><span class="o">.</span><span class="n">start_x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="k">drag</span><span class="o">.</span><span class="n">start_y</span> <span class="o">=</span> <span class="n">y</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>Except for <cite>d</cite>, all of the parameters are available as fields (with
+the same name) on the Drag object. In addition, after the drag has
+been rendered, the following fields become available:</p>
+<dl class="simple">
+<dt><cite>x</cite>, <cite>y</cite></dt><dd><p>The position of the Drag relative to its parent, in pixels.</p>
+</dd>
+<dt><cite>start_x</cite>, <cite>start_y</cite></dt><dd><p>The drag start position of the Drag relative to its parent, in pixels.</p>
+</dd>
+<dt><cite>grab_x</cite>, <cite>grab_y</cite></dt><dd><p>The x and y positions, relative to its parent, where the drag was
+picked up, in pixels.</p>
+</dd>
+<dt><cite>last_drop</cite></dt><dd><p>The last Drag that the current Drag can be dropped on if released,
+or None if no valid Drag currently exists.</p>
+</dd>
+<dt><cite>snapping</cite></dt><dd><p>True if this Drag is in the middle of a snapping animation.</p>
+</dd>
+<dt><cite>w</cite>, <cite>h</cite></dt><dd><p>The width and height of the Drag's child, in pixels.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Drag.bottom">
+<span class="sig-name descname"><span class="pre">bottom</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Drag.bottom" title="Link to this definition"></a></dt>
+<dd><p>Lowers this displayable to the bottom of its drag_group.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Drag.set_child">
+<span class="sig-name descname"><span class="pre">set_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drag.set_child" title="Link to this definition"></a></dt>
+<dd><p>Changes the child of this drag to <cite>d</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Drag.snap">
+<span class="sig-name descname"><span class="pre">snap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warper</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drag.snap" title="Link to this definition"></a></dt>
+<dd><p>Changes the position of the drag. If the drag is not showing,
+then the position change is instantaneous. Otherwise, the
+position change takes <cite>delay</cite> seconds and an optional warper. If no
+warper is provided, the transition is linear.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Drag.top">
+<span class="sig-name descname"><span class="pre">top</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Drag.top" title="Link to this definition"></a></dt>
+<dd><p>Raises this displayable to the top of its drag_group.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="DragGroup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DragGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">children</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">properties</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DragGroup" title="Link to this definition"></a></dt>
+<dd><p>Represents a group of Drags. A Drag is limited to the boundary of
+its DragGroup. Dropping only works between Drags that are in the
+same DragGroup. Drags may only be raised when they are inside a
+DragGroup.</p>
+<p>A DragGroup is laid out like a <a class="reference internal" href="displayables.html#Fixed" title="Fixed"><code class="xref py py-func docutils literal notranslate"><span class="pre">Fixed()</span></code></a>.</p>
+<p>All positional parameters to the DragGroup constructor should be
+Drags, that are added to the DragGroup.</p>
+<dl class="simple">
+<dt><cite>min_overlap</cite></dt><dd><p>An integer which means the minimum number of pixels at the
+overlap for the drop to be allowed.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="DragGroup.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DragGroup.add" title="Link to this definition"></a></dt>
+<dd><p>Adds <cite>child</cite>, which must be a Drag, to this DragGroup. This child
+will be added above all other children of this DragGroup.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DragGroup.get_child_by_name">
+<span class="sig-name descname"><span class="pre">get_child_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DragGroup.get_child_by_name" title="Link to this definition"></a></dt>
+<dd><p>Returns the first child of this DragGroup that has a drag_name
+of <cite>name</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DragGroup.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DragGroup.remove" title="Link to this definition"></a></dt>
+<dd><p>Removes <cite>child</cite> from this DragGroup.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<p>An example of a say screen that allows the user to choose the location
+of the window by dragging it around the screen.:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">screen</span> <span class="n">say</span><span class="p">(</span><span class="n">who</span><span class="p">,</span> <span class="n">what</span><span class="p">):</span>
+
+    <span class="k">drag</span><span class="p">:</span>
+        <span class="na">drag_name</span> <span class="s2">&quot;say&quot;</span>
+        <span class="na">yalign</span> <span class="mf">1.0</span>
+        <span class="na">drag_handle</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+
+        <span class="na">xalign</span> <span class="mf">0.5</span>
+
+        <span class="k">window</span> <span class="na">id</span> <span class="s2">&quot;window&quot;</span><span class="p">:</span>
+            <span class="c1"># Ensure that the window is smaller than the screen.</span>
+            <span class="na">xmaximum</span> <span class="mi">600</span>
+
+            <span class="k">has</span> <span class="k">vbox</span>
+
+            <span class="k">if</span> <span class="n">who</span><span class="p">:</span>
+                <span class="k">text</span> <span class="n">who</span> <span class="na">id</span> <span class="s2">&quot;who&quot;</span>
+
+            <span class="k">text</span> <span class="n">what</span> <span class="na">id</span> <span class="s2">&quot;what&quot;</span>
+</pre></div>
+</div>
+<p>Here's a more complicated example, one that shows how dragging can be
+used to influence gameplay. It shows how dragging can be used to
+send a character to a location:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">detective_dragged</span><span class="p">(</span><span class="n">drags</span><span class="p">,</span> <span class="n">drop</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="k">not</span> <span class="n">drop</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">store</span><span class="o">.</span><span class="n">detective</span> <span class="o">=</span> <span class="n">drags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="na">drag_name</span>
+        <span class="n">store</span><span class="o">.</span><span class="n">city</span> <span class="o">=</span> <span class="n">drop</span><span class="o">.</span><span class="na">drag_name</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">screen</span> <span class="n">send_detective_screen</span><span class="p">:</span>
+
+    <span class="c1"># A map as background.</span>
+    <span class="k">add</span> <span class="s2">&quot;europe.jpg&quot;</span>
+
+    <span class="c1"># A drag group ensures that the detectives and the cities can be</span>
+    <span class="c1"># dragged to each other.</span>
+    <span class="k">draggroup</span><span class="p">:</span>
+
+        <span class="c1"># Our detectives.</span>
+        <span class="k">drag</span><span class="p">:</span>
+            <span class="na">drag_name</span> <span class="s2">&quot;Ivy&quot;</span>
+            <span class="na">droppable</span> <span class="kc">False</span>
+            <span class="na">dragged</span> <span class="n">detective_dragged</span>
+            <span class="na">xpos</span> <span class="mi">100</span> <span class="na">ypos</span> <span class="mi">100</span>
+
+            <span class="k">add</span> <span class="s2">&quot;ivy.png&quot;</span>
+        <span class="k">drag</span><span class="p">:</span>
+            <span class="na">drag_name</span> <span class="s2">&quot;Zack&quot;</span>
+            <span class="na">droppable</span> <span class="kc">False</span>
+            <span class="na">dragged</span> <span class="n">detective_dragged</span>
+            <span class="na">xpos</span> <span class="mi">150</span> <span class="na">ypos</span> <span class="mi">100</span>
+
+            <span class="k">add</span> <span class="s2">&quot;zack.png&quot;</span>
+
+        <span class="c1"># The cities they can go to.</span>
+        <span class="k">drag</span><span class="p">:</span>
+            <span class="na">drag_name</span> <span class="s2">&quot;London&quot;</span>
+            <span class="na">draggable</span> <span class="kc">False</span>
+            <span class="na">xpos</span> <span class="mi">450</span> <span class="na">ypos</span> <span class="mi">140</span>
+
+            <span class="k">add</span> <span class="s2">&quot;london.png&quot;</span>
+
+        <span class="k">drag</span><span class="p">:</span>
+            <span class="na">drag_name</span> <span class="s2">&quot;Paris&quot;</span>
+            <span class="na">draggable</span> <span class="kc">False</span>
+            <span class="na">xpos</span> <span class="mi">500</span> <span class="na">ypos</span> <span class="mi">280</span>
+
+            <span class="k">add</span> <span class="s2">&quot;paris.png&quot;</span>
+
+<span class="k">label</span> <span class="n">send_detective</span><span class="p">:</span>
+    <span class="s2">&quot;We need to investigate! Who should we send, and where should they go?&quot;</span>
+
+    <span class="k">call</span> <span class="k">screen</span> <span class="n">send_detective_screen</span>
+
+    <span class="s2">&quot;Okay, we&#39;ll send [detective] to [city].&quot;</span>
+</pre></div>
+</div>
+<p>More complicated systems take significant programming skill to get
+right.</p>
+<p id="as-example">The <code class="docutils literal notranslate"><span class="pre">as</span></code> clause can be used to bind a drag to variable, which can then be
+used to call methods on the drag.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">screen</span> <span class="n">snap</span><span class="p">():</span>
+
+    <span class="k">drag</span><span class="p">:</span>
+        <span class="k">as</span> <span class="n">carmen</span>
+        <span class="na">draggable</span> <span class="kc">True</span>
+        <span class="na">xpos</span> <span class="mi">100</span> <span class="na">ypos</span> <span class="mi">100</span>
+        <span class="k">frame</span><span class="p">:</span>
+            <span class="k">style</span> <span class="s2">&quot;empty&quot;</span>
+            <span class="na">background</span> <span class="s2">&quot;carmen.png&quot;</span>
+            <span class="na">xysize</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+            <span class="k">vbox</span><span class="p">:</span>
+                <span class="k">textbutton</span> <span class="s2">&quot;London&quot;</span> <span class="na">action</span> <span class="n">Function</span><span class="p">(</span><span class="n">carmen</span><span class="o">.</span><span class="n">snap</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+                <span class="k">textbutton</span> <span class="s2">&quot;Paris&quot;</span> <span class="na">action</span> <span class="n">Function</span><span class="p">(</span><span class="n">carmen</span><span class="o">.</span><span class="n">snap</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">280</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rooms.html" class="btn btn-neutral float-left" title="Image Gallery, Music Room, and Replay Actions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sprites.html" class="btn btn-neutral float-right" title="Sprites" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

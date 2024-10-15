@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text Shaders &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/textshaders.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Launcher" href="launcher.html" />
+    <link rel="prev" title="Custom Mouse Cursors" href="mouse.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Text Shaders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-text-shaders">Using Text Shaders</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#specifying-text-shaders">Specifying Text Shaders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#text-shader-callbacks">Text Shader Callbacks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#built-in-text-shaders">Built-In Text Shaders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-text-shaders">Creating Text Shaders</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.register_textshader"><code class="docutils literal notranslate"><span class="pre">renpy.register_textshader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variables-in-text-shaders">Variables in Text Shaders</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#uniforms">Uniforms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Text Shaders</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/textshaders.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="text-shaders">
+<h1>Text Shaders<a class="headerlink" href="#text-shaders" title="Link to this heading"></a></h1>
+<p>Ren'Py contains a text shader system that makes it possible to control how
+Ren'Py displays text. When enabled, the text shader system uses <a class="reference internal" href="model.html"><span class="doc">Model-Based Rendering</span></a>
+to render two triangles for each unicode character. Shader parts, either specified
+from the creator or generated by Ren'Py, are applied to the model, and
+can change how text is displayed.</p>
+<p>The text shader documentation is in three parts:</p>
+<ol class="arabic simple">
+<li><p>How to use text shaders</p></li>
+<li><p>What text shaders are included in Ren'Py</p></li>
+<li><p>How to create new text shaders</p></li>
+</ol>
+<p>Note that while text shaders are intended to be easily used by game creators,
+making your own text shaders requires some knowledge of GLSL, the OpenGL Shading
+Language, as well as <a class="reference internal" href="model.html"><span class="doc">Model-Based Rendering</span></a>, and hence is more advanced than most Ren'Py
+features.</p>
+<section id="using-text-shaders">
+<h2>Using Text Shaders<a class="headerlink" href="#using-text-shaders" title="Link to this heading"></a></h2>
+<p>There are three ways to use text shaders:</p>
+<p><strong>Default Text Shader</strong> The first is to set the default
+text shader, using <code class="xref std std-var docutils literal notranslate"><span class="pre">config.default_textshader</span></code>.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="n">default_textshader</span> <span class="o">=</span> <span class="s2">&quot;wave:10&quot;</span>
+</pre></div>
+</div>
+<p>When set this way, the text shader will be used for all text that does not
+specify a text shader. It will also be combined with text shaders that
+include the default text shader, which is most of them.</p>
+<p>Generally, the default textshader should take care of slow text and
+shouldn't add more complicated effects.</p>
+<p><strong>Styles</strong> The second way to use text shaders is to set the <code class="xref std std-propref docutils literal notranslate"><span class="pre">textshader</span></code>
+style property, either directly or in one of the many ways provided by Ren'Py to
+set styles.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">style</span> <span class="k">default</span><span class="p">:</span>
+    <span class="na">textshader</span> <span class="s2">&quot;dissolve&quot;</span>
+
+<span class="k">define</span> <span class="n">goldfinger</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Goldfinger&quot;</span><span class="p">,</span> <span class="n">what_textshader</span><span class="o">=</span><span class="s2">&quot;linetexture:gold.png&quot;</span><span class="p">)</span>
+
+<span class="k">screen</span> <span class="n">purchase</span><span class="p">():</span>
+    <span class="k">vbox</span><span class="p">:</span>
+        <span class="k">text</span> <span class="s2">&quot;Buy the DLC for more!&quot;</span> <span class="na">textshader</span> <span class="s2">&quot;wave&quot;</span>
+        <span class="k">textbutton</span> <span class="s2">&quot;Buy Now&quot;</span><span class="p">:</span>
+            <span class="na">text_textshader</span> <span class="s2">&quot;wave&quot;</span> <span class="na">action</span> <span class="n">iap</span><span class="o">.</span><span class="n">Purchase</span><span class="p">(</span><span class="s2">&quot;dlc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Text Tags</strong> The third way to use text shaders is to use the <a class="reference internal" href="text.html#text-tag-shader"><code class="xref std std-tt docutils literal notranslate"><span class="pre">appropriate</span> <span class="pre">text</span> <span class="pre">tag</span></code></a>
+to change the look of a portion of text.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;What&#39;s this? A letter from {shader=zoom}out of nowhere{/shader}?&quot;</span>
+</pre></div>
+</div>
+<p><strong>Note</strong> A text block should either use text shaders or not - mixing is not
+supported. For example, you should set <code class="xref std std-var docutils literal notranslate"><span class="pre">config.default_textshader</span></code>
+or <code class="xref std std-propref docutils literal notranslate"><span class="pre">textshader</span></code> style property if you use the text tag like above.</p>
+<section id="specifying-text-shaders">
+<h3>Specifying Text Shaders<a class="headerlink" href="#specifying-text-shaders" title="Link to this heading"></a></h3>
+<p>Text shaders are specified as strings like:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;dissolve&quot;</span>
+<span class="s2">&quot;jitter:u__jitter=1.0, 3.0&quot;</span>
+<span class="s2">&quot;texture:gold.png&quot;</span>
+</pre></div>
+</div>
+<p>The first part of the string, before the first colon, is the name of the text shader.
+The rest of the string is a series of uniforms that are passed to the shader,
+separated by colons. (Uniforms are parameters that are passed to the shader,
+that can be used to control how the shader works.)</p>
+<p>Uniforms can be specified by name followed by =, or the name can be
+omitted to set each uniform in order. (Omitting the name is not supported in Ren'Py 7.) While
+internally all uniforms begin with u_, the u_ can be omitted for brevity.</p>
+<p>The value of a uniform can be:</p>
+<ul class="simple">
+<li><p>Between 1 and 4 numbers, separated by commas. These can be used with the
+the float, vec2, vec3, or vec4 types.</p></li>
+<li><p>A color, beginning with #. (For example, #f00 or #ff0000 for red.) This
+creates a vec4 corresponding to that color. This color will be
+premultiplied by its alpha channel.</p></li>
+<li><p>A <a class="reference internal" href="displayables.html"><span class="doc">displayable</span></a> that will be
+used as a texture. This creates a sampler2D that can be used to sample
+the texture.</p></li>
+</ul>
+<p>Uniform values can't be expressions or access variables, though it is
+possible to use text interpolation to create a string that can be
+evaluated as a textshader tag or its parameter.</p>
+<p>Finally, text shaders can be combined with each other using the | operator.
+For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;jitter:1.0, 3.0|wave&quot;</span>
+</pre></div>
+</div>
+<p>This will apply both the jitter and wave shaders to the text. This only works
+if the shaders are compatible with each other, and do not use the same
+uniforms (or use the uniform in a way that is compatible with each other, in
+which case it takes the value from the last shader in the list).</p>
+<p>Unless a textshader has <cite>include_default</cite> set to False, the default textshader
+will be combined with the textshader specified in the style or tag.</p>
+</section>
+<section id="text-shader-callbacks">
+<h3>Text Shader Callbacks<a class="headerlink" href="#text-shader-callbacks" title="Link to this heading"></a></h3>
+<p>The <a class="reference internal" href="config.html#var-config.textshader_callbacks"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.textshader_callbacks</span></code></a> variable can be used to set a callback that
+is run when a text shader is applied. This can be used to customize the text
+shader based on a preference.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">default</span> <span class="n">persistent</span><span class="o">.</span><span class="n">dissolve_text</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">get_default_textshader</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">persistent</span><span class="o">.</span><span class="n">dissolve_text</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;dissolve&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;typewriter&quot;</span>
+
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="n">default_textshader</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span>
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="n">textshader_callbacks</span><span class="p">[</span><span class="s2">&quot;default&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_default_textshader</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="built-in-text-shaders">
+<h2>Built-In Text Shaders<a class="headerlink" href="#built-in-text-shaders" title="Link to this heading"></a></h2>
+<p>Ren'Py includes a number of built-in text shaders. These are:</p>
+<dl class="std textshader">
+<dt class="sig sig-object std" id="textshader-dissolve">
+<span class="sig-name descname"><span class="pre">dissolve</span></span><a class="headerlink" href="#textshader-dissolve" title="Link to this definition"></a></dt>
+<dd><p>The dissolve text shader handles text by dissolving it in slowly, with the start dissolving in first, and the
+end dissolving in last.</p>
+<dl class="simple">
+<dt><cite>u__duration</cite> = 10.0</dt><dd><p>The number of characters that will be changing alpha at a time.  If set to
+0, the wave will move across the text one pixel at a time.</p>
+</dd>
+</dl>
+<p>Using this shader will prevent the default text shader from being used.</p>
+</dd></dl>
+
+<dl class="std textshader">
+<dt class="sig sig-object std" id="textshader-flip">
+<span class="sig-name descname"><span class="pre">flip</span></span><a class="headerlink" href="#textshader-flip" title="Link to this definition"></a></dt>
+<dd><p>The flip shader flips slow text by flipping the text horizontally, with the start flipping in first,
+and the end flipping in last.</p>
+<dl class="simple">
+<dt><cite>u__duration</cite> = 10.0</dt><dd><p>The number of characters that will be changing alpha at a time.  If set to
+0, the characters will instantly flip.</p>
+</dd>
+</dl>
+<p>Using this shader will prevent the default text shader from being used.</p>
+</dd></dl>
+
+<dl class="std textshader">
+<dt class="sig sig-object std" id="textshader-jitter">
+<span class="sig-name descname"><span class="pre">jitter</span></span><a class="headerlink" href="#textshader-jitter" title="Link to this definition"></a></dt>
+<dd><p>The jitter text shader moves the text to random positions
+relative to where it would be normally drawn. The position changes
+once per frame.</p>
+<dl class="simple">
+<dt><cite>u__jitter</cite> = (3.0, 3.0)</dt><dd><p>The amount of jitter to apply to the text, in pixels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std textshader">
+<dt class="sig sig-object std" id="textshader-linetexture">
+<span class="sig-name descname"><span class="pre">linetexture</span></span><a class="headerlink" href="#textshader-linetexture" title="Link to this definition"></a></dt>
+<dd><p>Multiplies the text with a texture, one line at a time. The texture is aligned with
+the left side of the text. The vertical center of the texture is aligned with
+the baseline of the text - this meas that most of the lower half of the texture
+will not be visible.</p>
+<dl class="simple">
+<dt><cite>u__texture</cite> = ...</dt><dd><p>The texture to multiply the text by.</p>
+</dd>
+<dt><cite>u__scale</cite> = (1.0, 1.0)</dt><dd><p>A factor to scale the texture by. For example (1.0, 0.5) will make the
+texture half as tall as it otherwise would be.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std textshader">
+<dt class="sig sig-object std" id="textshader-offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#textshader-offset" title="Link to this definition"></a></dt>
+<dd><p>The offset text shader moves the text by a fixed amount.</p>
+<dl class="simple">
+<dt><cite>u__offset</cite> = (0.0, 0.0)</dt><dd><p>The amount to move the text by, in virtual pixels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std textshader">
+<dt class="sig sig-object std" id="textshader-slowalpha">
+<span class="sig-name descname"><span class="pre">slowalpha</span></span><a class="headerlink" href="#textshader-slowalpha" title="Link to this definition"></a></dt>
+<dd><p>The slowalpha shader is intended to be used with another slow text shader, like typewriter or dissolve.
+It causes the text that has yet to be revealed to be drawn with an alpha value of <cite>u__alpha</cite> = 0.2, rather than
+being invisible.</p>
+<dl class="simple">
+<dt><cite>u__alpha</cite> = 0.2</dt><dd><p>The alpha value of the text that has not been revealed yet.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std textshader">
+<dt class="sig sig-object std" id="textshader-texture">
+<span class="sig-name descname"><span class="pre">texture</span></span><a class="headerlink" href="#textshader-texture" title="Link to this definition"></a></dt>
+<dd><p>The texture text shader multiplies the text with the colors from a texture. This not
+done to outlines or offset text. The texture is aligned with the top
+left of the text.</p>
+<dl class="simple">
+<dt><cite>u__texture</cite> = ...</dt><dd><p>The texture to multiply the text by.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std textshader">
+<dt class="sig sig-object std" id="textshader-typewriter">
+<span class="sig-name descname"><span class="pre">typewriter</span></span><a class="headerlink" href="#textshader-typewriter" title="Link to this definition"></a></dt>
+<dd><p>The typewriter text shader handles slow text by making the text appear one character at a time, as if it were being
+typed out by a typewriter.</p>
+<p>Using this shader will prevent the default text shader from being used.</p>
+</dd></dl>
+
+<dl class="std textshader">
+<dt class="sig sig-object std" id="textshader-wave">
+<span class="sig-name descname"><span class="pre">wave</span></span><a class="headerlink" href="#textshader-wave" title="Link to this definition"></a></dt>
+<dd><p>The wave text shader makes the text bounce up and down in a wave.</p>
+<dl class="simple">
+<dt><cite>u__amplitude</cite> = 5.0</dt><dd><p>The number of pixels up and down the text will move.</p>
+</dd>
+<dt><cite>u__frequency</cite> = 2.0</dt><dd><p>The number of waves per second.</p>
+</dd>
+<dt><cite>u__wavelength</cite> = 20.0</dt><dd><p>The number of characters between peaks in the wave.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std textshader">
+<dt class="sig sig-object std" id="textshader-zoom">
+<span class="sig-name descname"><span class="pre">zoom</span></span><a class="headerlink" href="#textshader-zoom" title="Link to this definition"></a></dt>
+<dd><p>The zoom text shader handles slow text to cause it to zoom in from an initial size of <cite>u__zoom</cite> = 0.0 to full size.</p>
+<dl class="simple">
+<dt><cite>u__zoom</cite> = 0.0</dt><dd><p>The initial amount of zoom to apply to a character when it first starts
+showing.</p>
+</dd>
+<dt><cite>u__duration</cite> = 10.0</dt><dd><p>The number of characters that will be changing alpha at a time.  If set to
+0, the characters will instantly flip.</p>
+</dd>
+</dl>
+<p>Using this shader will prevent the default text shader from being used.</p>
+</dd></dl>
+
+</section>
+<section id="creating-text-shaders">
+<h2>Creating Text Shaders<a class="headerlink" href="#creating-text-shaders" title="Link to this heading"></a></h2>
+<p>Text shaders are GLSL programs that are run on the GPU. These shaders are
+registered using the renpy.register_text_shader function.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.register_textshader">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">register_textshader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shaders</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_slow_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_slow_duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redraw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redraw_when_slow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjust_function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.register_textshader" title="Link to this definition"></a></dt>
+<dd><p>This creates a textshader and registers it with the name <cite>name</cite>.</p>
+<p>This function takes the following arguments:</p>
+<dl>
+<dt><cite>name</cite></dt><dd><p>This is the name of the textshader. It's also used to register a shader
+part named textshader.`name`.</p>
+</dd>
+<dt><cite>shaders</cite></dt><dd><p>Shader parts to apply to the text. This can be a string, or a list or tuple of strings.
+This should be a shader part registered with <a class="reference internal" href="model.html#renpy.register_shader" title="renpy.register_shader"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.register_shader()</span></code></a>, or this
+function. If a shader part begins with '-', then it is removed from the list of shader
+parts. (For example, '-textshader.typewriter' will remove that part.)</p>
+<p>Note that the shader parts registered with this function are prefixed
+with textshader., which needs to be supplied when used with this function.</p>
+</dd>
+<dt><cite>extra_slow_time</cite></dt><dd><p>Extra time to add to the slow time effect beyond what Ren'Py will compute from
+the current characters per second. This is useful for shaders that
+might take more time to transition a character than the default time.
+If True, the shader is always updated.</p>
+</dd>
+<dt><cite>extra_slow_duration</cite></dt><dd><p>Added to <cite>extra_slow_time</cite>, but this is multiplied by the time
+per character to get the extra time to add to the slow time effect.
+(Time per character is 1 / characters per second.)</p>
+</dd>
+<dt><cite>redraw</cite></dt><dd><p>The amount in time in seconds before the text is redrawn, after
+all slow text has been show and <cite>extra_slow_time</cite> has passed.</p>
+</dd>
+<dt><cite>redraw_when_slow</cite></dt><dd><p>The amount of time in seconds before the text is redrawn when showing
+slow text.</p>
+</dd>
+<dt><cite>include_default</cite></dt><dd><p>If True, when this textshader is used directly, it will be combined
+with <code class="xref std std-var docutils literal notranslate"><span class="pre">config.default_textshader</span></code>.</p>
+</dd>
+<dt><cite>adjust_function</cite></dt><dd><p>A function that is called with an object and the uniforms being
+passed to the text shader as keyworkd arguments. This
+function can set the <cite>extra_slow_time</cite>, <cite>extra_slow_duration</cite>,
+<cite>redraw</cite>, and <cite>redraw_when_slow</cite> fields of the object</p>
+</dd>
+<dt><cite>doc</cite></dt><dd><p>A string containing documetation information. This is mostly intended
+for Ren'Py's documentation system.</p>
+</dd>
+</dl>
+<p>Keyword argument beginning with <code class="docutils literal notranslate"><span class="pre">u_</span></code> are passed as uniforms to the shader,
+with strings beginning with <code class="docutils literal notranslate"><span class="pre">#</span></code> being interpreted as colors. Most uniforms
+should begin with <code class="docutils literal notranslate"><span class="pre">u__</span></code>, using <a class="reference internal" href="model.html#shader-local-variables"><span class="std std-ref">shader local variables</span></a>
+to prevent conflicts with other shaders.</p>
+<p>A keyword argument named <cite>variables</cite> and all keyword arguments that begin
+with <cite>fragment_</cite> or <cite>vertex_</cite> are passed to <a class="reference internal" href="model.html#renpy.register_shader" title="renpy.register_shader"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.register_shader()</span></code></a>,
+which registers the shader part.</p>
+</dd></dl>
+
+<section id="variables-in-text-shaders">
+<h3>Variables in Text Shaders<a class="headerlink" href="#variables-in-text-shaders" title="Link to this heading"></a></h3>
+<p>In additions to the uniforms you provided to the text shader (generally beginning with <code class="docutils literal notranslate"><span class="pre">u__</span></code>),
+Ren'Py makes the following variables available to text shaders. To use a variable in a text shader,
+it needs to be declared in the <cite>variables</cite> argument to renpy.register_text_shader.</p>
+<p>In addition to these, the model <a class="reference internal" href="model.html#model-uniforms"><span class="std std-ref">uniforms and attributes</span></a> are available, with
+<cite>a_position</cite>, <cite>a_tex_coord</cite>, <cite>u_time</cite> and <cite>u_random</cite> being particularly useful.</p>
+<section id="uniforms">
+<h4>Uniforms<a class="headerlink" href="#uniforms" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">u_text_depth</span></code></dt><dd><p>The depth of the text from the top. The topmost text has a depth of 0.0, the first outline or shadow has a
+depth of 1.0, the second outline or shadow has a depth of 2.0, and so on.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">u_text_main</span></code></dt><dd><p>If this is 1.0, the text is the main text. If this is 0.0, the text is the outline or shadow of the main text.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">u_text_max_depth</span></code></dt><dd><p>The maximum value of u_text_depth. This is the number of outlines and shadows that will be drawn. When u_text_depth
+is equal to this value, the texct is the last outline or shadow, which may be useful for drawing backgrounds.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">vec2</span> <span class="pre">u_text_offset</span></code></dt><dd><p>The offset of the text from the center of the character. This is in drawable pixels in x, y order.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">u_text_outline</span></code></dt><dd><p>The width of the outline around the text. This is in drawable pixels, and is the distance from the edge of the text to the edge of the outline.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">u_text_slow_duration</span></code></dt><dd><p>The duration of a single slow character, when showing slow text. 0.0 if not showing slow text.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">u_text_slow_time</span></code></dt><dd><p>The time in seconds since the start of the slow text effect. This will only increase until the end of slow
+text, when it will max out. If the user clicks to terminate slow text, this will max out. It should only
+be used for slow text - use</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">u_text_to_drawable</span></code></dt><dd><p>The ratio of virtual pixels to drawable pixels. This is used to convert from virtual pixels to drawable pixels.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">u_text_to_virtual</span></code></dt><dd><p>The ratio of drawable pixels to virtual pixels. This is used to convert from drawable pixels to virtual pixels.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">sampler2D</span> <span class="pre">tex0</span></code></dt><dd><p>This texture contains the rendered text at the current depth.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">vec2</span> <span class="pre">res0</span></code></dt><dd><p>The resolution of tex0, in drawable pixels.</p>
+</dd>
+</dl>
+</section>
+<section id="attributes">
+<h4>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h4>
+<p>When drawing text, each vertex corresponds to a single glyph. Multiple glyphs may have vertices that share
+locations, but these are passed to the shader as different vertices.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">a_text_ascent</span></code></dt><dd><p>The ascent of the current glyph's font above the baseline, in drawable pixels.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">vec2</span> <span class="pre">a_text_center</span></code></dt><dd><p>The position of the center of the glyphs's baseline, in drawable pixels. This is not the
+center of the rectangle, it's a point on the baseline and around the center of the character.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">a_text_descent</span></code></dt><dd><p>The descent of the current glyph below the baseline, in drawable pixels.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">a_text_index</span></code></dt><dd><p>The index of the glyph being drawn. This is 0 for the first vertex and goes up by one for each vertex.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">vec2</span> <span class="pre">a_text_min_time</span></code></dt><dd><p>The minimum time at which any vertex of the glyph should be shown. When showing from left-to-right,
+this is the time the leftmost vertices should be shown. When the text is meant to be shown instantly
+but <code class="docutils literal notranslate"><span class="pre">u_text_slow_duration</span></code> is not 0.0, this will be -3600.0.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">vec2</span> <span class="pre">a_text_max_time</span></code></dt><dd><p>The maximum time at which any vertex of the glyph should be shown. When showing from left-to-right,
+this is the time the rightmost vertices should be shown. When the text is meant to be shown instantly
+but <code class="docutils literal notranslate"><span class="pre">u_text_slow_duration</span></code> is not 0.0, this will be -3600.0.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">a_text_time</span></code></dt><dd><p>The time at which this vertex should be shown. When the text is meant to be shown instantly
+but <code class="docutils literal notranslate"><span class="pre">u_text_slow_duration</span></code> is not 0.0, this will be -3600.0.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">vec4</span> <span class="pre">a_text_pos_rect</span></code></dt><dd><p>The rectangle containing the glyph, in drawable pixels. This is a vec4 with the x, y, width, and height of the rectangle,
+in drawable pixels. This can be converted to texture coordinates by dividing it by <code class="docutils literal notranslate"><span class="pre">res0</span></code>.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h3>
+<p>This is an example of a text shader that spins text when shown.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">adjust_extra_slow_time</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">u__delay</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adjusts a text shader&#39;s extra slow time to support the spinning text shader.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ts</span><span class="o">.</span><span class="n">extra_slow_time</span> <span class="o">=</span> <span class="n">u__delay</span>
+
+    <span class="n">renpy</span><span class="o">.</span><span class="n">register_textshader</span><span class="p">(</span>
+        <span class="s2">&quot;spin&quot;</span><span class="p">,</span>
+        <span class="n">adjust_function</span> <span class="o">=</span> <span class="n">adjust_extra_slow_time</span><span class="p">,</span>
+
+        <span class="n">variables</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        uniform float u__delay;</span>
+<span class="s2">        uniform float u__offset;</span>
+<span class="s2">        uniform float u_text_slow_time;</span>
+<span class="s2">        attribute vec2 a_text_center;</span>
+<span class="s2">        attribute float a_text_min_time;</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+
+        <span class="n">vertex_50</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        float l__angle = clamp((u_text_slow_time - a_text_min_time) / u__delay, 0.0, 1.0) * 2.0 * 3.1415926536;</span>
+<span class="s2">        float l__sin = sin(l__angle);</span>
+<span class="s2">        float l__cos = cos(l__angle);</span>
+
+<span class="s2">        gl_Position.y -= u__offset;</span>
+<span class="s2">        gl_Position.xy -= a_text_center;</span>
+<span class="s2">        gl_Position = vec4(</span>
+<span class="s2">            gl_Position.x * l__cos - gl_Position.y * l__sin,</span>
+<span class="s2">            gl_Position.x * l__sin + gl_Position.y * l__cos,</span>
+<span class="s2">            gl_Position.z,</span>
+<span class="s2">            gl_Position.w</span>
+<span class="s2">            );</span>
+<span class="s2">        gl_Position.xy += a_text_center;</span>
+<span class="s2">        gl_Position.y += u__offset;</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+
+        <span class="n">u__delay</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">u__offset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>It can be used witt the following script:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="n">default_textshader</span> <span class="o">=</span> <span class="s2">&quot;typewriter&quot;</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+
+    <span class="s2">&quot;This is a test of the {shader=spin:0.5:-5}spin{/shader} text shader.&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mouse.html" class="btn btn-neutral float-left" title="Custom Mouse Cursors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="launcher.html" class="btn btn-neutral float-right" title="Launcher" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

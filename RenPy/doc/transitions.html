@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transitions &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/transitions.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Matrixcolor" href="matrixcolor.html" />
+    <link rel="prev" title="Transform Properties" href="transform_properties.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Transitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pre-defined-transitions">Pre-Defined Transitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#transition-classes">Transition Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#AlphaDissolve"><code class="docutils literal notranslate"><span class="pre">AlphaDissolve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ComposeTransition"><code class="docutils literal notranslate"><span class="pre">ComposeTransition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#CropMove"><code class="docutils literal notranslate"><span class="pre">CropMove()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Dissolve"><code class="docutils literal notranslate"><span class="pre">Dissolve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Fade"><code class="docutils literal notranslate"><span class="pre">Fade()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ImageDissolve"><code class="docutils literal notranslate"><span class="pre">ImageDissolve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#MoveTransition"><code class="docutils literal notranslate"><span class="pre">MoveTransition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#MultipleTransition"><code class="docutils literal notranslate"><span class="pre">MultipleTransition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Pause"><code class="docutils literal notranslate"><span class="pre">Pause()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Pixellate"><code class="docutils literal notranslate"><span class="pre">Pixellate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#PushMove"><code class="docutils literal notranslate"><span class="pre">PushMove()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Swing"><code class="docutils literal notranslate"><span class="pre">Swing()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#transition-families">Transition Families</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#define.move_transitions"><code class="docutils literal notranslate"><span class="pre">define.move_transitions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dict-transitions">Dict Transitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#atl-transitions">ATL Transitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-transitions">Python Transitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#automatic-transitions-after-scene-show-and-hide">Automatic Transitions after Scene, Show, and Hide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Transitions</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/transitions.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="transitions">
+<span id="id1"></span><h1>Transitions<a class="headerlink" href="#transitions" title="Link to this heading"></a></h1>
+<p>Transitions can be used as part of the <a class="reference internal" href="displaying_images.html#with-statement"><span class="std std-ref">with statement</span></a>,
+as well as in other parts of Ren'Py, to apply effects to changes in the scene
+(or sometimes to turn a displayable into another). Ren'Py comes with a small
+number of pre-defined transitions, which can be given directly to the with
+statement. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">bg</span> <span class="n">washington</span>
+<span class="k">with</span> <span class="n">dissolve</span>
+</pre></div>
+</div>
+<section id="pre-defined-transitions">
+<h2>Pre-Defined Transitions<a class="headerlink" href="#pre-defined-transitions" title="Link to this heading"></a></h2>
+<dl class="std var">
+<dt class="sig sig-object std" id="var-dissolve">
+<span class="sig-name descname"><span class="pre">dissolve</span></span><a class="headerlink" href="#var-dissolve" title="Link to this definition"></a></dt>
+<dd><p>Takes 0.5 seconds to dissolve from the old to the new screen. An instance of
+the <a class="reference internal" href="#Dissolve" title="Dissolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">Dissolve()</span></code></a> transition class.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-fade">
+<span class="sig-name descname"><span class="pre">fade</span></span><a class="headerlink" href="#var-fade" title="Link to this definition"></a></dt>
+<dd><p>Takes 0.5 seconds to fade to black, and then 0.5 seconds to fade to the new
+screen. An instance of the <a class="reference internal" href="#Fade" title="Fade"><code class="xref py py-func docutils literal notranslate"><span class="pre">Fade()</span></code></a> transition class.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-pixellate">
+<span class="sig-name descname"><span class="pre">pixellate</span></span><a class="headerlink" href="#var-pixellate" title="Link to this definition"></a></dt>
+<dd><p>Pixellates the old scene for .5 seconds, and the new scene for another .5
+seconds. An instance of the <a class="reference internal" href="#Pixellate" title="Pixellate"><code class="xref py py-func docutils literal notranslate"><span class="pre">Pixellate()</span></code></a> transition class.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-move">
+<span class="sig-name descname"><span class="pre">move</span></span><a class="headerlink" href="#var-move" title="Link to this definition"></a></dt>
+<dd><p>Takes 0.5 seconds to the move images that have changed location to their new
+locations. An instance of the <a class="reference internal" href="#MoveTransition" title="MoveTransition"><code class="xref py py-func docutils literal notranslate"><span class="pre">MoveTransition()</span></code></a> transition class.</p>
+<p>Move transitions, and similar transitions like ease, can only be applied to
+a single layer or all layers at once, using the
+<a class="reference internal" href="displaying_images.html#with-statement"><span class="std std-ref">with statement</span></a>. It will not work in other contexts
+such as <a class="reference internal" href="transforms.html#displayable-atl-statement"><span class="std std-ref">ATL</span></a>, <a class="reference internal" href="#ComposeTransition" title="ComposeTransition"><code class="xref py py-func docutils literal notranslate"><span class="pre">ComposeTransition()</span></code></a>,
+or other ways of applying transitions.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-moveinright">
+<span class="sig-name descname"><span class="pre">moveinright</span></span><a class="headerlink" href="#var-moveinright" title="Link to this definition"></a></dt>
+<dd><p>Also: <strong>moveinleft, moveintop, moveinbottom</strong></p>
+<p>These move entering images onto the screen from the appropriate side, taking
+0.5 seconds to do so.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-moveoutright">
+<span class="sig-name descname"><span class="pre">moveoutright</span></span><a class="headerlink" href="#var-moveoutright" title="Link to this definition"></a></dt>
+<dd><p>Also: <strong>moveoutleft, moveouttop, moveoutbottom</strong></p>
+<p>These move leaving images off the screen via the appropriate side, taking
+0.5 seconds to do so.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-ease">
+<span class="sig-name descname"><span class="pre">ease</span></span><a class="headerlink" href="#var-ease" title="Link to this definition"></a></dt>
+<dd><p>Also: <strong>easeinright, easeinleft, easeintop, easeinbottom, easeoutright, easeoutleft, easeouttop, easeoutbottom</strong></p>
+<p>These are similar to the move- family of transitions, except that they use a
+cosine-based curve to slow down the start and end of the transition.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-zoomin">
+<span class="sig-name descname"><span class="pre">zoomin</span></span><a class="headerlink" href="#var-zoomin" title="Link to this definition"></a></dt>
+<dd><p>This zooms in entering images, taking 0.5 seconds to do so.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-zoomout">
+<span class="sig-name descname"><span class="pre">zoomout</span></span><a class="headerlink" href="#var-zoomout" title="Link to this definition"></a></dt>
+<dd><p>This zooms out leaving images, taking 0.5 seconds to do so.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-zoominout">
+<span class="sig-name descname"><span class="pre">zoominout</span></span><a class="headerlink" href="#var-zoominout" title="Link to this definition"></a></dt>
+<dd><p>This zooms in entering images and zooms out leaving images, taking 0.5
+seconds to do so.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-vpunch">
+<span class="sig-name descname"><span class="pre">vpunch</span></span><a class="headerlink" href="#var-vpunch" title="Link to this definition"></a></dt>
+<dd><p>When invoked, this transition shakes the screen vertically for a quarter
+second. Imitating and customizing this transition and <a class="reference internal" href="#var-hpunch"><code class="xref std std-var docutils literal notranslate"><span class="pre">hpunch</span></code></a> is best
+done using <a class="reference internal" href="#atl-transitions"><span class="std std-ref">ATL Transitions</span></a>.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-hpunch">
+<span class="sig-name descname"><span class="pre">hpunch</span></span><a class="headerlink" href="#var-hpunch" title="Link to this definition"></a></dt>
+<dd><p>When invoked, this transition shakes the screen horizontally for a quarter
+second.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-blinds">
+<span class="sig-name descname"><span class="pre">blinds</span></span><a class="headerlink" href="#var-blinds" title="Link to this definition"></a></dt>
+<dd><p>Transitions the screen in a vertical blinds effect lasting 1 second. An
+instance of the <a class="reference internal" href="#ImageDissolve" title="ImageDissolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">ImageDissolve()</span></code></a> transition class.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-squares">
+<span class="sig-name descname"><span class="pre">squares</span></span><a class="headerlink" href="#var-squares" title="Link to this definition"></a></dt>
+<dd><p>Transitions the screen in a squares effect lasting 1 second.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-wipeleft">
+<span class="sig-name descname"><span class="pre">wipeleft</span></span><a class="headerlink" href="#var-wipeleft" title="Link to this definition"></a></dt>
+<dd><p>Also: <strong>wiperight, wipeup, wipedown</strong></p>
+<p>Wipes the scene in the given direction. Instances of the <a class="reference internal" href="#CropMove" title="CropMove"><code class="xref py py-func docutils literal notranslate"><span class="pre">CropMove()</span></code></a>
+transition class.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-slideleft">
+<span class="sig-name descname"><span class="pre">slideleft</span></span><a class="headerlink" href="#var-slideleft" title="Link to this definition"></a></dt>
+<dd><p>Also: <strong>slideright, slideup, slidedown</strong></p>
+<p>Slides the new scene in the given direction. Instances of the
+<a class="reference internal" href="#CropMove" title="CropMove"><code class="xref py py-func docutils literal notranslate"><span class="pre">CropMove()</span></code></a> transition class.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-slideawayleft">
+<span class="sig-name descname"><span class="pre">slideawayleft</span></span><a class="headerlink" href="#var-slideawayleft" title="Link to this definition"></a></dt>
+<dd><p>Also: <strong>slideawayright, slideawayup, slideawaydown</strong></p>
+<p>Slides the old scene in the given direction. Instances of the
+<a class="reference internal" href="#CropMove" title="CropMove"><code class="xref py py-func docutils literal notranslate"><span class="pre">CropMove()</span></code></a> transition class.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-pushright">
+<span class="sig-name descname"><span class="pre">pushright</span></span><a class="headerlink" href="#var-pushright" title="Link to this definition"></a></dt>
+<dd><p>Also: <strong>pushleft, pushup, pushdown</strong></p>
+<p>These use the new scene to slide the old scene out the named side. Instances
+of the <a class="reference internal" href="#PushMove" title="PushMove"><code class="xref py py-func docutils literal notranslate"><span class="pre">PushMove()</span></code></a> transition class.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-irisin">
+<span class="sig-name descname"><span class="pre">irisin</span></span><a class="headerlink" href="#var-irisin" title="Link to this definition"></a></dt>
+<dd><p>Also: <strong>irisout</strong></p>
+<p>Use a rectangular iris to display the new screen, or hide the old screen.
+Instances of the <a class="reference internal" href="#CropMove" title="CropMove"><code class="xref py py-func docutils literal notranslate"><span class="pre">CropMove()</span></code></a> transition class.</p>
+</dd></dl>
+
+</section>
+<section id="transition-classes">
+<h2>Transition Classes<a class="headerlink" href="#transition-classes" title="Link to this heading"></a></h2>
+<p>Transition classes are functions that can be called to create new transitions.
+These functions are parameterized, allowing entire families of transitions to be
+created. Unlike what the term may imply, they are usually not classes in the
+Python sense and should not be treated as such.</p>
+<p>Calling transition classes can be done as part of the with statement. For
+example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># A very long dissolve.</span>
+<span class="k">with</span> <span class="n">Dissolve</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the same transition class is used repeatedly, the <a class="reference internal" href="python.html#define-statement"><span class="std std-ref">define statement</span></a> can be used to assign the transition to a variable:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">dissolve1</span> <span class="o">=</span> <span class="n">Dissolve</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+    <span class="k">show</span> <span class="n">bg</span> <span class="n">washington</span>
+    <span class="k">with</span> <span class="n">dissolve1</span>
+</pre></div>
+</div>
+<p>The <cite>time_warp</cite> argument taken by many transition classes can be given built-in
+warpers found in the <code class="docutils literal notranslate"><span class="pre">_warper</span></code> module, see <a class="reference internal" href="transforms.html#warpers"><span class="std std-ref">warpers</span></a>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="AlphaDissolve">
+<span class="sig-name descname"><span class="pre">AlphaDissolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">control</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mipmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AlphaDissolve" title="Link to this definition"></a></dt>
+<dd><p>Returns a transition that uses a control displayable (almost always some
+sort of animated transform) to transition from one screen to another. The
+transform is evaluated. The new screen is used where the transform is
+opaque, and the old image is used when it is transparent.</p>
+<dl class="simple">
+<dt><cite>control</cite></dt><dd><p>The control transform.</p>
+</dd>
+<dt><cite>delay</cite></dt><dd><p>The time the transition takes, before ending.</p>
+</dd>
+<dt><cite>reverse</cite></dt><dd><p>If true, the alpha channel is reversed. Opaque areas are taken
+from the old image, while transparent areas are taken from the
+new image.</p>
+</dd>
+<dt><cite>mipmap</cite></dt><dd><p>When the dissolve will be scaled to less than half its natural size,
+this can be set to True. This will cause mipmaps to be generated,
+which will make the dissolve consume more GPU resources, but will
+reduce artifacts. See <a class="reference internal" href="style_properties.html#style-property-mipmap"><code class="xref std std-propref docutils literal notranslate"><span class="pre">mipmap</span></code></a> for more information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ComposeTransition">
+<span class="sig-name descname"><span class="pre">ComposeTransition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trans</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">before</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">after</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ComposeTransition" title="Link to this definition"></a></dt>
+<dd><p>Returns a transition that composes up to three transitions. If not None,
+the <cite>before</cite> and <cite>after</cite> transitions are applied to the old and new
+scenes, respectively. These updated old and new scenes are then supplied
+to the <cite>trans</cite> transition.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># Move the images in and out while dissolving. (This is a fairly expensive transition.)</span>
+<span class="k">define</span> <span class="n">moveinoutdissolve</span> <span class="o">=</span> <span class="n">ComposeTransition</span><span class="p">(</span><span class="n">dissolve</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="n">moveoutleft</span><span class="p">,</span> <span class="n">after</span><span class="o">=</span><span class="n">moveinright</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="CropMove">
+<span class="sig-name descname"><span class="pre">CropMove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'slideright'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startcrop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startpos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.0,</span> <span class="pre">0.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endcrop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.0,</span> <span class="pre">0.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topnew</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CropMove" title="Link to this definition"></a></dt>
+<dd><p>Returns a transition that works by cropping a scene and positioning it on the
+screen. This can be used to implement a variety of effects, all of which
+involve changing rectangular slices of scenes.</p>
+<dl>
+<dt><cite>time</cite></dt><dd><p>The time the transition takes.</p>
+</dd>
+<dt><cite>mode</cite></dt><dd><p>The name of the mode of the transition. There are three groups
+of modes: wipes, slides, and other. This can also be &quot;custom&quot;,
+to allow a custom mode to be defined.</p>
+<p>In a wipe, the image stays fixed, and more of it is revealed as
+the transition progresses. For example, in &quot;wiperight&quot;, a wipe from left to right, first the left edge of the image is
+revealed at the left edge of the screen, then the center of the image,
+and finally the right side of the image at the right of the screen.
+Other supported wipes are &quot;wipeleft&quot;, &quot;wipedown&quot;, and &quot;wipeup&quot;.</p>
+<p>In a slide, the image moves. So in a &quot;slideright&quot;, the right edge of the
+image starts at the left edge of the screen, and moves to the right
+as the transition progresses. Other slides are &quot;slideleft&quot;, &quot;slidedown&quot;,
+and &quot;slideup&quot;.</p>
+<p>There are also slideaways, in which the old image moves on top of
+the new image. Slideaways include &quot;slideawayright&quot;, &quot;slideawayleft&quot;,
+&quot;slideawayup&quot;, and &quot;slideawaydown&quot;.</p>
+<p>We also support a rectangular iris in with &quot;irisin&quot; and a
+rectangular iris out with &quot;irisout&quot;.</p>
+</dd>
+</dl>
+<p>The following parameters are only respected if the mode is &quot;custom&quot;. Positions
+are relative to the size of the screen, while the crops are relative to the
+size of the image. So a crop of (0.25, 0.0, 0.5, 1.0) takes the middle
+half of an image.</p>
+<dl class="simple">
+<dt><cite>startcrop</cite></dt><dd><p>The starting rectangle that is cropped out of the
+top image. A 4-element tuple containing x, y, width, and height.</p>
+</dd>
+<dt><cite>startpos</cite></dt><dd><p>The starting place that the top image is drawn
+to the screen at, a 2-element tuple containing x and y.</p>
+</dd>
+<dt><cite>endcrop</cite></dt><dd><p>The ending rectangle that is cropped out of the
+top image. A 4-element tuple containing x, y, width, and height.</p>
+</dd>
+<dt><cite>endpos</cite></dt><dd><p>The ending place that the top image is drawn
+to the screen at, a 2-element tuple containing x and y.</p>
+</dd>
+<dt><cite>topnew</cite></dt><dd><p>If true, the scene that is cropped and moved (and is on top of
+the other scene) is the new scene. If false, it is the old scene.</p>
+</dd>
+</dl>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">wiperight</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;wiperight&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">wipeleft</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;wipeleft&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">wipeup</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;wipeup&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">wipedown</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;wipedown&quot;</span><span class="p">)</span>
+
+<span class="k">define</span> <span class="n">slideright</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;slideright&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">slideleft</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;slideleft&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">slideup</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;slideup&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">slidedown</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;slidedown&quot;</span><span class="p">)</span>
+
+<span class="k">define</span> <span class="n">slideawayright</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;slideawayright&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">slideawayleft</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;slideawayleft&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">slideawayup</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;slideawayup&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">slideawaydown</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;slideawaydown&quot;</span><span class="p">)</span>
+
+<span class="k">define</span> <span class="n">irisout</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;irisout&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">irisin</span> <span class="o">=</span> <span class="n">CropMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;irisin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Dissolve">
+<span class="sig-name descname"><span class="pre">Dissolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_warp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mipmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Dissolve" title="Link to this definition"></a></dt>
+<dd><p>Returns a transition that dissolves from the old scene to the new scene.</p>
+<dl class="simple">
+<dt><cite>time</cite></dt><dd><p>The time the dissolve will take.</p>
+</dd>
+<dt><cite>time_warp</cite></dt><dd><p>A <a class="reference internal" href="transforms.html#warpers"><span class="std std-ref">function that adjusts the timeline</span></a>. If not None, this
+should be a function that takes a fractional time between 0.0 and 1.0,
+and returns a number in the same range.</p>
+</dd>
+<dt><cite>mipmap</cite></dt><dd><p>When the dissolve will be scaled to less than half its natural size,
+this can be set to True. This will cause mipmaps to be generated,
+which will make the dissolve consume more GPU resources, but will
+reduce artifacts. See <a class="reference internal" href="style_properties.html#style-property-mipmap"><code class="xref std std-propref docutils literal notranslate"><span class="pre">mipmap</span></code></a> for more information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Fade">
+<span class="sig-name descname"><span class="pre">Fade</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hold_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_time</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'#000'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Fade" title="Link to this definition"></a></dt>
+<dd><p>Returns a transition that takes <cite>out_time</cite> seconds to fade to
+a screen filled with <cite>color</cite>, holds at that screen for <cite>hold_time</cite>
+seconds, and then takes <cite>in_time</cite> to fade to then new screen.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fade to black and back.</span>
+<span class="k">define</span> <span class="n">fade</span> <span class="o">=</span> <span class="n">Fade</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Hold at black for a bit.</span>
+<span class="k">define</span> <span class="n">fadehold</span> <span class="o">=</span> <span class="n">Fade</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Camera flash - quickly fades to white, then back to the scene.</span>
+<span class="k">define</span> <span class="n">flash</span> <span class="o">=</span> <span class="n">Fade</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="na">color</span><span class="o">=</span><span class="s2">&quot;#fff&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ImageDissolve">
+<span class="sig-name descname"><span class="pre">ImageDissolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ramplen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_warp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mipmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ImageDissolve" title="Link to this definition"></a></dt>
+<dd><p>Returns a transition that dissolves the old scene into the new scene, using
+an image to control the dissolve process. This means that white pixels will
+dissolve in first, and black pixels will dissolve in last.</p>
+<dl class="simple">
+<dt><cite>image</cite></dt><dd><p>The control image. This can be any displayable. It
+should be the size of the scenes being dissolved, and if <cite>reverse=True</cite>,
+it should be fully opaque.</p>
+</dd>
+<dt><cite>time</cite></dt><dd><p>The time the dissolve will take.</p>
+</dd>
+<dt><cite>ramplen</cite></dt><dd><p>The length of the ramp to use. This must be an integer power
+of 2. When this is the default value of 8, when a white pixel
+is fully dissolved, a pixel 8 shades of gray darker will have
+completed one step of dissolving in.</p>
+</dd>
+<dt><cite>reverse</cite></dt><dd><p>If True, black pixels will dissolve in before white pixels.</p>
+</dd>
+<dt><cite>time_warp</cite></dt><dd><p>A <a class="reference internal" href="transforms.html#warpers"><span class="std std-ref">function that adjusts the timeline</span></a>. If not None, this
+should be a function that takes a fractional time between 0.0 and 1.0,
+and returns a number in the same range.</p>
+</dd>
+<dt><cite>mipmap</cite></dt><dd><p>When the dissolve will be scaled to less than half its natural size,
+this can be set to True. This will cause mipmaps to be generated,
+which will make the dissolve consume more GPU resources, but will
+reduce artifacts. See <a class="reference internal" href="style_properties.html#style-property-mipmap"><code class="xref std std-propref docutils literal notranslate"><span class="pre">mipmap</span></code></a> for more information.</p>
+</dd>
+</dl>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">circirisout</span> <span class="o">=</span> <span class="n">ImageDissolve</span><span class="p">(</span><span class="s2">&quot;circiris.png&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">time_warp</span><span class="o">=</span><span class="n">_warper</span><span class="o">.</span><span class="n">easeout</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">circirisin</span> <span class="o">=</span> <span class="n">ImageDissolve</span><span class="p">(</span><span class="s2">&quot;circiris.png&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">time_warp</span><span class="o">=</span><span class="n">_warper</span><span class="o">.</span><span class="n">easein</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">circiristbigramp</span> <span class="o">=</span> <span class="n">ImageDissolve</span><span class="p">(</span><span class="s2">&quot;circiris.png&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">ramplen</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MoveTransition">
+<span class="sig-name descname"><span class="pre">MoveTransition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delay</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['master']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_warp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">_warper.linear</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enter_time_warp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">_warper.linear</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leave_time_warp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">_warper.linear</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MoveTransition" title="Link to this definition"></a></dt>
+<dd><p>With these transitions, images changing position between the old and new
+scenes will be interpolated, which means their movement will be smooth
+instead of instantaneous.</p>
+<p>As only layers have tags, MoveTransitions can only be applied to a single
+layer or all layers at once, using the <a class="reference internal" href="displaying_images.html#with-statement"><span class="std std-ref">with statement</span></a>.
+It will not work in other contexts such as <a class="reference internal" href="transforms.html#displayable-atl-statement"><span class="std std-ref">ATL</span></a>,
+<a class="reference internal" href="#ComposeTransition" title="ComposeTransition"><code class="xref py py-func docutils literal notranslate"><span class="pre">ComposeTransition()</span></code></a>, or other ways of applying transitions.</p>
+<dl class="simple">
+<dt><cite>delay</cite></dt><dd><p>The time it takes for the interpolation to finish.</p>
+</dd>
+<dt><cite>old</cite></dt><dd><p>If true, when a tag gets its image changed during the transition,
+the old image will be used in preference to the new one. Otherwise,
+the new images will be used.</p>
+</dd>
+<dt><cite>layers</cite></dt><dd><p>A list of layers that moves are applied to.</p>
+</dd>
+</dl>
+<p>The two following parameters take transforms, which should not be animated
+over time.</p>
+<dl class="simple">
+<dt><cite>enter</cite></dt><dd><p>If not None, images entering the scene will also be moved. The transform
+will be applied to the image to get it in its starting position.</p>
+</dd>
+<dt><cite>leave</cite></dt><dd><p>If not None, images leaving the scene will also be moved. The transform
+will be applied to the image to get it in its ending position.</p>
+</dd>
+</dl>
+<p>The three following parameters take <a class="reference internal" href="transforms.html#warpers"><span class="std std-ref">time warp functions</span></a>,
+which take a number between 0.0 and 1.0, and should return a number in the
+same range.</p>
+<dl class="simple">
+<dt><cite>time_warp</cite></dt><dd><p>A time warp function that's applied to the images changing position
+between the old and new scenes.</p>
+</dd>
+<dt><cite>enter_time_warp</cite></dt><dd><p>A time warp function that's applied to images entering the scene.</p>
+</dd>
+<dt><cite>leave_time_warp</cite></dt><dd><p>A time warp function that's applied to images leaving the scene.</p>
+</dd>
+</dl>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">longer_easein</span> <span class="o">=</span> <span class="n">MoveTransition</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">enter</span><span class="o">=</span><span class="n">offscreenright</span><span class="p">,</span> <span class="n">enter_time_warp</span><span class="o">=</span><span class="n">_warper</span><span class="o">.</span><span class="n">easein</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the following code, &quot;a&quot; will be leaving the scene (using <cite>leave</cite> and
+<cite>leave_time_warp</cite>), &quot;b&quot; will be changing position (using <cite>time_warp</cite>), and
+&quot;c&quot; will be entering (using <cite>enter</cite> and <cite>enter_time_warp</cite>). Because the same
+tag is applied before and after, &quot;d&quot; will not be counted as entering or
+leaving, but as changing position.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">some_move_trans</span> <span class="o">=</span> <span class="n">MoveTransition</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+    <span class="k">show</span> <span class="n">a</span>
+    <span class="k">show</span> <span class="n">b</span> <span class="k">at</span> <span class="n">left</span>
+    <span class="k">show</span> <span class="n">ugly_eileen</span> <span class="k">as</span> <span class="n">d</span> <span class="k">at</span> <span class="n">right</span>
+    <span class="n">e</span> <span class="s2">&quot;This is a dialogue !&quot;</span>
+
+    <span class="k">hide</span> <span class="n">a</span>
+    <span class="k">show</span> <span class="n">b</span> <span class="k">at</span> <span class="n">right</span>
+    <span class="k">show</span> <span class="n">c</span>
+    <span class="k">show</span> <span class="n">pretty_eileen</span> <span class="k">as</span> <span class="n">d</span> <span class="k">at</span> <span class="n">left</span>
+    <span class="k">with</span> <span class="n">some_move_trans</span>
+</pre></div>
+</div>
+<p>During the time when &quot;d&quot; is changing position, whether ugly or pretty eileen
+will be shown depends on the value of <cite>old</cite> : if <cite>old</cite> is False, the
+default, ugly_eileen will instantly turn into pretty_eileen and then move,
+and if <cite>old</cite> is True, ugly_eileen will move and then instantly turn into
+pretty_eileen.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MultipleTransition">
+<span class="sig-name descname"><span class="pre">MultipleTransition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MultipleTransition" title="Link to this definition"></a></dt>
+<dd><p>Returns a transition that allows multiple transitions to be displayed, one
+after the other.</p>
+<dl>
+<dt><cite>args</cite></dt><dd><p>A <strong>list</strong> containing an odd number of items. The first, third, and
+other odd-numbered items must be scenes, and the even items
+must be transitions. A scene can be one of:</p>
+<ul class="simple">
+<li><p>A displayable.</p></li>
+<li><p>False, to use the old scene.</p></li>
+<li><p>True, to use the new scene.</p></li>
+</ul>
+<p>Almost always, the first argument will be False and the last True.</p>
+<p>Note that this is a single parameter taking a list, this is not <code class="docutils literal notranslate"><span class="pre">*args</span></code>.</p>
+</dd>
+</dl>
+<p>The transitions in <cite>args</cite> are applied in order. For each transition,
+the old scene is the screen preceding it, and the new scene is the
+scene following it. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">logodissolve</span> <span class="o">=</span> <span class="n">MultipleTransition</span><span class="p">([</span>
+    <span class="kc">False</span><span class="p">,</span> <span class="n">Dissolve</span><span class="p">(</span><span class="mf">0.5</span><span class="p">),</span>
+    <span class="s2">&quot;logo.jpg&quot;</span><span class="p">,</span> <span class="n">Pause</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+    <span class="s2">&quot;logo.jpg&quot;</span><span class="p">,</span> <span class="n">dissolve</span><span class="p">,</span>
+    <span class="kc">True</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>This example will dissolve to logo.jpg, wait 1 second, and then
+dissolve to the new scene.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Pause">
+<span class="sig-name descname"><span class="pre">Pause</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delay</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Pause" title="Link to this definition"></a></dt>
+<dd><p>Returns a transition that only displays the new screen for <cite>delay</cite> seconds.
+It can be useful as part of a MultipleTransition.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Pixellate">
+<span class="sig-name descname"><span class="pre">Pixellate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Pixellate" title="Link to this definition"></a></dt>
+<dd><p>Returns a transition that pixellates out the old screen, and then
+pixellates in the new screen.</p>
+<dl class="simple">
+<dt><cite>time</cite></dt><dd><p>The total time the transition will take, in seconds.</p>
+</dd>
+<dt><cite>steps</cite></dt><dd><p>The number of steps that will occur, in each direction. Each step
+creates pixels about twice the size of those in the previous step,
+so a 5-step pixellation will create 32x32 pixels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PushMove">
+<span class="sig-name descname"><span class="pre">PushMove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pushright'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PushMove" title="Link to this definition"></a></dt>
+<dd><p>Returns a transition that works by taking the new scene and using it to
+&quot;push&quot; the old scene off the screen.</p>
+<dl class="simple">
+<dt><cite>time</cite></dt><dd><p>The time the transition takes.</p>
+</dd>
+<dt><cite>mode</cite></dt><dd><p>There are four possible modes: &quot;pushright&quot;, &quot;pushleft&quot;, &quot;pushup&quot;,
+and &quot;pushdown&quot;, which push the old scene off the screen in the
+direction indicated.</p>
+</dd>
+</dl>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">pushright</span> <span class="o">=</span> <span class="n">PushMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;pushright&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">pushleft</span> <span class="o">=</span> <span class="n">PushMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;pushleft&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">pushup</span> <span class="o">=</span> <span class="n">PushMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;pushup&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">pushdown</span> <span class="o">=</span> <span class="n">PushMove</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;pushdown&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Swing">
+<span class="sig-name descname"><span class="pre">Swing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'#000'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flatten</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Swing" title="Link to this definition"></a></dt>
+<dd><p>A transitions that rotates the old scene 90 degrees around an axis,
+so that it is edge on with the viewer, switches to the new scene,
+and then rotates that scene another 90 degrees to show the new
+scene to the viewer.</p>
+<dl class="simple">
+<dt><cite>delay</cite></dt><dd><p>How long the transition should take.</p>
+</dd>
+<dt><cite>vertical</cite></dt><dd><p>If true, the scene is rotate around the x-axis (pixels move
+vertically). If false, the scene is roated around the y axis,
+pixels moving horizontally.</p>
+</dd>
+<dt><cite>reverse</cite></dt><dd><p>When true, the rotation occurs in the reverse direction.</p>
+</dd>
+<dt><cite>background</cite></dt><dd><p>A displayable that is placed behind the scene as it rotates.</p>
+</dd>
+<dt><cite>flatten</cite></dt><dd><p>If true, the scenes are flattened into images the size of
+the screen before being rotated. Use this if images being
+not entirely on the screen causes undesired effects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="transition-families">
+<h2>Transition Families<a class="headerlink" href="#transition-families" title="Link to this heading"></a></h2>
+<p>Transition families are functions that define a large family of related
+transitions.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="define.move_transitions">
+<span class="sig-prename descclassname"><span class="pre">define.</span></span><span class="sig-name descname"><span class="pre">move_transitions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_warp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_time_warp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_time_warp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['master']</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#define.move_transitions" title="Link to this definition"></a></dt>
+<dd><p>This defines a family of <a class="reference internal" href="#MoveTransition" title="MoveTransition"><code class="xref py py-class docutils literal notranslate"><span class="pre">move</span> <span class="pre">transitions</span></code></a>,
+similar to the <a class="reference internal" href="#var-move"><code class="xref std std-var docutils literal notranslate"><span class="pre">move</span></code></a> and <a class="reference internal" href="#var-ease"><code class="xref std std-var docutils literal notranslate"><span class="pre">ease</span></code></a> transitions. For a given
+<cite>prefix</cite>, this defines the transitions:</p>
+<ul class="simple">
+<li><p><em>prefix</em> - A transition that takes <cite>delay</cite> seconds to move images that
+changed positions to their new locations.</p></li>
+<li><p><em>prefix</em>inleft, <em>prefix</em>inright, <em>prefix</em>intop, <em>prefix</em>inbottom - Transitions
+that take <cite>delay</cite> seconds to move images that changed positions to their
+new locations, with newly shown images coming in from the appropriate
+side.</p></li>
+<li><p><em>prefix</em>outleft, <em>prefix</em>outright, <em>prefix</em>outtop, <em>prefix</em>outbottom -
+Transitions that take <cite>delay</cite> seconds to move images that changed
+positions to their new locations, with newly hidden images leaving via
+the appropriate side.</p></li>
+</ul>
+<p>The other parameters are as <a class="reference internal" href="#MoveTransition" title="MoveTransition"><code class="xref py py-class docutils literal notranslate"><span class="pre">MoveTransition</span></code></a> takes them:</p>
+<dl>
+<dt><cite>time_warp</cite>, <cite>in_time_warp</cite>, <cite>out_time_warp</cite></dt><dd><p><a class="reference internal" href="transforms.html#warpers"><span class="std std-ref">Time warp functions</span></a> that are given a time from 0.0
+to 1.0 representing the fraction of the move that is complete, and
+return a value in the same range giving the fraction of a linear
+move that is complete.</p>
+<p>This can be used to define functions that ease the images around,
+rather than moving them at a constant speed.</p>
+<p>The three arguments are used for images remaining on the screen,
+newly shown images, and newly hidden images, respectively.</p>
+</dd>
+<dt><cite>old</cite></dt><dd><p>If true, when a tag gets its image changed during the transition,
+the old image will be used in preference to the new one. Otherwise,
+the new images will be used.</p>
+</dd>
+<dt><cite>layers</cite></dt><dd><p>The layers the transition will apply to.</p>
+</dd>
+</dl>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># This defines all of the pre-defined transitions beginning</span>
+<span class="c1"># with &quot;move&quot;.</span>
+<span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+    <span class="k">define</span><span class="o">.</span><span class="n">move_transitions</span><span class="p">(</span><span class="s2">&quot;move&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="dict-transitions">
+<span id="id2"></span><h2>Dict Transitions<a class="headerlink" href="#dict-transitions" title="Link to this heading"></a></h2>
+<p>In many places where Ren'Py takes a transition, it's possible to instead specify
+a dictionary that maps layer names to this transition. When this is the case,
+Ren'Py applies each transition to the appropriate layer.</p>
+<p>When a dict is used, the pause that usually occurs when a transition takes place
+does not occur. Instead, the statement taking the dictionary returns
+immediately, and the transitions are scheduled to occur at the start of the next
+interaction.</p>
+<p>This can be used with the master layer to cause transitions to occur while
+dialogue is being shown on the screen. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">dis</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;master&quot;</span> <span class="p">:</span> <span class="n">Dissolve</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span> <span class="p">}</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span>
+    <span class="k">with</span> <span class="n">dis</span>
+
+    <span class="n">e</span> <span class="s2">&quot;Hello, world.&quot;</span>
+</pre></div>
+</div>
+<p>The dissolve will take place while the text is displayed on the screen.</p>
+<p>Dict layer transitions can't be used every place a transition can be used, only
+in places where applying transitions to a layer is possible. It can be used with
+the <a class="reference internal" href="displaying_images.html#with-statement"><span class="std std-ref">With Statement</span></a> and <code class="docutils literal notranslate"><span class="pre">with</span></code> cause of the
+<a class="reference internal" href="displaying_images.html#scene-statement"><span class="std std-ref">scene</span></a>, <a class="reference internal" href="displaying_images.html#show-statement"><span class="std std-ref">show</span></a>, and
+<a class="reference internal" href="displaying_images.html#hide-statement"><span class="std std-ref">hide</span></a> statements. It can also be used with
+<a class="reference internal" href="statement_equivalents.html#renpy.with_statement" title="renpy.with_statement"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.with_statement()</span></code></a> and <a class="reference internal" href="other.html#renpy.transition" title="renpy.transition"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.transition()</span></code></a>, the <a class="reference internal" href="screen_actions.html#Show" title="Show"><code class="xref py py-func docutils literal notranslate"><span class="pre">Show()</span></code></a> and
+<a class="reference internal" href="screen_actions.html#Hide" title="Hide"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hide()</span></code></a> actions, and various config variables that take transitions. Dict
+layer transitions <em>will not</em> work inside things that don't work with layers,
+such as <a class="reference internal" href="transforms.html#atl"><span class="std std-ref">ATL - Animation and Transformation Language</span></a>, <a class="reference internal" href="#ComposeTransition" title="ComposeTransition"><code class="xref py py-func docutils literal notranslate"><span class="pre">ComposeTransition()</span></code></a> and <a class="reference internal" href="#MultipleTransition" title="MultipleTransition"><code class="xref py py-func docutils literal notranslate"><span class="pre">MultipleTransition()</span></code></a>.</p>
+<p>This can interact poorly with statements that cause a transition to occur
+themselves, like the transitions caused by <code class="docutils literal notranslate"><span class="pre">window</span> <span class="pre">auto</span></code>. That can often be
+solved with a second dict transition that applies to a different layer.
+For example, if you are seeing weird blinking when the dialogue window shows
+and hides, consider changing <code class="file docutils literal notranslate"><span class="pre">options.rpy</span></code> to have:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="n">window_show_transition</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;screens&quot;</span> <span class="p">:</span> <span class="n">Dissolve</span><span class="p">(</span><span class="mf">.25</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="n">window_hide_transition</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;screens&quot;</span> <span class="p">:</span> <span class="n">Dissolve</span><span class="p">(</span><span class="mf">.25</span><span class="p">)</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>This works because the dialogue window exists entirely on the screens layer.</p>
+</section>
+<section id="atl-transitions">
+<span id="id3"></span><h2>ATL Transitions<a class="headerlink" href="#atl-transitions" title="Link to this heading"></a></h2>
+<p><em>See also:</em> <a class="reference internal" href="transforms.html#atl"><span class="std std-ref">ATL - Animation and Transformation Language</span></a></p>
+<p>It's possible to use an ATL transform to define a transition. These transitions
+need to accept the <cite>old_widget</cite> and <cite>new_widget</cite> arguments, which will receive
+displayables representing the screens that are transitioned from and to,
+respectively.</p>
+<p>An ATL transition must set itself the <a class="reference internal" href="transform_properties.html#transform-property-delay"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">delay</span></code></a> property to the number of
+seconds the transition lasts for. It may use the <a class="reference internal" href="transform_properties.html#transform-property-events"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">events</span></code></a> property to
+prevent the old displayable from receiving events.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">transform</span> <span class="n">spin</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">new_widget</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">old_widget</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="c1"># Set how long this transform will take to complete.</span>
+    <span class="na">delay</span> <span class="n">duration</span>
+
+    <span class="c1"># Center it.</span>
+    <span class="na">xcenter</span> <span class="mf">.5</span>
+    <span class="na">ycenter</span> <span class="mf">.5</span>
+
+    <span class="c1"># Spin the old displayable.</span>
+    <span class="n">old_widget</span>
+    <span class="na">events</span> <span class="kc">False</span>
+    <span class="na">rotate</span> <span class="mf">0.</span>
+    <span class="n">easeout</span> <span class="p">(</span><span class="n">duration</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="na">rotate</span> <span class="mf">360.0</span>
+
+    <span class="c1"># Spin the new displayable.</span>
+    <span class="n">new_widget</span>
+    <span class="na">events</span> <span class="kc">True</span>
+    <span class="n">easein</span> <span class="p">(</span><span class="n">duration</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="na">rotate</span> <span class="mf">720.0</span>
+</pre></div>
+</div>
+</section>
+<section id="python-transitions">
+<span id="transitions-python"></span><h2>Python Transitions<a class="headerlink" href="#python-transitions" title="Link to this heading"></a></h2>
+<p>A Python callable may be used as a transition. For that, it must take two
+keyword arguments described below, and return a displayable that performs the
+transition effect - usually by delegating that to another transition. The two
+keyword arguments are <cite>old_widget</cite>, which represents the old screen, and
+<cite>new_widget</cite>, which represents the new screen.</p>
+<p>The displayable returned by the callable should have a <code class="docutils literal notranslate"><span class="pre">delay</span></code> attribute,
+set to the number of seconds that the transition should run for.</p>
+<p>For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">dissolve_or_pixellate</span><span class="p">(</span><span class="n">old_widget</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">new_widget</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">persistent</span><span class="o">.</span><span class="n">want_pixellate</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pixellate</span><span class="p">(</span><span class="n">old_widget</span><span class="o">=</span><span class="n">old_widget</span><span class="p">,</span> <span class="n">new_widget</span><span class="o">=</span><span class="n">new_widget</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dissolve</span><span class="p">(</span><span class="n">old_widget</span><span class="o">=</span><span class="n">old_widget</span><span class="p">,</span> <span class="n">new_widget</span><span class="o">=</span><span class="n">new_widget</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Accordingly, all kinds of transitions can be called and passed these two keyword
+arguments, resulting in a displayable animating the transition between the two
+passed displayables.</p>
+</section>
+<section id="automatic-transitions-after-scene-show-and-hide">
+<span id="scene-show-hide-transition"></span><h2>Automatic Transitions after Scene, Show, and Hide<a class="headerlink" href="#automatic-transitions-after-scene-show-and-hide" title="Link to this heading"></a></h2>
+<p>Ren'Py can automatically show a transition after a series of scene, show, and
+hide statements. This transition can be enabled by setting the
+<a class="reference internal" href="store_variables.html#var-_scene_show_hide_transition"><code class="xref std std-var docutils literal notranslate"><span class="pre">_scene_show_hide_transition</span></code></a> variable to the transition to be used.</p>
+<p>The transition will occur after one or more <a class="reference internal" href="displaying_images.html#scene-statement"><span class="std std-ref">scene</span></a>,
+<a class="reference internal" href="displaying_images.html#show-statement"><span class="std std-ref">show</span></a>, and <a class="reference internal" href="displaying_images.html#hide-statement"><span class="std std-ref">hide</span></a> statements,
+provided the statement are not followed by a <a class="reference internal" href="displaying_images.html#with-statement"><span class="std std-ref">with</span></a>
+statement, or a transition caused by <a class="reference internal" href="dialogue.html#dialogue-window-management"><span class="std std-ref">Dialogue Window Management</span></a>, like the
+various <code class="docutils literal notranslate"><span class="pre">window</span></code> statements. It's also disabled when in a menu context.</p>
+<p>For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">_scene_show_hide_transition</span> <span class="o">=</span> <span class="n">Dissolve</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+    <span class="k">scene</span> <span class="n">bg</span> <span class="n">washington</span>
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span>
+
+    <span class="s2">&quot;The transition won&#39;t show here, because the dialogue window transitioned in.&quot;</span>
+
+    <span class="k">show</span> <span class="n">lucy</span> <span class="n">mad</span> <span class="k">at</span> <span class="n">right</span>
+
+    <span class="s2">&quot;The transition will happen here.&quot;</span>
+
+    <span class="k">hide</span> <span class="n">lucy</span> <span class="n">mad</span>
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">vhappy</span>
+
+    <span class="s2">&quot;And it will happen here, as well.&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="transform_properties.html" class="btn btn-neutral float-left" title="Transform Properties" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="matrixcolor.html" class="btn btn-neutral float-right" title="Matrixcolor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

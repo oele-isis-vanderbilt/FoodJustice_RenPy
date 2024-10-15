@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audio Filters &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/audio_filters.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Movie" href="movie.html" />
+    <link rel="prev" title="Audio" href="audio.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Audio Filters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#filter-reuse">Filter Reuse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#silence-padding">Silence Padding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Audio Filters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Allpass"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Allpass()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Bandpass"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Bandpass()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Comb"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Comb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Delay"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Delay</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Highpass"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Highpass()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Highshelf"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Highshelf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Lowpass"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Lowpass()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Lowshelf"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Lowshelf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Mix"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Mix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Multiply"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Multiply</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Notch"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Notch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Null"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Null</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Peaking"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Peaking()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Reverb"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Reverb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.Sequence"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.Sequence</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.audio.filter.WetDry"><code class="docutils literal notranslate"><span class="pre">renpy.audio.filter.WetDry</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Audio Filters</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/audio_filters.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="audio-filters">
+<h1>Audio Filters<a class="headerlink" href="#audio-filters" title="Link to this heading"></a></h1>
+<p>Audio filters allow a game to change the sound on a channel from what is
+present in an audio file. This can be used to add effects to the sound,
+including reverb, delay/echo, and high-pass/low-pass filters.</p>
+<p>Audio filters are placed in the renpy.audio.filter module. Although
+not strictly required, it is recommended that module be aliased to something
+shorter, like <code class="docutils literal notranslate"><span class="pre">af</span></code>, using:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">af</span> <span class="o">=</span> <span class="n">renpy</span><span class="o">.</span><span class="n">audio</span><span class="o">.</span><span class="n">filter</span>
+</pre></div>
+</div>
+<p>The filters can then be invoked using the <a class="reference internal" href="audio.html#renpy.music.set_audio_filter" title="renpy.music.set_audio_filter"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.music.set_audio_filter()</span></code></a>
+function, like:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">$</span> <span class="n">renpy</span><span class="o">.</span><span class="k">music</span><span class="o">.</span><span class="n">set_audio_filter</span><span class="p">(</span><span class="s2">&quot;music&quot;</span><span class="p">,</span> <span class="n">af</span><span class="o">.</span><span class="n">Reverb</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>By default, the filter takes effect at the start of the next audio file
+queued or played. If you want to apply the filter to the currently playing
+and queued audio, you can use the <cite>replace</cite> argument:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">$</span> <span class="n">renpy</span><span class="o">.</span><span class="k">music</span><span class="o">.</span><span class="n">set_audio_filter</span><span class="p">(</span><span class="s2">&quot;music&quot;</span><span class="p">,</span> <span class="n">af</span><span class="o">.</span><span class="n">Lowpass</span><span class="p">(</span><span class="mi">440</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will apply the filter to the audio as soon as possible.</p>
+<p>Finally, you can remove a filter from a channel by passing None as the filter:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">$</span> <span class="n">renpy</span><span class="o">.</span><span class="k">music</span><span class="o">.</span><span class="n">set_audio_filter</span><span class="p">(</span><span class="s2">&quot;music&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(It's also possible to give None with <cite>replace</cite> set to True.)</p>
+<section id="filter-reuse">
+<h2>Filter Reuse<a class="headerlink" href="#filter-reuse" title="Link to this heading"></a></h2>
+<p>When a filter is set on a channel, it will filter all audio played on
+that channel. Specifically, the Comb, Delay, and Reverb filters will
+continue to output information from old audio files for some time
+after a new audio file has started playing, provided the filter is
+not changed.</p>
+<p>This means that Ren'Py is storing audio information inside the filter
+object. Because of this, it is generally not a good idea to share filter
+objects between channels, or to use a filter object multiple times with
+a single channel.</p>
+</section>
+<section id="silence-padding">
+<h2>Silence Padding<a class="headerlink" href="#silence-padding" title="Link to this heading"></a></h2>
+<p>When an audio filter is active and the last queued sound on a channel finises
+playing, Ren'Py will add 2 seconds of silence to the channel, to ensure that
+delay and reverb filters have time to finish playing.</p>
+<p>If you need more silence, it can be queued with:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">queue</span> <span class="k">sound</span> <span class="s2">&quot;&lt;silence 10&quot;</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2>Audio Filters<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>Whenever a filter is accepted, a list may be given instead, to represent a
+<a class="reference internal" href="#renpy.audio.filter.Sequence" title="renpy.audio.filter.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">renpy.audio.filter.Sequence</span></code></a> of those filters. So writing:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">renpy</span><span class="o">.</span><span class="k">music</span><span class="o">.</span><span class="n">set_audio_filter</span><span class="p">(</span><span class="s2">&quot;music&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">af</span><span class="o">.</span><span class="n">Reverb</span><span class="p">(</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">af</span><span class="o">.</span><span class="n">Lowpass</span><span class="p">(</span><span class="mi">440</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>is equivalent to:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">renpy</span><span class="o">.</span><span class="k">music</span><span class="o">.</span><span class="n">set_audio_filter</span><span class="p">(</span><span class="s2">&quot;music&quot;</span><span class="p">,</span>
+    <span class="n">af</span><span class="o">.</span><span class="n">Sequence</span><span class="p">([</span>
+        <span class="n">af</span><span class="o">.</span><span class="n">Reverb</span><span class="p">(</span><span class="mf">0.5</span><span class="p">),</span>
+        <span class="n">af</span><span class="o">.</span><span class="n">Lowpass</span><span class="p">(</span><span class="mi">440</span><span class="p">),</span>
+        <span class="p">]))</span>
+</pre></div>
+</div>
+<p>Apart from that, the audio filters consist of the following classes. It's not
+possible to define your own, for performance reasons.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.audio.filter.Allpass">
+<span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Allpass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">350</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Allpass" title="Link to this definition"></a></dt>
+<dd><p>An allpass filter allows all frequencies through, but changes the phase
+relationship between the various frequencies.</p>
+<dl class="simple">
+<dt><cite>frequency</cite></dt><dd><p>The frequency at the center of the phase change.</p>
+</dd>
+<dt><cite>q</cite></dt><dd><p>Controls the sharpness of the phase shift. The higher the value, the
+sharper the phase shift.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.audio.filter.Bandpass">
+<span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Bandpass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">350</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Bandpass" title="Link to this definition"></a></dt>
+<dd><p>A bandpass filter.</p>
+<dl class="simple">
+<dt><cite>frequency</cite></dt><dd><p>The center frequency.</p>
+</dd>
+<dt><cite>q</cite></dt><dd><p>Controls the width of the band. The width becomes narrower as the
+value of Q increases.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="renpy.audio.filter.Comb">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Comb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Comb" title="Link to this definition"></a></dt>
+<dd><p>A comb filter. A comb filter consists of a delay that is filtered and
+mutiplied, mixed with its input, and then fed back into the delay,
+causing the filter to be applied multiple times.</p>
+<dl class="simple">
+<dt><cite>delay</cite></dt><dd><p>The delay, in seconds. If a list of delays is provided, each subchannel
+will be delayed by the corresponding amount. Each delay must be at least
+0.01 seconds.</p>
+</dd>
+<dt><cite>filter</cite></dt><dd><p>The filter to apply to the delayed signal. If None, the Null filter
+is used.</p>
+</dd>
+<dt><cite>multiplier</cite></dt><dd><p>The amount to multiply the filtered signal by.</p>
+</dd>
+<dt><cite>wet</cite></dt><dd><p>If True, the output of the filter is the sum of the input and the
+filtered and multiplied signal.  If False, the output is just the filtered
+and muliplied signal.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="renpy.audio.filter.Delay">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Delay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delay</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Delay" title="Link to this definition"></a></dt>
+<dd><p>This filter implements a delay. Samples that are provided to the input
+emerge from the output after <cite>delay</cite> seconds.</p>
+<dl class="simple">
+<dt><cite>delay</cite></dt><dd><p>The delay, in seconds. If a list of delays is provided, each subchannel
+will be delayed by the corresponding amount. Each delay must be at least
+0.01 seconds.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.audio.filter.Highpass">
+<span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Highpass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">350</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Highpass" title="Link to this definition"></a></dt>
+<dd><p>A highpass filter with 12/dB octave rolloff.</p>
+<dl class="simple">
+<dt><cite>frequency</cite></dt><dd><p>The cutoff frequency.</p>
+</dd>
+<dt><cite>q</cite></dt><dd><p>Controls how peaked the response will be in decibels. For this filter
+type, this value is not a traditional Q, but is a resonance value in decibels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.audio.filter.Highshelf">
+<span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Highshelf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">350</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Highshelf" title="Link to this definition"></a></dt>
+<dd><p>A highshelf filter that allows all frequencies through, but boosts those
+above a certain frequency by a certain amount.</p>
+<dl class="simple">
+<dt><cite>frequency</cite></dt><dd><p>The lower frequency.</p>
+</dd>
+<dt><cite>gain</cite></dt><dd><p>The amount to boost the frequencies above the lower frequency,
+in decibels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.audio.filter.Lowpass">
+<span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Lowpass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">350</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Lowpass" title="Link to this definition"></a></dt>
+<dd><p>A lowpass filter with 12/dB octave rolloff.</p>
+<dl class="simple">
+<dt><cite>frequency</cite></dt><dd><p>The cutoff frequency.</p>
+</dd>
+<dt><cite>q</cite></dt><dd><p>Controls how peaked the response will be in decibels. For this filter
+type, this value is not a traditional Q, but is a resonance value in decibels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.audio.filter.Lowshelf">
+<span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Lowshelf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">350</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Lowshelf" title="Link to this definition"></a></dt>
+<dd><p>A lowshelf filter that allows all frequencies through, but boosts those
+below a certain frequency by a certain amount.</p>
+<dl class="simple">
+<dt><cite>frequency</cite></dt><dd><p>The upper frequency.</p>
+</dd>
+<dt><cite>gain</cite></dt><dd><p>The amount to boost the frequencies below the upper frequency,
+in decibels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="renpy.audio.filter.Mix">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Mix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Mix" title="Link to this definition"></a></dt>
+<dd><p>An audio filter that splits its input into multiple streams, applies
+each of its arguments to a stream, and mixes those streams by summing
+them together.</p>
+<p>For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+
+    <span class="kn">import</span> <span class="nn">renpy.audio.filter</span> <span class="k">as</span> <span class="nn">af</span>
+
+    <span class="c1"># This mixes the unchanged input with a delay.</span>
+    <span class="k">$</span> <span class="n">echo</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">Mix</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">Null</span><span class="p">(),</span> <span class="n">af</span><span class="o">.</span><span class="n">Delay</span><span class="p">(</span><span class="mf">.3</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="renpy.audio.filter.Multiply">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Multiply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">multiplier</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Multiply" title="Link to this definition"></a></dt>
+<dd><p>An audio filter that multiplies its input by <cite>multiplier</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.audio.filter.Notch">
+<span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Notch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">350</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Notch" title="Link to this definition"></a></dt>
+<dd><p>The opposite of a bandpass filter. Frequencies inside a range surrounding
+<cite>frequency</cite> are suppressed, while other frequences are passed through.</p>
+<dl class="simple">
+<dt><cite>frequency</cite></dt><dd><p>The center frequency.</p>
+</dd>
+<dt><cite>q</cite></dt><dd><p>Controls the width of the notch. The width becomes narrower as the
+value of q increases.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="renpy.audio.filter.Null">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Null</span></span><a class="headerlink" href="#renpy.audio.filter.Null" title="Link to this definition"></a></dt>
+<dd><p>An audio filter that passes it's input through to its output unchanged.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.audio.filter.Peaking">
+<span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Peaking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">350</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Peaking" title="Link to this definition"></a></dt>
+<dd><p>A peaking filter that allows all frequencies through, but boosts those
+around a certain frequency by a certain amount.</p>
+<dl class="simple">
+<dt><cite>frequency</cite></dt><dd><p>The center frequency.</p>
+</dd>
+<dt><cite>q</cite></dt><dd><p>Controls the sharpness of the peak. The higher the value, the sharper
+the peak.</p>
+</dd>
+<dt><cite>gain</cite></dt><dd><p>The amount to boost the frequencies around the center frequency,
+in decibels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.audio.filter.Reverb">
+<span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Reverb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resonance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dampening</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">880</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_times</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.0253,</span> <span class="pre">0.0269,</span> <span class="pre">0.029,</span> <span class="pre">0.0307,</span> <span class="pre">0.0322,</span> <span class="pre">0.0338,</span> <span class="pre">0.0353,</span> <span class="pre">0.0367]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_subchannel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allpass_frequences</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[225,</span> <span class="pre">556,</span> <span class="pre">441,</span> <span class="pre">341]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Reverb" title="Link to this definition"></a></dt>
+<dd><p>An artificial reverb filter that simulates the sound of a room or hall,
+somewhat inspired by Freeverb.</p>
+<dl class="simple">
+<dt><cite>resonance</cite></dt><dd><p>The amount of feedback in the reverb. This should be between 0 and 1.
+Larger numbers make the reverb last longer. Too large values will
+cause the reverb to go out of control.</p>
+</dd>
+<dt><cite>dampening</cite></dt><dd><p>This applies a lowpass filter to each reverberation, simulating
+the lost of high frequences as sound passes through the air.</p>
+</dd>
+<dt><cite>wet</cite></dt><dd><p>A multiplier that is applied to the reverb signal before it is passed
+to the output.</p>
+</dd>
+<dt><cite>dry</cite></dt><dd><p>A multiplier that is applied to the input signal before it is passed
+to the output. Set this to 0.0 to only hear the reverb, not the original
+sound.</p>
+</dd>
+<dt><cite>delay_multiplier</cite></dt><dd><p>A multiplier that is applied to the delay times. This can be used to
+adjust the length of the reverb.</p>
+</dd>
+<dt><cite>delay_times</cite></dt><dd><p>A list of delay times, in seconds, that are used to create the early
+reflections. These are used to create comb filters.</p>
+</dd>
+<dt><cite>delay_subchannel</cite></dt><dd><p>The amount of time, in seconds, that is added to each delay time to
+create a second subchannel. This is used to create a stereo effect.</p>
+</dd>
+<dt><cite>allpass_frequences</cite></dt><dd><p>A list of frequences, in hertz, that are used to create allpass filters
+that simulate late reflections.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="renpy.audio.filter.Sequence">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">Sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.Sequence" title="Link to this definition"></a></dt>
+<dd><p>An AudioFilter that applies its input to a sequence of filters, in order.
+This is used internally when a list of audiofilters is given, so it should
+be rare to use this directly.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="renpy.audio.filter.WetDry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">renpy.audio.filter.</span></span><span class="sig-name descname"><span class="pre">WetDry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.audio.filter.WetDry" title="Link to this definition"></a></dt>
+<dd><p>A filter that mixes its input with the output of a filter.</p>
+<dl class="simple">
+<dt><cite>filter</cite></dt><dd><p>The filter to apply to the input.</p>
+</dd>
+<dt><cite>wet</cite></dt><dd><p>A multiplier, generally between 0.0 and 1.0, that controls the amount
+of the filter that is mixed in.</p>
+</dd>
+<dt><cite>dry</cite></dt><dd><p>A multiplier, generally between 0.0 and 1.0, that controls the amount
+of the input that is mixed in.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="audio.html" class="btn btn-neutral float-left" title="Audio" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="movie.html" class="btn btn-neutral float-right" title="Movie" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

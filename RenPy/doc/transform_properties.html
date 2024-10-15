@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transform Properties &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/transform_properties.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Transitions" href="transitions.html" />
+    <link rel="prev" title="Transforms" href="transforms.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Transform Properties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#list-of-transform-properties">List of Transform Properties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#positioning">Positioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rotation">Rotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#zoom-and-flip">Zoom and Flip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pixel-effects">Pixel Effects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#polar-positioning">Polar Positioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#polar-positioning-of-the-anchor">Polar Positioning of the Anchor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cropping-and-resizing">Cropping and Resizing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#panning-and-tiling">Panning and Tiling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transitions">Transitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other">Other</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#property-order">Property Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deprecated-transform-properties">Deprecated Transform Properties</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Transform Properties</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/transform_properties.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="transform-properties">
+<h1>Transform Properties<a class="headerlink" href="#transform-properties" title="Link to this heading"></a></h1>
+<p>Transform properties are used by <a class="reference internal" href="transforms.html"><span class="doc">Transforms</span></a> to influence how a
+displayable is drawn. They are usually set using <a class="reference internal" href="transforms.html#atl"><span class="std std-ref">ATL</span></a> or the
+<a class="reference internal" href="transforms.html#Transform" title="Transform"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transform</span></code></a> class.</p>
+<section id="list-of-transform-properties">
+<span id="id1"></span><h2>List of Transform Properties<a class="headerlink" href="#list-of-transform-properties" title="Link to this heading"></a></h2>
+<p>The following transform properties exist.</p>
+<p>When the type is given as a <a class="reference internal" href="style_properties.html#term-position"><span class="xref std std-term">position</span></a>, its relative component is
+interpreted as a fraction of the size of the containing area (for
+<a class="reference internal" href="#transform-property-pos"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">pos</span></code></a>) or of the displayable (for <a class="reference internal" href="#transform-property-anchor"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">anchor</span></code></a>).</p>
+<p>Note that not all properties are independent. For example, <a class="reference internal" href="#transform-property-xalign"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">xalign</span></code></a> and
+<a class="reference internal" href="#transform-property-xpos"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">xpos</span></code></a> both update some of the same underlying data. In a <code class="docutils literal notranslate"><span class="pre">parallel</span></code>
+statement, not more than one block should adjust properties sharing the same data.
+The angle and radius properties set both horizontal and vertical positions.</p>
+<section id="positioning">
+<h3>Positioning<a class="headerlink" href="#positioning" title="Link to this heading"></a></h3>
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-pos">
+<span class="sig-name descname"><span class="pre">pos</span></span><a class="headerlink" href="#transform-property-pos" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(position, position)</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>(0, 0)</p>
+</dd>
+</dl>
+<p>The position, relative to the top-left corner of the containing area.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-xpos">
+<span class="sig-name descname"><span class="pre">xpos</span></span><a class="headerlink" href="#transform-property-xpos" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>position</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>0</p>
+</dd>
+</dl>
+<p>The horizontal position, relative to the left side of the containing area.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-ypos">
+<span class="sig-name descname"><span class="pre">ypos</span></span><a class="headerlink" href="#transform-property-ypos" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>position</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>0</p>
+</dd>
+</dl>
+<p>The vertical position, relative to the top of the containing area.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-anchor">
+<span class="sig-name descname"><span class="pre">anchor</span></span><a class="headerlink" href="#transform-property-anchor" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(position, position)</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>(0, 0)</p>
+</dd>
+</dl>
+<p>The anchor position, relative to the top-left corner of the displayable.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-xanchor">
+<span class="sig-name descname"><span class="pre">xanchor</span></span><a class="headerlink" href="#transform-property-xanchor" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>position</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>0</p>
+</dd>
+</dl>
+<p>The horizontal anchor position, relative to the left side of the
+displayable.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-yanchor">
+<span class="sig-name descname"><span class="pre">yanchor</span></span><a class="headerlink" href="#transform-property-yanchor" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>position</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>0</p>
+</dd>
+</dl>
+<p>The vertical anchor position, relative to the top of the displayable.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-align">
+<span class="sig-name descname"><span class="pre">align</span></span><a class="headerlink" href="#transform-property-align" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(float, float)</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>(0.0, 0.0)</p>
+</dd>
+</dl>
+<p>Equivalent to setting pos and anchor to the same value.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-xalign">
+<span class="sig-name descname"><span class="pre">xalign</span></span><a class="headerlink" href="#transform-property-xalign" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>0.0</p>
+</dd>
+</dl>
+<p>Equivalent to setting xpos and xanchor to this value.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-yalign">
+<span class="sig-name descname"><span class="pre">yalign</span></span><a class="headerlink" href="#transform-property-yalign" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>0.0</p>
+</dd>
+</dl>
+<p>Equivalent to setting ypos and yanchor to this value.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#transform-property-offset" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(absolute, absolute)</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>(0, 0)</p>
+</dd>
+</dl>
+<p>The number of pixels the displayable is offset by in each direction.
+Positive values offset towards the bottom-right.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-xoffset">
+<span class="sig-name descname"><span class="pre">xoffset</span></span><a class="headerlink" href="#transform-property-xoffset" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>absolute</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>0</p>
+</dd>
+</dl>
+<p>The number of pixels the displayable is offset by in the horizontal
+direction. Positive values offset toward the right.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-yoffset">
+<span class="sig-name descname"><span class="pre">yoffset</span></span><a class="headerlink" href="#transform-property-yoffset" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>absolute</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>0</p>
+</dd>
+</dl>
+<p>The number of pixels the displayable is offset by in the vertical direction.
+Positive values offset toward the bottom.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-xycenter">
+<span class="sig-name descname"><span class="pre">xycenter</span></span><a class="headerlink" href="#transform-property-xycenter" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(position, position)</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>(0.0, 0.0)</p>
+</dd>
+</dl>
+<p>Equivalent to setting pos to the value of this property, and anchor to
+(0.5, 0.5).</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-xcenter">
+<span class="sig-name descname"><span class="pre">xcenter</span></span><a class="headerlink" href="#transform-property-xcenter" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>position</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>0.0</p>
+</dd>
+</dl>
+<p>Equivalent to setting xpos to the value of this property, and xanchor to
+0.5.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-ycenter">
+<span class="sig-name descname"><span class="pre">ycenter</span></span><a class="headerlink" href="#transform-property-ycenter" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>position</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>0.0</p>
+</dd>
+</dl>
+<p>Equivalent to setting ypos to the value of this property, and yanchor to
+0.5.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-subpixel">
+<span class="sig-name descname"><span class="pre">subpixel</span></span><a class="headerlink" href="#transform-property-subpixel" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>False</p>
+</dd>
+</dl>
+<p>If True, causes the child to be placed using subpixel positioning.</p>
+<p>Subpixel positioning effects the colors (including transparency) that are
+drawn into pixels, but not which pixels are drawn. When subpixel positioning
+is used in combination with movement (the usual case), the image should have
+transparent borders in the directions it might be moved in, if those edges
+are visible on the screen.</p>
+<p>For example, if a character sprite is being moved horizontally, it makes
+sense to have transparent borders on the left and right. These might not be
+necessary when panning over a background that extends outside the visible
+area, as the edges will not be seen.</p>
+</dd></dl>
+
+</section>
+<section id="rotation">
+<h3>Rotation<a class="headerlink" href="#rotation" title="Link to this heading"></a></h3>
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-rotate">
+<span class="sig-name descname"><span class="pre">rotate</span></span><a class="headerlink" href="#transform-property-rotate" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or None</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>If None, no rotation occurs. Otherwise, the image will be rotated by this
+many degrees clockwise. Rotating the displayable causes it to be resized,
+according to the setting of rotate_pad, below. This can cause positioning to
+change if xanchor and yanchor are not 0.5.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-rotate_pad">
+<span class="sig-name descname"><span class="pre">rotate_pad</span></span><a class="headerlink" href="#transform-property-rotate_pad" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>True</p>
+</dd>
+</dl>
+<p>If True, then a rotated displayable is padded such that the width and height
+are equal to the hypotenuse of the original width and height. This ensures
+that the transform will not change size as its contents rotate. If False,
+the transform will be given the minimal size that contains the transformed
+displayable. This is more suited to fixed rotations.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-transform_anchor">
+<span class="sig-name descname"><span class="pre">transform_anchor</span></span><a class="headerlink" href="#transform-property-transform_anchor" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>False</p>
+</dd>
+</dl>
+<p>If true, the anchor point is located on the cropped child, and is scaled and
+rotated as the child is transformed. Effectively, this makes the anchor the
+point that the child is rotated and scaled around.</p>
+</dd></dl>
+
+</section>
+<section id="zoom-and-flip">
+<h3>Zoom and Flip<a class="headerlink" href="#zoom-and-flip" title="Link to this heading"></a></h3>
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-zoom">
+<span class="sig-name descname"><span class="pre">zoom</span></span><a class="headerlink" href="#transform-property-zoom" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+</dl>
+<p>This causes the displayable to be zoomed by the supplied factor.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-xzoom">
+<span class="sig-name descname"><span class="pre">xzoom</span></span><a class="headerlink" href="#transform-property-xzoom" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+</dl>
+<p>This causes the displayable to be horizontally zoomed by the supplied
+factor. A negative value causes the image to be flipped horizontally.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-yzoom">
+<span class="sig-name descname"><span class="pre">yzoom</span></span><a class="headerlink" href="#transform-property-yzoom" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+</dl>
+<p>This causes the displayable to be vertically zoomed by the supplied
+factor. A negative value causes the image to be flipped vertically.</p>
+</dd></dl>
+
+</section>
+<section id="pixel-effects">
+<h3>Pixel Effects<a class="headerlink" href="#pixel-effects" title="Link to this heading"></a></h3>
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-nearest">
+<span class="sig-name descname"><span class="pre">nearest</span></span><a class="headerlink" href="#transform-property-nearest" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>If True, the displayable and its children are drawn using nearest-neighbor
+filtering. If False, the displayable and its children are drawn using
+bilinear filtering. If None, this is inherited from the parent, or
+<a class="reference internal" href="config.html#var-config.nearest_neighbor"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.nearest_neighbor</span></code></a>, which defaults to False.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><a class="headerlink" href="#transform-property-alpha" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+</dl>
+<p>This controls the opacity of the displayable.</p>
+<p>The alpha transform is applied to each image comprising the child of the
+transform independently. This can lead to unexpected results when the
+children overlap, such as seeing a character through clothing. The
+<a class="reference internal" href="displayables.html#Flatten" title="Flatten"><code class="xref py py-func docutils literal notranslate"><span class="pre">Flatten()</span></code></a> displayable can help with these problems.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-additive">
+<span class="sig-name descname"><span class="pre">additive</span></span><a class="headerlink" href="#transform-property-additive" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>0.0</p>
+</dd>
+</dl>
+<p>This controls how much additive blending Ren'Py performs. When 1.0, Ren'Py
+draws using the ADD operator. When 0.0, Ren'Py draws using the OVER
+operator.</p>
+<p>Additive blending is performed on each child of the transform independently.</p>
+<p>Fully additive blending doesn't alter the alpha channel of the destination,
+and additive images may not be visible if they're not drawn directly onto an
+opaque surface. (Complex operations, like viewport, <a class="reference internal" href="displayables.html#Flatten" title="Flatten"><code class="xref py py-func docutils literal notranslate"><span class="pre">Flatten()</span></code></a>,
+<a class="reference internal" href="displayables.html#Frame" title="Frame"><code class="xref py py-func docutils literal notranslate"><span class="pre">Frame()</span></code></a>, and certain transitions may cause problems with additive
+blending.)</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-matrixcolor">
+<span class="sig-name descname"><span class="pre">matrixcolor</span></span><a class="headerlink" href="#transform-property-matrixcolor" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or Matrix or MatrixColor</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>If not None, the value of this property is used to recolor everything that
+children of this transform draw. Interpolation is only supported when
+MatrixColors are used, and the MatrixColors are structurally similar. See
+<a class="reference internal" href="matrixcolor.html"><span class="doc">Matrixcolor</span></a> for more information.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-blur">
+<span class="sig-name descname"><span class="pre">blur</span></span><a class="headerlink" href="#transform-property-blur" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or float</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>This blurs the child of this transform by <cite>blur</cite> pixels, up to the border
+of the displayable. The precise details of the blurring may change between
+Ren'Py versions, and the blurring may exhibit artifacts, especially when the
+image being blurred is changing.</p>
+</dd></dl>
+
+</section>
+<section id="polar-positioning">
+<h3>Polar Positioning<a class="headerlink" href="#polar-positioning" title="Link to this heading"></a></h3>
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-around">
+<span class="sig-name descname"><span class="pre">around</span></span><a class="headerlink" href="#transform-property-around" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(position, position)</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>(0.0, 0.0)</p>
+</dd>
+</dl>
+<p>This specifies the starting point, relative to the upper-left corner of the
+containing area, from where the polar vector (computed from <a class="reference internal" href="#transform-property-angle"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">angle</span></code></a>
+and <a class="reference internal" href="#transform-property-radius"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">radius</span></code></a>) will be drawn. The sum of the two gives the resulting
+<a class="reference internal" href="#transform-property-pos"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">pos</span></code></a>.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-angle">
+<span class="sig-name descname"><span class="pre">angle</span></span><a class="headerlink" href="#transform-property-angle" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p>This gives the angle component of a position specified in polar coordinates.
+This is measured in degrees, with 0 being to the top of the screen, and 90
+being to the right.</p>
+<p>Ren'Py clamps this angle to between 0 and 360 degrees, including 0 but
+not 360. If a value is set outside this range, it will be set to the
+equivalent angle in this range before being used. (Setting this to -10 is
+the equivalent of setting it to 350.)</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-radius">
+<span class="sig-name descname"><span class="pre">radius</span></span><a class="headerlink" href="#transform-property-radius" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>position</p>
+</dd>
+</dl>
+<p>The radius component of the position given in polar coordinates.</p>
+<p>If a float, this will be scaled to the smaller of the width and height
+available to the transform.</p>
+</dd></dl>
+
+</section>
+<section id="polar-positioning-of-the-anchor">
+<h3>Polar Positioning of the Anchor<a class="headerlink" href="#polar-positioning-of-the-anchor" title="Link to this heading"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While using polar coordinates to position the anchor is possible, it's often
+more convenient to simply set <a class="reference internal" href="#transform-property-anchor"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">anchor</span></code></a> to (0.5, 0.5), and position
+the center of your displayable.</p>
+</div>
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-anchoraround">
+<span class="sig-name descname"><span class="pre">anchoraround</span></span><a class="headerlink" href="#transform-property-anchoraround" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(position, position)</p>
+</dd>
+</dl>
+<p>This specifies the starting point, relative to the upper-left corner of the
+displayable, from where the polar vector (computed from <a class="reference internal" href="#transform-property-anchorangle"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">anchorangle</span></code></a>
+and <a class="reference internal" href="#transform-property-anchorradius"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">anchorradius</span></code></a>) will be drawn. The sum of the two gives the
+resulting <a class="reference internal" href="#transform-property-anchor"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">anchor</span></code></a>.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-anchorangle">
+<span class="sig-name descname"><span class="pre">anchorangle</span></span><a class="headerlink" href="#transform-property-anchorangle" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(float)</p>
+</dd>
+</dl>
+<p>The angle component of the polar coordinates of the anchor. This is
+specified in degrees, with 0 being to the top and 90 being to the right.</p>
+<p>Ren'Py clamps this angle to between 0 and 360 degrees, including 0 but
+not 360. If a value is set outside this range, it will be set to the
+equivalent angle in this range before being used. (Setting this to -10 is
+the equivalent of setting it to 350.)</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-anchorradius">
+<span class="sig-name descname"><span class="pre">anchorradius</span></span><a class="headerlink" href="#transform-property-anchorradius" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(position)</p>
+</dd>
+</dl>
+<p>The radius component of the polar coordinates of the anchor.</p>
+<p>If a float, it is scaled horizontally and vertically to the size and shape
+of the displayable: if the height is not equal to the width, a radius that
+is not strictly absolute will result in elliptical motion when varying the
+anchorangle. For that reason, it is recommended to only pass <code class="docutils literal notranslate"><span class="pre">int</span></code> or
+<a class="reference internal" href="style_properties.html#absolute" title="absolute"><code class="xref py py-func docutils literal notranslate"><span class="pre">absolute()</span></code></a> values to this property.</p>
+</dd></dl>
+
+</section>
+<section id="cropping-and-resizing">
+<h3>Cropping and Resizing<a class="headerlink" href="#cropping-and-resizing" title="Link to this heading"></a></h3>
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-crop">
+<span class="sig-name descname"><span class="pre">crop</span></span><a class="headerlink" href="#transform-property-crop" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or (position, position, position, position)</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>If not None, causes the displayable to be cropped to the given box. The box
+is specified as a tuple of (x, y, width, height), with x and y being the
+coordinates of the box's top-left corner relative to the top-left corner of
+the child. All values can expand outside of the bounds of the original
+image, with the area outside being transparent, though width and height must
+be positive.</p>
+<p>If corners and crop are given, crop takes priority over corners.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-corner1">
+<span class="sig-name descname"><span class="pre">corner1</span></span><a class="headerlink" href="#transform-property-corner1" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or (position, position)</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>If not None, gives the upper-left corner of the crop box. The values can
+expand outside of the bounds of the original image. Crop takes priority over
+corners.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-corner2">
+<span class="sig-name descname"><span class="pre">corner2</span></span><a class="headerlink" href="#transform-property-corner2" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or (position, position)</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>If not None, gives the lower-right corner of the crop box. The values can
+expand outside of the bounds of the original image, but they should not be
+inferior to <a class="reference internal" href="#transform-property-corner1"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">corner1</span></code></a>. Crop takes priority over corners.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-xysize">
+<span class="sig-name descname"><span class="pre">xysize</span></span><a class="headerlink" href="#transform-property-xysize" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or (position, position)</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>If not None, causes the displayable to be scaled to the given size. This is
+equivalent to setting the <a class="reference internal" href="#transform-property-xsize"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">xsize</span></code></a> and <a class="reference internal" href="#transform-property-ysize"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">ysize</span></code></a> properties to
+the first and second components.</p>
+<p>This is affected by the <a class="reference internal" href="#transform-property-fit"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">fit</span></code></a> property.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-xsize">
+<span class="sig-name descname"><span class="pre">xsize</span></span><a class="headerlink" href="#transform-property-xsize" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or position</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>If not None, causes the displayable to be scaled to the given width.</p>
+<p>This is affected by the <a class="reference internal" href="#transform-property-fit"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">fit</span></code></a> property.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-ysize">
+<span class="sig-name descname"><span class="pre">ysize</span></span><a class="headerlink" href="#transform-property-ysize" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or position</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>If not None, causes the displayable to be scaled to the given height.</p>
+<p>This is affected by the <a class="reference internal" href="#transform-property-fit"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">fit</span></code></a> property.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><a class="headerlink" href="#transform-property-fit" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or string</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Causes the displayable to be sized according to the table below. In the
+context of the table below, the &quot;dimensions&quot; are:</p>
+<ul class="simple">
+<li><p>If both <a class="reference internal" href="#transform-property-xsize"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">xsize</span></code></a> and <a class="reference internal" href="#transform-property-ysize"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">ysize</span></code></a> are not None, both sizes are
+used as the dimensions.</p></li>
+<li><p>If only one of those properties is not None, it is used as the sole
+dimension.</p></li>
+<li><p>Otherwise, if fit is not None the area that the Transform is contained in
+is used as the dimensions.</p></li>
+</ul>
+<p>If fit, xsize, and ysize are all None, this property does not apply.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 85.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">contain</span></code></p></td>
+<td><p>As large as possible, without exceeding any dimensions. Maintains
+aspect ratio.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cover</span></code></p></td>
+<td><p>As small as possible, while matching or exceeding all dimensions.
+Maintains aspect ratio.</p></td>
+</tr>
+<tr class="row-even"><td><p>None or <code class="docutils literal notranslate"><span class="pre">fill</span></code></p></td>
+<td><p>Stretches/squashes displayable to exactly match dimensions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">scale-down</span></code></p></td>
+<td><p>As for <code class="docutils literal notranslate"><span class="pre">contain</span></code>, but will never increase the size of the
+displayable.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">scale-up</span></code></p></td>
+<td><p>As for <code class="docutils literal notranslate"><span class="pre">cover</span></code>, but will never decrease the size of the
+displayable.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</section>
+<section id="panning-and-tiling">
+<h3>Panning and Tiling<a class="headerlink" href="#panning-and-tiling" title="Link to this heading"></a></h3>
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-xpan">
+<span class="sig-name descname"><span class="pre">xpan</span></span><a class="headerlink" href="#transform-property-xpan" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or float</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>If not None, this interpreted as an angle that is used to pan horizontally
+across a 360 degree panoramic image. The center of the image is used as the
+zero angle, while the left and right edges are -180 and 180 degrees,
+respectively.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-ypan">
+<span class="sig-name descname"><span class="pre">ypan</span></span><a class="headerlink" href="#transform-property-ypan" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or float</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>If not None, this interpreted as an angle that is used to pan vertically
+across a 360 degree panoramic image. The center of the image is used as the
+zero angle, while the top and bottom edges are -180 and 180 degrees,
+respectively.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-xtile">
+<span class="sig-name descname"><span class="pre">xtile</span></span><a class="headerlink" href="#transform-property-xtile" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>1</p>
+</dd>
+</dl>
+<p>The number of times to tile the image horizontally.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-ytile">
+<span class="sig-name descname"><span class="pre">ytile</span></span><a class="headerlink" href="#transform-property-ytile" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>1</p>
+</dd>
+</dl>
+<p>The number of times to tile the image vertically.</p>
+</dd></dl>
+
+</section>
+<section id="transitions">
+<h3>Transitions<a class="headerlink" href="#transitions" title="Link to this heading"></a></h3>
+<p>See <a class="reference internal" href="transitions.html#atl-transitions"><span class="std std-ref">ATL Transitions</span></a>.</p>
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-delay">
+<span class="sig-name descname"><span class="pre">delay</span></span><a class="headerlink" href="#transform-property-delay" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>0.0</p>
+</dd>
+</dl>
+<p>If this transform is being used as a transition, then this is the duration
+of the transition. See <a class="reference internal" href="transitions.html#atl-transitions"><span class="std std-ref">ATL Transitions</span></a>.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-events">
+<span class="sig-name descname"><span class="pre">events</span></span><a class="headerlink" href="#transform-property-events" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>True</p>
+</dd>
+</dl>
+<p>If True, events are passed to the child of this transform. If False, events
+are blocked. (This can be used in ATL transitions to prevent events from
+reaching the old_widget.)</p>
+</dd></dl>
+
+</section>
+<section id="other">
+<h3>Other<a class="headerlink" href="#other" title="Link to this heading"></a></h3>
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-fps">
+<span class="sig-name descname"><span class="pre">fps</span></span><a class="headerlink" href="#transform-property-fps" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or None</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>If not None, this alters time inside the transform so that it is discrete.
+For example, if a transform has an fps of 10, then times inside the
+transform will be rounded down to the nearest multiple of 0.1. This can be
+used to simulate a lower frame rate.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-show_cancels_hide">
+<span class="sig-name descname"><span class="pre">show_cancels_hide</span></span><a class="headerlink" href="#transform-property-show_cancels_hide" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>True</p>
+</dd>
+</dl>
+<p>Normally, when a displayable or screen with the same tag or name as one that
+is hiding is shown, the hiding displayable or screen is removed, cancelling
+the hide transform. If this property is False in the hide transform, this
+cancellation will not occur, and the hide transform will proceed to
+completion.</p>
+</dd></dl>
+
+<p>There are also several sets of transform properties that are documented
+elsewhere:</p>
+<dl class="simple">
+<dt>3D Stage properties:</dt><dd><p><a class="reference internal" href="3dstage.html#transform-property-perspective"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">perspective</span></code></a>, <a class="reference internal" href="3dstage.html#transform-property-point_to"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">point_to</span></code></a>, <a class="reference internal" href="3dstage.html#transform-property-orientation"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">orientation</span></code></a>, <a class="reference internal" href="3dstage.html#transform-property-xrotate"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">xrotate</span></code></a>, <a class="reference internal" href="3dstage.html#transform-property-yrotate"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">yrotate</span></code></a>, <a class="reference internal" href="3dstage.html#transform-property-zrotate"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">zrotate</span></code></a>, <a class="reference internal" href="3dstage.html#transform-property-matrixanchor"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">matrixanchor</span></code></a>, <a class="reference internal" href="3dstage.html#transform-property-matrixtransform"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">matrixtransform</span></code></a>, <a class="reference internal" href="3dstage.html#transform-property-zpos"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">zpos</span></code></a>, <a class="reference internal" href="3dstage.html#transform-property-zzoom"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">zzoom</span></code></a></p>
+</dd>
+<dt>Model-based rendering properties:</dt><dd><p><a class="reference internal" href="model.html#transform-property-blend"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">blend</span></code></a>, <a class="reference internal" href="model.html#transform-property-mesh"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">mesh</span></code></a>, <a class="reference internal" href="model.html#transform-property-mesh_pad"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">mesh_pad</span></code></a>, <a class="reference internal" href="model.html#transform-property-shader"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">shader</span></code></a></p>
+</dd>
+<dt>GL Properties:</dt><dd><p>The <a class="reference internal" href="model.html#gl-properties"><span class="std std-ref">GL properties</span></a>.</p>
+</dd>
+<dt>Uniforms:</dt><dd><p>Properties beginning with <code class="docutils literal notranslate"><span class="pre">u_</span></code> are uniforms that can be used by <a class="reference internal" href="model.html#custom-shaders"><span class="std std-ref">custom shaders</span></a>.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="property-order">
+<h2>Property Order<a class="headerlink" href="#property-order" title="Link to this heading"></a></h2>
+<p>Transform properties are applied in the following order:</p>
+<ol class="arabic simple">
+<li><p>fps</p></li>
+<li><p>mesh, blur</p></li>
+<li><p>tile</p></li>
+<li><p>pan</p></li>
+<li><p>crop, corner1, corner2</p></li>
+<li><p>xysize, size, maxsize</p></li>
+<li><p>zoom, xzoom, yzoom</p></li>
+<li><p>point_to</p></li>
+<li><p>orientation</p></li>
+<li><p>xrotate, yrotate, zrotate</p></li>
+<li><p>rotate</p></li>
+<li><p>zpos</p></li>
+<li><p>matrixtransform, matrixanchor</p></li>
+<li><p>zzoom</p></li>
+<li><p>perspective</p></li>
+<li><p>nearest, blend, alpha, additive, shader</p></li>
+<li><p>matrixcolor</p></li>
+<li><p>GL Properties, Uniforms</p></li>
+<li><p>position properties</p></li>
+<li><p>show_cancels_hide</p></li>
+</ol>
+</section>
+<section id="deprecated-transform-properties">
+<h2>Deprecated Transform Properties<a class="headerlink" href="#deprecated-transform-properties" title="Link to this heading"></a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The following properties should not be used in modern games, as they may
+conflict with more recent features. They are only kept here for
+compatibility, along with the new way of achieving the same behavior.</p>
+</div>
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-alignaround">
+<span class="sig-name descname"><span class="pre">alignaround</span></span><a class="headerlink" href="#transform-property-alignaround" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(float, float)</p>
+</dd>
+</dl>
+<p>This sets <a class="reference internal" href="#transform-property-anchor"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">anchor</span></code></a>, <a class="reference internal" href="#transform-property-around"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">around</span></code></a>, and <a class="reference internal" href="#transform-property-anchoraround"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">anchoraround</span></code></a> to the
+same value.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-crop_relative">
+<span class="sig-name descname"><span class="pre">crop_relative</span></span><a class="headerlink" href="#transform-property-crop_relative" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>True</p>
+</dd>
+</dl>
+<p>If False, float components of <a class="reference internal" href="#transform-property-crop"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">crop</span></code></a>, <a class="reference internal" href="#transform-property-corner1"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">corner1</span></code></a> and
+<a class="reference internal" href="#transform-property-corner2"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">corner2</span></code></a> are interpreted as an absolute number of pixels, instead of
+a fraction of the width and height of the source image.</p>
+<p>If an absolute number of pixel is to be expressed, <a class="reference internal" href="style_properties.html#absolute" title="absolute"><code class="xref py py-func docutils literal notranslate"><span class="pre">absolute()</span></code></a>
+instances should be provided to these properties instead of using the
+crop_relative property. If necessary, values of dubious type can be wrapped
+in the <a class="reference internal" href="style_properties.html#absolute" title="absolute"><code class="xref py py-func docutils literal notranslate"><span class="pre">absolute()</span></code></a> callable.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-size">
+<span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#transform-property-size" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or (int, int)</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>This is an older version of <a class="reference internal" href="#transform-property-xysize"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">xysize</span></code></a> interpreting floating-point
+values as an absolute number of pixels.</p>
+</dd></dl>
+
+<dl class="std transform-property">
+<dt class="sig sig-object std" id="transform-property-maxsize">
+<span class="sig-name descname"><span class="pre">maxsize</span></span><a class="headerlink" href="#transform-property-maxsize" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or (int, int)</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>If not None, causes the displayable to be scaled so that it fits within a
+box of this size, while preserving aspect ratio. (Note that this means that
+one of the dimensions may be smaller than the size of this box.)</p>
+<p>To achieve the same result, give the values to the <a class="reference internal" href="#transform-property-xysize"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">xysize</span></code></a> property,
+and set the <a class="reference internal" href="#transform-property-fit"><code class="xref std std-tpref docutils literal notranslate"><span class="pre">fit</span></code></a> property to the value &quot;contain&quot;.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="transforms.html" class="btn btn-neutral float-left" title="Transforms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="transitions.html" class="btn btn-neutral float-right" title="Transitions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

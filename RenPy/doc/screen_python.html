@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Screens and Python &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/screen_python.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Creator-Defined Displayables" href="cdd.html" />
+    <link rel="prev" title="Advanced GUI" href="gui_advanced.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Movie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Screens and Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#screen-functions">Screen Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.call_screen"><code class="docutils literal notranslate"><span class="pre">renpy.call_screen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.current_screen"><code class="docutils literal notranslate"><span class="pre">renpy.current_screen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_adjustment"><code class="docutils literal notranslate"><span class="pre">renpy.get_adjustment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.value"><code class="docutils literal notranslate"><span class="pre">renpy.value</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#range"><code class="docutils literal notranslate"><span class="pre">range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_displayable"><code class="docutils literal notranslate"><span class="pre">renpy.get_displayable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_displayable_properties"><code class="docutils literal notranslate"><span class="pre">renpy.get_displayable_properties()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_screen"><code class="docutils literal notranslate"><span class="pre">renpy.get_screen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.layer"><code class="docutils literal notranslate"><span class="pre">renpy.layer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#name"><code class="docutils literal notranslate"><span class="pre">name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#zorder"><code class="docutils literal notranslate"><span class="pre">zorder</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.get_screen_variable"><code class="docutils literal notranslate"><span class="pre">renpy.get_screen_variable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.hide_screen"><code class="docutils literal notranslate"><span class="pre">renpy.hide_screen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.set_focus"><code class="docutils literal notranslate"><span class="pre">renpy.set_focus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.set_screen_variable"><code class="docutils literal notranslate"><span class="pre">renpy.set_screen_variable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.show_screen"><code class="docutils literal notranslate"><span class="pre">renpy.show_screen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.start_predict_screen"><code class="docutils literal notranslate"><span class="pre">renpy.start_predict_screen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.stop_predict_screen"><code class="docutils literal notranslate"><span class="pre">renpy.stop_predict_screen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.variant"><code class="docutils literal notranslate"><span class="pre">renpy.variant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ui.adjustment"><code class="docutils literal notranslate"><span class="pre">ui.adjustment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ui.adjustment.change"><code class="docutils literal notranslate"><span class="pre">ui.adjustment.change()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ui.interact"><code class="docutils literal notranslate"><span class="pre">ui.interact()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#actions">Actions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Action"><code class="docutils literal notranslate"><span class="pre">Action</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Action.__call__"><code class="docutils literal notranslate"><span class="pre">Action.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Action.get_sensitive"><code class="docutils literal notranslate"><span class="pre">Action.get_sensitive()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Action.get_selected"><code class="docutils literal notranslate"><span class="pre">Action.get_selected()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Action.get_tooltip"><code class="docutils literal notranslate"><span class="pre">Action.get_tooltip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Action.periodic"><code class="docutils literal notranslate"><span class="pre">Action.periodic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Action.unhovered"><code class="docutils literal notranslate"><span class="pre">Action.unhovered()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Action.alt"><code class="docutils literal notranslate"><span class="pre">Action.alt</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.is_selected"><code class="docutils literal notranslate"><span class="pre">renpy.is_selected()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.is_sensitive"><code class="docutils literal notranslate"><span class="pre">renpy.is_sensitive()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.run"><code class="docutils literal notranslate"><span class="pre">renpy.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#barvalues">BarValues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#BarValue"><code class="docutils literal notranslate"><span class="pre">BarValue</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#BarValue.get_adjustment"><code class="docutils literal notranslate"><span class="pre">BarValue.get_adjustment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BarValue.get_style"><code class="docutils literal notranslate"><span class="pre">BarValue.get_style()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BarValue.get_tooltip"><code class="docutils literal notranslate"><span class="pre">BarValue.get_tooltip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BarValue.replaces"><code class="docutils literal notranslate"><span class="pre">BarValue.replaces()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BarValue.periodic"><code class="docutils literal notranslate"><span class="pre">BarValue.periodic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BarValue.alt"><code class="docutils literal notranslate"><span class="pre">BarValue.alt</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#inputvalue">InputValue</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#InputValue"><code class="docutils literal notranslate"><span class="pre">InputValue</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#InputValue.editable"><code class="docutils literal notranslate"><span class="pre">InputValue.editable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#InputValue.default"><code class="docutils literal notranslate"><span class="pre">InputValue.default</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#InputValue.get_text"><code class="docutils literal notranslate"><span class="pre">InputValue.get_text()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#InputValue.set_text"><code class="docutils literal notranslate"><span class="pre">InputValue.set_text()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#InputValue.enter"><code class="docutils literal notranslate"><span class="pre">InputValue.enter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#InputValue.Enable"><code class="docutils literal notranslate"><span class="pre">InputValue.Enable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#InputValue.Disable"><code class="docutils literal notranslate"><span class="pre">InputValue.Disable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#InputValue.Toggle"><code class="docutils literal notranslate"><span class="pre">InputValue.Toggle()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creator-defined-screen-language-statements">Creator-Defined Screen Language Statements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.register_sl_displayable"><code class="docutils literal notranslate"><span class="pre">renpy.register_sl_displayable</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#renpy.register_sl_displayable.add_positional"><code class="docutils literal notranslate"><span class="pre">renpy.register_sl_displayable.add_positional()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#renpy.register_sl_displayable.add_property"><code class="docutils literal notranslate"><span class="pre">renpy.register_sl_displayable.add_property()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#renpy.register_sl_displayable.add_style_property"><code class="docutils literal notranslate"><span class="pre">renpy.register_sl_displayable.add_style_property()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#renpy.register_sl_displayable.add_prefix_style_property"><code class="docutils literal notranslate"><span class="pre">renpy.register_sl_displayable.add_prefix_style_property()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#renpy.register_sl_displayable.add_property_group"><code class="docutils literal notranslate"><span class="pre">renpy.register_sl_displayable.add_property_group()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#renpy.register_sl_displayable.copy_properties"><code class="docutils literal notranslate"><span class="pre">renpy.register_sl_displayable.copy_properties()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.register_sl_statement"><code class="docutils literal notranslate"><span class="pre">renpy.register_sl_statement</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Screens and Python</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/screen_python.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="screens-and-python">
+<h1>Screens and Python<a class="headerlink" href="#screens-and-python" title="Link to this heading"></a></h1>
+<section id="screen-functions">
+<h2>Screen Functions<a class="headerlink" href="#screen-functions" title="Link to this heading"></a></h2>
+<p>The following functions support various operations related to screens.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.call_screen">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">call_screen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_screen_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_with_none</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'screen'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.call_screen" title="Link to this definition"></a></dt>
+<dd><p>The programmatic equivalent of the call screen statement.</p>
+<p>This shows <cite>_screen_name</cite> as a screen, then causes an interaction
+to occur. The screen is hidden at the end of the interaction, and
+the result of the interaction is returned.</p>
+<p>Positional arguments, and keyword arguments that do not begin with
+_ are passed to the screen.</p>
+<p>If <cite>_with_none</cite> is false, &quot;with None&quot; is not run at the end of end
+of the interaction.</p>
+<p>If <cite>_mode</cite> is passed, it will be the mode of this interaction,
+otherwise the mode will be &quot;screen&quot;.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.current_screen">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">current_screen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.current_screen" title="Link to this definition"></a></dt>
+<dd><p>Returns information about the screen currently being
+updated, rendered, or processed.</p>
+<p>See <a class="reference internal" href="#renpy.get_screen" title="renpy.get_screen"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_screen()</span></code></a> for documented fields on the returned object.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_adjustment">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_adjustment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bar_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_adjustment" title="Link to this definition"></a></dt>
+<dd><p>Given <cite>bar_value</cite>, a <a class="reference internal" href="#BarValue" title="BarValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">BarValue</span></code></a>, returns the <a class="reference internal" href="#ui.adjustment" title="ui.adjustment"><code class="xref py py-func docutils literal notranslate"><span class="pre">ui.adjustment()</span></code></a>
+it uses. The adjustment has the following attributes defined:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="renpy.value">
+<span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#renpy.value" title="Link to this definition"></a></dt>
+<dd><p>The current value of the bar.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="range">
+<span class="sig-name descname"><span class="pre">range</span></span><a class="headerlink" href="#range" title="Link to this definition"></a></dt>
+<dd><p>The current range of the bar.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_displayable">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_displayable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_displayable" title="Link to this definition"></a></dt>
+<dd><p>From the <cite>screen</cite> on <cite>layer</cite>, returns the displayable with
+<cite>id</cite>. Returns None if the screen doesn't exist, or there is no
+widget with that id on the screen.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_displayable_properties">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_displayable_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_displayable_properties" title="Link to this definition"></a></dt>
+<dd><p>Returns the properties for the displayable with <cite>id</cite> in the <cite>screen</cite>
+on <cite>layer</cite>. If <cite>screen</cite> is None, returns the properties for the
+current screen. This can be used from Python or property code inside
+a screen.</p>
+<p>Note that this returns a dictionary containing the widget properties,
+and so to get an individual property, the dictionary must be accessed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_screen">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_screen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_screen" title="Link to this definition"></a></dt>
+<dd><p>Returns information about the screen with the given <cite>name</cite> on <cite>layer</cite>.
+<cite>name</cite> is first interpreted as a tag name, and then as a screen name.
+If the screen is not showing, returns None.</p>
+<p>This can also take a list of names, in which case the first screen
+that is showing is returned.</p>
+<dl class="simple">
+<dt><cite>tag_only</cite></dt><dd><p>If true, only the tag is considered.</p>
+</dd>
+</dl>
+<p>This function can be used to check whether a screen is showing:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">renpy</span><span class="o">.</span><span class="n">get_screen</span><span class="p">(</span><span class="s2">&quot;say&quot;</span><span class="p">):</span>
+    <span class="k">text</span> <span class="s2">&quot;The say screen is showing.&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">text</span> <span class="s2">&quot;The say screen is hidden.&quot;</span>
+</pre></div>
+</div>
+<p>The objects returned by this function have the
+following documented fields:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="renpy.layer">
+<span class="sig-name descname"><span class="pre">layer</span></span><a class="headerlink" href="#renpy.layer" title="Link to this definition"></a></dt>
+<dd><p>The layer the screen is being displayed on.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#name" title="Link to this definition"></a></dt>
+<dd><p>The name of the screen.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="zorder">
+<span class="sig-name descname"><span class="pre">zorder</span></span><a class="headerlink" href="#zorder" title="Link to this definition"></a></dt>
+<dd><p>The zorder the screen is being displayed at.</p>
+</dd></dl>
+
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Like other similar functions, the object this returns is meant to be used
+in the short term after the function is called. Including it in save data
+or making it participate in rollback is not advised.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.get_screen_variable">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_screen_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_screen_variable" title="Link to this definition"></a></dt>
+<dd><p>Returns the value of a variable in the scope of a screen.</p>
+<dl class="simple">
+<dt><cite>name</cite></dt><dd><p>The name of the variable to return.</p>
+</dd>
+<dt><cite>screen</cite></dt><dd><p>The name of the screen to return the variable from. If None,
+the current screen is used. (The current screen is only defined
+when updating a screen, and in actions that are run inside the
+screen.)</p>
+</dd>
+<dt><cite>layer</cite></dt><dd><p>The layer to find the screen on, if <cite>screen</cite> is not None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.hide_screen">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">hide_screen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">immediately</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.hide_screen" title="Link to this definition"></a></dt>
+<dd><p>The programmatic equivalent of the hide screen statement.</p>
+<p>Hides the screen with <cite>tag</cite> on <cite>layer</cite>.</p>
+<p>If <cite>immediately</cite> is true, the screen is hidden immediately, without the 'on hide' event.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.set_focus">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">set_focus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'screens'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.set_focus" title="Link to this definition"></a></dt>
+<dd><p>This attempts to focus the displayable with <cite>id</cite> in the screen <cite>screen</cite>.
+Focusing will fail if the displayable isn't found, the window isn't
+focused, or something else is grabbing focus.</p>
+<p>The focus may change if the mouse moves, even slightly, after this call
+is processed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.set_screen_variable">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">set_screen_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.set_screen_variable" title="Link to this definition"></a></dt>
+<dd><p>Sets a variable to a value in the scope of a screen. Note that this
+will not immediately update the variable's value - call
+<a class="reference internal" href="other.html#renpy.restart_interaction" title="renpy.restart_interaction"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.restart_interaction()</span></code></a> to cause the screen to be updated.</p>
+<dl class="simple">
+<dt><cite>name</cite></dt><dd><p>The name of the variable to set. This should be a variable
+created with the <a class="reference internal" href="screens.html#sl-default"><span class="std std-ref">Default</span></a> statement, as optimization
+may prevent changes to other variables from being visible.</p>
+</dd>
+<dt><cite>value</cite></dt><dd><p>The value to set the variable to.</p>
+</dd>
+<dt><cite>screen</cite></dt><dd><p>The name of the screen to return the variable from. If None,
+the current screen is used. (The current screen is only defined
+when updating a screen, and in actions that are run inside the
+screen.)</p>
+</dd>
+<dt><cite>layer</cite></dt><dd><p>The layer to find the screen on, if <cite>screen</cite> is not None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.show_screen">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">show_screen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_screen_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_zorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_widget_properties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_transient</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.show_screen" title="Link to this definition"></a></dt>
+<dd><p>The programmatic equivalent of the show screen statement.</p>
+<p>Shows the named screen. This takes the following keyword arguments:</p>
+<dl>
+<dt><cite>_screen_name</cite></dt><dd><p>The name of the screen to show.</p>
+</dd>
+<dt><cite>_layer</cite></dt><dd><p>The layer to show the screen on. This is equivalent to the
+<code class="docutils literal notranslate"><span class="pre">onlayer</span></code> clause of the <a class="reference internal" href="screens.html#show-screen-statement"><span class="std std-ref">Show Screen</span></a> statement.</p>
+</dd>
+<dt><cite>_zorder</cite></dt><dd><p>The zorder to show the screen on. If not specified, defaults to
+the zorder associated with the screen. If that's not specified,
+it is 0 by default.</p>
+</dd>
+<dt><cite>_tag</cite></dt><dd><p>The tag to show the screen with. If not specified, defaults to
+the tag associated with the screen. If that's not specified,
+defaults to the name of the screen.</p>
+<p>This is equivalent to the <code class="docutils literal notranslate"><span class="pre">as</span></code> clause of the
+<a class="reference internal" href="screens.html#show-screen-statement"><span class="std std-ref">Show Screen</span></a> statement.</p>
+</dd>
+<dt><cite>_widget_properties</cite></dt><dd><p>A map from the id of a widget to a property name -&gt; property value
+dictionary. When a widget with that id is shown by the screen, the
+specified properties are added to it.</p>
+</dd>
+<dt><cite>_transient</cite></dt><dd><p>If true, the screen will be automatically hidden at the end of
+the current interaction.</p>
+</dd>
+</dl>
+<p>Non-keyword arguments, and keyword arguments that do not begin with
+an underscore, are passed to the screen.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.start_predict_screen">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">start_predict_screen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_screen_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.start_predict_screen" title="Link to this definition"></a></dt>
+<dd><p>Causes Ren'Py to start predicting the screen named <cite>_screen_name</cite>
+with the given arguments. This replaces any previous prediction
+of <cite>_screen_name</cite>. To stop predicting a screen, call <a class="reference internal" href="#renpy.stop_predict_screen" title="renpy.stop_predict_screen"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.stop_predict_screen()</span></code></a>.</p>
+<p>Prediction will occur during normal gameplay. To wait for prediction
+to complete, use the <cite>predict</cite> argument to <a class="reference internal" href="statement_equivalents.html#renpy.pause" title="renpy.pause"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.pause()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.stop_predict_screen">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">stop_predict_screen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.stop_predict_screen" title="Link to this definition"></a></dt>
+<dd><p>Causes Ren'Py to stop predicting the screen named <cite>name</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.variant">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">variant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.variant" title="Link to this definition"></a></dt>
+<dd><p>Returns true if <cite>name</cite> is a screen variant that corresponds to the
+context in which Ren'Py is currently executing. See <a class="reference internal" href="screens.html#screen-variants"><span class="std std-ref">Screen Variants</span></a>
+for more details. This function can be used as the condition in an
+if statement to switch behavior based on the selected screen variant.</p>
+<p><cite>name</cite> can also be a list of variants, in which case this function
+returns True if any of the variants would.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ui.adjustment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ui.</span></span><span class="sig-name descname"><span class="pre">adjustment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">changed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjustable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranged</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw_changed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ui.adjustment" title="Link to this definition"></a></dt>
+<dd><p>Adjustment objects represent a value that can be adjusted by a bar
+or viewport. They contain information about the value, the range
+of the value, and how to adjust the value in small steps and large
+pages.</p>
+<p>The following parameters correspond to fields or properties on
+the adjustment object:</p>
+<dl>
+<dt><cite>range</cite></dt><dd><p>The range of the adjustment, a number.</p>
+</dd>
+<dt><cite>value</cite></dt><dd><p>The value of the adjustment, a number.</p>
+</dd>
+<dt><cite>step</cite></dt><dd><p>The step size of the adjustment, a number. If None, then
+defaults to 1/10th of a page, if set. Otherwise, defaults
+to the 1/20th of the range.</p>
+<p>This is used when scrolling a viewport with the mouse wheel.</p>
+</dd>
+<dt><cite>page</cite></dt><dd><p>The page size of the adjustment. If None, this is set
+automatically by a viewport. If never set, defaults to 1/10th
+of the range.</p>
+<p>It's can be used when clicking on a scrollbar.</p>
+</dd>
+</dl>
+<p>The following parameters control the behavior of the adjustment.</p>
+<dl>
+<dt><cite>adjustable</cite></dt><dd><p>If True, this adjustment can be changed by a bar. If False,
+it can't.</p>
+<p>It defaults to being adjustable if a <cite>changed</cite> function
+is given or if the adjustment is associated with a viewport,
+and not adjustable otherwise.</p>
+</dd>
+<dt><cite>changed</cite></dt><dd><p>This function is called with the new value when the value of
+the adjustment changes.</p>
+</dd>
+<dt><cite>raw_changed</cite></dt><dd><p>This function is called when the value of the adjustment
+changes. Unlike <cite>changed</cite>, this function is called with
+the raw value, which may be out of range. It's called with
+two arguments, the adjustment and the new value.</p>
+</dd>
+<dt><cite>ranged</cite></dt><dd><p>This function is called with the adjustment object when
+the range of the adjustment is set by a viewport.</p>
+<p>This function may be called multiple times, as part of the layout
+process.</p>
+</dd>
+<dt><cite>force_step</cite></dt><dd><p>If True and this adjustment changes by dragging associated
+viewport or a bar, value will be changed only if the drag
+reached next step.
+If &quot;release&quot; and this adjustment changes by dragging associated
+viewport or a bar, after the release, value will be
+rounded to the nearest step.
+If False, this adjustment will changes by dragging, ignoring
+the step value.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ui.adjustment.change">
+<span class="sig-name descname"><span class="pre">change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ui.adjustment.change" title="Link to this definition"></a></dt>
+<dd><p>Changes the value of the adjustment to <cite>value</cite>, updating
+any bars and viewports that use the adjustment.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ui.interact">
+<span class="sig-prename descclassname"><span class="pre">ui.</span></span><span class="sig-name descname"><span class="pre">interact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roll_forward</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mouse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ui.interact" title="Link to this definition"></a></dt>
+<dd><p>Causes an interaction with the user, and returns the result of that
+interaction. This causes Ren'Py to redraw the screen and begin processing
+input events. When a displayable returns a value in response to an event,
+that value is returned from ui.interact, and the interaction ends.</p>
+<p>This function is rarely called directly. It is usually called by other
+parts of Ren'Py, including the say statement, menu statement, with statement,
+pause statement, call screen, <a class="reference internal" href="input.html#renpy.input" title="renpy.input"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.input()</span></code></a>, among many other
+functions. However, it can be called directly if necessary.</p>
+<p>When an interaction ends, the transient layer and all screens shown with
+<cite>_transient</cite> as true are cleared from the scene lists.</p>
+<p>The following arguments are documented. As other, undocumented arguments
+exist for Ren'Py's internal use, please pass all arguments as keyword
+arguments.</p>
+<dl class="simple">
+<dt><cite>roll_forward</cite></dt><dd><p>The information that will be returned by this function when a
+roll forward occurs. (If None, the roll forward is ignored.) This
+should usually be passed the result of the <a class="reference internal" href="save_load_rollback.html#renpy.roll_forward_info" title="renpy.roll_forward_info"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.roll_forward_info()</span></code></a>
+function.</p>
+</dd>
+<dt><cite>mouse</cite></dt><dd><p>The style of mouse cursor to use during this function.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="actions">
+<h2>Actions<a class="headerlink" href="#actions" title="Link to this heading"></a></h2>
+<p>Many of the displayables created in the screen language take actions
+as arguments. An action is one of three things:</p>
+<ul class="simple">
+<li><p>A callable Python object (like a function or bound method) that
+takes no arguments.</p></li>
+<li><p>An object of a class that inherits from the Action class.</p></li>
+<li><p>A list of other Actions.</p></li>
+</ul>
+<p>The advantage to inheriting from the Action class is that it allows
+you to override the methods that determine when a button should be
+sensitive, and when it is selected.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="Action">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Action</span></span><a class="headerlink" href="#Action" title="Link to this definition"></a></dt>
+<dd><p>To define a new action, inherit from this class. Override the
+methods in this class to change the behavior of the action.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Action.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Action.__call__" title="Link to this definition"></a></dt>
+<dd><p>This is the method that is called when the action is
+activated. In many cases, returning a non-None value from the
+action will cause the current interaction to end.</p>
+<p>This method must be overridden, as the default method will
+raise a NotImplementedError (and hence cause Ren'Py to
+report an error).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Action.get_sensitive">
+<span class="sig-name descname"><span class="pre">get_sensitive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Action.get_sensitive" title="Link to this definition"></a></dt>
+<dd><p>This is called to determine if the button with this action
+should be sensitive. It should return true if the button is
+sensitive.</p>
+<p>Note that __call__ can be called, even if this returns False.</p>
+<p>The default implementation returns True.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Action.get_selected">
+<span class="sig-name descname"><span class="pre">get_selected</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Action.get_selected" title="Link to this definition"></a></dt>
+<dd><p>This should return true if the button should be rendered as a
+selected button, and false otherwise.</p>
+<p>The default implemention returns False.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Action.get_tooltip">
+<span class="sig-name descname"><span class="pre">get_tooltip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Action.get_tooltip" title="Link to this definition"></a></dt>
+<dd><p>This gets a default tooltip for this button, if a specific
+tooltip is not assigned. It should return the tooltip value,
+or None if a tooltip is not known.</p>
+<p>This defaults to returning None.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Action.periodic">
+<span class="sig-name descname"><span class="pre">periodic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">st</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Action.periodic" title="Link to this definition"></a></dt>
+<dd><p>This method is called once at the start of each interaction,
+and then is called periodically thereafter. If it returns a
+number, it will be called before that many seconds elapse, but
+it might be called sooner.</p>
+<p>The main use of this is to call
+<a class="reference internal" href="other.html#renpy.restart_interaction" title="renpy.restart_interaction"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.restart_interaction()</span></code></a> if the value of
+get_selected or get_sensitive should change.</p>
+<p>It takes one argument:</p>
+<dl class="simple">
+<dt><cite>st</cite></dt><dd><p>The number of seconds since the screen or displayable this
+action is associated with was first shown.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Action.unhovered">
+<span class="sig-name descname"><span class="pre">unhovered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Action.unhovered" title="Link to this definition"></a></dt>
+<dd><p>When the action is used as the <cite>hovered</cite> parameter to a button (or
+similar object), this method is called when the object loses focus.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Action.alt">
+<span class="sig-name descname"><span class="pre">alt</span></span><a class="headerlink" href="#Action.alt" title="Link to this definition"></a></dt>
+<dd><p>The text-to-speech text used for buttons that use this Action, if
+the button does not have the <a class="reference internal" href="style_properties.html#style-property-alt"><code class="xref std std-propref docutils literal notranslate"><span class="pre">alt</span></code></a> property set. This can
+set to a string in the class, or in the constructor, or it can be
+a Python property that returns a string.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>To run an action from Python, use <a class="reference internal" href="#renpy.run" title="renpy.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.run()</span></code></a>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.is_selected">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">is_selected</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.is_selected" title="Link to this definition"></a></dt>
+<dd><p>Returns a true value if the provided action or list of actions
+indicates it is selected, and false otherwise.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.is_sensitive">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">is_sensitive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.is_sensitive" title="Link to this definition"></a></dt>
+<dd><p>Returns a true value if the provided action or list of actions
+indicates it is sensitive, and false otherwise.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.run">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.run" title="Link to this definition"></a></dt>
+<dd><p>Run an action or list of actions. A single action is called with no
+arguments, a list of actions is run in order using this function, and
+None is ignored.</p>
+<p>Returns the result of the last action to return a value.</p>
+</dd></dl>
+
+</section>
+<section id="barvalues">
+<h2>BarValues<a class="headerlink" href="#barvalues" title="Link to this heading"></a></h2>
+<p>When creating a bar, vbar, or hotbar, a BarValue object can be supplied as
+the <cite>value</cite> property. Methods on the BarValue object are called to get
+the adjustment and styles.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="BarValue">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BarValue</span></span><a class="headerlink" href="#BarValue" title="Link to this definition"></a></dt>
+<dd><p>To define a new BarValue, inherit from this class and override
+some of the methods.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="BarValue.get_adjustment">
+<span class="sig-name descname"><span class="pre">get_adjustment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BarValue.get_adjustment" title="Link to this definition"></a></dt>
+<dd><p>This method is called to get an adjustment object for the
+bar. It should create the adjustment with
+<a class="reference internal" href="#ui.adjustment" title="ui.adjustment"><code class="xref py py-func docutils literal notranslate"><span class="pre">ui.adjustment()</span></code></a>, and then return the object created this
+way.</p>
+<p>This method must be overridden, as the default method will
+raise NotImplementedError (and hence cause Ren'Py to report an
+error).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BarValue.get_style">
+<span class="sig-name descname"><span class="pre">get_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BarValue.get_style" title="Link to this definition"></a></dt>
+<dd><p>This is used to determine the style of bars that use this
+value. It should return a tuple of two style names or style
+objects. The first is used for a bar, and the
+second for vbar.</p>
+<p>This defaults to (&quot;bar&quot;, &quot;vbar&quot;).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BarValue.get_tooltip">
+<span class="sig-name descname"><span class="pre">get_tooltip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BarValue.get_tooltip" title="Link to this definition"></a></dt>
+<dd><p>This gets a default tooltip for this button, if a specific
+tooltip is not assigned. It should return the tooltip value,
+or None if a tooltip is not known.</p>
+<p>This defaults to returning None.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BarValue.replaces">
+<span class="sig-name descname"><span class="pre">replaces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BarValue.replaces" title="Link to this definition"></a></dt>
+<dd><p>This is called when a BarValue replaces another BarValue, such
+as when a screen is updated. It can be used to update this
+BarValue from the other. It is called before get_adjustment.</p>
+<p>Note that <cite>other</cite> is not necessarily the same type as <cite>self</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BarValue.periodic">
+<span class="sig-name descname"><span class="pre">periodic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">st</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BarValue.periodic" title="Link to this definition"></a></dt>
+<dd><p>This method is called once at the start of each interaction. If
+it returns a number of seconds, it will be called before that
+many seconds elapse, but it might be called sooner. It is
+called after get_adjustment.</p>
+<p>It can be used to update the value of the bar over time, like
+<a class="reference internal" href="screen_actions.html#AnimatedValue" title="AnimatedValue"><code class="xref py py-func docutils literal notranslate"><span class="pre">AnimatedValue()</span></code></a> does. To do this, get_adjustment should
+store the adjustment, and periodic should call the
+adjustment's changed method.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BarValue.alt">
+<span class="sig-name descname"><span class="pre">alt</span></span><a class="headerlink" href="#BarValue.alt" title="Link to this definition"></a></dt>
+<dd><p>The text-to-speech text used for bars that use this BarValue, if
+the bar does not have the <a class="reference internal" href="style_properties.html#style-property-alt"><code class="xref std std-propref docutils literal notranslate"><span class="pre">alt</span></code></a> property set. This can
+set to a string in the class, or in the constructor, or it can be
+a Python property that returns a string.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="inputvalue">
+<h2>InputValue<a class="headerlink" href="#inputvalue" title="Link to this heading"></a></h2>
+<p>When creating an input, an InputValue object can be supplied as the
+<cite>value</cite> property. Methods on the InputValue object are called to
+get and set the text, determine if the input is editable, and handle
+the enter key being pressed.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="InputValue">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InputValue</span></span><a class="headerlink" href="#InputValue" title="Link to this definition"></a></dt>
+<dd><p>To define a new InputValue, inherit from this class, override
+some or all of the methods, and set the value of the default
+field.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="InputValue.editable">
+<span class="sig-name descname"><span class="pre">editable</span></span><a class="headerlink" href="#InputValue.editable" title="Link to this definition"></a></dt>
+<dd><p>If not true, disables the input field from being editable at all.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="InputValue.default">
+<span class="sig-name descname"><span class="pre">default</span></span><a class="headerlink" href="#InputValue.default" title="Link to this definition"></a></dt>
+<dd><p>If true, the input is eligible to be editable by default. (That
+is, it may be given the caret when the screen is shown.)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="InputValue.get_text">
+<span class="sig-name descname"><span class="pre">get_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#InputValue.get_text" title="Link to this definition"></a></dt>
+<dd><p>Returns the default text of the input. This must be implemented.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="InputValue.set_text">
+<span class="sig-name descname"><span class="pre">set_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#InputValue.set_text" title="Link to this definition"></a></dt>
+<dd><p>Called when the text of the input is changed, with the new text.
+This must be implemented.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="InputValue.enter">
+<span class="sig-name descname"><span class="pre">enter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#InputValue.enter" title="Link to this definition"></a></dt>
+<dd><p>Called when the user presses enter. If this returns a non-None
+value, that value is returned from the interacton. This may also
+raise <a class="reference internal" href="cdd.html#renpy.IgnoreEvent" title="renpy.IgnoreEvent"><code class="xref py py-exc docutils literal notranslate"><span class="pre">renpy.IgnoreEvent</span></code></a> to ignore the press. Otherwise, the
+enter-press is propagated to other displayables.</p>
+</dd></dl>
+
+<p>The following actions are available as methods on InputValue:</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="InputValue.Enable">
+<span class="sig-name descname"><span class="pre">Enable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#InputValue.Enable" title="Link to this definition"></a></dt>
+<dd><p>Returns an action that enables text editing on the input.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="InputValue.Disable">
+<span class="sig-name descname"><span class="pre">Disable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#InputValue.Disable" title="Link to this definition"></a></dt>
+<dd><p>Returns an action that disables text editing on the input.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="InputValue.Toggle">
+<span class="sig-name descname"><span class="pre">Toggle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#InputValue.Toggle" title="Link to this definition"></a></dt>
+<dd><p>Returns an action that toggles text editing on the input.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="creator-defined-screen-language-statements">
+<span id="creator-defined-sl"></span><h2>Creator-Defined Screen Language Statements<a class="headerlink" href="#creator-defined-screen-language-statements" title="Link to this heading"></a></h2>
+<p>Ren'Py supports defining custom screen language statements. Creator-defined screen
+language statements are wrappers for the screen language <a class="reference internal" href="screens.html#sl-use"><span class="std std-ref">use statement</span></a>.
+Positional arguments remain positional arguments, properties become keyword
+arguments, and if the statement takes a block, so does the use statement. For
+example, the custom screen language statement:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">titledwindow</span> <span class="s2">&quot;Test Window&quot;</span><span class="p">:</span>
+    <span class="n">icon</span> <span class="s2">&quot;icon.png&quot;</span>
+
+    <span class="k">text</span> <span class="s2">&quot;This is a test.&quot;</span>
+</pre></div>
+</div>
+<p>becomes:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="n">titledwindow</span><span class="p">(</span><span class="s2">&quot;Test Window&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;icon.png&quot;</span><span class="p">):</span>
+    <span class="k">text</span> <span class="s2">&quot;This is a test.&quot;</span>
+</pre></div>
+</div>
+<p>Creator-defined screen language statements must be registered in a <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">early</span></code> block.
+What's more, the filename containing the creator-defined statement must be be loaded earlier
+than any file that uses it. Since Ren'Py loads files in the Unicode sort order of their paths,
+it generally makes sense to prefix the name of any file registering a user-defined
+statement with 01, or some other small number.</p>
+<p>Creator-defined screen language statements are registered with the renpy.register_sl_statement
+function:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="renpy.register_sl_displayable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">register_sl_displayable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">displayable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nchildren</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_keywords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_properties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.register_sl_displayable" title="Link to this definition"></a></dt>
+<dd><p>Registers a screen language statement that creates a displayable.</p>
+<dl>
+<dt><cite>name</cite></dt><dd><p>The name of the screen language statement, a string containing a Ren'Py
+keyword. This keyword is used to introduce the new statement.</p>
+</dd>
+<dt><cite>displayable</cite></dt><dd><p>This is a function that, when called, returns a displayable
+object. All position arguments, properties, and style properties
+are passed as arguments to this function. Other keyword arguments
+are also given to this function, a described below.</p>
+<p>This must return a Displayable. If it returns multiple displayables,
+the _main attribute of the outermost displayable should be set to
+the &quot;main&quot; displayable - the one that children should be added
+to.</p>
+</dd>
+<dt><cite>style</cite></dt><dd><p>The base name of the style of this displayable. If the style property
+is not given, this will have the style prefix added to it. The
+computed style is passed to the <cite>displayable</cite> function as the
+<code class="docutils literal notranslate"><span class="pre">style</span></code> keyword argument.</p>
+</dd>
+<dt><cite>nchildren</cite></dt><dd><p>The number of children of this displayable. One of:</p>
+<dl class="simple">
+<dt>0</dt><dd><p>The displayable takes no children.</p>
+</dd>
+<dt>1</dt><dd><p>The displayable takes 1 child. If more than one child is given,
+the children are placed in a Fixed.</p>
+</dd>
+<dt>&quot;many&quot;</dt><dd><p>The displayable takes more than one child.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>unique</cite></dt><dd><p>This should be set to true if the function returns a  displayable with
+no other references to it.</p>
+</dd>
+</dl>
+<p>The following arguments should be passed in using keyword arguments:</p>
+<dl class="simple">
+<dt><cite>replaces</cite></dt><dd><p>If true, and the displayable replaces a prior displayable, that displayable
+is passed as a parameter to the new displayable.</p>
+</dd>
+<dt><cite>default_keywords</cite></dt><dd><p>The default set of keyword arguments to supply to the displayable.</p>
+</dd>
+<dt><cite>default_properties</cite></dt><dd><p>If true, the ui and position properties are added by default.</p>
+</dd>
+</dl>
+<p>Returns an object that can have positional arguments and properties
+added to it by calling the following methods. Each of these methods
+returns the object it is called on, allowing methods to be chained
+together.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="renpy.register_sl_displayable.add_positional">
+<span class="sig-name descname"><span class="pre">add_positional</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.register_sl_displayable.add_positional" title="Link to this definition"></a></dt>
+<dd><p>Adds a positional argument with <cite>name</cite></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="renpy.register_sl_displayable.add_property">
+<span class="sig-name descname"><span class="pre">add_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.register_sl_displayable.add_property" title="Link to this definition"></a></dt>
+<dd><p>Adds a property with <cite>name</cite>. Properties are passed as keyword
+arguments.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="renpy.register_sl_displayable.add_style_property">
+<span class="sig-name descname"><span class="pre">add_style_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.register_sl_displayable.add_style_property" title="Link to this definition"></a></dt>
+<dd><p>Adds a family of properties, ending with <cite>name</cite> and prefixed with
+the various style property prefixes. For example, if called with
+(&quot;size&quot;), this will define size, idle_size, hover_size, etc.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="renpy.register_sl_displayable.add_prefix_style_property">
+<span class="sig-name descname"><span class="pre">add_prefix_style_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.register_sl_displayable.add_prefix_style_property" title="Link to this definition"></a></dt>
+<dd><p>Adds a family of properties with names consisting of <cite>prefix</cite>,
+a style property prefix, and <cite>name</cite>. For example, if called
+with a prefix of <cite>text_</cite> and a name of <cite>size</cite>, this will
+create text_size, text_idle_size, text_hover_size, etc.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="renpy.register_sl_displayable.add_property_group">
+<span class="sig-name descname"><span class="pre">add_property_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.register_sl_displayable.add_property_group" title="Link to this definition"></a></dt>
+<dd><p>Adds a group of properties, prefixed with <cite>prefix</cite>. <cite>Group</cite> may
+be one of the strings:</p>
+<ul class="simple">
+<li><p>&quot;bar&quot;</p></li>
+<li><p>&quot;box&quot;</p></li>
+<li><p>&quot;button&quot;</p></li>
+<li><p>&quot;position&quot;</p></li>
+<li><p>&quot;text&quot;</p></li>
+<li><p>&quot;window&quot;</p></li>
+</ul>
+<p>These correspond to groups of <a class="reference internal" href="style_properties.html"><span class="doc">Style Properties</span></a>. Group can
+also be &quot;ui&quot;, in which case it adds the <a class="reference internal" href="screens.html#common-properties"><span class="std std-ref">common ui properties</span></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="renpy.register_sl_displayable.copy_properties">
+<span class="sig-name descname"><span class="pre">copy_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.register_sl_displayable.copy_properties" title="Link to this definition"></a></dt>
+<dd><p>Adds all styles and positional/keyword arguments that can be passed to the <cite>name</cite> screen statement.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="renpy.register_sl_statement">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">register_sl_statement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">children</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'many'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.register_sl_statement" title="Link to this definition"></a></dt>
+<dd><p>Registers a custom screen language statement with Ren'Py.</p>
+<dl class="simple">
+<dt><cite>name</cite></dt><dd><p>This must be a word. It's the name of the custom screen language
+statement.</p>
+</dd>
+<dt><cite>children</cite></dt><dd><p>The number of children this custom statement takes. This should
+be 0, 1, or &quot;many&quot;, which means zero or more.</p>
+</dd>
+<dt><cite>screen</cite></dt><dd><p>The screen to use. If not given, defaults to <cite>name</cite>.</p>
+</dd>
+</dl>
+<p>Returns an object that can have positional arguments and properties
+added to it. This object has the same .add_ methods as the objects
+returned by <a class="reference internal" href="#renpy.register_sl_displayable" title="renpy.register_sl_displayable"><code class="xref py py-class docutils literal notranslate"><span class="pre">renpy.register_sl_displayable</span></code></a>.</p>
+</dd></dl>
+
+<p>As an example of a creator-defined screen language statement, here's an
+implementation of the <code class="docutils literal notranslate"><span class="pre">titledwindow</span></code> statement given above. First, the
+statement must be registered in a <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">early</span></code> block in a file that is loaded
+early – a name like 01custom.rpy will often load soon enough. The registration
+call looks like:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">python</span> <span class="n">early</span><span class="p">:</span>
+    <span class="n">renpy</span><span class="o">.</span><span class="n">register_sl_statement</span><span class="p">(</span><span class="s2">&quot;titledwindow&quot;</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">add_positional</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add_property</span><span class="p">(</span><span class="s2">&quot;icon&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add_property</span><span class="p">(</span><span class="s2">&quot;pos&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then, we define a screen that implements the custom statement. This screen can be defined in
+any file. One such screen is:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">screen</span> <span class="n">titledwindow</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="na">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
+    <span class="k">drag</span><span class="p">:</span>
+        <span class="na">pos</span> <span class="na">pos</span>
+
+        <span class="k">frame</span><span class="p">:</span>
+            <span class="na">background</span> <span class="s2">&quot;#00000080&quot;</span>
+
+            <span class="k">has</span> <span class="k">vbox</span>
+
+            <span class="k">hbox</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">icon</span> <span class="k">is</span> <span class="k">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">add</span> <span class="n">icon</span>
+
+                <span class="k">text</span> <span class="n">title</span>
+
+            <span class="k">null</span> <span class="na">height</span> <span class="mi">15</span>
+
+            <span class="k">transclude</span>
+</pre></div>
+</div>
+<p>When are used large property groups like a <cite>add_property_group</cite>, it makes sense to use
+the **properties syntax with a properties keyword in some place. For example:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">screen</span> <span class="n">titledwindow</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="na">properties</span><span class="p">):</span>
+    <span class="k">frame</span><span class="p">:</span>
+        <span class="c1"># When background not in properties it will use it as default value.</span>
+        <span class="na">background</span> <span class="s2">&quot;#00000080&quot;</span>
+
+        <span class="na">properties</span> <span class="na">properties</span>
+
+        <span class="k">has</span> <span class="k">vbox</span>
+
+        <span class="k">hbox</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">icon</span> <span class="k">is</span> <span class="k">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">add</span> <span class="n">icon</span>
+
+            <span class="k">text</span> <span class="n">title</span>
+
+        <span class="k">null</span> <span class="na">height</span> <span class="mi">15</span>
+
+        <span class="k">transclude</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gui_advanced.html" class="btn btn-neutral float-left" title="Advanced GUI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cdd.html" class="btn btn-neutral float-right" title="Creator-Defined Displayables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

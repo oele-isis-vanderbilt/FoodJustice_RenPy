@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c659a740" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/movie.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f79c3bd2"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Voice" href="voice.html" />
+    <link rel="prev" title="Audio Filters" href="audio_filters.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Logo" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.3.2 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Ren'Py Language</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Language Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Labels &amp; Control Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Dialogue and Narration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Displaying Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">In-Game Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Audio Filters</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Movie</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fullscreen-movies">Fullscreen Movies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#movie-displayables-and-movie-sprites">Movie Displayables and Movie Sprites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-functions">Python Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.movie_cutscene"><code class="docutils literal notranslate"><span class="pre">renpy.movie_cutscene()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Movie"><code class="docutils literal notranslate"><span class="pre">Movie</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Voice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Text, Displayables, Transforms, and Transitions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Transitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Customizing Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Functionality</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Ren'Py game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python and Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Advanced GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building, Updating, and Other Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">End-User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Library and Tool Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Engine Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Translating Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Changes, License, and Credits</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Movie</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/movie.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="movie">
+<span id="id1"></span><h1>Movie<a class="headerlink" href="#movie" title="Link to this heading"></a></h1>
+<p>Ren'Py is capable of using FFmpeg (included) to play movies using the
+video codecs:</p>
+<ul class="simple">
+<li><p>AV1</p></li>
+<li><p>VP9</p></li>
+<li><p>VP8</p></li>
+<li><p>Theora</p></li>
+<li><p>MPEG-4 part 2 (including Xvid and DivX)</p></li>
+<li><p>MPEG-2</p></li>
+<li><p>MPEG-1</p></li>
+</ul>
+<p>and the following audio codecs:</p>
+<ul class="simple">
+<li><p>Opus</p></li>
+<li><p>Vorbis</p></li>
+<li><p>MP3</p></li>
+<li><p>MP2</p></li>
+<li><p>FLAC</p></li>
+<li><p>PCM</p></li>
+</ul>
+<p>inside the following container formats:</p>
+<ul class="simple">
+<li><p>WebM</p></li>
+<li><p>Matroska</p></li>
+<li><p>Ogg</p></li>
+<li><p>AVI</p></li>
+<li><p>Various kinds of MPEG stream.</p></li>
+</ul>
+<p>(Note that using some of these formats may require patent licenses.
+When in doubt, and especially for commercial games, we recommend using
+AV1, VP9, VP8, or Theora; Opus or Vorbis; and WebM, Matroska, or Ogg.)</p>
+<p>Movies can be displayed fullscreen or in a displayable. Fullscreen movies
+are more efficient. YUV444 movies are not hardware accelerated, use YUV420
+or YUV422 instead.</p>
+<p>Ren'Py's movie decoder does not support movies with alpha channels, but the
+<cite>side_mask</cite> parameter of the <a class="reference internal" href="#Movie" title="Movie"><code class="xref py py-func docutils literal notranslate"><span class="pre">Movie()</span></code></a> displayable can be used for that
+purpose. Here is an example of how to use ffmpeg to create a webm file with
+a side-by-side mask from a mov file with an alpha channel.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">ffmpeg</span> <span class="o">-</span><span class="n">i</span> <span class="n">original</span><span class="o">.</span><span class="n">mov</span> <span class="o">-</span><span class="nb">filter</span><span class="p">:</span><span class="n">v</span> <span class="n">alphaextract</span> <span class="na">mask</span><span class="o">.</span><span class="n">mov</span>
+<span class="n">ffmpeg</span> <span class="o">-</span><span class="n">i</span> <span class="n">original</span><span class="o">.</span><span class="n">mov</span> <span class="o">-</span><span class="n">i</span> <span class="na">mask</span><span class="o">.</span><span class="n">mov</span> <span class="o">-</span><span class="n">filter_complex</span> <span class="s2">&quot;hstack&quot;</span> <span class="o">-</span><span class="n">codec</span><span class="p">:</span><span class="n">v</span> <span class="n">vp8</span> <span class="o">-</span><span class="n">crf</span> <span class="mi">10</span> <span class="n">output</span><span class="o">.</span><span class="n">webm</span>
+</pre></div>
+</div>
+<p>Movies are supported on the Web platform, but the list of supported codecs differs
+from browser to browser. For cross-browser compatibility (especially to support Safari),
+the most efficient combination is H.264 with MP3 (or AAC) in a MP4 file. However, Ren'Py
+does not support H.264 decoding (or AAC), so this combination can only work on the
+Web platform.</p>
+<section id="fullscreen-movies">
+<h2>Fullscreen Movies<a class="headerlink" href="#fullscreen-movies" title="Link to this heading"></a></h2>
+<p>The easiest and most efficient way to display a movie fullscreen is
+to use the <a class="reference internal" href="#renpy.movie_cutscene" title="renpy.movie_cutscene"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.movie_cutscene()</span></code></a> function. This function displays the
+movie fullscreen until it either ends, or the player clicks to dismiss
+it.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">$</span> <span class="n">renpy</span><span class="o">.</span><span class="n">movie_cutscene</span><span class="p">(</span><span class="s2">&quot;On_Your_Mark.webm&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="movie-displayables-and-movie-sprites">
+<h2>Movie Displayables and Movie Sprites<a class="headerlink" href="#movie-displayables-and-movie-sprites" title="Link to this heading"></a></h2>
+<p>The Movie displayable can be used to display a movie anywhere Ren'Py can
+show a displayable. For example, a movie can be displayed as the background
+of a menu screen, or as a background.</p>
+<p>The Movie displayable can also be used to define a movie sprite, which is
+a sprite that is backed by two movies. The primary movie provides the
+color of the sprite. A second movie, the mask movie, provides the alpha
+channel, with white being full opacity and black being full transparency.</p>
+<p>Movies played by the Movie displayable loop automatically.</p>
+<p>Here's an example of defining a movie sprite:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">eileen</span> <span class="n">movie</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">(</span><span class="k">play</span><span class="o">=</span><span class="s2">&quot;eileen_movie.webm&quot;</span><span class="p">,</span> <span class="n">side_mask</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The movie sprite can be shown using the show statement, which automatically starts the
+movie playing. It will be automatically stopped when the displayable is hidden.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">eileen</span> <span class="n">movie</span>
+
+<span class="n">e</span> <span class="s2">&quot;I&#39;m feeling quite animated today.&quot;</span>
+
+<span class="k">hide</span> <span class="n">eileen</span>
+
+<span class="n">e</span> <span class="s2">&quot;But there&#39;s no point on wasting energy when I&#39;m not around.&quot;</span>
+</pre></div>
+</div>
+<p>A Movie displayable can also be used as part of a screen, provided it is created
+during the init phase (for example, as part of an image statement.)</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">main_menu</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">(</span><span class="k">play</span><span class="o">=</span><span class="s2">&quot;main_menu.ogv&quot;</span><span class="p">)</span>
+
+<span class="k">screen</span> <span class="n">main_menu</span><span class="p">:</span>
+    <span class="k">add</span> <span class="s2">&quot;main_menu&quot;</span>
+    <span class="k">textbutton</span> <span class="s2">&quot;Start&quot;</span> <span class="na">action</span> <span class="n">Start</span><span class="p">()</span> <span class="na">xalign</span> <span class="mf">0.5</span> <span class="na">yalign</span> <span class="mf">0.5</span>
+</pre></div>
+</div>
+<p>Multiple movie displayables or sprites can be displayed on the screen at once,
+subject to system performance, and provided all share the same framerate. The
+behavior of Ren'Py when displaying movies with different framerates is
+undefined, but will likely include a significant amount of frame drop.</p>
+</section>
+<section id="python-functions">
+<h2>Python Functions<a class="headerlink" href="#python-functions" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.movie_cutscene">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">movie_cutscene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loops</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_music</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.movie_cutscene" title="Link to this definition"></a></dt>
+<dd><p>This displays a movie cutscene for the specified number of
+seconds. The user can click to interrupt the cutscene.
+Overlays and Underlays are disabled for the duration of the cutscene.</p>
+<dl class="simple">
+<dt><cite>filename</cite></dt><dd><p>The name of a file containing any movie playable by Ren'Py.</p>
+</dd>
+<dt><cite>delay</cite></dt><dd><p>The number of seconds to wait before ending the cutscene.
+Normally the length of the movie, in seconds. If None, then the
+delay is computed from the number of loops (that is, loops + 1) *
+the length of the movie. If -1, we wait until the user clicks.</p>
+</dd>
+<dt><cite>loops</cite></dt><dd><p>The number of extra loops to show, -1 to loop forever.</p>
+</dd>
+</dl>
+<p>Returns True if the movie was terminated by the user, or False if the
+given delay elapsed uninterrupted.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Movie">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Movie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'movie'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">play</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">play_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">properties</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Movie" title="Link to this definition"></a></dt>
+<dd><p>This is a displayable that shows the current movie.</p>
+<dl>
+<dt><cite>size</cite></dt><dd><p>This should be specified as either a tuple giving the width and
+height of the movie, or None to automatically adjust to the size
+of the playing movie. (If None, the displayable will be (0, 0)
+when the movie is not playing.)</p>
+</dd>
+<dt><cite>channel</cite></dt><dd><p>The audio channel associated with this movie. When a movie file
+is played on that channel, it will be displayed in this Movie
+displayable. If this is left at the default of &quot;movie&quot;, and <cite>play</cite>
+is provided, a channel name is automatically selected, using
+<a class="reference internal" href="config.html#var-config.single_movie_channel"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.single_movie_channel</span></code></a> and <a class="reference internal" href="config.html#var-config.auto_movie_channel"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.auto_movie_channel</span></code></a>.</p>
+</dd>
+<dt><cite>play</cite></dt><dd><p>If given, this should be the path to a movie file, or a list
+of paths to movie files. These movie
+files will be automatically played on <cite>channel</cite> when the Movie is
+shown, and automatically stopped when the movie is hidden.</p>
+</dd>
+<dt><cite>side_mask</cite></dt><dd><p>If true, this tells Ren'Py to use the side-by-side mask mode for
+the Movie. In this case, the movie is divided in half. The left
+half is used for color information, while the right half is used
+for alpha information. The width of the displayable is half the
+width of the movie file.</p>
+<p>Where possible, <cite>side_mask</cite> should be used over <cite>mask</cite> as it has
+no chance of frames going out of sync.</p>
+</dd>
+<dt><cite>mask</cite></dt><dd><p>If given, this should be the path to a movie file, or a list of paths
+to movie files, that are used as
+the alpha channel of this displayable. The movie file will be
+automatically played on <cite>movie_channel</cite> when the Movie is shown,
+and automatically stopped when the movie is hidden.</p>
+</dd>
+<dt><cite>mask_channel</cite></dt><dd><p>The channel the alpha mask video is played on. If not given,
+defaults to <cite>channel</cite>_mask. (For example, if <cite>channel</cite> is &quot;sprite&quot;,
+<cite>mask_channel</cite> defaults to &quot;sprite_mask&quot;.)</p>
+</dd>
+<dt><cite>start_image</cite></dt><dd><p>An image that is displayed when playback has started, but the
+first frame has not yet been decoded.</p>
+</dd>
+<dt><cite>image</cite></dt><dd><p>An image that is displayed when <cite>play</cite> has been given, but the
+file it refers to does not exist. (For example, this can be used
+to create a slimmed-down mobile version that does not use movie
+sprites.) Users can also choose to fall back to this image as a
+preference if video is too taxing for their system. The image will
+also be used if the video plays, and then the movie ends, unless
+<cite>group</cite> is given.</p>
+</dd>
+<dt><cite>play_callback</cite></dt><dd><p>If not None, a function that's used to start the movies playing.
+(This may do things like queue a transition between sprites, if
+desired.) It's called with the following arguments:</p>
+<dl class="simple">
+<dt><cite>old</cite></dt><dd><p>The old Movie object, or None if the movie is not playing.</p>
+</dd>
+<dt><cite>new</cite></dt><dd><p>The new Movie object.</p>
+</dd>
+</dl>
+<p>A movie object has the <cite>play</cite> parameter available as <code class="docutils literal notranslate"><span class="pre">_play</span></code>,
+while the <code class="docutils literal notranslate"><span class="pre">channel</span></code>, <code class="docutils literal notranslate"><span class="pre">loop</span></code>, <code class="docutils literal notranslate"><span class="pre">mask</span></code>, and <code class="docutils literal notranslate"><span class="pre">mask_channel</span></code> fields
+correspond to the given parameters.</p>
+<p>Generally, this will want to use <a class="reference internal" href="audio.html#renpy.music.play" title="renpy.music.play"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.music.play()</span></code></a> to start
+the movie playing on the given channel, with synchro_start=True.
+A minimal implementation is:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">play_callback</span><span class="p">(</span><span class="k">old</span><span class="p">,</span> <span class="k">new</span><span class="p">):</span>
+
+    <span class="n">renpy</span><span class="o">.</span><span class="k">music</span><span class="o">.</span><span class="k">play</span><span class="p">(</span><span class="k">new</span><span class="o">.</span><span class="n">_play</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="k">new</span><span class="o">.</span><span class="n">channel</span><span class="p">,</span> <span class="n">loop</span><span class="o">=</span><span class="k">new</span><span class="o">.</span><span class="n">loop</span><span class="p">,</span> <span class="n">synchro_start</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="k">new</span><span class="o">.</span><span class="na">mask</span><span class="p">:</span>
+        <span class="n">renpy</span><span class="o">.</span><span class="k">music</span><span class="o">.</span><span class="k">play</span><span class="p">(</span><span class="k">new</span><span class="o">.</span><span class="na">mask</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="k">new</span><span class="o">.</span><span class="n">mask_channel</span><span class="p">,</span> <span class="n">loop</span><span class="o">=</span><span class="k">new</span><span class="o">.</span><span class="n">loop</span><span class="p">,</span> <span class="n">synchro_start</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt><cite>loop</cite></dt><dd><p>If False, the movie will not loop. If <cite>image</cite> is defined, the image
+will be displayed when the movie ends. Otherwise, the displayable will
+become transparent.</p>
+</dd>
+<dt><cite>group</cite></dt><dd><p>If not None, this should be a string. If given, and if the movie has not
+yet started playing, and another movie in the same group has played in
+the previous frame, the last frame from that movie will be used for
+this movie. This can prevent flashes of transparency when switching
+between two movies.</p>
+</dd>
+<dt><cite>keep_last_frame</cite></dt><dd><p>If true, and the movie has ended, the last frame will be displayed,
+rather than the movie being hidden. This only works if <cite>loop</cite> is
+false. (This behavior will also occur if <cite>group</cite> is set.)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="audio_filters.html" class="btn btn-neutral float-left" title="Audio Filters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="voice.html" class="btn btn-neutral float-right" title="Voice" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>
