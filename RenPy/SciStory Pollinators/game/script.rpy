@@ -7,14 +7,16 @@
 define e = Character("Elliot")
 
 #character that talks via chat bubbles
-define e2 = Character(None, image="elliot standing", kind=bubble)
+define e2 = Character(None, image="elliot smile", kind=bubble)
 
 #tells renpy where to find the movie - for playing in background of character
 image bees = Movie(play="movies/beevr_snippet.webm")
 
-#adds python module to use date and time tracking for logs
 init python:
     import datetime
+
+default source_list = ["Source name"]
+default note_list = ["Note description"]
 
 # The game starts here.
 
@@ -27,11 +29,28 @@ label start:
     scene empty lot
     with None
 
+    menu:
+        "I live in a city":
+            $ startplace = "empty lot city"
+            jump begin
+
+        "I live in a rural town":
+            $ startplace = "empty lot rural"
+            jump begin
+
+        "I live in the suburbs":
+            $ startplace = "empty lot suburb" 
+            jump begin
+
+    label begin:
+    scene expression "[startplace]"
+    with dissolve
+
     # This shows a character sprite. A placeholder is used, but you can
     # replace it by adding a file named "eileen happy.png" to the images
     # directory.
 
-    show elliot standing
+    show elliot smile
     with dissolve
 
     # These display lines of dialogue.
@@ -59,7 +78,9 @@ label start:
 
     label intro:
 
-        e "Anyway, I'm glad you're here, new kid."
+        e "Anyway, I'm glad you're here, new kid." 
+
+        show screen notebook
 
 # player can enter their name and it removes whitespace from entry
         $ name = renpy.input("What's your name?")
@@ -89,25 +110,39 @@ label start:
 
 # Basic student input & cleaning it (remove punctuation and make it all lowercase)
         $ idea = renpy.input("What do you notice while watching the bees?")
+
+#Adds what they noticed to the notebook lists       
+        $ note_list.append(idea)
+        $ source_list.append("BeeVR video")
+        $ renpy.notify("Note Taken!")
+
         $ idea = idea.strip(".?!")
         $ idea = idea.lower()
-        $ timestamp = datetime.datetime.now()
         $ renpy.log(timestamp)
         $ renpy.log("Observation: " + idea + "\n")
 
         e "Oh, you noticed that [idea]? Awesome!"
+        
         hide bees
+
+#Test notebook functionality
+        show screen notebook
 
 # this block calls the ECA via the IU server
         $ eca = renpy.input("Ask something to the GEMSTEP ECA.")
-        $ timestamp = datetime.datetime.now()
         $ renpy.log(timestamp)
         $ renpy.log("Player input to ECA: " + eca + "\n")
         $ ecaresponse = renpy.fetch("https://bl-educ-engage.educ.indiana.edu/GetECAResponse", method="POST", json={"ECAType": "GEMSTEP_Observing", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
         e "[ecaresponse]"
 
+        $ note_list.append(ecaresponse)
+        $ source_list.append("Elliot")
+        $ renpy.notify("Note Taken!")
+
 # Embedding links to websites into dialogue
         e "Why don't you check in with your friends and {a=https://docs.google.com/document/d/1QTPBkV9XNADFgnluxhJ1SjGkWyEDG8Kug7edNoMDLHQ/edit?usp=sharing}see what evidence they've found?{/a}"
+
+        show screen notebook
 
 #grants achievements and tells the player it was granted
         $ achievement.grant("Helping Elliot")

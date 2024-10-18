@@ -1270,7 +1270,7 @@ screen notify(message):
     frame at notify_appear:
         text "[message!tq]"
 
-    timer 3.25 action Hide('notify')
+    timer 5.25 action Hide('notify')
 
 
 transform notify_appear:
@@ -1610,3 +1610,55 @@ style slider_vbox:
 style slider_slider:
     variant "small"
     xsize 900
+
+#### Custom screens for SciStory ################################
+##  
+##  Attempts to create screens to support learning!
+##  Notebook to collect evidence, idea board, etc.
+##
+#################################################################
+
+#### Notebook ######
+
+style note_text:
+    anchor (0.0,0.0)
+    pos (0.325,0.12)
+
+style notebook_title:
+    anchor (0.5,0.0)
+    pos (0.5,0.05)
+
+style close_button:
+    anchor (0.5, 0.0)
+    pos (0.68,0.03)
+
+screen notebook():
+    modal True
+    add "images/notebook page.png"
+    zorder 50
+
+    imagebutton:
+        idle "images/close button.png"
+        hover "images/close button dark.png"
+        action Hide(screen="notebook") 
+        style "close_button" 
+    
+    text "Evidence Notebook" style "notebook_title"
+
+    vbox style "note_text":
+        xmaximum 760
+
+        for s, n in zip(source_list,note_list):
+            text "Source: " + s id "source":
+                size 15
+            text n id "note":
+                size 22
+            text "\n":
+                size 8
+
+#### Travel ####
+
+screen learningbuttons():
+
+    imagebutton:
+        idle "images/travel.png"

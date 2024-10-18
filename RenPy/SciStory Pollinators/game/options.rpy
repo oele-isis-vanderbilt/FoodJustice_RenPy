@@ -18,7 +18,7 @@ define config.name = _("SciStory Pollinators")
 ## Determines if the title given above is shown on the main menu screen. Set
 ## this to False to hide the title.
 
-define gui.show_name = True
+define gui.show_name = False
 
 
 ## The version of the game.
@@ -30,6 +30,13 @@ define config.version = "1.0"
 ## triple-quotes, and leave a blank line between paragraphs.
 
 define gui.about = _p("""An educational game about pollinators, food justice, and how the choices we make for our food systems impact people, animals, and the world we live in.
+
+Art for this story was created using Canva's AI Magic Media tool, with some human editing of generated images.
+
+This story was built and written by Dr. Megan Humburg.
+
+This work is funded by the National Science Foundation as a part of the EngageAI Institute (DRL-2112635). 
+Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
 """)
 
 
