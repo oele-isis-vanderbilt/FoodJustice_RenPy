@@ -11,3 +11,10 @@ $ ./renpy.sh launcher web_build PATH/TO/REPO/SciStory\ Pollinators/ --destinatio
 $ cd SciSctoryPollinators1.0-dists
 $ http-server
 ```
+
+
+For your terminal, use the following command to launch the GUI version.
+
+```{sh}
+$ PATH/TO/RENPY_SDK/renpy.sh SciStory\ Pollinators/
+```
