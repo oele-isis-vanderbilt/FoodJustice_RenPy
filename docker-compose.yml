@@ -1,0 +1,10 @@
+services:
+  food-justice-service:
+    build: .
+    image: foodjustice:latest
+    container_name: "foodjustice-container"
+    ports:
+      - "8080:8080"
+    environment:
+      - GAME_ROOT_DIR=/code/SciStoryPollinators
+    
