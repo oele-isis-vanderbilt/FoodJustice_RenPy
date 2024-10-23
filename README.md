@@ -7,7 +7,7 @@ From your terminal. Use the following command to launch for the web.
 
 ```{sh}
 $ cd PATH_TO_RENPY_SDK
-$ ./renpy.sh launcher web_build PATH/TO/REPO/SciStory\ Pollinators/ --destination SciStoryPollinators1.0-dists
+$ ./renpy.sh launcher web_build PATH/TO/REPO/SciStoryPollinators/ --destination SciStoryPollinators1.0-dists
 $ cd SciSctoryPollinators1.0-dists
 $ http-server
 ```
@@ -16,5 +16,5 @@ $ http-server
 For your terminal, use the following command to launch the GUI version.
 
 ```{sh}
-$ PATH/TO/RENPY_SDK/renpy.sh SciStory\ Pollinators/
+$ PATH/TO/RENPY_SDK/renpy.sh SciStoryPollinators/
 ```
