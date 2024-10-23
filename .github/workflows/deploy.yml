@@ -30,8 +30,8 @@ jobs:
             ssh-keygen -y -f private_key > /dev/null
             ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST} '
               echo "Pulling latest changes from GitHub"
-              rm -rf FoodJusticDeployment
-              mkdir FoodJusticDeployment && cd FoodJusticDeployment
+              rm -rf FoodJusticeDeployment
+              mkdir FoodJusticeDeployment && cd FoodJusticeDeployment
               git clone git@github.com:oele-isis-vanderbilt/FoodJustice_RenPy.git
               cd FoodJustice_RenPy
               git checkout -b fastapi-server origin/fastapi-server
