@@ -95,6 +95,10 @@ style frame:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#say
 
+style pencil_button:
+    anchor (0.5, 0.5)
+    pos (0.18, 0.94)
+
 screen say(who, what):
     style_prefix "say"
 
@@ -109,7 +113,13 @@ screen say(who, what):
                 text who id "who"
 
         text what id "what"
-
+  
+    imagebutton:
+        tooltip "Write this down"
+        idle "images/takenote.png"
+        hover "images/takenotedark.png"
+        action Function(note, what, who)
+        style "pencil_button"
 
     ## If there's a side image, display it above the text. Do not display on the
     ## phone variant - there's no room.
@@ -1270,7 +1280,7 @@ screen notify(message):
     frame at notify_appear:
         text "[message!tq]"
 
-    timer 3.25 action Hide('notify')
+    timer 5.25 action Hide('notify')
 
 
 transform notify_appear:
@@ -1610,3 +1620,269 @@ style slider_vbox:
 style slider_slider:
     variant "small"
     xsize 900
+
+#### Custom screens for SciStory ################################
+##  
+##  Attempts to create screens to support learning!
+##  Notebook to collect evidence, idea board, etc.
+##
+#################################################################
+
+#### Notebook ######
+
+style note_text:
+    anchor (0.0,0.0)
+    pos (0.325,0.12)
+
+style notebook_title:
+    anchor (0.5,0.0)
+    pos (0.5,0.05)
+
+style close_button:
+    anchor (0.5, 0.0)
+    pos (0.68,0.03)
+
+screen notebook():
+    modal True
+    add "images/notebook page.png"
+    zorder 92
+
+    imagebutton:
+        idle "images/close button.png"
+        hover "images/close button dark.png"
+        action Hide(screen="notebook") 
+        style "close_button" 
+    
+    text "Evidence Notebook" style "notebook_title"
+
+    viewport:
+        anchor (0.0,0.0)
+        pos (0.325,0.12)
+        xsize 740
+        ysize 800
+        scrollbars "vertical"
+        mousewheel True
+        vscrollbar_unscrollable "hide"
+        has vbox style "note_text"
+
+        for s, n in zip(source_list,note_list):
+            text "Source: " + s id "source":
+                size 15
+            text n id "note":
+                size 22
+            hbox:
+                imagebutton:
+                    tooltip "Delete note"
+                    idle "images/delete note.png"
+                    hover "images/delete note dark.png"
+                    action Confirm("Are you sure you want to delete this note?", yes=Function(deletenote, n))
+                imagebutton:
+                    tooltip "Edit note"
+                    idle "images/edit pencil.png"
+                    hover "images/edit pencil dark.png"
+                    action Show("note_edit", None, n, s)
+            text "\n":
+                size 8
+        
+        imagebutton:
+            tooltip "New note"
+            idle "images/takenote.png"
+            hover "images/takenotedark.png"
+            action Show("noteentry")
+            xpos -40
+
+    $ tooltip = GetTooltip()
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+
+            frame:
+                xalign 0.5
+                text tooltip:
+                    size 15
+
+style note_input:
+    size 25
+
+##### Shows key bindings for typing in the input box ######
+
+screen keyboard_shortcuts():
+    modal False
+    zorder 94
+    add "images/keyboard shortcuts.png":
+        pos (0.0, 0.15)
+
+###### Custom notetaking for player to add notes to notebook #####
+
+screen noteentry():
+    modal True
+    zorder 93
+    add "images/note background.png"
+
+    if customnotecount == 0:
+        default customnote = "Type ideas here"
+        default customsource = "What's the source?"
+        add "images/keyboard shortcuts.png":
+            pos (0.0, 0.15)
+    else:
+        default customnote = ""
+        default customsource = ""
+        imagebutton:
+            pos (0.30, 0.17)
+            tooltip "Show/Hide Shortcuts"
+            idle "images/note clip.png"
+            hover "images/note clip.png"
+            action If(renpy.get_screen("keyboard_shortcuts"), true=Hide("keyboard_shortcuts"), false=Show("keyboard_shortcuts"))
+
+    default noteinput = ScreenVariableInputValue("customnote")
+    default sourceinput = ScreenVariableInputValue("customsource")
+
+    viewport:
+        anchor (0.0,0.0)
+        pos (0.325,0.20)
+        xsize 720
+        ysize 400
+        scrollbars "vertical"
+        vscrollbar_unscrollable "hide"
+        mousewheel True
+        has vbox
+        text "My note: ":
+            size 20
+        button:
+            action noteinput.Toggle()
+            xsize 720
+            input: 
+                value noteinput
+                copypaste True
+                multiline True
+                style "note_input"
+        text "\n" + "I learned this from: ":
+            size 20
+        button:
+            action sourceinput.Toggle()
+            xsize 720
+            input: 
+                value sourceinput
+                copypaste True
+                multiline True
+                style "note_input"
+    
+    textbutton "Save Note":
+        pos (0.35, 0.6)
+        action (Function(note, customnote, customsource), IncrementVariable("customnotecount"), Hide("noteentry"), Hide("keyboard_shortcuts"))
+    textbutton "Cancel":
+        pos (0.55, 0.6)
+        action (Hide("noteentry"), Hide("keyboard_shortcuts"))  
+
+    $ tooltip = GetTooltip()
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+
+            frame:
+                xalign 0.5
+                text tooltip:
+                    size 15  
+
+##### Note editing for existing notes in the player's notebook ######
+
+screen note_edit(n, s):
+    default newnote = n
+    default newsource = s
+
+    modal True
+    zorder 93
+    add "images/note background.png"
+
+    imagebutton:
+        pos (0.30, 0.17)
+        tooltip "Show/Hide Shortcuts"
+        idle "images/note clip.png"
+        hover "images/note clip.png"
+        action If(renpy.get_screen("keyboard_shortcuts"), true=Hide("keyboard_shortcuts"), false=Show("keyboard_shortcuts"))
+
+    default noteinput = ScreenVariableInputValue("newnote")
+    default sourceinput = ScreenVariableInputValue("newsource")
+
+    viewport:
+        anchor (0.0,0.0)
+        pos (0.325,0.20)
+        xsize 720
+        ysize 400
+        scrollbars "vertical"
+        vscrollbar_unscrollable "hide"
+        mousewheel True
+        has vbox
+        text "Note: ":
+            size 20
+        button:
+            action noteinput.Toggle()
+            xsize 720
+            input: 
+                value noteinput
+                copypaste True
+                multiline True
+                style "note_input"
+        text "\n" + "Source: ":
+            size 20
+        button:
+            action sourceinput.Toggle()
+            xsize 720
+            input: 
+                value sourceinput
+                copypaste True
+                multiline True
+                style "note_input"
+    
+    textbutton "Save Revised Note":
+        pos (0.35, 0.6)
+        action (Function(editnote, n, newnote, newsource), Hide("note_edit"), Hide("keyboard_shortcuts"))
+    textbutton "Cancel":
+        pos (0.55, 0.6)
+        action (Hide("note_edit"), Hide("keyboard_shortcuts"))  
+
+    $ tooltip = GetTooltip()
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+
+            frame:
+                xalign 0.5
+                text tooltip:
+                    size 15  
+
+
+#### Travel and Notebook access - Always available buttons ####
+style side_button:
+    anchor (0.5, 0.5)
+    pos (0.95, 0.10)
+
+screen learningbuttons():
+    zorder 90
+
+    vbox style "side_button":
+        imagebutton:
+            tooltip "Travel"
+            idle "images/travel.png"
+            hover "images/traveldark.png"
+            action Jump("travelmenu")
+
+        text "\n":
+                size 8
+
+        imagebutton:
+            tooltip "Notebook"
+            idle "images/notebook.png"
+            hover "images/notebook dark.png"
+            action Show("notebook")
+
+    $ tooltip = GetTooltip()
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+
+            frame:
+                xalign 0.5
+                text tooltip:
+                    size 15
+
