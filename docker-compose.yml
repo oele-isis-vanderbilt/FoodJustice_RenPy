@@ -7,4 +7,8 @@ services:
       - "8080:8080"
     environment:
       - GAME_ROOT_DIR=/code/SciStoryPollinators
-    
+    volumes:
+      - SciStoryPollinators:/code/gamelogs
+  
+volumes:
+  SciStoryPollinators:

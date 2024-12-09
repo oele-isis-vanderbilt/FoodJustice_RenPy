@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - http-based-logging
 
   release: # Trigger the workflow on release events
     types: [published]
@@ -33,6 +34,7 @@ jobs:
               mkdir FoodJusticeDeployment && cd FoodJusticeDeployment
               git clone git@github.com:oele-isis-vanderbilt/FoodJustice_RenPy.git
               cd FoodJustice_RenPy
+              git checkout -b http-based-logging origin/http-based-logging
               sudo chmod 666 /var/run/docker.sock
               docker compose -p food-justice-deployment build food-justice-service
               docker compose -p food-justice-deployment down food-justice-service
