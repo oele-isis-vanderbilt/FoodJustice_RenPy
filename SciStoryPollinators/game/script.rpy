@@ -85,7 +85,11 @@ init python:
 
     def log_http(user: str, payload: Optional[Dict[str, Any]], action: str, view: str = None):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        base_url = os.environ.get("SERVICE_URL", "http://localhost:8000")
+        if os.getenv("SERVICE_URL") is None:
+            base_url = ""
+        else:
+            base_url = os.getenv("SERVICE_URL")
+            
         log_entry = {
             "action": action,
             "timestamp": timestamp,
