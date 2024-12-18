@@ -20,19 +20,21 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(body)
-		}).then(async (response) => {
-			if (response.ok) {
-				console.log(base || '/');
+		})
+			.then(async (response) => {
+				if (response.ok) {
+					console.log(base || '/');
+					pending = false;
+					goto(base || '/');
+				} else {
+					pending = false;
+					alert('Login failed\n' + (await response.text()));
+				}
+			})
+			.catch((error) => {
 				pending = false;
-				goto(base || '/');
-			} else {
-				pending = false;
-				alert('Login failed\n' + (await response.text()));
-			}
-		}).catch((error) => {
-			pending = false;
-			alert('Login failed\n' + error);
-		});
+				alert('Login failed\n' + error);
+			});
 	}
 </script>
 
@@ -41,7 +43,13 @@
 		<h3 class="text-xl font-medium text-gray-900 dark:text-white">Sign In</h3>
 		<Label class="space-y-2">
 			<span>Username</span>
-			<Input type="text" name="username" placeholder="username" required class="bg-gray-100 dark:bg-gray-700 dark:text"/>
+			<Input
+				type="text"
+				name="username"
+				placeholder="username"
+				required
+				class="dark:text bg-gray-100 dark:bg-gray-700"
+			/>
 		</Label>
 		<Label class="space-y-2">
 			<span>Your password</span>
