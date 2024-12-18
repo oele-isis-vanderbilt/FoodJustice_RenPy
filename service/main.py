@@ -1,10 +1,13 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
-from typing import Optional, Dict, Any
-from pydantic import BaseModel
+from fastapi.responses import FileResponse, HTMLResponse, Response
 from logging import getLogger, StreamHandler, Formatter, DEBUG
 from logging.handlers import RotatingFileHandler
+from .models import LogEntry, SyncFlowRuntimeSettings, AppSettings
+from .syncflow_route import router as syncflow_router
+from .admin_route import router as admin_router
+from pathlib import Path
 
 logger = getLogger("foodjustice-renpy-service")
 logger.setLevel(DEBUG)
@@ -23,15 +26,11 @@ logger.propagate = False
 logger.info("Service started")
 
 
-class LogEntry(BaseModel):
-    action: str
-    timestamp: str
-    user: str
-    view: Optional[str] = None
-    payload: Optional[Dict[str, Any]] = None
-
-
 app = FastAPI()
+app.include_router(syncflow_router, prefix="/syncflow")
+app.include_router(admin_router, prefix="/admin")
+settings = AppSettings()
+app.state.syncflow_runtime_settings = SyncFlowRuntimeSettings(enabled=True)
 
 
 @app.post("/player-log")
@@ -43,8 +42,40 @@ async def log_entry(entry: LogEntry):
     return {"status": "ok"}
 
 
-if os.getenv("GAME_ROOT_DIR") is not None:
-    print(f"GAME_ROOT_DIR: {os.getenv('GAME_ROOT_DIR')}")
+if settings.game_root_dir is not None:
     app.mount(
-        "/", StaticFiles(directory=os.getenv("GAME_ROOT_DIR"), html=True), name="game"
+        "/", StaticFiles(directory=settings.game_root_dir, html=True), name="game"
     )
+
+if settings.admin_build_dir is not None:
+
+    @app.middleware("http")
+    async def serve_static_file(request: Request, call_next):
+        if not request.url.path.startswith("/control"):
+            return await call_next(request)
+
+        path = request.url.path.replace("/control", "")
+
+        if path == "/" or path == "":
+            path = "index.html"
+            with open(f"{settings.admin_build_dir}/index.html") as f:
+                return HTMLResponse(f.read())
+        else:
+            if path.startswith("/"):
+                path = path[1:]
+
+            pth: Path = Path(settings.admin_build_dir) / path
+
+            if (
+                pth.exists()
+                or (
+                    pth := Path(settings.admin_build_dir)
+                    / f"{path.replace('/', '')}.html"
+                ).exists()
+            ):
+                return FileResponse(pth)
+            else:
+                return Response(
+                    status_code=404,
+                    content=f"{request.url.path} not found",
+                )

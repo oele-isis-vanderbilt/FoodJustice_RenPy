@@ -206,3 +206,4 @@ pyrightconfig.json
 *dist*
 *.zip
 gamelogs
+.env*

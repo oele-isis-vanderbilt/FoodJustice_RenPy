@@ -23,8 +23,13 @@ init python:
     import datetime
     from typing import Dict, Any, Optional
     import os
+    # Todo: Remove this later
+    if renpy.emscripten:
+        import emscripten
+        result = emscripten.run_script("window.syncFlowPublisher.startPublishing('umesh', 'umesh')")
+        
 
-#### Custom functions to control adding, editing, and deleting notes, as well as logging to txt file #####
+    #### Custom functions to control adding, editing, and deleting notes, as well as logging to txt file #####
     current_label = None
     current_user = "Unknown"
 
@@ -75,7 +80,7 @@ init python:
             current_user,
             action="PlayerEditedNote",
             view=current_label,
-            payload={"note": newnote, "source": newsource, note_id: noteindex}
+            payload={"note": newnote, "source": newsource, "note_id": noteindex}
         )
 
     def log(action):
@@ -116,6 +121,7 @@ label start:
     # add a file (named either "bg room.png" or "bg room.jpg") to the
     # images directory to show it.
 
+    
     scene empty lot
     with None
 
