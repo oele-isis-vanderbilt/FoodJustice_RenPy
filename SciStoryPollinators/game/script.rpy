@@ -50,25 +50,55 @@ default corachat = 0
 
 init python:
     import datetime
+    from typing import Dict, Any, Optional
+    import os
+    # Todo: Remove this later
+    if renpy.emscripten:
+        import emscripten
+        result = emscripten.run_script("window.syncFlowPublisher.startPublishing('umesh', 'umesh')")
+        
 
-#### Custom functions to control adding, editing, and deleting notes, as well as logging to txt file #####
+    #### Custom functions to control adding, editing, and deleting notes, as well as logging to txt file #####
+    current_label = None
+    current_user = "Unknown"
 
-    def note(info,speaker,tag):
+    def label_callback(label, interaction):
+        if not label.startswith("_"):
+            log_http(current_user, action=f"PlayerJumpedLabel({label}|{interaction})", view=label, payload=None)
+            global current_label
+            current_label = label
+
+    config.label_callbacks = [label_callback]
+
+    def note(info, speaker, tag):
         note_list.append(info)
         source_list.append(speaker)
         tag_list.append(tag)
         renpy.notify("Note Taken!")
         noteindex = note_list.index(info)
         notenumber = str(noteindex)
-        log("Took note #" + notenumber + ": " + info + " (Source: " + speaker + ")")
+        # log("Took note #" + notenumber + ": " + info + " (Source: " + speaker + ")")
+        log_http(current_user, action="PlayerTookNote", view=current_label, payload={
+            "note": info,
+            "source": speaker,
+            "note_id": noteindex
+        })
 
     def deletenote(notetext):
         noteindex = note_list.index(notetext)
+        notetext = note_list[noteindex]
+        note_source = source_list[noteindex]
         del note_list[noteindex]
         del source_list[noteindex]
         del tag_list[noteindex]
         renpy.notify("Note Deleted")
-        log("Player deleted note: " + notetext)
+        # log("Player deleted note: " + notetext)
+        log_http(
+            current_user,
+            action="PlayerDeletedNote",
+            view=current_label,
+            payload={"note": notetext, "source": note_source, "note_id": noteindex}
+        )
     
     def editnote(oldtext, newnote, newsource, newtag):
         noteindex = note_list.index(oldtext)
@@ -77,12 +107,42 @@ init python:
         tag_list[noteindex] = newtag
         renpy.notify("Note Revised")
         notenumber = str(noteindex)
-        log("Player edited note #" + notenumber + " to say: " + newnote + " (Source: " + newsource + ")")
+        # log("Player edited note #" + notenumber + " to say: " + newnote + " (Source: " + newsource + ")")
+        log_http(
+            current_user,
+            action="PlayerEditedNote",
+            view=current_label,
+            payload={"note": newnote, "source": newsource, "note_id": noteindex}
+        )
 
     def log(action):
         timestamp = datetime.datetime.now()
         renpy.log(timestamp)
         renpy.log(action + "\n")
+
+    def log_http(user: str, payload: Optional[Dict[str, Any]], action: str, view: str = None):
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        if os.getenv("SERVICE_URL") is None:
+            base_url = ""
+        else:
+            base_url = os.getenv("SERVICE_URL")
+            
+        log_entry = {
+            "action": action,
+            "timestamp": timestamp,
+            "user": user,
+            "view": view,
+            "payload": payload
+        }
+        try:
+            renpy.fetch(
+                f"{base_url}/player-log",
+                method="POST",
+                json=log_entry,
+            )
+        except Exception as e:
+            renpy.log(timestamp)
+            renpy.log(f"{action}\n")
 
 # The game starts here.
 
@@ -249,7 +309,9 @@ label start:
 # player can enter their name and it removes whitespace from entry
     $ name = renpy.input("What's your name?")
     $ name = name.strip()
-    $ log("Player name: " + name)
+    # $ log("Player name: " + name)
+    $ current_user = name
+    $ log_http(current_user, action="PlayerIntroduced", view="intro", payload=None)
 
     e "Great to meet you [name]! I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our lot to those parking guys."
 
@@ -328,8 +390,6 @@ label start:
         $ renpy.notify("Achievement Unlocked: A New Friend")
 
         jump emptylot
-
-    jump travelmenu
 
     label foodlab:
         scene science lab
@@ -447,8 +507,10 @@ label start:
 
     label ca_eval_riley:
         $ eca = renpy.input("My persuasive ideas for the Mayor:")
-        $ log("Player input to ECA: " + eca)
+        # $ log("Player input to ECA: " + eca)
+        $ log_http(current_user, action="PlayerInputToECA", view="riley", payload={"utterance": eca, "eca_type": "FoodJustice_RileyEvaluation", "context": "", "confidence_threshold": 0.3})
         $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "FoodJustice_RileyEvaluation", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
+        $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
         r "[ecaresponse]"
         r "Are there other ideas you want to run by me?"
 
@@ -702,8 +764,10 @@ label start:
     label gardenquestions:
         w "Anything you'd like to know about the bees in our garden?"
         $ eca = renpy.input("I'm wondering...")
-        $ log("Player input to ECA: " + eca)
+        # $ log("Player input to ECA: " + eca)
+        $ log_http(current_user, action="PlayerInputToECA", view="garden", payload={"utterance": eca, "eca_type": "Knowledge_Pollination", "context": "", "confidence_threshold": 0.3})
         $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "Knowledge_Pollination", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
+        $ log_http(current_user, action="PlayerECAResponse", view="garden", payload={"eca_response": ecaresponse})
         w "[ecaresponse]"
 
         jump wes_choices
@@ -828,8 +892,9 @@ label start:
     label ideasharing:
         e "What are your ideas?"
         $ eca = renpy.input("My ideas for the mayor:")
-        $ log("Player input to ECA: " + eca)
+        $ log_http(current_user, action="PlayerInputToECA", view="emptylot", payload={"utterance": eca, "eca_type": "FoodJustice_RileyEvaluation", "context": "", "confidence_threshold": 0.3})
         $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "FoodJustice_RileyEvaluation", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
+        $ log_http(current_user, action="PlayerECAResponse", view="emptylot", payload={"eca_response": ecaresponse})
         e "[ecaresponse]"
         jump ideasharing
 

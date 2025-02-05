@@ -4,6 +4,8 @@ WORKDIR /game
 
 COPY SciStoryPollinators /game/SciStoryPollinators
 
+ENV SERVICE_URL=""
+
 RUN apt-get update && apt-get install -y libgl1-mesa-glx && \
     wget https://www.renpy.org/dl/8.3.2/renpy-8.3.2-sdk.tar.bz2 && \
     tar -xf renpy-8.3.2-sdk.tar.bz2 && \
