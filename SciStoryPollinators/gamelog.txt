@@ -472,3 +472,637 @@ Let me show you some honeybees in action.
 
 --- Tue Oct 22 17:11:11 2024
 
+--- Mon Dec  9 12:18:59 2024
+
+--- Mon Dec  9 12:47:21 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Player chose: Yeah, just moved here!
+
+Elliot
+Welcome to the neighborhood! I live right down the street.
+
+Elliot
+Anyway, I'm glad you're here, new kid.
+
+2024-12-09 12:47:46.364658
+Player name: Umesh
+
+Elliot
+Great to meet you Umesh! I'm Elliot. I'm hoping you'll help me convince Mayor
+Watson not to sell our lot to those parking guys.
+
+Elliot
+Let me show you some honeybees in action.
+
+--- Mon Dec  9 13:03:07 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+Where would you like to go?
+
+Choice: The food lab
+Choice: The community garden
+Choice: Nevermind, stay here
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Player chose: Maybe.
+
+Elliot
+I dunno where you moved from, but we don't do the whole 'mysterious stranger'
+thing here.
+
+Elliot
+Anyway, I'm glad you're here, new kid.
+
+2024-12-09 13:11:35.196229
+Player name: Umesh
+
+2024-12-09 13:11:35
+Player name: Umesh
+
+Elliot
+Great to meet you Umesh! I'm Elliot. I'm hoping you'll help me convince Mayor
+Watson not to sell our lot to those parking guys.
+
+Elliot
+Let me show you some honeybees in action.
+
+Elliot
+Cool, right?
+
+Elliot
+I think watching how the bees explore the garden can help us find some
+evidence to convince the Mayor.
+
+--- Mon Dec  9 13:13:34 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Player chose: Yeah, just moved here!
+
+Elliot
+Welcome to the neighborhood! I live right down the street.
+
+Elliot
+Anyway, I'm glad you're here, new kid.
+
+2024-12-09 13:13:51.252670
+Player name: Umesh
+
+Elliot
+Great to meet you Umesh! I'm Elliot. I'm hoping you'll help me convince Mayor
+Watson not to sell our lot to those parking guys.
+
+Elliot
+Let me show you some honeybees in action.
+
+2024-12-09 13:14:17.221135
+Took note #0: Cool, right? (Source: Elliot)
+
+Where would you like to go?
+
+Choice: The food lab
+Choice: The community garden
+Choice: Nevermind, stay here
+
+Player chose: Nevermind, stay here
+
+Where would you like to go?
+
+Choice: The food lab
+Choice: The community garden
+Choice: Nevermind, stay here
+
+Player chose: The food lab
+
+Amara
+Hi! I'm Amara - I'm the lead scientist here at the food lab.
+
+Amara
+What would you like to know about food science?
+
+Choice: Why does genetic diversity in plants matter?
+Choice: What do you know about soil quality?
+Choice: What do gardens do for the environment?
+
+Player chose: Why does genetic diversity in plants matter?
+
+2024-12-09 13:14:49.255314
+Took note #0: Oh, plant genetics are so interesting. Like people, plants have
+DNA that carries information about the different kinds of traits they have.
+(Source: Amara)
+
+Amara
+Oh, plant genetics are so interesting. Like people, plants have DNA that
+carries information about the different kinds of traits they have.
+
+Amara
+What would you like to know about food science?
+
+Choice: Why does genetic diversity in plants matter?
+Choice: What do you know about soil quality?
+Choice: What do gardens do for the environment?
+
+Player chose: What do gardens do for the environment?
+
+Where would you like to go?
+
+Choice: The empty lot
+Choice: The community garden
+Choice: Nevermind, stay here
+
+Player chose: The community garden
+
+Wes
+Hey there kiddo! Welcome to the Westport Community Garden.
+
+Wes
+Anything you'd like to know about the bees in our garden?
+
+2024-12-09 13:15:32.669315
+Player input to ECA: What is the log entry here.
+
+Wes
+I'm not sure, but this might be helpful. An ecosystem is a community of living
+organisms and nonliving parts of their environment such as air, water, soil,
+and sunlight. All the parts of the ecosystem interact together and impact each
+other.
+
+Wes
+Anything you'd like to know about the bees in our garden?
+
+Where would you like to go?
+
+Choice: The empty lot
+Choice: The food lab
+Choice: Nevermind, stay here
+
+Player chose: The empty lot
+
+Elliot
+Welcome back! Did you find some interesting evidence for us to use in our
+pitch to the mayor?
+
+Elliot
+What are your ideas?
+
+--- Mon Dec  9 13:23:23 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+--- Mon Dec  9 13:23:51 2024
+
+2024-12-09 13:28:23
+Player Jumped
+
+--- Mon Dec  9 13:28:23 2024
+
+2024-12-09 13:28:23
+Player Jumped
+
+2024-12-09 13:28:24
+Player Jumped
+
+2024-12-09 13:28:24
+Player Jumped
+
+2024-12-09 13:28:35
+Player Jumped
+
+--- Mon Dec  9 13:28:35 2024
+
+2024-12-09 13:28:35
+Player Jumped
+
+2024-12-09 13:28:36
+Player Jumped
+
+2024-12-09 13:28:36
+Player Jumped
+
+--- Mon Dec  9 13:29:10 2024
+
+--- Mon Dec  9 13:29:24 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Player chose: Yeah, just moved here!
+
+Elliot
+Welcome to the neighborhood! I live right down the street.
+
+Where would you like to go?
+
+Choice: The food lab
+Choice: The community garden
+Choice: Nevermind, stay here
+
+Player chose: The food lab
+
+--- Mon Dec  9 13:34:49 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Player chose: Yeah, just moved here!
+
+Elliot
+Welcome to the neighborhood! I live right down the street.
+
+Elliot
+Anyway, I'm glad you're here, new kid.
+
+2024-12-09 13:35:15.868642
+Player name: Umesh
+
+Elliot
+Great to meet you Umesh! I'm Elliot. I'm hoping you'll help me convince Mayor
+Watson not to sell our lot to those parking guys.
+
+2024-12-09 13:35:38.120745
+Took note #0: Let me show you some honeybees in action. (Source: Elliot)
+
+--- Mon Dec  9 13:43:29 2024
+
+--- Mon Dec  9 13:44:40 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Player chose: Yeah, just moved here!
+
+Elliot
+Welcome to the neighborhood! I live right down the street.
+
+Elliot
+Anyway, I'm glad you're here, new kid.
+
+2024-12-09 13:46:12.663538
+Player name: Umesh
+
+Elliot
+Great to meet you Umesh! I'm Elliot. I'm hoping you'll help me convince Mayor
+Watson not to sell our lot to those parking guys.
+
+Elliot
+Let me show you some honeybees in action.
+
+Elliot
+Cool, right?
+
+--- Mon Dec  9 13:47:28 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+--- Mon Dec  9 14:43:53 2024
+
+--- Mon Dec  9 14:44:08 2024
+
+2024-12-09 14:44:09
+PlayerJumpedLabel(main_menu_screen|True)
+
+--- Mon Dec  9 14:49:12 2024
+
+2024-12-09 14:49:12
+PlayerJumpedLabel(main_menu_screen|True)
+
+2024-12-09 14:49:19
+PlayerJumpedLabel(start|True)
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+2024-12-09 14:49:23
+PlayerJumpedLabel(begin|True)
+
+2024-12-09 14:49:26
+PlayerTookNote
+
+--- Mon Dec  9 14:50:16 2024
+
+2024-12-09 14:50:17
+PlayerJumpedLabel(main_menu_screen|True)
+
+2024-12-09 14:51:16
+PlayerJumpedLabel(start|True)
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+--- Mon Dec  9 14:51:38 2024
+
+2024-12-09 14:51:38
+PlayerJumpedLabel(main_menu_screen|True)
+
+2024-12-09 14:51:43
+PlayerJumpedLabel(start|True)
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+2024-12-09 14:51:48
+PlayerJumpedLabel(begin|True)
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Player chose: Yeah, just moved here!
+
+2024-12-09 14:52:16
+PlayerJumpedLabel(friendly|True)
+
+Elliot
+Welcome to the neighborhood! I live right down the street.
+
+2024-12-09 14:52:19
+PlayerJumpedLabel(intro|True)
+
+Elliot
+Anyway, I'm glad you're here, new kid.
+
+2024-12-09 14:52:23.753489
+Player name: Umesh
+
+--- Mon Dec  9 14:56:10 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Player chose: Yeah, just moved here!
+
+Elliot
+Welcome to the neighborhood! I live right down the street.
+
+Elliot
+Anyway, I'm glad you're here, new kid.
+
+2024-12-09 14:58:34.638251
+Player name: sdfsa
+
+Elliot
+Great to meet you sdfsa! I'm Elliot. I'm hoping you'll help me convince Mayor
+Watson not to sell our lot to those parking guys.
+
+Elliot
+Let me show you some honeybees in action.
+
+Elliot
+Cool, right?
+
+Elliot
+I think watching how the bees explore the garden can help us find some
+evidence to convince the Mayor.
+
+Elliot
+You're right - pollution can hurt bees by making it harder for them to smell
+flowers and find nectar. They can get lost and confused if the air is thick
+with smog.
+
+Elliot
+Why don't you check in with your friends and {a=https://docs.google.com/docume
+nt/d/1QTPBkV9XNADFgnluxhJ1SjGkWyEDG8Kug7edNoMDLHQ/edit?usp=sharing}see what
+evidence they've found?{/a}
+
+Thanks for chatting!
+
+--- Mon Dec  9 15:01:25 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+--- Mon Dec  9 15:02:38 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Player chose: Yeah, just moved here!
+
+--- Mon Dec  9 15:03:48 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Player chose: Yeah, just moved here!
+
+--- Mon Dec  9 15:07:24 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Player chose: Yeah, just moved here!
+
+Elliot
+Welcome to the neighborhood! I live right down the street.
+
+--- Mon Dec  9 15:10:10 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Player chose: Yeah, just moved here!
+
+Elliot
+Welcome to the neighborhood! I live right down the street.
+
+Elliot
+Anyway, I'm glad you're here, new kid.
+
+2024-12-09 15:20:06.723614
+Player name: Umesh
+
+Elliot
+Great to meet you Umesh! I'm Elliot. I'm hoping you'll help me convince Mayor
+Watson not to sell our lot to those parking guys.
+
+Elliot
+Let me show you some honeybees in action.
+
+2024-12-09 15:22:01
+PlayerWatchedVideo
+
+Elliot
+Cool, right?
+
+Elliot
+I think watching how the bees explore the garden can help us find some
+evidence to convince the Mayor.
+
+Elliot
+If you're not sure, let's try BeeVR again! Keep an eye on the bees and
+flowers, and see if you can figure out what they need.
+
+Elliot
+Why don't you check in with your friends and {a=https://docs.google.com/docume
+nt/d/1QTPBkV9XNADFgnluxhJ1SjGkWyEDG8Kug7edNoMDLHQ/edit?usp=sharing}see what
+evidence they've found?{/a}
+
+--- Mon Dec  9 15:23:19 2024
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Player chose: I live in a city
+
+Elliot
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Player chose: Yeah, just moved here!
+
+Elliot
+Welcome to the neighborhood! I live right down the street.
+
+Elliot
+Anyway, I'm glad you're here, new kid.
+
+2024-12-09 15:25:12.405723
+Player name: Umesh
+
+Elliot
+Great to meet you Umesh! I'm Elliot. I'm hoping you'll help me convince Mayor
+Watson not to sell our lot to those parking guys.
+
+Elliot
+Let me show you some honeybees in action.
+
+Elliot
+Cool, right?
+
+Elliot
+I think watching how the bees explore the garden can help us find some
+evidence to convince the Mayor.
+
