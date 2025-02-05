@@ -118,7 +118,7 @@ screen say(who, what):
         tooltip "Write this down"
         idle "images/takenote.png"
         hover "images/takenotedark.png"
-        action Function(note, what, who)
+        action Function(note, what, who, " ")
         style "pencil_button"
 
     ## If there's a side image, display it above the text. Do not display on the
@@ -1665,8 +1665,8 @@ screen notebook():
         vscrollbar_unscrollable "hide"
         has vbox style "note_text"
 
-        for s, n in zip(source_list,note_list):
-            text "Source: " + s id "source":
+        for s, n, t in zip(source_list,note_list,tag_list):
+            text "Source: " + s + "   Tag: " + t id "source_tag":
                 size 15
             text n id "note":
                 size 22
@@ -1680,7 +1680,7 @@ screen notebook():
                     tooltip "Edit note"
                     idle "images/edit pencil.png"
                     hover "images/edit pencil dark.png"
-                    action Show("note_edit", None, n, s)
+                    action Show("note_edit", None, n, s, t)
             text "\n":
                 size 8
         
@@ -1722,11 +1722,13 @@ screen noteentry():
     if customnotecount == 0:
         default customnote = "Type ideas here"
         default customsource = "What's the source?"
+        default customtag = "What is this evidence about?"
         add "images/keyboard shortcuts.png":
             pos (0.0, 0.15)
     else:
         default customnote = ""
         default customsource = ""
+        default customtag = ""
         imagebutton:
             pos (0.30, 0.17)
             tooltip "Show/Hide Shortcuts"
@@ -1736,6 +1738,7 @@ screen noteentry():
 
     default noteinput = ScreenVariableInputValue("customnote")
     default sourceinput = ScreenVariableInputValue("customsource")
+    default taginput = ScreenVariableInputValue("customtag")
 
     viewport:
         anchor (0.0,0.0)
@@ -1766,10 +1769,20 @@ screen noteentry():
                 copypaste True
                 multiline True
                 style "note_input"
+        text "\n" + "Tag/Label: ":
+            size 20
+        button:
+            action taginput.Toggle()
+            xsize 720
+            input: 
+                value taginput
+                copypaste True
+                multiline True
+                style "note_input"
     
     textbutton "Save Note":
         pos (0.35, 0.6)
-        action (Function(note, customnote, customsource), IncrementVariable("customnotecount"), Hide("noteentry"), Hide("keyboard_shortcuts"))
+        action (Function(note, customnote, customsource, customtag), IncrementVariable("customnotecount"), Hide("noteentry"), Hide("keyboard_shortcuts"))
     textbutton "Cancel":
         pos (0.55, 0.6)
         action (Hide("noteentry"), Hide("keyboard_shortcuts"))  
@@ -1786,9 +1799,10 @@ screen noteentry():
 
 ##### Note editing for existing notes in the player's notebook ######
 
-screen note_edit(n, s):
+screen note_edit(n, s, t):
     default newnote = n
     default newsource = s
+    default newtag = t
 
     modal True
     zorder 93
@@ -1803,6 +1817,7 @@ screen note_edit(n, s):
 
     default noteinput = ScreenVariableInputValue("newnote")
     default sourceinput = ScreenVariableInputValue("newsource")
+    default taginput = ScreenVariableInputValue("newtag")
 
     viewport:
         anchor (0.0,0.0)
@@ -1833,10 +1848,20 @@ screen note_edit(n, s):
                 copypaste True
                 multiline True
                 style "note_input"
+        text "\n" + "Tag: ":
+            size 20
+        button:
+            action taginput.Toggle()
+            xsize 720
+            input: 
+                value taginput
+                copypaste True
+                multiline True
+                style "note_input"
     
     textbutton "Save Revised Note":
         pos (0.35, 0.6)
-        action (Function(editnote, n, newnote, newsource), Hide("note_edit"), Hide("keyboard_shortcuts"))
+        action (Function(editnote, n, newnote, newsource, newtag), Hide("note_edit"), Hide("keyboard_shortcuts"))
     textbutton "Cancel":
         pos (0.55, 0.6)
         action (Hide("note_edit"), Hide("keyboard_shortcuts"))  
@@ -1851,11 +1876,49 @@ screen note_edit(n, s):
                 text tooltip:
                     size 15  
 
+#### Invisible Character Selection Screen ####
+
+screen characterselect3(c_left, c_center, c_right):
+    zorder 80
+
+    button:
+        xysize (600, 900)
+        anchor (0.5, 0.0)
+        pos (0.2, 0.25)
+        action Jump(c_left + "_chatting")
+
+    button:
+        xysize (600, 900)
+        anchor (0.5, 0.0)
+        pos (0.5, 0.25)
+        action Jump(c_center + "_chatting")
+
+    button:
+        xysize (600, 900)
+        anchor (0.5, 0.0)
+        pos (0.8, 0.25)
+        action Jump(c_right + "_chatting")
+
+screen characterselect2(c_left, c_right):
+    zorder 80
+
+    button:
+        xysize (600, 900)
+        anchor (0.5, 0.0)
+        pos (0.2, 0.25)
+        action Jump(c_left + "_chatting")
+
+    button:
+        xysize (600, 900)
+        anchor (0.5, 0.0)
+        pos (0.8, 0.25)
+        action Jump(c_right + "_chatting")
+
 
 #### Travel and Notebook access - Always available buttons ####
 style side_button:
     anchor (0.5, 0.5)
-    pos (0.95, 0.10)
+    pos (0.95, 0.15)
 
 screen learningbuttons():
     zorder 90
@@ -1875,6 +1938,15 @@ screen learningbuttons():
             idle "images/notebook.png"
             hover "images/notebook dark.png"
             action Show("notebook")
+
+        text "\n":
+                size 8
+
+        imagebutton:
+            tooltip "Ask Tulip"
+            idle "images/bee button.png"
+            hover "images/bee button dark.png"
+            action Call("tulipchat", from_current = True)
 
     $ tooltip = GetTooltip()
     if tooltip:
