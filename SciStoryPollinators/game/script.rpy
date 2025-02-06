@@ -3,16 +3,6 @@
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 
-# Code for switching out CA models in the narrative #
-# anywhere you see "ecaresponse" in the code, a CA is being called
-# Need to write a function to replace the link with a variable switch so that we only have to switch out one line rather than all the CA calls separately
-# flanT5-small: 
-# $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "FoodJustice_RileyEvaluation", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
-# Only have to change ECAType based on which CA character you want to call
-# Possible types:
-# FoodJustice_RileyEvaluation, FoodJustice_MayorEvaluation, Knowledge_FoodJustice, Knowledge_Pollination
-# GameHelp, GameHelp_Collaboration, GEMSTEP_Observing
-
 # regular character talking with dialogue at bottom of screen
 # use the letter to trigger their dialogue rather than typing out full name
 define e = Character("Elliot")
@@ -31,6 +21,8 @@ define t = Character("Tulip")
 default source_list = []
 default note_list = []
 default tag_list = []
+default visited_list = []
+default spoken_list = []
 default customnotecount = 0
 default emptylotvisit = False
 default foodlabvisit = False
@@ -47,6 +39,68 @@ default nadiachat = 0
 default victorchat = 0
 default alexchat = 0
 default corachat = 0
+default argument_attempts = 0
+default ca_context = ""
+
+### Code for switching out CA models for the AI agents. Uncomment the ca_link and ca_json for the model you want to use, comment others ###
+
+init python:
+    current_label = None
+    current_user = "Unknown"
+
+    def agent_setup(ca_type, eca, llama_ca, character):
+        note_count = len(note_list)
+        speakers = ", ".join(spoken_list)
+        visits = ", ".join(visited_list)
+
+        ## To use the Llama CA: ##
+        ca_link = "http://149.165.155.145:9999/foodjustice/" + llama_ca
+
+        if ca_type == "FoodJustice_RileyEvaluation" or "FoodJustice_MayorEvaluation":
+            ca_json = {"userID": current_user, "query": "argument evaluation", "gameState": {
+                                                    "contextType": ca_type,
+                                                    "numNotes": note_count,
+                                                    "customNotes": customnotecount,
+                                                    "numArgument": argument_attempts,
+                                                    "currentSpeaker": character
+                                                    "spokeToNPC": speakers,
+                                                    "visitLocation": visits,
+                                                    "currentLocation": currentlocation,
+                                                    "argument": eca}}
+        else:
+            ca_json = {"userID": current_user, "query": eca, "gameState": {
+                                                    "contextType": ca_type,
+                                                    "numNotes": note_count,
+                                                    "customNotes": customnotecount,
+                                                    "numArgument": argument_attempts,
+                                                    "currentSpeaker": character
+                                                    "spokeToNPC": speakers,
+                                                    "visitLocation": visits,
+                                                    "currentLocation": currentlocation,
+                                                    "argument": ""}}
+
+        ## To use the flanT5 CA: ##
+        # ca_context = "Player has taken " + note_count + " notes. Player has shared their argument " + argument attempts + " times. Player is currently in the " + currentlocation + ". Player has already spoken to " + speakers + " and has already visited " + visits
+        # ca_json = {"ECAType": ca_type, "Context": ca_context, "Utterance": eca, "ConfidenceThreshold": 0.3}
+
+        ## To use the NCSU flanT5 CA: ##
+        # ca_link = "https://tracedata-01.csc.ncsu.edu/GetECAResponse"
+
+        ## To use the IU flanT5 CA: ##
+        # ca_link = "https://bl-educ-engage.educ.indiana.edu/GetECAResponse"
+
+## Possibilities for ca_type: ##
+# FoodJustice_RileyEvaluation, FoodJustice_MayorEvaluation, Knowledge_FoodJustice, Knowledge_Pollination
+# GameHelp, GameHelp_Collaboration, GEMSTEP_Observing
+
+## Possbilities for llama_ca ##
+# eliot, garden, RileyEvaluation
+# only eliot and garden are implemented currently 
+
+#### Code to copy/paste to call CA model during narrative ####
+# ca_type, the utterance, the llama_ca type, and the character name who is talking #
+# $ agent_setup("RileyEvaluation", eca, "eliot", "Elliot")
+# $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text")
 
 init python:
     import datetime
@@ -59,8 +113,6 @@ init python:
         
 
     #### Custom functions to control adding, editing, and deleting notes, as well as logging to txt file #####
-    current_label = None
-    current_user = "Unknown"
 
     def label_callback(label, interaction):
         if not label.startswith("_"):
@@ -230,7 +282,7 @@ label start:
                 return
         #    "How do I get my group to listen to me?":
         #        t "Humans are a lot like bees - sometimes we're so busy buzzing around trying to be heard that we forget to listen!"
-        #        t "You could try saying, “Hey, what do you think of this note I found? I think you'd have some good ideas about it."
+        #        t "You could try saying, "Hey, what do you think of this note I found? I think you'd have some good ideas about it."
         #        t "If you show your group that you care about what they have to say, they are more likely to listen to you in return."
         #        hide tulip
         #        with dissolve
