@@ -28,7 +28,6 @@ default emptylotvisit = False
 default foodlabvisit = False
 default gardenvisit = False
 default hivesvisit = False
-default name = "Player"
 default rileychat = 0
 default amarachat = 0
 default elliotchat = 0
@@ -47,6 +46,7 @@ default ca_context = ""
 init python:
     current_label = None
     current_user = "Unknown"
+    TIMEOUT = 15
 
     def agent_setup(ca_type, eca, llama_ca, character):
         note_count = len(note_list)
@@ -56,13 +56,13 @@ init python:
         ## To use the Llama CA: ##
         ca_link = "http://149.165.155.145:9999/foodjustice/" + llama_ca
 
-        if ca_type == "FoodJustice_RileyEvaluation" or "FoodJustice_MayorEvaluation":
+        if (ca_type == "FoodJustice_RileyEvaluation") or (ca_type == "FoodJustice_MayorEvaluation"):
             ca_json = {"userID": current_user, "query": "argument evaluation", "gameState": {
                                                     "contextType": ca_type,
                                                     "numNotes": note_count,
                                                     "customNotes": customnotecount,
                                                     "numArgument": argument_attempts,
-                                                    "currentSpeaker": character
+                                                    "currentSpeaker": character,
                                                     "spokeToNPC": speakers,
                                                     "visitLocation": visits,
                                                     "currentLocation": currentlocation,
@@ -73,7 +73,7 @@ init python:
                                                     "numNotes": note_count,
                                                     "customNotes": customnotecount,
                                                     "numArgument": argument_attempts,
-                                                    "currentSpeaker": character
+                                                    "currentSpeaker": character,
                                                     "spokeToNPC": speakers,
                                                     "visitLocation": visits,
                                                     "currentLocation": currentlocation,
@@ -88,6 +88,8 @@ init python:
 
         ## To use the IU flanT5 CA: ##
         # ca_link = "https://bl-educ-engage.educ.indiana.edu/GetECAResponse"
+        return ca_link, ca_json
+
 
 ## Possibilities for ca_type: ##
 # FoodJustice_RileyEvaluation, FoodJustice_MayorEvaluation, Knowledge_FoodJustice, Knowledge_Pollination
@@ -95,7 +97,6 @@ init python:
 
 ## Possbilities for llama_ca ##
 # eliot, garden, RileyEvaluation
-# only eliot and garden are implemented currently 
 
 #### Code to copy/paste to call CA model during narrative ####
 # ca_type, the utterance, the llama_ca type, and the character name who is talking #
@@ -204,6 +205,8 @@ label start:
     scene flowers muted
     with fade
 
+    $ current_user = renpy.input("Please enter your player ID")
+
     narrator "You open your eyes and find yourself surrounded by bright flowers and sweet-smelling fresh air. How did you get here?"
     
     narrator "You hear a quiet buzzing noise getting closer..."
@@ -273,6 +276,7 @@ label start:
 
         t "Hi human friend! How's it going?"
 
+    label tulip_help_menu:
         menu:
             "I don't know what to do.":
                 t "I would start by talking to people around town to see what they have to say!"
@@ -289,17 +293,36 @@ label start:
         #        return
             "I'd like some help with persuading the mayor.":
                 t "I'd be happy to help! If you tell me what evidence you've found, I can give you some advice on improving your pursuasive writing."
+
                 $ eca = renpy.input("What should the Mayor do with the empty lot, and why?")
+
+                $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Tulip")
+                $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
                 $ log("Player input to ECA: " + eca)
-                $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "FoodJustice_RileyEvaluation", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
+                $ argument_attempts = argument_attempts + 1
+
+                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                
+                # $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "FoodJustice_RileyEvaluation", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
+                
                 t "[ecaresponse]"
+                $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
+               
                 t "Do you have other evidence to share?"
                 menu:
                     "I have more ideas to add.":
                         $ eca = renpy.input("What should the Mayor do with the empty lot, and why?")
+
+                        $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Tulip")
+                        $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
                         $ log("Player input to ECA: " + eca)
-                        $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "FoodJustice_RileyEvaluation", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
+                        $ argument_attempts = argument_attempts + 1
+
+                        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                        
                         t "[ecaresponse]"
+                        $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
+
                         t "You're doing great! Keep exploring and gathering notes, and your argument will get even stronger."
                         hide tulip
                         with dissolve
@@ -311,16 +334,31 @@ label start:
                         return
             "I need help with something else.":
                 $ eca = renpy.input("I love questions! What's your question?")
+
+                $ ca_link, ca_json = agent_setup("GameHelp", eca, "tulip", "Tulip")
+                $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
                 $ log("Player input to ECA: " + eca)
-                $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "GameHelp", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
+
+                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                
                 t "[ecaresponse]"
+                $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
+
+
                 t "Any more questions?"
                 menu:
                     "I have another question.":
                         $ eca = renpy.input("What's your question?")
+
+                        $ ca_link, ca_json = agent_setup("GameHelp_Collaboration", eca, "tulip", "Tulip")
+                        $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
                         $ log("Player input to ECA: " + eca)
-                        $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "GameHelp_Collaboration", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
+
+                        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                        
                         t "[ecaresponse]"
+                        $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
+
                         t "Let me know if you need anything else!"
                         hide tulip
                         with dissolve
@@ -358,14 +396,7 @@ label start:
 
     "Friendly Stranger" "Anyway, I'm glad you're here, new kid." 
 
-# player can enter their name and it removes whitespace from entry
-    $ name = renpy.input("What's your name?")
-    $ name = name.strip()
-    # $ log("Player name: " + name)
-    $ current_user = name
-    $ log_http(current_user, action="PlayerIntroduced", view="intro", payload=None)
-
-    e "Great to meet you [name]! I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our lot to those parking guys."
+    e "I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our lot to those parking guys."
 
     menu:
         "What parking guys?":
@@ -380,7 +411,7 @@ label start:
         show tulip at left
         with dissolve
 
-        t "Hey [name]! Sorry to interrupt - but this seems like a good time to show you your notebook!"
+        t "Hey! Sorry to interrupt - but this seems like a good time to show you your notebook!"
 
         t "See this pencil button at the bottom left? Any time you click that, you will make a note of what is being said."
 
@@ -436,6 +467,7 @@ label start:
         e "If you're interested, you should go talk with the Community Gardeners. Wes and Nadia, the head gardeners, are over at Westgate Community Garden on the other side of the city."
         e "It would be so great if we could have a garden like that in our neighborhood! They even have beehives!"
         e "You can also check out the science lab, where my friend Riley has been hanging out to learn about food science." 
+        $ spoken_list.append("Elliot")
 
     #grants achievements and tells the player it was granted
         $ achievement.grant("A New Friend")
@@ -447,6 +479,7 @@ label start:
         scene science lab
         with dissolve
         $ currentlocation = "foodlab"
+        $ visited_list.append("Food Lab")
 
         show amara smile at left
         with dissolve
@@ -479,14 +512,9 @@ label start:
             jump riley_2
 
     label riley_1:
-        r "Let me guess - you're [name]! Oh, it's so great to meet you."
+        r "Hi there! Elliot texted me and said he recruited you to help us gather notes for the Southport garden project."
         $ rileychat = 1
-
-        menu:
-            "That's me!":
-                jump rileyintro
-            "How do you know my name?":
-                r "Oh, Elliot texted me and said he recruited you to help us gather notes for the Southport garden project!"
+        jump rileyintro
         
     label rileyintro:
         r "We're so grateful for your help! I'm Riley. I'm a member of the Community Gardeners."
@@ -559,11 +587,17 @@ label start:
 
     label ca_eval_riley:
         $ eca = renpy.input("My persuasive ideas for the Mayor:")
-        # $ log("Player input to ECA: " + eca)
-        $ log_http(current_user, action="PlayerInputToECA", view="riley", payload={"utterance": eca, "eca_type": "FoodJustice_RileyEvaluation", "context": "", "confidence_threshold": 0.3})
-        $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "FoodJustice_RileyEvaluation", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
+
+        $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Riley")
+        $ log_http(current_user, action="PlayerInputToECA", view="riley", payload=ca_json)
+        $ log("Player input to ECA: " + eca)
+        $ argument_attempts = argument_attempts + 1
+
+        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                        
         $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
         r "[ecaresponse]"
+
         r "Are there other ideas you want to run by me?"
 
         menu:
@@ -580,6 +614,7 @@ label start:
 
     label riley_later:
         r "Awesome! If you want to run any ideas by me before you talk to the Mayor, I'd be happy to help you workshop your argument. See ya!"
+        $ spoken_list.append("Riley")
         jump foodlab
     
     label riley_2:
@@ -600,14 +635,24 @@ label start:
         menu:
             "Why is access to healthy food important?":
                 $ eca = "Why is access to healthy food important?"
+
+                $ ca_link, ca_json = agent_setup("Knowledge_FoodJustice", eca, "riley", "Riley")
+                $ log_http(current_user, action="PlayerInputToECA_fromtemplate", view="riley", payload=ca_json)
                 $ log("Player input to ECA (from template): " + eca)
-                $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "Knowledge_FoodJustice", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
+
+                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+
                 r "[ecaresponse]"
                 jump foodknowledge_loop
             "How can we help everyone have access to healthy food?":
                 $ eca = "How can we help everyone have access to healthy food?"
+
+                $ ca_link, ca_json = agent_setup("Knowledge_FoodJustice", eca, "riley", "Riley")
+                $ log_http(current_user, action="PlayerInputToECA_fromtemplate", view="riley", payload=ca_json)
                 $ log("Player input to ECA (from template): " + eca)
-                $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "Knowledge_FoodJustice", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
+
+                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+
                 r "[ecaresponse]"
                 jump foodknowledge_loop
             "I have another question.":
@@ -629,8 +674,13 @@ label start:
 
     label foodknowledge:
         $ eca = renpy.input("I'm wondering...")
+
+        $ ca_link, ca_json = agent_setup("Knowledge_FoodJustice", eca, "riley", "Riley")
+        $ log_http(current_user, action="PlayerInputToECA", view="riley", payload=ca_json)
         $ log("Player input to ECA: " + eca)
-        $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "Knowledge_FoodJustice", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
+
+        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+
         r "[ecaresponse]"
         jump foodknowledge_loop
     
@@ -709,10 +759,11 @@ label start:
 
     label amara_later:
         a "Oh okay! Well you're welcome to hang out, let me know if you get curious about anything!"
+        $ spoken_list.append("Amara")
         jump foodlab
 
     label amara_2:
-        a "Hey [name]! What are you up to?"
+        a "Hey there! What are you up to?"
         jump amara_revisit
 
     label amara_revisit:
@@ -763,6 +814,7 @@ label start:
         scene garden
         with dissolve
         $ currentlocation = "garden"
+        $ visited_list.append("Garden")
 
         show victor smile at left
         with dissolve
@@ -793,6 +845,8 @@ label start:
         with dissolve
 
         v "Hello."
+        $ victorchat = 1
+        $ spoken_list.append("Victor")
 
         jump garden
     
@@ -803,31 +857,144 @@ label start:
         show wes smile
         with dissolve
 
-        w "Hey there [name]! Welcome to the Westport Community Garden. Elliot called and said you might come by."
+        if weschat == 0:
+            jump wes_1
+        else:
+            jump wes_2
+
+    label wes_1:
+        w "Hey there! Welcome to the Westport Community Garden. Elliot called and said you might come by."
+        w "Feel free to explore the garden, and let me know if you are curious about anything."
+        $ weschat = 1
         jump wes_choices
 
     label wes_choices:
+        default wes_menu = set()
         menu:
-            "I have a question.":
+            set wes_menu
+            "Tell me about the food you're growing.":
+                jump growing_food
+            "Is the garden good for the neighborhood?":
+                jump garden_benefits
+            "How can we pollinate plants in the garden?":
+                jump wes_plants
+            "I have a different question.":
                 jump gardenquestions
             "See you later.":
-                jump garden
+                jump bye_wes
 
+    label growing_food:
+        w "We grow all sorts of food here! Tomatoes, watermelon, zucchini, cucumbers, bell peppers, strawberries - the list goes on!"
+        w "Some of the plants, like tomatoes, we grow in containers, and others like the melons need more space to spread out."
+        w "Growing your own food means the fruits and vegetables will be fresher and tastier, because they don't have to travel from other states or countries to get to your plate."
+        w "Homegrown fruits and vegetables are also good for our health because we can control the soil quality - and better soil means more nutritious produce."
+        $ AddToSet(wes_menu, "Tell me about the food you're growing.")
+        jump wes_choices
+
+    label garden_benefits:
+        w "Absolutely! Gardens are really useful for people and for the insects and animals that live around here."
+        w "The people in the neighborhood can grow fresh fruits and vegetables, and all the different plants and flowers provide food for pollinators."
+        $ AddToSet(wes_menu, "Is the garden good for the neighborhood?")
+        jump pollen_questions
+
+    label pollen_questions:
+        menu:
+            "What are pollinators?":
+                jump wes_pollen
+            "What types of pollinators exist?":
+                jump types_pollinators
+            "How do plants help pollinators?":
+                jump plants_help
+            "I have a different question.":
+                jump gardenquestions
+            "See you later.":
+                jump bye_wes
+
+    label wes_pollen:
+        w "Pollinators are creatures like bees and butterflies that transfer pollen from one flower to another."
+        w "This helps the plants reproduce and grow food - lots of plants can't grow their fruits without the help of pollinators!"
+        jump pollen_questions
+
+    label types_pollinators:
+        w "Honeybees are a particularly important pollinator for humans, because they pollinate a lot of the food crops that we grow."
+        w "Flies, butterflies, birds, and even bats also pollinate particular types of flowers in different regions of the world."
+        w "But insects are definitely the most common pollinators when it comes to the foods that humans eat."
+        jump pollen_questions
+
+    label plants_help:
+        w "Many pollinators, like honeybees, get food from plants by drinking flower nectar and eating pollen."
+        w "When the pollinators visit the plants, they move pollen from one part of the flower to another while they are gathering food."
+        w "It's a happy little accident - they're just trying to get food for themselves, but they end up helping us grow our food, too!"
+        w "Pollination helps the plants grow nice healthy fruits, which gives us yummy things to eat!"
+        jump pollen_questions
+
+    label wes_plants:
+        w "Plants can be pollinated by wind, by insects and animals, and by people. This happens when pollen from a plant's flower is moved from the male part of the flower to the female part of the flower."
+        w "People can pollinate some plants by using cotton swabs to help transfer pollen between flowers. This can be helpful when there aren't lots of pollinators around, but it takes a lot of time."
+        w "If we want to grow lots of food, it's better to have pollinators nearby who can help the plants grow healthy."
+        $ AddToSet(wes_menu, "How can we pollinate plants in the garden?")
+        jump wes_choices
+   
     label gardenquestions:
-        w "Anything you'd like to know about the bees in our garden?"
+        w "What would you like to know about the garden?"
         $ eca = renpy.input("I'm wondering...")
-        # $ log("Player input to ECA: " + eca)
-        $ log_http(current_user, action="PlayerInputToECA", view="garden", payload={"utterance": eca, "eca_type": "Knowledge_Pollination", "context": "", "confidence_threshold": 0.3})
-        $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "Knowledge_Pollination", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
-        $ log_http(current_user, action="PlayerECAResponse", view="garden", payload={"eca_response": ecaresponse})
+
+        $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Wes")
+        $ log_http(current_user, action="PlayerInputToECA", view="wes", payload=ca_json)
+        $ log("Player input to ECA: " + eca)
+
+        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+
+        $ log_http(current_user, action="PlayerECAResponse", view="wes", payload={"eca_response": ecaresponse})
+
         w "[ecaresponse]"
 
         jump wes_choices
+
+    label bye_wes:
+        w "It was great talking with you. Come by anytime, kid."
+        $ spoken_list.append("Wes")
+        jump garden
+
+    label wes_2:
+        w "Hope you're enjoying the garden, friend. Can I help with anything?"
+        jump wes_questions
+
+    label wes_questions:
+        menu:
+            "I have a question about the garden":
+                jump wes_ca
+            "I should go.":
+                jump bye_wes2
+
+    label bye_wes2:
+        w "No problem. Enjoy the garden!"
+        $ weschat = weschat + 1
+        jump garden
+
+    label wes_ca:
+        w "What would you like to know?"
+        $ eca = renpy.input("I'm wondering...")
+
+        $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Wes")
+        $ log_http(current_user, action="PlayerInputToECA", view="wes", payload=ca_json)
+        $ log("Player input to ECA: " + eca)
+
+        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+
+        $ log_http(current_user, action="PlayerECAResponse", view="wes", payload={"eca_response": ecaresponse})
+
+        w "[ecaresponse]"
+
+        w "Would you like to know anything else?"
+
+        jump wes_questions
 
     label bees_chatting:
         scene beehives
         with dissolve
         $ currentlocation = "beehives"
+        $ visited_list.append("Beehives")
 
         show nadia smile at left
         with dissolve
@@ -857,9 +1024,101 @@ label start:
         show nadia smile
         with dissolve 
 
-        n "Hello." 
+        if nadiachat == 0:
+            jump nadia_1
+        else:
+            jump nadia_2
 
-        jump bees_chatting     
+    label nadia_1:
+        n "Hi, I'm Nadia. I'm a beekeeper, though you can probably tell that from the outfit. I take care of the beehives in several community gardens around town." 
+        n "If you have any questions about bees, plants, and pollination, I'd be happy to tell you what I know."
+        $ nadiachat = 1
+        default nadia_menu = set()
+        jump nadia_questions
+      
+    label nadia_questions:
+        menu:
+            set nadia_menu
+            "Why did you become a beekeeper?":
+                jump beekeeper
+            "How do bees help with pollination?":
+                $ eca = "How do bees help with pollination?"
+
+                $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
+                $ log_http(current_user, action="PlayerInputToECA_fromtemplate", view="nadia", payload=ca_json)
+                $ log("Player input to ECA (from template): " + eca)
+
+                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+
+                n "[ecaresponse]"
+                $ AddToSet(nadia_menu, "How do bees help with pollination?")
+                jump nadia_questions
+            "How do plants get pollinated?":
+                $ eca = "How do plants get pollinated?"
+
+                $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
+                $ log_http(current_user, action="PlayerInputToECA_fromtemplate", view="nadia", payload=ca_json)
+                $ log("Player input to ECA (from template): " + eca)
+
+                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+
+                n "[ecaresponse]"
+                $ AddToSet(nadia_menu, "How do plants get pollinated?")
+                jump nadia_questions
+            "I have a different question.":
+                jump nadia_ca
+            "See you later.":
+                jump nadia_bye
+    
+    label beekeeper:
+        n "I grew up on a farm, and I always thought bees were amazing. They're so small, but also so coordinated and intelligent!"
+        n "Did you know that bees communicate the locations of flowers to each other by dancing? How cool is that?"
+        n "Anyway, bees are just such an important part of our ecosystem that I wanted to do something to help take care of them."
+        n "Bees are important for pollinating lots of crops, such as almonds, apples, and blueberries. Without bees, many crops would have to be pollinated by hand, which would take a ton of time and money."
+        $ AddToSet(nadia_menu, "Why did you become a beekeeper?")
+        jump nadia_questions
+
+    label nadia_ca:
+        $ eca = renpy.input("I'm wondering...")
+
+        $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
+        $ log_http(current_user, action="PlayerInputToECA", view="nadia", payload=ca_json)
+        $ log("Player input to ECA: " + eca)
+
+        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+
+        $ log_http(current_user, action="PlayerECAResponse", view="nadia", payload={"eca_response": ecaresponse})
+
+        n "[ecaresponse]"
+
+        n "Do you have any other questions?"
+        menu:
+            "I have more questions.":
+                jump nadia_ca
+            "No, I should go.":
+                if nadiachat == 1:
+                    jump nadia_bye
+                else:
+                    jump byenadia2
+    
+    label nadia_bye:
+        n "It was nice to meet you. Let me know if you have any more questions as you explore the garden!"
+        $ spoken_list.append("Nadia")
+
+        jump bees_chatting
+
+    label nadia_2:
+        n "Hello dear! Can I help you with anything?"
+
+        menu:
+            "I have a question for you.":
+                jump nadia_ca
+            "Actually, I'll talk to you later":
+                jump byenadia2
+
+    label byenadia2:
+        n "No problem at all. Enjoy your visit!"
+        jump bees_chatting
 
     label alex_chatting:
         scene beehives
@@ -868,7 +1127,78 @@ label start:
         show alex smile
         with dissolve 
 
-        x "Hello."     
+        if alexchat == 0:
+            jump x_1
+        else:
+            jump x_2
+
+    label x_1:
+        x "Hi! Are you a gardener?"     
+        $ alexchat = 1
+
+        menu:
+            "No, I'm just visiting.":
+                jump alex_visitor
+            "I want to be!":
+                jump alex_gardener
+            "I'm busy.":
+                jump sadkid
+
+    label alex_visitor:
+        x "Us too! Mom says they might build a garden like this next door to our apartment building."
+        x "I love the bees buzzing! Buzzzz buzzz buzzz..."
+        jump questions_alex
+
+    label alex_gardener:
+        x "Whoa! Me too. I like worms. And dirt. And BEES!"
+        jump questions_alex
+
+    label questions_alex:
+        menu:
+            "What do you think about the garden?":
+                jump gardenthink
+            "Do you live near the empty lot?":
+                jump alex_lot
+            "What kind of food do you wanna grow?":
+                jump alex_growfood
+            "Buzz ya later!":
+                jump buzzbye_alex
+
+    label gardenthink:
+        x "I like this garden! There's so many bees. Mom thinks they're creepy but I like them!"
+        x "And Wes gave me a tomato! It was yummy. Maybe I could grow big tomatoes like that if I was a gardener."
+        jump questions_alex
+
+    label alex_lot:
+        x "The big old dirt patch? Yeah. I throw rocks at the fence sometimes. Don't tell my mom."
+        jump questions_alex
+
+    label alex_growfood:
+        x "I don't know. Can you grow pizza in a garden?"
+        x "Mom says she wants to grow spinach and tomatoes. Tomatoes are pizza! So we can grow part of the pizza."
+        x "I like blueberries too. We don't get the fresh ones lots but they're way juicier than the frozen bag ones."
+        jump questions_alex
+
+    label buzzbye_alex:
+        x "Hahaha! Buzz you later!"
+        $ spoken_list.append("Alex")
+        jump bees_chatting
+
+    label sadkid:
+        x "Ohh..."
+        $ spoken_list.append("Alex")
+        jump bees_chatting
+
+    label x_2:
+        x "Buzzzz... buzz buzz buzz!"
+        x "There's a bee by your head. I think it likes you!"
+
+        show tulip at left
+        with dissolve
+
+        t "Oh I love that kid. By the way, do you need any help? You can always click my button to say hi if you get bored!"
+
+        $ renpy.call("tulip_help_menu")
 
         jump bees_chatting
 
@@ -879,7 +1209,9 @@ label start:
         show cora concern
         with dissolve 
 
-        c "Hello."      
+        c "Hello."  
+        $ corachat = 1
+        $ spoken_list.append("Cora")    
 
         jump bees_chatting
 
@@ -887,6 +1219,7 @@ label start:
         scene expression "[startplace]"
         with dissolve
         $ currentlocation = "emptylot"
+        $ visited_list.append("Empty Lot")
 
         show elliot smile at left
         with dissolve
@@ -916,8 +1249,157 @@ label start:
         show cyrus smile
         with dissolve
 
-        cy "Hello."
+        if cyruschat == 0:
+            jump cy_1
+        else:
+            jump cy_2
 
+    label cy_1:
+        cy "Hey there, kiddo. Cyrus Murphy, Marketing Executive for CityPark."
+        cy "Nice to meet ya."
+        $ cyruschat = 1
+
+        menu:
+            "Great to meet you!":
+                jump excited_cy
+            "Hey.":
+                jump normal_cy
+            "Don't respond.":
+                jump dislike_cy
+
+    label excited_cy:
+        cy "It's great to see young people in this neighborhood so passionate about growth in their community!"
+        cy "Our team at CityPark is looking forward to meeting more people like you while we get ready to build our new garage."
+        jump cy_menu
+
+    label normal_cy:
+        cy "I'm glad so many folks have come by to say hello - our team at CityPark is all about working with the community."
+        cy "Are you excited about the new garage?"
+        jump cy_menu
+
+    label dislike_cy:
+        cy "Hey, I get it, you've got better things to do than talk with some stranger in a suit. But I look forward to getting to know you and your neighbors better as we begin building our new garage!"
+        jump cy_menu
+    
+    label cy_menu:
+        menu:
+            "New garage?":
+                jump cy_pitch
+            "Can't wait!":
+                jump agree_garage
+            "We don't want a new garage.":
+                jump dislike_garage
+            "I gotta go.":
+                jump bye_cy
+
+    label cy_pitch:
+        cy "This empty lot here is the future site of a CityPark Park Express garage! It will have six levels, state-of-the-art elevators, and a prime location to encourage new businesses to move in on this street."
+        cy "As soon as we get the sign-off from Mayor Watson, we're going to begin construction."
+
+        menu:
+            "Can't wait!":
+                jump agree_garage
+            "We don't want a new garage.":
+                jump dislike_garage
+            "I gotta go.":
+                jump bye_cy
+    
+    label agree_garage:
+        cy "That's what I'm talking about - you're a bright kid. Make sure to tell your friends all about CityPark and what a great choice we are for your neighborhood!"
+        jump bye_cy
+    
+    label dislike_garage:
+        cy "Hey now, I know change can be scary, but just think about how much money the garage could make for the city!"
+        cy "And that money can help fix roads, fund schools, and support the community. More parking means more businesses, more neighborhood growth - you're gonna love it, I swear."
+        
+        show elliot smile at left
+        with dissolve
+
+        hide cyrus smile
+
+        show cyrus smile at right
+        with dissolve
+
+        e "We're NOT going to love it, Mr. Murphy. The garage might make money for you and your company, but the people here need food, not a place to park cars."
+
+        cy "Now Elliot, we've been over this! When we get this garage built, I'm sure a big grocery store will move right into town, and wouldn't you rather just go buy your food rather than having to spend all that time growing it?"
+
+        menu:
+            "Actually, a grocery store sounds nice.":
+                jump grocery
+            "A garden is better for the neighborhood, and I'm gonna prove it.":
+                jump cy_challenge
+            "I'm not sure.":
+                jump unsure
+    
+    label unsure:
+        cy "It's a complex problem, kid. Perhaps you should learn more about it before you fall in with these gardeners."
+
+        e "Ugh, ignore him. But it is a good idea to talk to the others in the neighborhood. We'll need their support to convince the Mayor!"
+        $ spoken_list.append("Cyrus")
+        jump emptylot
+
+    label grocery:
+
+        e "I know, it would be great if a grocery store moved in. But big chain stores don't usually move into low-income neighborhoods like this one because they don't think they'll make enough money."
+        e "I'm not convinced a parking garage will change that."
+
+        cy "You never know until you try! We've been gathering economic data on how garages impact neighborhood growth. You'll need a lot of evidence to beat our pitch to the Mayor, kid."
+
+        menu:
+            "We'll find the evidence.":
+                jump cy_challenge
+            "I need to go.":
+                jump bye_cy
+
+    label cy_challenge:
+        e "That's right! We're working hard to build a persuasive argument for the Mayor to support the community garden project."
+
+        cy "Alright kiddo, whatever you say. Best of luck, and may the best argument win."
+        $ spoken_list.append("Cyrus")
+        jump emptylot
+
+    label bye_cy:
+        cy "Great talking with you, kiddo! Take it easy."
+        $ spoken_list.append("Cyrus")
+        jump emptylot
+
+    label cy_2:
+        cy "Ah, our resident investigator, back again. What can I do for you?"
+        jump cy_questions
+
+    label cy_questions:
+        menu:
+            "What evidence do you have about the benefits of the parking garage?":
+                jump garage_benefits
+            "Have you considered how car pollution might impact the neighborhood?":
+                jump cy_pollution
+            "Nevermind, I should go.":
+                jump later_cy
+
+    label garage_benefits:
+        cy "Ah, so you're coming around to our plan? Wonderful!"
+        cy "Parking garages can be great for local businesses. If people from out of town can easily park in the neighborhood, then more people will stop here and spend money on shopping trips."
+        cy "More parking means more businesses can move in, which makes the economy of the neighborhood stronger! It might even bring new jobs to the area."
+        jump cy_questions
+
+    label cy_pollution:
+        cy "Oh, cars are everywhere. One more garage won't change anything. The pollution isn't as important as the money the garage will make for the city."
+        
+        menu:
+            "What about the pollinators?":
+                jump cy_bees
+            "I guess you're right.":
+                cy "That's the spirit. CityPark will make this neighborhood a shopping hotspot for the city!"
+                jump cy_questions
+    
+    label cy_bees:
+        cy "What about them? The bees can just go somewhere else to find flowers. We should care more about the people here, and making the local economy stronger."
+        jump cy_questions
+
+    label later_cy:
+        cy "Alright then. Tell your friends to sign up for our CityPark newsletter!"
+        $ cyruschat = cyruschat + 1
         jump emptylot
     
     label watson_chatting:
@@ -927,7 +1409,9 @@ label start:
         show watson smile
         with dissolve
 
-        w "Hello."
+        m "Hello."
+        $ mayorchat = 1
+        $ spoken_list.append("Mayor Watson")
 
         jump emptylot
 
@@ -944,9 +1428,15 @@ label start:
     label ideasharing:
         e "What are your ideas?"
         $ eca = renpy.input("My ideas for the mayor:")
-        $ log_http(current_user, action="PlayerInputToECA", view="emptylot", payload={"utterance": eca, "eca_type": "FoodJustice_RileyEvaluation", "context": "", "confidence_threshold": 0.3})
-        $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "FoodJustice_RileyEvaluation", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
-        $ log_http(current_user, action="PlayerECAResponse", view="emptylot", payload={"eca_response": ecaresponse})
+
+        $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Elliot")
+        $ log_http(current_user, action="PlayerInputToECA", view="elliot", payload=ca_json)
+        $ log("Player input to ECA: " + eca)
+        $ argument_attempts = argument_attempts + 1
+
+        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+
+        $ log_http(current_user, action="PlayerECAResponse", view="elliot", payload={"eca_response": ecaresponse})
         e "[ecaresponse]"
         jump ideasharing
 
