@@ -107,10 +107,6 @@ init python:
     import datetime
     from typing import Dict, Any, Optional
     import os
-    # Todo: Remove this later
-    if renpy.emscripten:
-        import emscripten
-        result = emscripten.run_script("window.syncFlowPublisher.startPublishing('umesh', 'umesh')")
         
 
     #### Custom functions to control adding, editing, and deleting notes, as well as logging to txt file #####
