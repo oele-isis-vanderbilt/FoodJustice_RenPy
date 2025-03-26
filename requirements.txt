@@ -1,1 +1,3 @@
 fastapi[all]
+bcrypt
+pyjwt
