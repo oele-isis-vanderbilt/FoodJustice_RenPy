@@ -5,10 +5,7 @@ on:
     branches:
       - main
   workflow_dispatch: # Trigger the workflow manually
-    branches:
-      - main
-      - 12-manual-trigger
-
+    
   release: # Trigger the workflow on release events
     types: [published]
 
