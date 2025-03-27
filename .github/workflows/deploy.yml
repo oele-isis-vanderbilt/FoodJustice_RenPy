@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - misc-deployment-fixes
   workflow_dispatch: # Trigger the workflow manually
     
   release: # Trigger the workflow on release events
@@ -35,7 +34,6 @@ jobs:
               mkdir FoodJusticeDeployment && cd FoodJusticeDeployment
               git clone https://github.com/oele-isis-vanderbilt/FoodJustice_RenPy.git
               cd FoodJustice_RenPy
-              git checkout -b misc-deployment-fixes origin/misc-deployment-fixes
               sudo chmod 666 /var/run/docker.sock
               docker compose -p food-justice-deployment build food-justice-service
               docker compose -p food-justice-deployment down food-justice-service
