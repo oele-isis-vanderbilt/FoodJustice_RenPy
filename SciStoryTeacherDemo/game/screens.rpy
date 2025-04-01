@@ -1920,7 +1920,7 @@ screen characterselect2(c_left, c_right):
 #### Travel and Notebook access - Always available buttons ####
 style side_button:
     anchor (0.5, 0.5)
-    pos (0.95, 0.15)
+    pos (0.95, 0.17)
 
 screen learningbuttons():
     zorder 90
@@ -1987,8 +1987,8 @@ screen three_agents(eca, image, llama, gpt, flan):
     viewport:
         anchor (0.0,0.0)
         pos (0.05,0.07)
-        xsize 740
-        ysize 200
+        xsize 900
+        ysize 250
         scrollbars "vertical"
         mousewheel True
         vscrollbar_unscrollable "hide"
@@ -1998,7 +1998,7 @@ screen three_agents(eca, image, llama, gpt, flan):
             size 20
         text "\n":
             size 5
-        text "Llama answer":
+        text "Excellent! I think the Mayor is going to really like this proposal! You've got a great point about pollinators helping the food grow, and that's a key benefit of a community garden. You're also referencing the importance of pollinators, which is a great connection to Nadia's ideas. Keep building on this and you'll have a strong case!":
         # text llama:
             size 24
         text "\n":
@@ -2015,8 +2015,8 @@ screen three_agents(eca, image, llama, gpt, flan):
     viewport:
         anchor (0.0,0.0)
         pos (0.05,0.39)
-        xsize 740
-        ysize 200
+        xsize 900
+        ysize 250
         scrollbars "vertical"
         mousewheel True
         vscrollbar_unscrollable "hide"
@@ -2026,7 +2026,7 @@ screen three_agents(eca, image, llama, gpt, flan):
             size 20
         text "\n":
             size 5
-        text "GPT answer":
+        text "Great start! You've mentioned two important benefits: teaching people how to grow food and helping pollinators. To make your argument even stronger, you could add more details about how the garden helps the community access healthy and affordable food. Maybe you could talk to Amara or Wes to gather more evidence about the health benefits of locally grown food. Keep going, you're doing well!":
         # text gpt:
             size 24
         text "\n":
@@ -2042,8 +2042,8 @@ screen three_agents(eca, image, llama, gpt, flan):
     viewport:
         anchor (0.0,0.0)
         pos (0.05,0.71)
-        xsize 740
-        ysize 200
+        xsize 900
+        ysize 250
         scrollbars "vertical"
         mousewheel True
         vscrollbar_unscrollable "hide"
@@ -2053,7 +2053,7 @@ screen three_agents(eca, image, llama, gpt, flan):
             size 20
         text "\n":
             size 5
-        text "FlanT5 answer":
+        text "Your argument is not clear or respectful. Let's focus on making a persuasive argument about using the empty field.":
         # text flan:
             size 24
         text "\n":
