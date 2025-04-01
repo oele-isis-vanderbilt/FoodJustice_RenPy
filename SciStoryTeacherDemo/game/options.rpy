@@ -46,6 +46,9 @@ Any opinions, findings, and conclusions or recommendations expressed in this mat
 
 define build.name = "SciStoryTeacherDemo"
 
+#Creates a place for the game events log file
+define config.log = "gamelog.txt"
+
 
 ## Sounds and music ############################################################
 
@@ -157,7 +160,7 @@ define config.save_directory = "SciStoryTeacherDemo-1740690470"
 ##
 ## The icon displayed on the taskbar or dock.
 
-define config.window_icon = "gui/window_icon.png"
+define config.window_icon = "gui/bee_icon.png"
 
 
 ## Build configuration #########################################################
