@@ -9,6 +9,9 @@ services:
       - GAME_ROOT_DIR=/code/SciStoryPollinators
     volumes:
       - SciStoryPollinators:/code/gamelogs
+      - $HOME/.env.foodjustice:/code/.env.app
+      - $HOME/.env.foodjustice:/code/.env.syncflow
+
   
 volumes:
   SciStoryPollinators:

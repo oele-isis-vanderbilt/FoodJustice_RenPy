@@ -1,1 +1,4 @@
 fastapi[all]
+bcrypt
+pyjwt
+git+https://github.com/oele-isis-vanderbilt/syncflow-python-client.git

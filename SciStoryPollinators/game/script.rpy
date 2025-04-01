@@ -107,10 +107,6 @@ init python:
     import datetime
     from typing import Dict, Any, Optional
     import os
-    # Todo: Remove this later
-    if renpy.emscripten:
-        import emscripten
-        result = emscripten.run_script("window.syncFlowPublisher.startPublishing('umesh', 'umesh')")
         
 
     #### Custom functions to control adding, editing, and deleting notes, as well as logging to txt file #####
@@ -218,7 +214,7 @@ label start:
     show tulip
     with dissolve
 
-    narrator "Suddenly, tiny bee flies around your head and hovers in front of you!"
+    narrator "Suddenly, a tiny bee flies around your head and hovers in front of you!"
 
     "???" "Hey there human friend!"
 
@@ -844,11 +840,68 @@ label start:
         show victor smile
         with dissolve
 
-        v "Hello."
+        v "Hi, I'm Victor. I just moved here a few months ago. Great to meet you!"
+        v "There's a really delicious soup from my hometown that I've been craving ever since I moved."
+        v "But the grocery stores here don't sell the kinds of vegetables that my family uses to make the soup extra flavorful and special."
+        v "I really want to make a soup that tastes like home. I wonder if the community gardeners would let me grow my own vegetables here?"
+        v "I don't even have a balcony at my apartment, much less a yard. But maybe if I lived near a garden, I could learn how to grow things."
         $ victorchat = 1
-        $ spoken_list.append("Victor")
 
-        jump garden
+    label victormenu:
+        menu:
+            "Do you live nearby?":
+                jump gardenfar
+            "Do you know a lot about growing things?":
+                jump gardenknowledge
+            "So you like the garden idea?":
+                jump victoropinion
+            "I'll talk to you later.":
+                v "Okay! See you later."
+                $ spoken_list.append("Victor")
+                jump garden
+
+    label victoropinion:
+        v "Yeah! I think a garden would be a great use of land for the neighborhood. It will let us grow heirloom produce that we can't find in stores."
+        v "A neighborhood garden would also give everybody access to fresh food, even if they don't have a lot of money to spend on groceries."
+        v "Since some neighborhoods don't have supermarkets, a garden would give more people healthy food options. And it can be fun to grow things yourself!"
+
+    label heirloommenu:
+        menu:
+            "What's heirloom produce?":
+                jump heirloom
+            "Why do you want to grow heirloom produce?":
+                jump whyheirloom
+            "I have a different question":
+                jump victormenu
+            "I'll talk to you later.":
+                v "Okay! See you later."
+                $ spoken_list.append("Victor")
+                jump garden
+            
+    label heirloom:
+        v "Heirloom fruits and vegetables are varieties of plants that have been passed down for many generations through seeds."
+        v "Heirloom produce has unique colors, shapes, and flavors that you won't find at most grocery stores, because these types of plants aren't used in the big commercial farms that make most of our food."
+        v "Big farms use plants that make large, nice looking fruit, because it sells better at the store."
+        v "Those big farm varieties are also bred to be more resistant to disease and weather, so the crops survive better."
+        v "But the tradeoff is that without heirloom versions of plants, we have less variety in tasty and unique flavors of produce."
+        jump heirloommenu
+
+    label whyheirloom:
+        v "I really love the taste of heirloom fruits and veggies better. They're just extra juicy and have unique flavors."
+        v "Growing up, my family used heirloom plants that our neighbors grew to make my favorite foods, like the soup I want to make!"
+        v "So those different varieties of heirloom produce remind me of home. The grocery store versions just don't taste the same, if I can find them at all."
+        jump heirloommenu
+
+    label gardenknowledge:
+        v "Not at all! I've never grown anything before. But Wes said he would be happy to teach me."
+        v "I thought growing my own food would be too hard, but the community gardeners have lots of guides to help us figure out how to care for different kinds of plants."
+        jump victormenu
+    
+    label gardenfar:
+        v "No, it took me 45 minutes to get here on the bus. But I heard that the gardeners are trying to turn the empty lot near my house into a garden!"
+        v "That lot is only a 10 minute walk from my apartment. If we had a garden there, it would be a lot easier for me to grown my own vegetables."
+        jump victormenu
+
     
     label wes_chatting:
         scene garden
@@ -1438,7 +1491,15 @@ label start:
 
         $ log_http(current_user, action="PlayerECAResponse", view="elliot", payload={"eca_response": ecaresponse})
         e "[ecaresponse]"
-        jump ideasharing
+
+        e "Are there other ideas you want to run by me?"
+
+        menu:
+            "I have more evidence to share":
+                jump ideasharing
+            "That's all for now.":
+                e "Okay! Let me know if you find new evidence later!"
+                jump emptylot
 
     # This ends the game.
 
