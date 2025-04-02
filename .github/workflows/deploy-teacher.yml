@@ -1,0 +1,53 @@
+name: Deploy to Jetstream / Docker Cleanup
+
+on:
+  push:
+    branches:
+      - Megan-tinkering
+  workflow_dispatch: # Trigger the workflow manually
+
+  schedule:
+    - cron: '0 0 * * *' # Run every day at 00:00 UTC
+
+jobs:
+  DeployToJetStream:
+    name: Deploy Teacher version to JetStream2
+    runs-on: "ubuntu-latest"
+    steps:
+        - uses: actions/checkout@v4
+        - name: Build and Deploy game teacher version
+          if: github.event_name == 'push'
+          env:
+            PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+            HOST: ${{ secrets.HOST }}
+            USERNAME: ${{ secrets.USERNAME }}
+        
+          run: |
+            echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            ssh-keygen -y -f private_key > /dev/null
+            ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST} '
+              echo "Pulling latest changes from GitHub"
+              rm -rf FoodJusticeDeploymentTeacher
+              mkdir FoodJusticeDeploymentTeacher && cd FoodJusticeDeploymentTeacher
+              git clone https://github.com/oele-isis-vanderbilt/FoodJustice_RenPy.git
+              cd FoodJustice_RenPy
+              git checkout -b Megan-tinkering origin/Megan-tinkering
+              sudo chmod 666 /var/run/docker.sock
+              docker compose -p food-justice-teacher-deployment build food-justice-teacher-service
+              docker compose -p food-justice-teacher-deployment down food-justice-teacher-service
+              docker compose -p food-justice-teacher-deployment up -d food-justice-teacher-service
+            '
+
+        - name: Docker Cleanup on JetStream2 VM
+          if: github.event_name == 'schedule'
+          env:
+            PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+            HOST: ${{ secrets.HOST }}
+            USERNAME: ${{ secrets.USERNAME }}
+          run: |
+              echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+              ssh-keygen -y -f private_key > /dev/null
+              ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST} '
+                sudo chmod 666 /var/run/docker.sock
+                docker system prune -f
+              '
