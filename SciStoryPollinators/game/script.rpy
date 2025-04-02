@@ -54,7 +54,11 @@ init python:
         visits = ", ".join(visited_list)
 
         ## To use the Llama CA: ##
-        ca_link = "http://149.165.155.145:9999/foodjustice/" + llama_ca
+
+        # Old link below, new link yeojin sent for web build is active underneath
+        # ca_link = "http://149.165.155.145:9999/foodjustice/" + llama_ca
+
+        ca_link = "https://ecoquest-llm-instance.soc240019.projects.jetstream-cloud.org:443/foodjustice/" + llama_ca
 
         if (ca_type == "FoodJustice_RileyEvaluation") or (ca_type == "FoodJustice_MayorEvaluation"):
             ca_json = {"userID": current_user, "query": "argument evaluation", "gameState": {
@@ -107,6 +111,10 @@ init python:
     import datetime
     from typing import Dict, Any, Optional
     import os
+    # Todo: Remove this later
+    # if renpy.emscripten:
+    # import emscripten
+    # result = emscripten.run_script("window.syncFlowPublisher.startPublishing('umesh', 'umesh')")
         
 
     #### Custom functions to control adding, editing, and deleting notes, as well as logging to txt file #####
