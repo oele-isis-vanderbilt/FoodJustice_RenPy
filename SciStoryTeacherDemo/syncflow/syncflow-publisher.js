@@ -9,6 +9,8 @@ class SyncFlowPublisher{
         this.enableCamera = enableCamera;
         this.enableMicrophone = enableMicrophone;
         this.enableScreenShare = enableScreenShare;
+        this.room = null;
+        this.encoder = new TextEncoder();
     }
 
     static async initialize() {
@@ -46,7 +48,44 @@ class SyncFlowPublisher{
             });
 
             await room.connect(tokenResponse.livekitServerUrl, tokenResponse.token);
-            await room.localParticipant.enableCameraAndMicrophone();
+            // await room.localParticipant.enableCameraAndMicrophone();   
+            console.log("Publishing screenshare");         
+            const publication = await room.localParticipant.setScreenShareEnabled(
+				true,
+				{
+					contentHint: 'detail',
+					audio: false,
+                    resolution: { width: 1920, height: 1080 },
+					video: { displaySurface: 'window' }
+				},
+				{
+					videoCodec: 'h264',
+					simulcast: true
+				}
+			);
+            console.log("Screenshare enabled");
+            this.room = room;
+        }
+    }
+
+    async logEvent(user, action, view, timestamp, payload) {    
+        if (this.room) {
+            console.log("Publishing data to room");
+            await this.room.localParticipant.publishData(
+                this.encoder.encode(
+                    JSON.stringify({
+                        user: user,
+                        action: action,
+                        view: view,
+                        timestamp: timestamp,
+                        payload: payload
+                    })
+                ),
+                {
+                    reliable: true
+                }
+            );
+            console.log("Published data to room");
         }
     }
 }

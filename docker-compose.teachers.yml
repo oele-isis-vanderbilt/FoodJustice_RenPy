@@ -11,8 +11,8 @@ services:
       - GAME_ROOT_DIR=/code/SciStoryTeacherDemo
     volumes:
       - SciStoryPollinatorsTeachersDemo:/code/gamelogs
-      - $HOME/.env.appteacher:/code/.env.app
-      - $HOME/.env.syncflowteacher:/code/.env.syncflow
+      - ./.env.appteacher:/code/.env.app
+      - ./.env.syncflowteacher:/code/.env.syncflow
 
   
 volumes:

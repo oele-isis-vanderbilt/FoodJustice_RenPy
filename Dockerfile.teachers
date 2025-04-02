@@ -14,6 +14,14 @@ RUN apt-get update && apt-get install -y libgl1-mesa-glx && \
     cd renpy && wget https://www.renpy.org/dl/8.3.2/renpy-8.3.2-web.zip && unzip renpy-8.3.2-web.zip && rm renpy-8.3.2-web.zip && \
     ./renpy.sh launcher web_build ../SciStoryTeacherDemo --dest ../SciStoryTeacherDemo1.0-dists --launch
 
+FROM node:20 AS controlbuilder
+
+WORKDIR /control
+
+COPY control-dashboard /control/control-dashboard
+
+RUN cd control-dashboard && npm install && npm run build
+
 FROM python:3.9
 
 WORKDIR /code
@@ -23,6 +31,14 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 COPY --from=renpybuilder /game/SciStoryTeacherDemo1.0-dists /code/SciStoryTeacherDemo
 
+COPY --from=controlbuilder /control/control-dashboard/build /code/ControlDashboard
+
 COPY ./service /code/app
+
+COPY ./SciStoryTeacherDemo/syncflow/index.html /code/SciStoryTeacherDemo/index.html
+
+COPY ./SciStoryTeacherDemo/syncflow/livekit-client.umd.min.js /code/SciStoryTeacherDemo/livekit-client.umd.min.js
+
+COPY ./SciStoryTeacherDemo/syncflow/syncflow-publisher.js /code/SciStoryTeacherDemo/syncflow-publisher.js
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080", "--proxy-headers"]

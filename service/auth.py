@@ -1,11 +1,12 @@
-from bcrypt import checkpw
+from bcrypt import checkpw, hashpw, gensalt
 from .models import Claims
 import jwt
 from time import time
 
 
-def is_valid_password(password: str, hashed_password: str) -> bool:
-    return checkpw(password.encode(), hashed_password.encode())
+def is_valid_password(password: str, plain_pw: str) -> bool:
+    hashed_password = hashpw(plain_pw.encode(), gensalt(12))
+    return checkpw(password.encode(), hashed_password=hashed_password)
 
 
 def is_valid_token(token: str, secret: str) -> bool:
