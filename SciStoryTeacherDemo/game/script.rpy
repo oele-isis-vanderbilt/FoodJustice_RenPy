@@ -42,14 +42,17 @@ default ecaresponse = ""
 init python:
     current_label = None
     current_user = "Unknown"
-    TIMEOUT = 1
+    # Change timeout to 15 for actual usage, change to 1 allows for rapid script testing when agents are turned off
+    TIMEOUT = 15
 
     def llama_agent_setup(ca_type, eca, llama_ca, character):
         note_count = len(note_list)
         speakers = ", ".join(spoken_list)
         visits = ", ".join(visited_list)
 
-        ca_link = "http://149.165.155.145:9999/foodjustice/" + llama_ca
+        # this is old llama link, new one yeojin sent is active below
+        # ca_link = "http://149.165.155.145:9999/foodjustice/" + llama_ca
+        ca_link = "https://ecoquest-llm-instance.soc240019.projects.jetstream-cloud.org:443/foodjustice/" + llama_ca
 
         if (ca_type == "FoodJustice_RileyEvaluation") or (ca_type == "FoodJustice_MayorEvaluation"):
             ca_json = {"userID": current_user, "query": "argument evaluation", "gameState": {
