@@ -94,6 +94,26 @@ init python:
         # ca_link = "https://bl-educ-engage.educ.indiana.edu/GetECAResponse"
         return ca_link, ca_json
 
+    def gpt_agent_setup(ca_type, eca, llama_ca, character):
+        note_count = len(note_list)
+        speakers = ", ".join(spoken_list)
+        visits = ", ".join(visited_list)
+
+        ca_link = "http://149.165.168.138:5005/foodjustice/respond"
+    
+        ca_json = {"userID": current_user, "query": eca, "gameState": {
+                                                "contextType": ca_type,
+                                                "numNotes": note_count,
+                                                "customNotes": customnotecount,
+                                                "numArgument": argument_attempts,
+                                                "currentSpeaker": character,
+                                                "spokeToNPC": speakers,
+                                                "visitLocation": visits,
+                                                "currentLocation": currentlocation,
+                                                "argument": ""}}
+        
+        return ca_link, ca_json
+
 
 ## Possibilities for ca_type: ##
 # FoodJustice_RileyEvaluation, FoodJustice_MayorEvaluation, Knowledge_FoodJustice, Knowledge_Pollination
@@ -497,8 +517,8 @@ label riley_test:
                     
     $ log_http(current_user, action="Flan Response", view="riley", payload={"eca_response": flan_response})
 
-    # $ ca_link, ca_json = gpt_agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Riley")
-    $ gpt_response = "Add GPT calls here."
+    $ ca_link, ca_json = gpt_agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Riley")
+    $ gpt_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
 
     $ log_http(current_user, action="GPT Response", view="riley", payload={"eca_response": gpt_response})
 
@@ -525,8 +545,8 @@ label nadia_test:
                         
     $ log_http(current_user, action="Flan Response", view="nadia", payload={"eca_response": flan_response})
 
-    # $ ca_link, ca_json = gpt_agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
-    $ gpt_response = "Add GPT calls here."
+    $ ca_link, ca_json = gpt_agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
+    $ gpt_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
     
     $ log_http(current_user, action="GPT Response", view="nadia", payload={"eca_response": gpt_response})
 
@@ -553,8 +573,8 @@ label tulip_test:
                     
     $ log_http(current_user, action="Flan Response", view="tulip", payload={"eca_response": flan_response})
 
-    # $ ca_link, ca_json = gpt_agent_setup("GameHelp", eca, "tulip", "Tulip")
-    $ gpt_response = "Add GPT calls here."
+    $ ca_link, ca_json = gpt_agent_setup("GameHelp", eca, "tulip", "Tulip")
+    $ gpt_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
 
     $ log_http(current_user, action="GPT Response", view="tulip", payload={"eca_response": gpt_response})
 

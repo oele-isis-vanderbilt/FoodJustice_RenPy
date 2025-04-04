@@ -2026,8 +2026,8 @@ screen three_agents(eca, image, llama, gpt, flan):
             size 20
         text "\n":
             size 5
-        text "Great start! You've mentioned two important benefits: teaching people how to grow food and helping pollinators. To make your argument even stronger, you could add more details about how the garden helps the community access healthy and affordable food. Maybe you could talk to Amara or Wes to gather more evidence about the health benefits of locally grown food. Keep going, you're doing well!":
-        # text gpt:
+        #text "Great start! You've mentioned two important benefits: teaching people how to grow food and helping pollinators. To make your argument even stronger, you could add more details about how the garden helps the community access healthy and affordable food. Maybe you could talk to Amara or Wes to gather more evidence about the health benefits of locally grown food. Keep going, you're doing well!":
+        text gpt:
             size 24
         text "\n":
             size 5
@@ -2053,8 +2053,8 @@ screen three_agents(eca, image, llama, gpt, flan):
             size 20
         text "\n":
             size 5
-        text "Your argument is not clear or respectful. Let's focus on making a persuasive argument about using the empty field.":
-        # text flan:
+        # text "Your argument is not clear or respectful. Let's focus on making a persuasive argument about using the empty field.":
+        text flan:
             size 24
         text "\n":
             size 5
