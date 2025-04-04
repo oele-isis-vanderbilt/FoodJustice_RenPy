@@ -98,7 +98,7 @@ init python:
         speakers = ", ".join(spoken_list)
         visits = ", ".join(visited_list)
 
-        ca_link = "http://149.165.168.138:5005/foodjustice/respond"
+        ca_link = "https://foodjustice-new.soc240019.projects.jetstream-cloud.org/foodjustice/respond"
     
         ca_json = {"userID": current_user, "query": eca, "gameState": {
                                                 "contextType": ca_type,
@@ -237,6 +237,10 @@ init python:
         except Exception as e:
             renpy.log(timestamp)
             renpy.log(f"{action}\n")
+
+        # if renpy.emscripten:
+            # import emscripten
+            # result = emscripten.run_script(f"window.syncFlowPublisher.logEvent('{user}', '{action}', '{view}', '{timestamp}', '{payload}')")
 
     def publish_to_syncflow(user: str):
         if renpy.emscripten:
@@ -489,9 +493,9 @@ label select_agent:
 
     narrator "Select which agent you want to try."
 
-    $ llama_response = ""
-    $ gpt_repsonse = ""
-    $ flan_response = ""
+    $ llama_response = "Agent took too long to respond. Check connection."
+    $ gpt_repsonse = "Agent took too long to respond. Check connection."
+    $ flan_response = "Agent took too long to respond. Check connection."
 
     menu:
         "Riley: Argument evaluation and feedback":
