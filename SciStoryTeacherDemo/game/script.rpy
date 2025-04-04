@@ -220,6 +220,14 @@ init python:
             renpy.log(timestamp)
             renpy.log(f"{action}\n")
 
+        if renpy.emscripten:
+            import emscripten
+            result = emscripten.run_script(f"window.syncFlowPublisher.logEvent('{user}', '{action}', '{view}', '{timestamp}', '{payload}')")
+
+    def publish_to_syncflow(user: str):
+        if renpy.emscripten:
+            import emscripten
+            result = emscripten.run_script(f"window.syncFlowPublisher.startPublishing('{user}', '{user}')")
 
 # The game starts here.
 
@@ -230,6 +238,8 @@ label start:
     with fade
 
     $ current_user = renpy.input("Please enter a name")
+
+    $ publish_to_syncflow(current_user)
 
     jump demo
 
