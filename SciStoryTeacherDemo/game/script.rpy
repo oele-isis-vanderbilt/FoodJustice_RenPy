@@ -238,10 +238,6 @@ init python:
             renpy.log(timestamp)
             renpy.log(f"{action}\n")
 
-        if renpy.emscripten:
-            import emscripten
-            result = emscripten.run_script(f"window.syncFlowPublisher.logEvent('{user}', '{action}', '{view}', '{timestamp}', '{payload}')")
-
     def publish_to_syncflow(user: str):
         if renpy.emscripten:
             import emscripten
