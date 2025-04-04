@@ -99,7 +99,8 @@ init python:
         speakers = ", ".join(spoken_list)
         visits = ", ".join(visited_list)
 
-        ca_link = "http://149.165.168.138:5005/foodjustice/respond"
+        ca_link = "https://foodjustice-new.soc240019.projects.jetstream-cloud.org/foodjustice/respond"
+        # ca_link = "http://149.165.168.138:5005/foodjustice/respond"
     
         ca_json = {"userID": current_user, "query": eca, "gameState": {
                                                 "contextType": ca_type,
