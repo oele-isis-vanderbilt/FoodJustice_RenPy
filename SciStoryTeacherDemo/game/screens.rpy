@@ -1998,8 +1998,7 @@ screen three_agents(eca, image, llama, gpt, flan):
             size 20
         text "\n":
             size 5
-        text "Excellent! I think the Mayor is going to really like this proposal! You've got a great point about pollinators helping the food grow, and that's a key benefit of a community garden. You're also referencing the importance of pollinators, which is a great connection to Nadia's ideas. Keep building on this and you'll have a strong case!":
-        # text llama:
+        text llama:
             size 24
         text "\n":
             size 5
@@ -2026,8 +2025,7 @@ screen three_agents(eca, image, llama, gpt, flan):
             size 20
         text "\n":
             size 5
-        text "Great start! You've mentioned two important benefits: teaching people how to grow food and helping pollinators. To make your argument even stronger, you could add more details about how the garden helps the community access healthy and affordable food. Maybe you could talk to Amara or Wes to gather more evidence about the health benefits of locally grown food. Keep going, you're doing well!":
-        # text gpt:
+        text gpt:
             size 24
         text "\n":
             size 5
@@ -2053,8 +2051,7 @@ screen three_agents(eca, image, llama, gpt, flan):
             size 20
         text "\n":
             size 5
-        text "Your argument is not clear or respectful. Let's focus on making a persuasive argument about using the empty field.":
-        # text flan:
+        text flan:
             size 24
         text "\n":
             size 5
