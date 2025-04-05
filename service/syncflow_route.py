@@ -67,7 +67,7 @@ async def get_token(identity: str, request: Request) -> TokenResponse:
         CreateSessionRequest(
             name=settings.session_name,
             max_participants=100,
-            automatic_recording=True,
+            auto_recording=True,
         )
     )
 
