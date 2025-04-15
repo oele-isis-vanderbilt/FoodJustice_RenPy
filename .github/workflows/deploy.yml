@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - 29-unified-dockerfiles
   workflow_dispatch: # Trigger the workflow manually
     
   release: # Trigger the workflow on release events

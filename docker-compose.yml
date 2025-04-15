@@ -1,6 +1,10 @@
 services:
   food-justice-service:
-    build: .
+    build:
+     context: .
+     dockerfile: Dockerfile
+     args:
+        - RENPY_GAME_DIR=SciStoryPollinators
     image: foodjustice:latest
     container_name: "foodjustice-container"
     ports:

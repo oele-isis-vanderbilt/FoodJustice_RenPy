@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - 29-unified-dockerfiles
   workflow_dispatch: # Trigger the workflow manually
 
   schedule:
@@ -31,7 +32,6 @@ jobs:
               mkdir FoodJusticeDeploymentTeacher && cd FoodJusticeDeploymentTeacher
               git clone https://github.com/oele-isis-vanderbilt/FoodJustice_RenPy.git
               cd FoodJustice_RenPy
-              git checkout -b Megan-tinkering origin/Megan-tinkering
               sudo chmod 666 /var/run/docker.sock
               docker compose -p food-justice-teacher-deployment -f docker-compose.teachers.yml build food-justice-teacher-service
               docker compose -p food-justice-teacher-deployment -f docker-compose.teachers.yml down food-justice-teacher-service
