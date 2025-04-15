@@ -2,7 +2,9 @@ services:
   food-justice-teacher-service:
     build: 
       context: .
-      dockerfile: Dockerfile.teachers
+      dockerfile: Dockerfile
+      args:
+        - RENPY_GAME_DIR=SciStoryTeacherDemo
     image: foodjustice-teacher-demo:latest
     container_name: "foodjustice-container-teacher-demo"
     ports:
