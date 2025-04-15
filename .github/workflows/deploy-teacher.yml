@@ -3,7 +3,7 @@ name: Deploy to Jetstream / Docker Cleanup
 on:
   push:
     branches:
-      - Megan-tinkering
+      - main
   workflow_dispatch: # Trigger the workflow manually
 
   schedule:
