@@ -35,6 +35,7 @@ jobs:
               mkdir FoodJusticeDeployment && cd FoodJusticeDeployment
               git clone https://github.com/oele-isis-vanderbilt/FoodJustice_RenPy.git
               cd FoodJustice_RenPy
+              git checkout -b 29-unified-dockerfiles origin/29-unified-dockerfiles
               sudo chmod 666 /var/run/docker.sock
               docker compose -p food-justice-deployment build food-justice-service
               docker compose -p food-justice-deployment down food-justice-service
