@@ -51,7 +51,9 @@ init python:
 
         # this is old llama link, new one yeojin sent is active below
         # ca_link = "http://149.165.155.145:9999/foodjustice/" + llama_ca
-        ca_link = "https://ecoquest-llm-instance.soc240019.projects.jetstream-cloud.org:443/foodjustice/" + llama_ca
+        # ca_link = "https://ecoquest-llm-instance.soc240019.projects.jetstream-cloud.org:443/foodjustice/" + llama_ca
+
+        ca_link = "https://llama-small-instance.soc240019.projects.jetstream-cloud.org/foodjustice/" + llama_ca
 
         if (ca_type == "FoodJustice_RileyEvaluation") or (ca_type == "FoodJustice_MayorEvaluation"):
             ca_json = {"userID": current_user, "query": "argument evaluation", "gameState": {
@@ -404,7 +406,7 @@ label demo:
 
     r "The overall goal of this story game is to help students learn how to gather both scientific and personal evidence, and to write persuasive, thoughtful arguments that consider multiple sides of a problem that doesn't have one right answer."
 
-    r "One of the key ways that the game helps students do this is by using artificial intelligence (AI) in some of the characters in order to help students built persuasive arguments."
+    r "One of the key ways that the game helps students do this is by using artificial intelligence (AI) in some of the characters in order to help students build persuasive arguments."
 
     r "My name is Riley, and I'm one of the key AI characters that helps students as they play. Students will bring me their draft arguments, and I use AI to give them tailored feedback about how to make their argument more convincing."
 
