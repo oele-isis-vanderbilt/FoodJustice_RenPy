@@ -1716,7 +1716,7 @@ label start:
         if "Accept." in ecaresponse:
             $ mayorconvinced = True
             $ ecaresponse = ecaresponse.replace("Accept. ", "", 1)
-        else if "Reject." in ecaresponse:
+        elif "Reject." in ecaresponse:
             $ ecaresponse = ecaresponse.replace("Reject. ", "", 1)
         else:
             pass
