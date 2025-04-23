@@ -39,7 +39,10 @@ default victorchat = 0
 default alexchat = 0
 default corachat = 0
 default argument_attempts = 0
+default mayor_attempts = 0
 default ca_context = ""
+default ecaresponse = ""
+default mayorconvinced = False
 
 ### Code for switching out CA models for the AI agents. Uncomment the ca_link and ca_json for the model you want to use, comment others ###
 
@@ -55,10 +58,12 @@ init python:
 
         ## To use the Llama CA: ##
 
-        # Old link below, new link yeojin sent for web build is active underneath
+        # Old links below, updated link is active
         # ca_link = "http://149.165.155.145:9999/foodjustice/" + llama_ca
+        # ca_link = "https://ecoquest-llm-instance.soc240019.projects.jetstream-cloud.org:443/foodjustice/" + llama_ca
 
-        ca_link = "https://ecoquest-llm-instance.soc240019.projects.jetstream-cloud.org:443/foodjustice/" + llama_ca
+        ca_link = "https://llama-small-instance.soc240019.projects.jetstream-cloud.org/foodjustice/" + llama_ca
+
 
         if (ca_type == "FoodJustice_RileyEvaluation") or (ca_type == "FoodJustice_MayorEvaluation"):
             ca_json = {"userID": current_user, "query": "argument evaluation", "gameState": {
@@ -93,6 +98,26 @@ init python:
         ## To use the IU flanT5 CA: ##
         # ca_link = "https://bl-educ-engage.educ.indiana.edu/GetECAResponse"
         return ca_link, ca_json
+
+
+    def eca_length_check(response):
+
+        if len(response) > 200:
+            multi_response = [x.strip() for x in response.split(".")]
+            if len(multi_response[0]+multi_response[1]) > 300:
+                ecaresponse1 = multi_response[0]+"."
+                del multi_response[0]
+                ecaresponse2 = ". ".join(multi_response)
+            else:
+                ecaresponse1 = ". ".join(multi_response[0:2])+"."
+                del multi_response[0:2]
+                ecaresponse2 = ". ".join(multi_response)
+                return True, ecaresponse1, ecaresponse2
+
+        else:
+            ecaresponse1 = response
+            ecaresponse2 = response
+            return False, ecaresponse1, ecaresponse2
 
 
 ## Possibilities for ca_type: ##
@@ -241,12 +266,15 @@ label start:
     menu:
         "I live in a city":
             $ startplace = "empty lot city"
+            $ structure = "garage"
            
         "I live in a rural town":
             $ startplace = "empty lot rural"
+            $ structure = "lot"
         
         "I live in the suburbs":
             $ startplace = "empty lot suburb" 
+            $ structure = "lot"
 
     t "Wonderful! We'll explore a neighborhood that's kinda like yours that needs your help."
 
@@ -309,7 +337,17 @@ label start:
                 
                 # $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "FoodJustice_RileyEvaluation", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
                 
-                t "[ecaresponse]"
+                $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+                if ecasplit == True:
+
+                    t "[ecaresponse1]"
+                    t "[ecaresponse2]"
+
+                else:
+
+                    t "[ecaresponse]"
+
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
                
                 t "Do you have other evidence to share?"
@@ -324,7 +362,17 @@ label start:
 
                         $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
                         
-                        t "[ecaresponse]"
+                        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+                        if ecasplit == True:
+
+                            t "[ecaresponse1]"
+                            t "[ecaresponse2]"
+
+                        else:
+
+                            t "[ecaresponse]"
+
                         $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
                         t "You're doing great! Keep exploring and gathering notes, and your argument will get even stronger."
@@ -345,7 +393,17 @@ label start:
 
                 $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
                 
-                t "[ecaresponse]"
+                $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+                if ecasplit == True:
+
+                    t "[ecaresponse1]"
+                    t "[ecaresponse2]"
+
+                else:
+
+                    t "[ecaresponse]"
+
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
 
@@ -360,7 +418,17 @@ label start:
 
                         $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
                         
-                        t "[ecaresponse]"
+                        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+                        if ecasplit == True:
+
+                            t "[ecaresponse1]"
+                            t "[ecaresponse2]"
+
+                        else:
+
+                            t "[ecaresponse]"
+                        
                         $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
                         t "Let me know if you need anything else!"
@@ -407,10 +475,10 @@ label start:
             jump parkingguys
     
     label parkingguys:
-        e "That guy over there in the suit is from CityPark. They want to turn our empty lot into a big parking garage for the neighborhood."
+        e "That guy over there in the suit is from CityPark. They want to turn our empty lot into a big parking [structure] for the neighborhood."
         e "But me and the other Community Gardeners have been trying to convince Mayor Watson to donate the lot to our food justice project instead."
 
-        e "The parking garage makes money, but a community garden would be huge for this neighborhood!"
+        e "The parking [structure] makes money, but a community garden would be huge for this neighborhood!"
 
         show tulip at left
         with dissolve
@@ -527,9 +595,9 @@ label start:
         r "What do you think about the empty lot?"
 
         menu:
-            "I think a community garden is a better idea than a parking lot.":
+            "I think a community garden is a better idea than a parking [structure].":
                 jump riley_support
-            "I'm not sure, the garage actually sounds like a good idea.":
+            "I'm not sure, the parking [structure] actually sounds like a good idea.":
                 jump riley_against
             "I've already got some ideas to persuade the Mayor!":
                 jump riley_plan
@@ -563,7 +631,7 @@ label start:
     
     label riley_against:
         r "Oh really? I'm curious why you think that."
-        $ progarage = renpy.input("Why do you support the parking garage?")
+        $ progarage = renpy.input("Why do you support the parking [structure]?")
         $ log("Player argument for garage: " + progarage)
         r "Hmm. That's fair. I still think the garden has more benefits for the people and the environment, but that's worth considering."
         r "The government often relies on data and algorithms. But some things, like the value of a community garden, can't be measured in money alone. It's measured in how it helps empower the people who live here."
@@ -600,7 +668,17 @@ label start:
         $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
                         
         $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
-        r "[ecaresponse]"
+
+        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+        if ecasplit == True:
+
+            r "[ecaresponse1]"
+            r "[ecaresponse2]"
+
+        else:
+
+            r "[ecaresponse]"
 
         r "Are there other ideas you want to run by me?"
 
@@ -646,7 +724,17 @@ label start:
 
                 $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
 
-                r "[ecaresponse]"
+                $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+                if ecasplit == True:
+
+                    r "[ecaresponse1]"
+                    r "[ecaresponse2]"
+
+                else:
+
+                    r "[ecaresponse]"
+
                 jump foodknowledge_loop
             "How can we help everyone have access to healthy food?":
                 $ eca = "How can we help everyone have access to healthy food?"
@@ -657,7 +745,17 @@ label start:
 
                 $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
 
-                r "[ecaresponse]"
+                $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+                if ecasplit == True:
+
+                    r "[ecaresponse1]"
+                    r "[ecaresponse2]"
+
+                else:
+
+                    r "[ecaresponse]"
+
                 jump foodknowledge_loop
             "I have another question.":
                 jump foodknowledge
@@ -685,7 +783,17 @@ label start:
 
         $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
 
-        r "[ecaresponse]"
+        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+        if ecasplit == True:
+
+            r "[ecaresponse1]"
+            r "[ecaresponse2]"
+
+        else:
+
+            r "[ecaresponse]"
+
         jump foodknowledge_loop
     
     label byeriley:
@@ -768,13 +876,14 @@ label start:
 
     label amara_2:
         a "Hey there! What are you up to?"
+        $ amarachat = amarachat + 1
         jump amara_revisit
 
     label amara_revisit:
         menu:
             "I'm trying to gather evidence about gardens.":
                 jump sciencequestions
-            "I'm trying to gather evidence about parking lots.":
+            "I'm trying to gather evidence about parking [structure]s.":
                 jump parkingquestions
             "Actually, we should talk later.":
                 jump amarabye
@@ -805,8 +914,8 @@ label start:
             jump sciencequestions
 
     label parkingquestions:
-        a "Ah, so you're curious about how the parking lot will impact the neighborhood?"
-        a "I mostly study food, so I don't know a ton about the economic impact of garages or how cars change the environment."
+        a "Ah, so you're curious about how the parking [structure] will impact the neighborhood?"
+        a "I mostly study food, so I don't know a ton about the economic impact of parking [structure]s or how cars change the environment."
         a "Wes might know more - he did a lot of that research when he was building the Westgate community garden!"
         jump amara_revisit
 
@@ -1008,7 +1117,16 @@ label start:
 
         $ log_http(current_user, action="PlayerECAResponse", view="wes", payload={"eca_response": ecaresponse})
 
-        w "[ecaresponse]"
+        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+        if ecasplit == True:
+
+            w "[ecaresponse1]"
+            w "[ecaresponse2]"
+
+        else:
+
+            w "[ecaresponse]"
 
         jump wes_choices
 
@@ -1045,7 +1163,16 @@ label start:
 
         $ log_http(current_user, action="PlayerECAResponse", view="wes", payload={"eca_response": ecaresponse})
 
-        w "[ecaresponse]"
+        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+        if ecasplit == True:
+
+            w "[ecaresponse1]"
+            w "[ecaresponse2]"
+
+        else:
+
+            w "[ecaresponse]"
 
         w "Would you like to know anything else?"
 
@@ -1111,7 +1238,17 @@ label start:
 
                 $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
 
-                n "[ecaresponse]"
+                $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+                if ecasplit == True:
+
+                    n "[ecaresponse1]"
+                    n "[ecaresponse2]"
+
+                else:
+
+                    n "[ecaresponse]"
+
                 $ AddToSet(nadia_menu, "How do bees help with pollination?")
                 jump nadia_questions
             "How do plants get pollinated?":
@@ -1123,7 +1260,17 @@ label start:
 
                 $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
 
-                n "[ecaresponse]"
+                $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+                if ecasplit == True:
+
+                    n "[ecaresponse1]"
+                    n "[ecaresponse2]"
+
+                else:
+
+                    n "[ecaresponse]"
+
                 $ AddToSet(nadia_menu, "How do plants get pollinated?")
                 jump nadia_questions
             "I have a different question.":
@@ -1150,7 +1297,16 @@ label start:
 
         $ log_http(current_user, action="PlayerECAResponse", view="nadia", payload={"eca_response": ecaresponse})
 
-        n "[ecaresponse]"
+        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+        if ecasplit == True:
+
+            n "[ecaresponse1]"
+            n "[ecaresponse2]"
+
+        else:
+
+            n "[ecaresponse]"
 
         n "Do you have any other questions?"
         menu:
@@ -1170,6 +1326,7 @@ label start:
 
     label nadia_2:
         n "Hello dear! Can I help you with anything?"
+        $ nadiachat = nadiachat + 1
 
         menu:
             "I have a question for you.":
@@ -1330,37 +1487,37 @@ label start:
 
     label excited_cy:
         cy "It's great to see young people in this neighborhood so passionate about growth in their community!"
-        cy "Our team at CityPark is looking forward to meeting more people like you while we get ready to build our new garage."
+        cy "Our team at CityPark is looking forward to meeting more people like you while we get ready to build our new parking [structure]."
         jump cy_menu
 
     label normal_cy:
         cy "I'm glad so many folks have come by to say hello - our team at CityPark is all about working with the community."
-        cy "Are you excited about the new garage?"
+        cy "Are you excited about the new parking [structure]?"
         jump cy_menu
 
     label dislike_cy:
-        cy "Hey, I get it, you've got better things to do than talk with some stranger in a suit. But I look forward to getting to know you and your neighbors better as we begin building our new garage!"
+        cy "Hey, I get it, you've got better things to do than talk with some stranger in a suit. But I look forward to getting to know you and your neighbors better as we begin construction!"
         jump cy_menu
     
     label cy_menu:
         menu:
-            "New garage?":
+            "New [structure]?":
                 jump cy_pitch
             "Can't wait!":
                 jump agree_garage
-            "We don't want a new garage.":
+            "We don't want a parking [structure].":
                 jump dislike_garage
             "I gotta go.":
                 jump bye_cy
 
     label cy_pitch:
-        cy "This empty lot here is the future site of a CityPark Park Express garage! It will have six levels, state-of-the-art elevators, and a prime location to encourage new businesses to move in on this street."
+        cy "This empty lot here is the future site of a CityPark Park Express [structure]! It will be a prime location to encourage new businesses to move in on this street."
         cy "As soon as we get the sign-off from Mayor Watson, we're going to begin construction."
 
         menu:
             "Can't wait!":
                 jump agree_garage
-            "We don't want a new garage.":
+            "We don't want a new parking [structure].":
                 jump dislike_garage
             "I gotta go.":
                 jump bye_cy
@@ -1370,7 +1527,7 @@ label start:
         jump bye_cy
     
     label dislike_garage:
-        cy "Hey now, I know change can be scary, but just think about how much money the garage could make for the city!"
+        cy "Hey now, I know change can be scary, but just think about how much money the parking [structure] could make for the city!"
         cy "And that money can help fix roads, fund schools, and support the community. More parking means more businesses, more neighborhood growth - you're gonna love it, I swear."
         
         show elliot smile at left
@@ -1381,9 +1538,9 @@ label start:
         show cyrus smile at right
         with dissolve
 
-        e "We're NOT going to love it, Mr. Murphy. The garage might make money for you and your company, but the people here need food, not a place to park cars."
+        e "We're NOT going to love it, Mr. Murphy. The [structure] might make money for you and your company, but the people here need food, not a place to park cars."
 
-        cy "Now Elliot, we've been over this! When we get this garage built, I'm sure a big grocery store will move right into town, and wouldn't you rather just go buy your food rather than having to spend all that time growing it?"
+        cy "Now Elliot, we've been over this! When we get this [structure] built, I'm sure a big grocery store will move right into town, and wouldn't you rather just go buy your food rather than having to spend all that time growing it?"
 
         menu:
             "Actually, a grocery store sounds nice.":
@@ -1403,9 +1560,9 @@ label start:
     label grocery:
 
         e "I know, it would be great if a grocery store moved in. But big chain stores don't usually move into low-income neighborhoods like this one because they don't think they'll make enough money."
-        e "I'm not convinced a parking garage will change that."
+        e "I'm not convinced a parking [structure] will change that."
 
-        cy "You never know until you try! We've been gathering economic data on how garages impact neighborhood growth. You'll need a lot of evidence to beat our pitch to the Mayor, kid."
+        cy "You never know until you try! We've been gathering economic data on how parking [structure]s impact neighborhood growth. You'll need a lot of evidence to beat our pitch to the Mayor, kid."
 
         menu:
             "We'll find the evidence.":
@@ -1431,7 +1588,7 @@ label start:
 
     label cy_questions:
         menu:
-            "What evidence do you have about the benefits of the parking garage?":
+            "What evidence do you have about the benefits of the parking [structure]?":
                 jump garage_benefits
             "Have you considered how car pollution might impact the neighborhood?":
                 jump cy_pollution
@@ -1440,12 +1597,12 @@ label start:
 
     label garage_benefits:
         cy "Ah, so you're coming around to our plan? Wonderful!"
-        cy "Parking garages can be great for local businesses. If people from out of town can easily park in the neighborhood, then more people will stop here and spend money on shopping trips."
+        cy "Parking [structure]s can be great for local businesses. If people from out of town can easily park in the neighborhood, then more people will stop here and spend money on shopping trips."
         cy "More parking means more businesses can move in, which makes the economy of the neighborhood stronger! It might even bring new jobs to the area."
         jump cy_questions
 
     label cy_pollution:
-        cy "Oh, cars are everywhere. One more garage won't change anything. The pollution isn't as important as the money the garage will make for the city."
+        cy "Oh, cars are everywhere. One more [structure] won't change anything. The pollution isn't as important as the money the [structure] will make for the city."
         
         menu:
             "What about the pollinators?":
@@ -1470,10 +1627,126 @@ label start:
         show watson smile
         with dissolve
 
-        m "Hello."
-        $ mayorchat = 1
-        $ spoken_list.append("Mayor Watson")
+        if mayorchat == 0:
+            jump mayor_1
+        else:
+            jump mayor_2
 
+    label mayor_1:
+        m "Hello there! I'm Mayor Watson. I'm out here today gathering community opinions on the empty lot."
+        m "Do you have any thoughts about it?"
+        $ mayorchat = 1
+
+        menu:
+            "I think you should let the Community Gardeners use the lot for growing food.":
+                jump garden_m
+            "I think you should let CityPark build a parking [structure] for the neighborhood.":
+                jump parking_m
+            "I'm not sure.":
+                jump uncertain_m
+
+    label garden_m:
+        m "Ah, interesting. The garden would provide some food for the neighborhood, though the parking [structure] might be more financially useful for the city."
+        m "I need to consider the research and figure out what is best for our community."
+        jump mayor_request
+
+    label parking_m:
+        m "Oh really? I do think the parking [structure] would give the city some useful income that we could use to improve our schools."
+        m "But the Community Gardeners feel strongly that a garden would be more beneficial to the neighborhood."
+        m "I need to consider the research and figure out what is best for our community."
+        jump mayor_request
+
+    label uncertain_m:
+        m "That's okay, I'm not sure either! I'm going to talk with the Community Gardeners and the CityPark representative to see what kind of data they have for their proposals."
+        jump mayor_request
+
+    label mayor_request:
+        m "If you gather any information you think I'd find interesting, feel free to come back and let me know!"
+        $ spoken_list.append("Mayor Watson")
+        jump emptylot
+
+    label mayor_2:
+        m "Hello there! What can I do for you?"
+        $ mayorchat = mayorchat + 1
+
+        menu:
+            "What kind of information are you looking for?":
+                jump what_evidence
+            "How can we convince you to support the Community Garden?":
+                jump good_argument
+            "I have a persuasive argument to share about the empty lot.":
+                jump mayor_eval
+
+    label what_evidence:
+        m "I want to gather many different kinds of evidence. Opinions of the community members, but also concrete information about how the garden and the parking [structure] will impact the community."
+        m "Scientific evidence about how the garden would impact the environment would be convincing. It would also be helpful to gather data about economic and health impacts on the community."
+        m "Gathering information from different sources will make for a more convincing argument. I know CityPark has been gathering lots of data to persuade me to support their plan."
+
+        menu:
+            "I'll look for some evidence.":
+                jump continue_search
+            "I have an argument to share about the empty lot.":
+                jump mayor_eval
+
+    label good_argument:
+        m "A persuasive argument brings together many different types of evidence and tells a good story about why someone should agree with your point of view."
+        m "If I am going to support the Community Garden project, I need to know how the garden will benefit the people in the community."
+        m "I also need to be convinced that the benefits of the garden are more important than the money and business that the parking [structure] will bring."
+
+        menu:
+            "I'll look for some evidence.":
+                jump continue_search
+            "I have an argument to share about the empty lot.":
+                jump mayor_eval
+
+    label mayor_eval:
+        m "I'd love to hear it. What have you found?"
+
+        $ eca = renpy.input("My persuasive argument for what the Mayor should do with the empty lot:")
+
+        $ ca_link, ca_json = agent_setup("FoodJustice_MayorEvaluation", eca, "mayor", "Mayor Watson")
+        $ log_http(current_user, action="PlayerInputToECA", view="mayor", payload=ca_json)
+        $ log("Player input to ECA: " + eca)
+        $ argument_attempts = argument_attempts + 1
+
+        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+
+        $ log_http(current_user, action="PlayerECAResponse", view="mayor", payload={"eca_response": ecaresponse})
+
+        if "Accept." in ecaresponse:
+            $ mayorconvinced = True
+            $ ecaresponse = ecaresponse.replace("Accept. ", "", 1)
+        else if "Reject." in ecaresponse:
+            $ ecaresponse = ecaresponse.replace("Reject. ", "", 1)
+        else:
+            pass
+
+        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+        if ecasplit == True:
+
+            m "[ecaresponse1]"
+            m "[ecaresponse2]"
+
+        else:
+
+            m "[ecaresponse]"
+
+        m "Do you have another argument to share?"
+        $ mayor_attempts = mayor_attempts + 1
+
+        menu:
+            "I have a different argument to share.":
+                jump mayor_eval
+            "No, that's all.":
+                jump byemayor
+    
+    label byemayor:
+        m "Thank you for sharing your ideas with me. Engaged citizens make our community stronger!"
+        jump tulip_endgame
+
+    label continue_search:
+        m "Wonderful. I look forward to hearing your argument when it is ready to share."
         jump emptylot
 
     label elliot_chatting:
@@ -1498,7 +1771,17 @@ label start:
         $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
 
         $ log_http(current_user, action="PlayerECAResponse", view="elliot", payload={"eca_response": ecaresponse})
-        e "[ecaresponse]"
+        
+        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+
+        if ecasplit == True:
+
+            e "[ecaresponse1]"
+            e "[ecaresponse2]"
+
+        else:
+
+            e "[ecaresponse]"
 
         e "Are there other ideas you want to run by me?"
 
@@ -1508,6 +1791,85 @@ label start:
             "That's all for now.":
                 e "Okay! Let me know if you find new evidence later!"
                 jump emptylot
+
+    label tulip_endgame:
+        scene expression "[startplace]"
+        with dissolve
+
+        show tulip
+        with dissolve
+
+        $ note_count = len(note_list)
+
+        if rileychat > 0 and nadiachat > 0 and weschat > 0 and amarachat > 0 and note_count > 5:
+
+            t "Great job sharing your ideas with the Mayor! How do you think it went?"
+            jump choices_eval
+
+        else:
+            t "Nice work sharing your argument! I bet you can make your argument even more persuasive if you talk to the rest of the folks in town and record their ideas in your notebook!"
+            jump emptylot
+
+    label choices_eval:
+        menu:
+            "I don't think he's convinced yet.":
+                jump needmore
+            "He seemed kinda convinced, but I'm not sure.":
+                jump maybeconvinced
+            "He was really convinced by my argument!":
+                jump convinced_endprep
+
+    label needmore:
+        t "That's okay! Don't be discouraged. Keep exploring and gathering more evidence in your notebook, and see if you can make your argument stronger!"
+        jump emptylot
+
+    label maybeconvinced:
+        if mayor_attempts > 3:
+            t "That's a good sign! I wonder if there are other people in town you could chat with to get more evidence?"
+            jump ending_game
+        else:
+            t "You're on the right track, then! Maybe there are a few more pieces of evidence you can gather in your notebook to make your argument more persuasive."
+            jump emptylot
+
+    label convinced_endprep:
+        t "Amazing! I'm so glad."
+        jump ending_game
+    
+    label ending_game:
+        t "If you are satisfied with your persuasive argument, we can end the game and see what happens to the empty lot."
+        t "But if you want to try to make your argument even more persuasive, you can keep exploring for a while and end the game later."
+        t "What do you want to do?"
+
+        menu:
+            "I want to keep exploring.":
+                t "Okay! I bet you can find even more evidence for your notebook if you talk with more people!"
+                jump emptylot
+            "I want to end the game.":
+                t "Okay! Oooo, I'm so excited to see what happens, I'm practically buzzing with excitement!"
+                jump final
+
+    label final:
+        if mayorconvinced == True:
+            jump final_garden
+        else:
+            jump final_parking
+
+    label final_garden:
+        scene garden
+        with dissolve
+
+        t "We built a garden! Yay!"
+        jump end
+
+    label final_parking:
+        scene empty lot
+        with dissolve
+
+        cy "We built a parking [structure]!"
+        jump end
+
+    label end:
+        narrator "Thanks for playing!"
 
     # This ends the game.
 
