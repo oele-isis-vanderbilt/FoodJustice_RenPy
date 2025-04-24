@@ -225,6 +225,7 @@ init python:
         except Exception as e:
             renpy.log(timestamp)
             renpy.log(f"{action}\n")
+            renpy.log(f"{payload}\n")
 
 # The game starts here.
 
@@ -324,7 +325,7 @@ label start:
         #        with dissolve
         #        return
             "I'd like some help with persuading the mayor.":
-                t "I'd be happy to help! If you tell me what evidence you've found, I can give you some advice on improving your pursuasive writing."
+                t "I'd be happy to help! If you tell me what evidence you've found, I can give you some advice on improving your persuasive writing."
 
                 $ eca = renpy.input("What should the Mayor do with the empty lot, and why?")
 
@@ -333,8 +334,12 @@ label start:
                 $ log("Player input to ECA: " + eca)
                 $ argument_attempts = argument_attempts + 1
 
-                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
-                
+                python:
+                    try:
+                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                    except Exception as e:
+                        log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
+                        ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers to look at your argument!"
                 # $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "FoodJustice_RileyEvaluation", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
                 
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
@@ -360,8 +365,13 @@ label start:
                         $ log("Player input to ECA: " + eca)
                         $ argument_attempts = argument_attempts + 1
 
-                        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
-                        
+                        python:
+                            try:
+                                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                            except Exception as e:
+                                log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
+                                ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers to look at your argument!"
+
                         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
                         if ecasplit == True:
@@ -391,7 +401,12 @@ label start:
                 $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
                 $ log("Player input to ECA: " + eca)
 
-                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                python:
+                    try:
+                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                    except Exception as e:
+                        log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
+                        ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers your question!"
                 
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
@@ -416,7 +431,12 @@ label start:
                         $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
                         $ log("Player input to ECA: " + eca)
 
-                        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                        python:
+                            try:
+                                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                            except Exception as e:
+                                log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
+                                ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers your question!"
                         
                         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
@@ -665,8 +685,13 @@ label start:
         $ log("Player input to ECA: " + eca)
         $ argument_attempts = argument_attempts + 1
 
-        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
-                        
+        python:
+            try:
+                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+            except Exception as e:
+                log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
+                ecaresponse = "I'm a little overwhelmed right now. You can ask one of the researchers to read your argument, or you can try again in a little while."
+                                     
         $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
 
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
@@ -722,8 +747,13 @@ label start:
                 $ log_http(current_user, action="PlayerInputToECA_fromtemplate", view="riley", payload=ca_json)
                 $ log("Player input to ECA (from template): " + eca)
 
-                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
-
+                python:
+                    try:
+                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                    except Exception as e:
+                        log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
+                        ecaresponse = "Access to healthy food is important because it helps us grow, stay healthy, and have the energy we need to do the things we love. Healthy food can also prevent diseases like obesity, heart disease, and diabetes."
+                  
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
                 if ecasplit == True:
@@ -743,7 +773,12 @@ label start:
                 $ log_http(current_user, action="PlayerInputToECA_fromtemplate", view="riley", payload=ca_json)
                 $ log("Player input to ECA (from template): " + eca)
 
-                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                python:
+                    try:
+                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                    except Exception as e:
+                        log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
+                        ecaresponse = "One way to help everyone get access to affordable and healthy food options is by supporting local farmers markets and community gardens. It's also important to advocate for policies that promote healthy food options."
 
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
@@ -781,7 +816,12 @@ label start:
         $ log_http(current_user, action="PlayerInputToECA", view="riley", payload=ca_json)
         $ log("Player input to ECA: " + eca)
 
-        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        python:
+            try:
+                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+            except Exception as e:
+                log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
+                ecaresponse = "I'm struggling a bit right now. Maybe you can chat with Amara about her food science work, and you and I can chat more later?"
 
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
@@ -1113,7 +1153,12 @@ label start:
         $ log_http(current_user, action="PlayerInputToECA", view="wes", payload=ca_json)
         $ log("Player input to ECA: " + eca)
 
-        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        python:
+            try:
+                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+            except Exception as e:
+                log_http(current_user, action="AgentError", view="wes", payload={"details": str(e)})
+                ecaresponse = "Sorry kid, I'm having a bit of trouble, actually. Why don't you go check out the beehives, and you and I can catch up more later."
 
         $ log_http(current_user, action="PlayerECAResponse", view="wes", payload={"eca_response": ecaresponse})
 
@@ -1159,7 +1204,12 @@ label start:
         $ log_http(current_user, action="PlayerInputToECA", view="wes", payload=ca_json)
         $ log("Player input to ECA: " + eca)
 
-        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        python:
+            try:
+                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+            except Exception as e:
+                log_http(current_user, action="AgentError", view="wes", payload={"details": str(e)})
+                ecaresponse = "Sorry kid, I'm having a bit of trouble, actually. Why don't you go check out the beehives, and you and I can catch up more later."
 
         $ log_http(current_user, action="PlayerECAResponse", view="wes", payload={"eca_response": ecaresponse})
 
@@ -1236,7 +1286,12 @@ label start:
                 $ log_http(current_user, action="PlayerInputToECA_fromtemplate", view="nadia", payload=ca_json)
                 $ log("Player input to ECA (from template): " + eca)
 
-                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                python:
+                    try:
+                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                    except Exception as e:
+                        log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
+                        ecaresponse = "Bees help with pollination by transferring pollen from one flower to another while collecting nectar. This helps the plant grow healthy fruits."
 
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
@@ -1258,7 +1313,12 @@ label start:
                 $ log_http(current_user, action="PlayerInputToECA_fromtemplate", view="nadia", payload=ca_json)
                 $ log("Player input to ECA (from template): " + eca)
 
-                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                python:
+                    try:
+                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                    except Exception as e:
+                        log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
+                        ecaresponse = "The flowers on plants can be pollinated by wind, by animals and insects, and by people. A flower is pollinated when pollen is moved from the male part of the flower to the female part of the flower."
 
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
@@ -1293,7 +1353,12 @@ label start:
         $ log_http(current_user, action="PlayerInputToECA", view="nadia", payload=ca_json)
         $ log("Player input to ECA: " + eca)
 
-        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        python:
+            try:
+                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+            except Exception as e:
+                log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
+                ecaresponse = "Oh, I'm having a bit of trouble. Can you chat with others in the garden and come back later? Sorry about that!"
 
         $ log_http(current_user, action="PlayerECAResponse", view="nadia", payload={"eca_response": ecaresponse})
 
@@ -1709,15 +1774,22 @@ label start:
         $ log("Player input to ECA: " + eca)
         $ argument_attempts = argument_attempts + 1
 
-        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        python:
+            try:
+                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+            except Exception as e:
+                log_http(current_user, action="AgentError", view="mayor", payload={"details": str(e)})
+                ecaresponse = "Thank you for sharing your ideas with me! I can't give you feedback right now, but please do come back and share more later."
 
         $ log_http(current_user, action="PlayerECAResponse", view="mayor", payload={"eca_response": ecaresponse})
 
         if "Accept." in ecaresponse:
             $ mayorconvinced = True
             $ ecaresponse = ecaresponse.replace("Accept. ", "", 1)
+            $ log_http(current_user, action="MayorEvaluation", view="mayor", payload={"mayor_convinced": "Convincing Argument"})
         elif "Reject." in ecaresponse:
             $ ecaresponse = ecaresponse.replace("Reject. ", "", 1)
+            $ log_http(current_user, action="MayorEvaluation", view="mayor", payload={"mayor_convinced": "Not Convinced"})
         else:
             pass
 
@@ -1768,7 +1840,12 @@ label start:
         $ log("Player input to ECA: " + eca)
         $ argument_attempts = argument_attempts + 1
 
-        $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        python:
+            try:
+                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+            except Exception as e:
+                log_http(current_user, action="AgentError", view="elliot", payload={"details": str(e)})
+                ecaresponse = "I'm having some trouble right now. Why don't you try asking Riley about this argument and see if she can give you some feedback?"
 
         $ log_http(current_user, action="PlayerECAResponse", view="elliot", payload={"eca_response": ecaresponse})
         
