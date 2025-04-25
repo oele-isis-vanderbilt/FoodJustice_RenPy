@@ -101,10 +101,10 @@ init python:
 
 
     def eca_length_check(response):
-
-        if len(response) > 200:
+        checker = "."
+        if len(response) > 200 and checker in response:
             multi_response = [x.strip() for x in response.split(".")]
-            if len(multi_response[0]+multi_response[1]) > 300:
+            if len(multi_response[0]+multi_response[1]) > 250:
                 ecaresponse1 = multi_response[0]+"."
                 del multi_response[0]
                 ecaresponse2 = ". ".join(multi_response)
@@ -112,6 +112,11 @@ init python:
                 ecaresponse1 = ". ".join(multi_response[0:2])+"."
                 del multi_response[0:2]
                 ecaresponse2 = ". ".join(multi_response)
+            if len(ecaresponse2) == 0:
+                ecaresponse1 = response
+                ecaresponse2 = response
+                return False, ecaresponse1, ecaresponse2
+            else: 
                 return True, ecaresponse1, ecaresponse2
 
         else:
