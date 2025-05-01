@@ -23,6 +23,7 @@ default note_list = []
 default tag_list = []
 default visited_list = []
 default spoken_list = []
+default notebook_argument = "Write your draft argument here."
 default customnotecount = 0
 default emptylotvisit = False
 default foodlabvisit = False
@@ -55,6 +56,7 @@ init python:
         note_count = len(note_list)
         speakers = ", ".join(spoken_list)
         visits = ", ".join(visited_list)
+        narrator.add_history(kind="adv",who="Player:",what=eca)
 
         ## To use the Llama CA: ##
 
@@ -141,6 +143,7 @@ init python:
     import datetime
     from typing import Dict, Any, Optional
     import os
+    import pygame.scrap
     # Todo: Remove this later
     # if renpy.emscripten:
     # import emscripten
@@ -157,6 +160,12 @@ init python:
 
     config.label_callbacks = [label_callback]
 
+    def copy(text):
+        pygame.scrap.put(pygame.SCRAP_TEXT, text.encode("utf-8"))
+
+    def retaindata():
+        renpy.retain_after_load()
+
     def note(info, speaker, tag):
         note_list.append(info)
         source_list.append(speaker)
@@ -168,8 +177,12 @@ init python:
         log_http(current_user, action="PlayerTookNote", view=current_label, payload={
             "note": info,
             "source": speaker,
+            "tag": tag,
             "note_id": noteindex
         })
+        narrator.add_history(kind="adv",who="You wrote a note:",what=info)
+        renpy.take_screenshot()
+        renpy.save("1-1", save_name)
 
     def deletenote(notetext):
         noteindex = note_list.index(notetext)
@@ -186,6 +199,9 @@ init python:
             view=current_label,
             payload={"note": notetext, "source": note_source, "note_id": noteindex}
         )
+        narrator.add_history(kind="adv",who="You erased a note:",what=notetext)
+        renpy.take_screenshot()
+        renpy.save("1-1", save_name)
     
     def editnote(oldtext, newnote, newsource, newtag):
         noteindex = note_list.index(oldtext)
@@ -199,8 +215,34 @@ init python:
             current_user,
             action="PlayerEditedNote",
             view=current_label,
-            payload={"note": newnote, "source": newsource, "note_id": noteindex}
+            payload={"note": newnote, "source": newsource, "tag": newtag, "note_id": noteindex}
         )
+        narrator.add_history(kind="adv",who="You edited a note:",what=newnote)
+        renpy.take_screenshot()
+        renpy.save("1-1", save_name)
+        
+
+    def draft(argument):
+        global notebook_argument
+        notebook_argument = argument
+        renpy.notify("Draft Argument Updated!")
+        log_http(current_user, action="PlayerSavedArgument", view=current_label, payload={
+            "draft": argument,
+        })
+        narrator.add_history(kind="adv",what="(You wrote this argument in your notebook.)")
+        renpy.take_screenshot()
+        renpy.save("1-1", save_name)
+
+    def editdraft(newargument):
+        global notebook_argument
+        notebook_argument = newargument
+        renpy.notify("Draft Argument Edited!")
+        log_http(current_user, action="PlayerEditedArgument", view=current_label, payload={
+            "draft": newargument,
+        })
+        narrator.add_history(kind="adv",who="You edited your draft:",what=newargument)
+        renpy.take_screenshot()
+        renpy.save("1-1", save_name)
 
     def log(action):
         timestamp = datetime.datetime.now()
@@ -282,6 +324,8 @@ label start:
             $ startplace = "empty lot suburb" 
             $ structure = "lot"
 
+    $ log_http(current_user, action="PlayerLocationChoice", view="tulip", payload={"startplace": startplace})
+
     t "Wonderful! We'll explore a neighborhood that's kinda like yours that needs your help."
 
     t "I'm here as your guide, so if you get stuck or need advice, just click on my button and I'll buzz on by."
@@ -293,7 +337,7 @@ label start:
             t "Yay! Let's zoom!"
         "I guess.":
             t "Don't worry, I'll be right by your side if you need help! We're two bees in a pod. Hehe."
-
+    
     jump begin
 
     label travelmenu:
@@ -332,7 +376,7 @@ label start:
             "I'd like some help with persuading the mayor.":
                 t "I'd be happy to help! If you tell me what evidence you've found, I can give you some advice on improving your persuasive writing."
 
-                $ eca = renpy.input("What should the Mayor do with the empty lot, and why?")
+                $ eca = renpy.input("What should the Mayor do with the empty lot, and why?", screen="argument_writing")
 
                 $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Tulip")
                 $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
@@ -359,11 +403,18 @@ label start:
                     t "[ecaresponse]"
 
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
+
+                $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
+
+                if savedraft == True:
+                    $ draft(eca)
+                else:
+                    pass
                
                 t "Do you have other evidence to share?"
                 menu:
                     "I have more ideas to add.":
-                        $ eca = renpy.input("What should the Mayor do with the empty lot, and why?")
+                        $ eca = renpy.input("What should the Mayor do with the empty lot, and why?", screen="argument_writing")
 
                         $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Tulip")
                         $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
@@ -390,17 +441,26 @@ label start:
 
                         $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
+                        $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
+
+                        if savedraft == True:
+                            $ draft(eca)
+                        else:
+                            pass
+
                         t "You're doing great! Keep exploring and gathering notes, and your argument will get even stronger."
                         hide tulip
                         with dissolve
                         return
                     "Not right now.":
                         t "Okay! I'm here if you need me."
+                        $ renpy.take_screenshot()
+                        $ renpy.save("1-1", save_name)
                         hide tulip
                         with dissolve
                         return
             "I need help with something else.":
-                $ eca = renpy.input("I love questions! What's your question?")
+                $ eca = renpy.input("I love questions! What's your question?", screen="argument_writing")
 
                 $ ca_link, ca_json = agent_setup("GameHelp", eca, "tulip", "Tulip")
                 $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
@@ -430,7 +490,7 @@ label start:
                 t "Any more questions?"
                 menu:
                     "I have another question.":
-                        $ eca = renpy.input("What's your question?")
+                        $ eca = renpy.input("What's your question?", screen="argument_writing")
 
                         $ ca_link, ca_json = agent_setup("GameHelp_Collaboration", eca, "tulip", "Tulip")
                         $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
@@ -479,6 +539,9 @@ label start:
 
     show elliot smile
     with dissolve
+
+    $ renpy.take_screenshot()
+    $ renpy.save("1-1", save_name)
 
     "Friendly Stranger" "Hey what's up - you new to the neighborhood?"
 
@@ -584,6 +647,9 @@ label start:
         show riley smile at right
         with dissolve
 
+        $ renpy.take_screenshot()
+        $ renpy.save("1-1", save_name)
+
         if foodlabvisit == False:
             narrator "You step into a bustling room full of scientific equipment. A woman in a lab coat is currently sorting vials on a nearby counter."
             narrator "Over by the table, another person is sorting papers and taking notes. You see brightly colored posters that read 'Community Gardeners'."
@@ -641,7 +707,7 @@ label start:
     
     label long_intro:
         r "I'm the director of a nonprofit organization called CareWorks. We advocate for the needs of our neighborhood by setting up programs that help the people here." 
-        r "We help run things ike community food pantries and after-school activities for kids. My work with the Community Gardeners is part of that!"
+        r "We help run things like community food pantries and after-school activities for kids. My work with the Community Gardeners is part of that!"
         r "We do research to help present proposals to the City, so that we can convince them to use money and resources in ways that will help our community grow."
         r "I'd love your help gathering notes to improve our persuasive writing about why community gardens matter! We're going to share it with the Mayor when we're ready."
         r "There are several other community gardens in the city, but they're all pretty far from this neighborhood, and folks here could really use a reliable source of fresh food."
@@ -683,7 +749,7 @@ label start:
                 jump long_intro
 
     label ca_eval_riley:
-        $ eca = renpy.input("My persuasive ideas for the Mayor:")
+        $ eca = renpy.input("My persuasive ideas for the Mayor:", screen="argument_writing")
 
         $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Riley")
         $ log_http(current_user, action="PlayerInputToECA", view="riley", payload=ca_json)
@@ -709,6 +775,13 @@ label start:
         else:
 
             r "[ecaresponse]"
+
+        $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
+
+        if savedraft == True:
+            $ draft(eca)
+        else:
+            pass
 
         r "Are there other ideas you want to run by me?"
 
@@ -815,7 +888,7 @@ label start:
                 jump byeriley
 
     label foodknowledge:
-        $ eca = renpy.input("I'm wondering...")
+        $ eca = renpy.input("I'm wondering...", screen="argument_writing")
 
         $ ca_link, ca_json = agent_setup("Knowledge_FoodJustice", eca, "riley", "Riley")
         $ log_http(current_user, action="PlayerInputToECA", view="riley", payload=ca_json)
@@ -927,6 +1000,7 @@ label start:
     label amara_revisit:
         menu:
             "I'm trying to gather evidence about gardens.":
+                a "Oh, I'm full of facts. Maybe I can help!"
                 jump sciencequestions
             "I'm trying to gather evidence about parking [structure]s.":
                 jump parkingquestions
@@ -934,7 +1008,7 @@ label start:
                 jump amarabye
     
     label sciencequestions:
-        a "Oh, I'm full of facts. Maybe I can help! What are you curious about?"
+        a "What are you curious about?"
 
         menu: 
             "Why does genetic diversity in plants matter?":
@@ -948,14 +1022,52 @@ label start:
 
         label genetics:
             a "Oh, plant genetics are so interesting. Like people, plants have DNA that carries information about the different kinds of traits they have."
+            a "And just like with people, diversity makes plants stronger. Genetic diversity means that plants have lots of unique traits, so that a pest or weather change that harms one plant might not bother another."
+            a "When our local ecosystem has a large variety of plants with diverse genetics, the overall ecosystem is healthier and more resilient."
+            
+            menu:
+                "Tell me more!":
+                    jump genetics2
+                "I have a different question.":
+                    jump sciencequestions
+
+        label genetics2:
+            a "Okay! So the thing with big farms and genetic diversity is that many of them like to pick the strongest and best-producing plants to grow over and over."
+            a "For example, if all the big farms choose to grow the same type of strawberry plant because it grows big berries, then we start to lose some of the interesting local varieties that might be smaller, but have unique flavors or taste extra sweet."
+            a "Someday the big strawberry plant might not be able to grow very well as our environment changes, so we need to protect genetic diversity to protect our future food system!"
             jump sciencequestions
 
         label soil:
-            a " Soil is super important for the health of plants. Dirt just looks like dirt at first glance, but there are actually 14 different nutrients in the soil that can change how plants grow."
+            a "Soil is super important for the health of plants. Dirt just looks like dirt at first glance, but there are actually 14 different nutrients in the soil that can change how plants grow."
+            a "Different plants need different amounts of nutrients, but they all need the same ones - the big ones are nitrogen, phosphorus, and potassium. But calcium, magnesium, and sulfur are important too."
+            a "It's very important to keep track of the nutrients in the soil, because healthier soil can grow stronger plants, more food, and in some cases even healthier food."
+            
+            menu:
+                "Tell me more!":
+                    jump soil2
+                "I have a different question.":
+                    jump sciencequestions
+
+        label soil2:
+            a "Some people like to grow their own food, because then they can be in control of the soil quality and the kinds of pesticides that are used on the food they eat."
+            a "Learning to grow your own food can also help to teach people useful skills and knowledge about food science, health, and farming pratices!"
             jump sciencequestions
         
         label environment:
             a "For the ecosystem, gardens give insects and animals a home. They provide food for pollinators and can be especially helpful if they're full of native plants."
+            a "For our air, gardens help to filter pollution, especially if you have large plants like trees that can filter out lots of pollutants. Plants also produce oxygen for us to breathe."
+            a "Local gardens also let us grow food that doesn't need to be driven a long way in order to get to us - so they help to make our food system more sustainable."
+            
+            menu:
+                "Tell me more!":
+                    jump environment2
+                "I have a different question.":
+                    jump sciencequestions
+
+        label environment2:
+            a "Food systems are so big and complex, and there isn't just one right answer for how to get healthy food to people and how to do it well. But I love complicated problems! That's why I'm a scientist."
+            a "And every family is different - sometimes our family recipes need ingredients that aren't easy to find in the grocery store."
+            a "So we should ask ourselves: how do we make sure everyone can find the foods they need and want, so that everyone has a voice in how they grow and buy their food?"
             jump sciencequestions
 
     label parkingquestions:
@@ -982,6 +1094,9 @@ label start:
 
         show beehives travel at right
         with dissolve
+
+        $ renpy.take_screenshot()
+        $ renpy.save("1-1", save_name)
 
         if gardenvisit == False:
             narrator "You arrive at a community garden across town after a long bus ride. The garden is full of colorful fruits and vegetables growing in planter boxes and plots on the ground."
@@ -1152,7 +1267,7 @@ label start:
    
     label gardenquestions:
         w "What would you like to know about the garden?"
-        $ eca = renpy.input("I'm wondering...")
+        $ eca = renpy.input("I'm wondering...", screen="argument_writing")
 
         $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Wes")
         $ log_http(current_user, action="PlayerInputToECA", view="wes", payload=ca_json)
@@ -1203,7 +1318,7 @@ label start:
 
     label wes_ca:
         w "What would you like to know?"
-        $ eca = renpy.input("I'm wondering...")
+        $ eca = renpy.input("I'm wondering...", screen="argument_writing")
 
         $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Wes")
         $ log_http(current_user, action="PlayerInputToECA", view="wes", payload=ca_json)
@@ -1247,6 +1362,9 @@ label start:
 
         show cora concern at right
         with dissolve
+
+        $ renpy.take_screenshot()
+        $ renpy.save("1-1", save_name)
 
         if hivesvisit == False:
             narrator "There are lots of bees buzzing about as you approach the beehives. The beekeeper smiles warmly at you."
@@ -1352,7 +1470,7 @@ label start:
         jump nadia_questions
 
     label nadia_ca:
-        $ eca = renpy.input("I'm wondering...")
+        $ eca = renpy.input("I'm wondering...", screen="argument_writing")
 
         $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
         $ log_http(current_user, action="PlayerInputToECA", view="nadia", payload=ca_json)
@@ -1422,7 +1540,7 @@ label start:
 
     label x_1:
         x "Hi! Are you a gardener?"     
-        $ alexchat = 1
+        $ spoken_list.append("Alex")
 
         menu:
             "No, I'm just visiting.":
@@ -1469,17 +1587,25 @@ label start:
 
     label buzzbye_alex:
         x "Hahaha! Buzz you later!"
-        $ spoken_list.append("Alex")
+        $ alexchat = alexchat + 1
         jump bees_chatting
 
     label sadkid:
         x "Ohh..."
-        $ spoken_list.append("Alex")
+        $ alexchat = alexchat + 1
         jump bees_chatting
 
     label x_2:
         x "Buzzzz... buzz buzz buzz!"
+        menu:
+            "I have a question for you.":
+                jump questions_alex
+            "Nevermind, have fun!":
+                jump alex_buzz
+    
+    label alex_buzz:
         x "There's a bee by your head. I think it likes you!"
+        $ alexchat = alexchat + 1
 
         show tulip at left
         with dissolve
@@ -1497,11 +1623,83 @@ label start:
         show cora concern
         with dissolve 
 
-        c "Hello."  
-        $ corachat = 1
-        $ spoken_list.append("Cora")    
+        if corachat == 0:
+            jump cora_1
+        else:
+            jump cora_2
 
+    label cora_1:
+        c "Oh Alex, be careful! Don't get too close to the hives! There's so many of them..."
+        $ spoken_list.append("Cora")
+
+        menu:
+            "Not a fan of bees?":
+                jump coranext
+
+    label coranext:
+        c "Goodness, no. I know they're good for the environment and all but...ugh. Bugs are too creepy and crawly. Alex loves them, though."    
+
+        menu:
+            "They're pretty gentle, actually.":
+                jump gentlebees
+            "What do you think of the garden?":
+                jump corathoughts
+            "Enjoy the garden.":
+                jump byecora
+
+    label gentlebees:
+        c "Hm, well I'll have to take your word for it. I'm not becoming a beekeeper anytime soon."
+        c "I am curious about the garden though. They put up flyers all over our neighborhood about wanting to build another garden down the street from our apartment."
+
+        menu:
+            "What do you think of the garden?":
+                jump corathoughts
+            "Enjoy the garden.":
+                jump byecora
+
+    label corathoughts:
+        c "Other than the bees flying everywhere, it seems like a good place for the neighborhood."
+        c "It's been really hard lately to get across town to get fresh fruits and vegetables from the store, since we don't have a car."
+        c "And the stores just keep getting more expensive! My paycheck only goes so far. If we had a garden like this in our neighborhood, maybe I could grow some fresh food for the kids, y'know?"
+        c "I try my best to give them healthy things to eat, but on nights when I work late, I don't have time for much more than throwing a frozen meal in the microwave."
+        c "I don't know, maybe the garden would be just as tiring. But at least I would have food in my own backyard! That's more than we've got right now."
+
+        menu:
+            "I'm working to convince the Mayor to build a garden in your neighborhood.":
+                jump coragarden
+            "I'm trying to convince the Mayor to build a parking [structure] instead.":
+                jump coraparking
+            "Enjoy the garden.":
+                jump byecora
+
+    label coragarden:
+        c "Oh! That's great. Will you tell the Mayor the families in the neighborhood want a garden too?"
+        c "Maybe we will get to grow our own food after all. Alex will be so excited! We can learn about growing fresh fruits and vegetables together."
+        $ corachat = corachat + 1
         jump bees_chatting
+
+    label coraparking:
+        c "Oh. That won't really do anything for my family...we don't have a car anyway. I'd rather build something we can all use."
+        $ corachat = corachat + 1
+        jump bees_chatting
+
+    label byecora:
+        c "Thank you, dear. You too."
+        $ corachat = corachat + 1
+        jump bees_chatting
+
+    label cora_2:
+        menu:
+            "How's it going?":
+                jump corastress
+            "What do you think of the garden?":
+                jump corathoughts
+            "Enjoy the garden.":
+                jump byecora
+
+    label corastress:
+        c "Oh it's alright, Alex is just - ALEX! Do not touch the bee!!"
+        jump cora_2
 
     label emptylot:
         scene expression "[startplace]"
@@ -1517,6 +1715,9 @@ label start:
         
         show watson smile
         with dissolve
+
+        $ renpy.take_screenshot()
+        $ renpy.save("1-1", save_name)
 
         if emptylotvisit == False:
             narrator "The empty lot isn't much - just a wide patch of dirt. Elliot is exploring, likely imagining what a garden would look like here."
@@ -1772,7 +1973,7 @@ label start:
     label mayor_eval:
         m "I'd love to hear it. What have you found?"
 
-        $ eca = renpy.input("My persuasive argument for what the Mayor should do with the empty lot:")
+        $ eca = renpy.input("My persuasive argument for what the Mayor should do with the empty lot:", screen="argument_writing")
 
         $ ca_link, ca_json = agent_setup("FoodJustice_MayorEvaluation", eca, "mayor", "Mayor Watson")
         $ log_http(current_user, action="PlayerInputToECA", view="mayor", payload=ca_json)
@@ -1809,14 +2010,14 @@ label start:
 
             m "[ecaresponse]"
 
-        m "Do you have another argument to share?"
         $ mayor_attempts = mayor_attempts + 1
 
-        menu:
-            "I have a different argument to share.":
-                jump mayor_eval
-            "No, that's all.":
-                jump byemayor
+        $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
+
+        if savedraft == True:
+            $ draft(eca)
+        else:
+            pass
     
     label byemayor:
         m "Thank you for sharing your ideas with me. Engaged citizens make our community stronger!"
@@ -1834,11 +2035,23 @@ label start:
         with dissolve
 
         e "Welcome back! Did you find some interesting evidence for us to use in our pitch to the mayor?"
-        jump ideasharing
+
+        menu:
+            "Yeah! I've got a pretty persuasive argument for the mayor.":
+                jump ideasharing
+            "Some, but I think I need to find more.":
+                jump still_investigating
+
+    label still_investigating:
+        e "The sign of a great investigator is knowing when you need to learn more!"
+        e "The folks over at the Food Lab know a lot about soil and nutrients, so they could probably help us figure out what kind of evidence we need to gather to convince the mayor."
+        e "And the gardeners at the community garden across town know a whole lot about bees and plants. They could tell us more about what benefits a garden can bring to a neighborhood."
+        e "When you feel like you've gathered enough info to present our persuasive argument to the mayor, let me or Riley know, and we can workshop together!"
+        jump emptylot
 
     label ideasharing:
-        e "What are your ideas?"
-        $ eca = renpy.input("My ideas for the mayor:")
+        e "Sweet. So pretend I'm the mayor! Hey there good citizen! What do you think about this garden idea? Should I support it?"
+        $ eca = renpy.input("My ideas to persuade the mayor:", screen="argument_writing")
 
         $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Elliot")
         $ log_http(current_user, action="PlayerInputToECA", view="elliot", payload=ca_json)
@@ -1865,6 +2078,13 @@ label start:
 
             e "[ecaresponse]"
 
+        $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
+
+        if savedraft == True:
+            $ draft(eca)
+        else:
+            pass
+
         e "Are there other ideas you want to run by me?"
 
         menu:
@@ -1881,6 +2101,9 @@ label start:
         show tulip
         with dissolve
 
+        $ renpy.take_screenshot()
+        $ renpy.save("1-1", save_name)
+
         $ note_count = len(note_list)
 
         if rileychat > 0 and nadiachat > 0 and weschat > 0 and amarachat > 0 and note_count > 5:
@@ -1888,8 +2111,11 @@ label start:
             t "Great job sharing your ideas with the Mayor! How do you think it went?"
             jump choices_eval
 
+        elif rileychat == 0 or nadiachat == 0 or weschat == 0 or amarachat == 0:
+            t "Nice work sharing your argument! There are more folks around town we should talk to - let's make sure we include evidence from lots of different sources to be extra convincing!"
+            jump emptylot
         else:
-            t "Nice work sharing your argument! I bet you can make your argument even more persuasive if you talk to the rest of the folks in town and record their ideas in your notebook!"
+            t "Wonderful! You've been chatting with lots of different folks to improve your argument. Why don't you try taking some more notes in your notebook so we remember all of the most important parts of your argument?"
             jump emptylot
 
     label choices_eval:
@@ -1902,12 +2128,13 @@ label start:
                 jump convinced_endprep
 
     label needmore:
-        t "That's okay! Don't be discouraged. Keep exploring and gathering more evidence in your notebook, and see if you can make your argument stronger!"
+        t "That's okay! Don't be discouraged. A strong argument is going to need evidence from different sources, and it needs to cover different layers of the problem."
+        t "This empty lot decision is going to impact people, bees like me, and the environment. As you talk to folks, think about what layers might be missing in your argument."
         jump emptylot
 
     label maybeconvinced:
         if mayor_attempts > 3:
-            t "That's a good sign! I wonder if there are other people in town you could chat with to get more evidence?"
+            t "That's a good sign! I wonder if there are pieces of evidence in your notebook that you could add to your argument to make it more specific?"
             jump ending_game
         else:
             t "You're on the right track, then! Maybe there are a few more pieces of evidence you can gather in your notebook to make your argument more persuasive."
