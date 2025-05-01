@@ -111,7 +111,7 @@ screen say(who, what):
                 id "namebox"
                 style "namebox"
                 text who id "who"
-
+        
         text what id "what"
   
     imagebutton:
@@ -220,7 +220,7 @@ screen choice(items):
 
     vbox:
         for i in items:
-            textbutton i.caption action i.action
+            textbutton i.caption action [i.action, Function(narrator.add_history, kind="adv",who=__("Choice:"),what=__(i.caption)), Function(log_http, current_user, action="PlayerDialogueChoice", view="choicemenu", payload={"choice": i.caption})]
 
 
 style choice_vbox is vbox
@@ -1623,7 +1623,7 @@ style slider_slider:
 
 #### Custom screens for SciStory ################################
 ##  
-##  Attempts to create screens to support learning!
+##  Screens to support learning!
 ##  Notebook to collect evidence, idea board, etc.
 ##
 #################################################################
@@ -1659,14 +1659,16 @@ screen notebook():
         anchor (0.0,0.0)
         pos (0.325,0.12)
         xsize 740
-        ysize 800
+        ysize 600
         scrollbars "vertical"
         mousewheel True
         vscrollbar_unscrollable "hide"
         has vbox style "note_text"
 
         for s, n, t in zip(source_list,note_list,tag_list):
-            text "Source: " + s + "   Tag: " + t id "source_tag":
+            if s is None:
+                $ s = ""
+            text "Source: " + s + "   Tag: " + t:
                 size 15
             text n id "note":
                 size 22
@@ -1690,6 +1692,34 @@ screen notebook():
             hover "images/takenotedark.png"
             action Show("noteentry")
             xpos -40
+
+    viewport:
+        anchor (0.0,0.0)
+        pos (0.325,0.7)
+        xsize 740
+        ysize 200
+        scrollbars "vertical"
+        mousewheel True
+        vscrollbar_unscrollable "hide"
+        has vbox style "note_text"
+        hbox:
+            text "Draft Argument for Mayor":
+                size 30
+            imagebutton:
+                tooltip "Edit draft argument"
+                idle "images/edit pencil.png"
+                hover "images/edit pencil dark.png"
+                action Show("argument_edit", None, notebook_argument)
+            text "  ":
+                size 8
+            imagebutton:
+                tooltip "Copy argument"
+                idle "images/copy.png"
+                hover "images/copy dark.png"
+                action Function(copy, notebook_argument)
+                # action CopyToClipboard(notebook_argument)
+        text notebook_argument:
+            size 22
 
     $ tooltip = GetTooltip()
     if tooltip:
@@ -1876,6 +1906,53 @@ screen note_edit(n, s, t):
                 text tooltip:
                     size 15  
 
+### Argument Revision in Notebook ###
+
+screen argument_edit(currentargument):
+    modal True
+    zorder 93
+    add "images/note background.png"
+
+    default newargument = currentargument
+    default argumentinput = ScreenVariableInputValue("newargument")
+
+    imagebutton:
+        pos (0.30, 0.17)
+        tooltip "Show/Hide Shortcuts"
+        idle "images/note clip.png"
+        hover "images/note clip.png"
+        action If(renpy.get_screen("keyboard_shortcuts"), true=Hide("keyboard_shortcuts"), false=Show("keyboard_shortcuts"))
+
+    viewport:
+        anchor (0.0,0.0)
+        pos (0.325,0.20)
+        xsize 720
+        ysize 400
+        scrollbars "vertical"
+        vscrollbar_unscrollable "hide"
+        mousewheel True
+        has vbox
+        text "Draft Argument: ":
+            size 20
+        input value argumentinput color "#037426" xmaximum 720 copypaste True multiline True
+    
+    textbutton "Save Revised Note":
+        pos (0.35, 0.6)
+        action (Function(editdraft, newargument), Hide("argument_edit"), Hide("keyboard_shortcuts"))
+    textbutton "Cancel":
+        pos (0.55, 0.6)
+        action (Hide("argument_edit"), Hide("keyboard_shortcuts"))  
+
+    $ tooltip = GetTooltip()
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+
+            frame:
+                xalign 0.5
+                text tooltip:
+                    size 15  
+
 #### Invisible Character Selection Screen ####
 
 screen characterselect3(c_left, c_center, c_right):
@@ -1937,7 +2014,7 @@ screen learningbuttons():
             tooltip "Notebook"
             idle "images/notebook.png"
             hover "images/notebook dark.png"
-            action Show("notebook")
+            action (Function(retaindata), Show("notebook"))
 
         text "\n":
                 size 8
@@ -1958,3 +2035,18 @@ screen learningbuttons():
                 text tooltip:
                     size 15
 
+#### Custom Input Screen for Long Entries ####
+
+screen argument_writing(prompt):
+    add "gui/textbox.png" xpos 0 ypos .743
+    vbox:
+        anchor (0.0,0.0)
+        pos (0.2,0.76)
+        xsize 1100
+        ysize 250
+        text prompt
+        viewport:
+            scrollbars "vertical"
+            vscrollbar_unscrollable "hide"
+            mousewheel True
+            input color "#037426" xmaximum 1200 copypaste True multiline True
