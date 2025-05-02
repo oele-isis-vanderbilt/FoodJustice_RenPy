@@ -274,17 +274,20 @@ init python:
             renpy.log(f"{action}\n")
             renpy.log(f"{payload}\n")
     
-    def publish_to_syncflow(user: str):
+    def publish_to_syncflow(user: str, force: bool = False):
+        global current_user
         global published_to_syncflow
+        if user != current_user and current_user != "Unknown":
+            force = True
         if renpy.emscripten:
             import emscripten
-            if not published_to_syncflow:
+            if not force and published_to_syncflow:
+                return
+            else:
                 result = emscripten.run_script(f"window.syncFlowPublisher.startPublishing('{user}', '{user}')")
                 published_to_syncflow = True
 
     def after_load_callback():
-        global published_to_syncflow
-        published_to_syncflow = False
         global current_user
         if renpy.emscripten and current_user != "Unknown":
             import emscripten
@@ -302,7 +305,7 @@ label start:
     scene flowers muted
     with fade
 
-    $ current_user = renpy.input("Please enter your player ID")
+    $ user = renpy.input("Please enter your player ID")
     $ publish_to_syncflow(current_user)
 
     narrator "You open your eyes and find yourself surrounded by bright flowers and sweet-smelling fresh air. How did you get here?"
