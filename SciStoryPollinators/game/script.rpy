@@ -229,7 +229,7 @@ init python:
         log_http(current_user, action="PlayerSavedArgument", view=current_label, payload={
             "draft": argument,
         })
-        narrator.add_history(kind="adv",what="(You wrote this argument in your notebook.)")
+        narrator.add_history(kind="adv",who="Action",what="(You wrote this argument in your notebook.)")
         renpy.take_screenshot()
         renpy.save("1-1", save_name)
 
@@ -313,15 +313,15 @@ label start:
 
     menu:
         "I live in a city":
-            $ startplace = "empty lot city"
+            $ startplace = "city"
             $ structure = "garage"
            
         "I live in a rural town":
-            $ startplace = "empty lot rural"
+            $ startplace = "rural"
             $ structure = "lot"
         
         "I live in the suburbs":
-            $ startplace = "empty lot suburb" 
+            $ startplace = "suburb" 
             $ structure = "lot"
 
     $ log_http(current_user, action="PlayerLocationChoice", view="tulip", payload={"startplace": startplace})
@@ -532,7 +532,7 @@ label start:
                 return
 
     label begin:
-    scene expression "[startplace]"
+    scene expression "empty lot [startplace]"
     with fade
     $ currentlocation = "emptylot"
     show screen learningbuttons()
@@ -1702,7 +1702,7 @@ label start:
         jump cora_2
 
     label emptylot:
-        scene expression "[startplace]"
+        scene expression "empty lot [startplace]"
         with dissolve
         $ currentlocation = "emptylot"
         $ visited_list.append("Empty Lot")
@@ -1732,7 +1732,7 @@ label start:
         call screen characterselect3("elliot", "watson", "cyrus")
     
     label cyrus_chatting:
-        scene expression "[startplace]"
+        scene expression "empty lot [startplace]"
         with dissolve
 
         show cyrus smile
@@ -1892,7 +1892,7 @@ label start:
         jump emptylot
     
     label watson_chatting:
-        scene expression "[startplace]"
+        scene expression "empty lot [startplace]"
         with dissolve
 
         show watson smile
@@ -2028,7 +2028,7 @@ label start:
         jump emptylot
 
     label elliot_chatting:
-        scene expression "[startplace]"
+        scene expression "empty lot [startplace]"
         with dissolve
 
         show elliot smile
@@ -2095,7 +2095,7 @@ label start:
                 jump emptylot
 
     label tulip_endgame:
-        scene expression "[startplace]"
+        scene expression "empty lot [startplace]"
         with dissolve
 
         show tulip
@@ -2164,21 +2164,109 @@ label start:
             jump final_parking
 
     label final_garden:
-        scene garden
+        scene expression "garden [startplace]"
         with dissolve
 
-        t "We built a garden! Yay!"
+        show elliot smile at left
+        with dissolve
+
+        e "We did it! Thanks to all of your help, we were able to convince Mayor Watson to build a community garden for the neighborhood."
+
+        show riley smile at right
+        with dissolve
+
+        r "The garden is becoming a favorite hangout spot for everyone. Wes has been coming here to teach workshops on how to care for the plants, and our first harvest is almost ready!"
+
+        hide elliot smile
+        with dissolve
+
+        hide riley smile
+        with dissolve
+
+        show cora concern at right
+        with dissolve
+
+        show alex smile
+        with dissolve
+
+        c "You know, I had my doubts about the bees, but the garden has been really good for the neighborhood. The air even feels fresher around here!"
+
+        x "Wes is teaching me how to grow tomatoes! We planted some seeds in the spring, and now they're HUGE!"
+
+        show victor smile at left
+        with dissolve
+
+        v "Wes is such a great teacher! I've been learning too, and the veggies are almost ready for soup season!"
+
+        hide victor smile
+        with dissolve
+
+        hide alex smile
+        with dissolve
+
+        hide cora concern
+        with dissolve
+
+        show tulip
+        with dissolve
+
+        t "The garden has been wonderful for the bees, too! Nadia helped the community plant some native flowers, so we have lots of tasty food to choose from."
+        t "It seems like the people here are really happy to have fresh, healthy food to grow in their backyard! You should be proud of all the work you did to convince the mayor that this was the best plan."
+        t "I'll see you around, human friend. Thanks for bee-ing a part of our community! Hehe."
+
+        hide tulip
+        with dissolve
+
         jump end
 
     label final_parking:
-        scene empty lot
+        scene expression "parking [startplace]"
         with dissolve
 
-        cy "We built a parking [structure]!"
+        show cyrus smile at left
+        with dissolve
+
+        show watson smile at right
+        with dissolve
+
+        cy "Look at that beautiful parking [structure]! See kid, I told you this would be a great addition to the neighborhood."
+
+        m "This really has been a great economic investment for the neighborhood. More people from out of town are visiting, which has been great for the local businesses."
+
+        hide cyrus smile
+        with dissolve
+
+        hide watson smile
+        with dissolve
+
+        show elliot smile at left
+        with dissolve
+
+        e "Well, I guess the mayor is happy with his choice. A grocery store never moved in though, so it feels like this is good for business but not really good for the people who live here."
+
+        show cora concern at right
+        with dissolve
+
+        c "We don't own a car, so the parking [structure] hasn't done much for us. The streets are also so busy now that I worry about Alex playing outside."
+
+        hide cora concern
+        with dissolve
+
+        hide elliot smile
+        with dissolve
+
+        show tulip
+        with dissolve
+
+        t "Hmm, it seems like some folks are happy with the parking [structure], but it didn't solve all the problems."
+        t "For the bees, there isn't a lot of green space left around here, so we won't find much food. The air is also getting a little polluted lately."
+        t "We're going to head out and find a different neighborhood to explore that might have more food for us."
+        t "Thanks for bee-ing my human friend! Hehe. I'll see you around!"
+
         jump end
 
     label end:
-        narrator "Thanks for playing!"
+        narrator "Thanks for playing! Raise your hand to let the researchers know that you're finished."
 
     # This ends the game.
 
