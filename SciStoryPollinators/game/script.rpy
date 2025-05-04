@@ -5,7 +5,7 @@
 
 # regular character talking with dialogue at bottom of screen
 # use the letter to trigger their dialogue rather than typing out full name
-define e = Character("Elliot")
+define el = Character("Elliot")
 define a = Character("Amara")
 define r = Character("Riley")
 define w = Character("Wes")
@@ -556,17 +556,17 @@ label start:
 
     "Friendly Stranger" "Anyway, I'm glad you're here, new kid." 
 
-    e "I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our lot to those parking guys."
+    el "I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our lot to those parking guys."
 
     menu:
         "What parking guys?":
             jump parkingguys
     
     label parkingguys:
-        e "That guy over there in the suit is from CityPark. They want to turn our empty lot into a big parking [structure] for the neighborhood."
-        e "But me and the other Community Gardeners have been trying to convince Mayor Watson to donate the lot to our food justice project instead."
+        el "That guy over there in the suit is from CityPark. They want to turn our empty lot into a big parking [structure] for the neighborhood."
+        el "But me and the other Community Gardeners have been trying to convince Mayor Watson to donate the lot to our food justice project instead."
 
-        e "The parking [structure] makes money, but a community garden would be huge for this neighborhood!"
+        el "The parking [structure] makes money, but a community garden would be huge for this neighborhood!"
 
         show tulip at left
         with dissolve
@@ -584,9 +584,9 @@ label start:
         hide tulip
         with dissolve
 
-        e "Whoa, a bee just flew past your face! You know, I bet if we built a garden here, the bees would love it."
+        el "Whoa, a bee just flew past your face! You know, I bet if we built a garden here, the bees would love it."
 
-        e "The garden would be great for people too. The nearest grocery store is miles away, and most folks don't have a car."
+        el "The garden would be great for people too. The nearest grocery store is miles away, and most folks don't have a car."
 
         menu:
             "How can I help?":
@@ -599,9 +599,9 @@ label start:
                 jump talk_later
 
     label explain_problem:
-        e "Our food justice project needs space to build a community garden in our neighborhood, so that folks here can grow fresh food that doesn't cost so much."
-        e "Gardens are awesome, obviously, but for some reason the Mayor says he wants to see data about the benefits before making a decision."
-        e "I'm trying to gather some evidence to convince him, but I could really use some help."
+        el "Our food justice project needs space to build a community garden in our neighborhood, so that folks here can grow fresh food that doesn't cost so much."
+        el "Gardens are awesome, obviously, but for some reason the Mayor says he wants to see data about the benefits before making a decision."
+        el "I'm trying to gather some evidence to convince him, but I could really use some help."
         menu: 
             "What's food justice?":
                 jump foodjusticeexplain
@@ -609,14 +609,14 @@ label start:
                 jump talk_later
     
     label agreement:
-        e "Awesome! I really appreciate it."
+        el "Awesome! I really appreciate it."
         jump explain_problem
 
     label foodjusticeexplain:
-        e "Food justice is this idea that everybody deserves access to healthy food that they can afford."
-        e "Food in our community should also include stuff that makes sense for each person's culture, because not everyone eats the same kinds of foods."
-        e "So many people in the U.S. only have access to fast-food restaurants, gas station food, and other places that sell food that is super processed."
-        e "There's nothing wrong with eating that food sometimes, but if that's the only kind of food people in your neighborhood can buy that is affordable, then everyone has more trouble eating healthy and feeling good."
+        el "Food justice is this idea that everybody deserves access to healthy food that they can afford."
+        el "Food in our community should also include stuff that makes sense for each person's culture, because not everyone eats the same kinds of foods."
+        el "So many people in the U.S. only have access to fast-food restaurants, gas station food, and other places that sell food that is super processed."
+        el "There's nothing wrong with eating that food sometimes, but if that's the only kind of food people in your neighborhood can buy that is affordable, then everyone has more trouble eating healthy and feeling good."
         menu:
             "How can I help?":
                 jump explain_problem
@@ -624,9 +624,9 @@ label start:
                 jump talk_later
     
     label talk_later:
-        e "If you're interested, you should go talk with the Community Gardeners. Wes and Nadia, the head gardeners, are over at Westgate Community Garden on the other side of the city."
-        e "It would be so great if we could have a garden like that in our neighborhood! They even have beehives!"
-        e "You can also check out the science lab, where my friend Riley has been hanging out to learn about food science." 
+        el "If you're interested, you should go talk with the Community Gardeners. Wes and Nadia, the head gardeners, are over at Westgate Community Garden on the other side of the city."
+        el "It would be so great if we could have a garden like that in our neighborhood! They even have beehives!"
+        el "You can also check out the science lab, where my friend Riley has been hanging out to learn about food science." 
         $ spoken_list.append("Elliot")
 
     #grants achievements and tells the player it was granted
@@ -1809,7 +1809,7 @@ label start:
         show cyrus smile at right
         with dissolve
 
-        e "We're NOT going to love it, Mr. Murphy. The [structure] might make money for you and your company, but the people here need food, not a place to park cars."
+        el "We're NOT going to love it, Mr. Murphy. The [structure] might make money for you and your company, but the people here need food, not a place to park cars."
 
         cy "Now Elliot, we've been over this! When we get this [structure] built, I'm sure a big grocery store will move right into town, and wouldn't you rather just go buy your food rather than having to spend all that time growing it?"
 
@@ -1824,14 +1824,14 @@ label start:
     label unsure:
         cy "It's a complex problem, kid. Perhaps you should learn more about it before you fall in with these gardeners."
 
-        e "Ugh, ignore him. But it is a good idea to talk to the others in the neighborhood. We'll need their support to convince the Mayor!"
+        el "Ugh, ignore him. But it is a good idea to talk to the others in the neighborhood. We'll need their support to convince the Mayor!"
         $ spoken_list.append("Cyrus")
         jump emptylot
 
     label grocery:
 
-        e "I know, it would be great if a grocery store moved in. But big chain stores don't usually move into low-income neighborhoods like this one because they don't think they'll make enough money."
-        e "I'm not convinced a parking [structure] will change that."
+        el "I know, it would be great if a grocery store moved in. But big chain stores don't usually move into low-income neighborhoods like this one because they don't think they'll make enough money."
+        el "I'm not convinced a parking [structure] will change that."
 
         cy "You never know until you try! We've been gathering economic data on how parking [structure]s impact neighborhood growth. You'll need a lot of evidence to beat our pitch to the Mayor, kid."
 
@@ -1842,7 +1842,7 @@ label start:
                 jump bye_cy
 
     label cy_challenge:
-        e "That's right! We're working hard to build a persuasive argument for the Mayor to support the community garden project."
+        el "That's right! We're working hard to build a persuasive argument for the Mayor to support the community garden project."
 
         cy "Alright kiddo, whatever you say. Best of luck, and may the best argument win."
         $ spoken_list.append("Cyrus")
@@ -2034,7 +2034,7 @@ label start:
         show elliot smile
         with dissolve
 
-        e "Welcome back! Did you find some interesting evidence for us to use in our pitch to the mayor?"
+        el "Welcome back! Did you find some interesting evidence for us to use in our pitch to the mayor?"
 
         menu:
             "Yeah! I've got a pretty persuasive argument for the mayor.":
@@ -2043,14 +2043,14 @@ label start:
                 jump still_investigating
 
     label still_investigating:
-        e "The sign of a great investigator is knowing when you need to learn more!"
-        e "The folks over at the Food Lab know a lot about soil and nutrients, so they could probably help us figure out what kind of evidence we need to gather to convince the mayor."
-        e "And the gardeners at the community garden across town know a whole lot about bees and plants. They could tell us more about what benefits a garden can bring to a neighborhood."
-        e "When you feel like you've gathered enough info to present our persuasive argument to the mayor, let me or Riley know, and we can workshop together!"
+        el "The sign of a great investigator is knowing when you need to learn more!"
+        el "The folks over at the Food Lab know a lot about soil and nutrients, so they could probably help us figure out what kind of evidence we need to gather to convince the mayor."
+        el "And the gardeners at the community garden across town know a whole lot about bees and plants. They could tell us more about what benefits a garden can bring to a neighborhood."
+        el "When you feel like you've gathered enough info to present our persuasive argument to the mayor, let me or Riley know, and we can workshop together!"
         jump emptylot
 
     label ideasharing:
-        e "Sweet. So pretend I'm the mayor! Hey there good citizen! What do you think about this garden idea? Should I support it?"
+        el "Sweet. So pretend I'm the mayor! Hey there good citizen! What do you think about this garden idea? Should I support it?"
         $ eca = renpy.input("My ideas to persuade the mayor:", screen="argument_writing")
 
         $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Elliot")
@@ -2071,12 +2071,12 @@ label start:
 
         if ecasplit == True:
 
-            e "[ecaresponse1]"
-            e "[ecaresponse2]"
+            el "[ecaresponse1]"
+            el "[ecaresponse2]"
 
         else:
 
-            e "[ecaresponse]"
+            el "[ecaresponse]"
 
         $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
 
@@ -2085,13 +2085,13 @@ label start:
         else:
             pass
 
-        e "Are there other ideas you want to run by me?"
+        el "Are there other ideas you want to run by me?"
 
         menu:
             "I have more evidence to share":
                 jump ideasharing
             "That's all for now.":
-                e "Okay! Let me know if you find new evidence later!"
+                el "Okay! Let me know if you find new evidence later!"
                 jump emptylot
 
     label tulip_endgame:
@@ -2170,7 +2170,7 @@ label start:
         show elliot smile at left
         with dissolve
 
-        e "We did it! Thanks to all of your help, we were able to convince Mayor Watson to build a community garden for the neighborhood."
+        el "We did it! Thanks to all of your help, we were able to convince Mayor Watson to build a community garden for the neighborhood."
 
         show riley smile at right
         with dissolve
@@ -2242,7 +2242,7 @@ label start:
         show elliot smile at left
         with dissolve
 
-        e "Well, I guess the mayor is happy with his choice. A grocery store never moved in though, so it feels like this is good for business but not really good for the people who live here."
+        el "Well, I guess the mayor is happy with his choice. A grocery store never moved in though, so it feels like this is good for business but not really good for the people who live here."
 
         show cora concern at right
         with dissolve
