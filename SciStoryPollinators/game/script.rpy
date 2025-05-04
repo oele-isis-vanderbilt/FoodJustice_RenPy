@@ -148,7 +148,7 @@ init python:
     # if renpy.emscripten:
     # import emscripten
     # result = emscripten.run_script("window.syncFlowPublisher.startPublishing('umesh', 'umesh')")
-        
+    published_to_syncflow = False
 
     #### Custom functions to control adding, editing, and deleting notes, as well as logging to txt file #####
 
@@ -273,8 +273,31 @@ init python:
             renpy.log(timestamp)
             renpy.log(f"{action}\n")
             renpy.log(f"{payload}\n")
+    
+    def publish_to_syncflow(user: str, force: bool = False):
+        global current_user
+        global published_to_syncflow
+        if user != current_user and current_user != "Unknown":
+            force = True
+        if renpy.emscripten:
+            import emscripten
+            if not force and published_to_syncflow:
+                return
+            else:
+                result = emscripten.run_script(f"window.syncFlowPublisher.startPublishing('{user}', '{user}')")
+                published_to_syncflow = True
+
+    def after_load_callback():
+        global current_user
+        if renpy.emscripten and current_user != "Unknown":
+            import emscripten
+            emscripten.run_script(f"console.log('{current_user}')")
+            publish_to_syncflow(current_user)
 
 # The game starts here.
+
+label after_load:
+    $ after_load_callback()
 
 label start:
 
@@ -282,7 +305,8 @@ label start:
     scene flowers muted
     with fade
 
-    $ current_user = renpy.input("Please enter your player ID")
+    $ user = renpy.input("Please enter your player ID")
+    $ publish_to_syncflow(current_user)
 
     narrator "You open your eyes and find yourself surrounded by bright flowers and sweet-smelling fresh air. How did you get here?"
     

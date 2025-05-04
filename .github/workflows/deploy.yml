@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - load-save-bug-fix
   workflow_dispatch: # Trigger the workflow manually
     
   release: # Trigger the workflow on release events
@@ -35,6 +36,7 @@ jobs:
               git clone https://github.com/oele-isis-vanderbilt/FoodJustice_RenPy.git
               cd FoodJustice_RenPy
               sudo chmod 666 /var/run/docker.sock
+              git checkout -b load-save-bug-fix origin/load-save-bug-fix
               docker compose -p food-justice-deployment build food-justice-service
               docker compose -p food-justice-deployment down food-justice-service
               docker compose -p food-justice-deployment up -d food-justice-service

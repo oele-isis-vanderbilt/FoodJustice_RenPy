@@ -30,6 +30,7 @@ class SyncFlowPublisher{
     }  
 
     async startPublishing(identity, name) {
+        await this.stopPublishing();
         const TOKEN_ENDPOINT = `/syncflow/token?identity=${identity}`;
         const response = await fetch(
             TOKEN_ENDPOINT
@@ -86,6 +87,12 @@ class SyncFlowPublisher{
                 }
             );
             console.log("Published data to room");
+        }
+    }
+
+    async stopPublishing() {
+        if (this.room) {
+            await this.room.disconnect();
         }
     }
 }
