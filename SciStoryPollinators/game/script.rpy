@@ -629,9 +629,7 @@ label start:
         el "You can also check out the science lab, where my friend Riley has been hanging out to learn about food science." 
         $ spoken_list.append("Elliot")
 
-    #grants achievements and tells the player it was granted
-        $ achievement.grant("A New Friend")
-        $ renpy.notify("Achievement Unlocked: A New Friend")
+        $ unlock_achievement(" New Friend, 2.5"); 
 
         jump emptylot
 
