@@ -3,7 +3,7 @@ define config.developer = True
 default persistent.achievements = {}
 
 #this is the list of all the achievements throughout the game. each one should have a name, description, and an icon.
-#icons should be 64x64 pixels, and should be placed in the "icons" folder with the name "icon_achieve_#_name.png" where X is the number of the achievement and name is a shorted 1-word reference for the achievement
+#icons should be a 64x64 pixel white icon on a transparent background, and should be placed in the "icons" folder with the filename "icon_achieve_#_name.png" where X is the number of the achievement and name is a shorted 1-word reference for the achievement
 
 define achievement_list = [
     {
@@ -24,26 +24,6 @@ transform popup_fade:
     linear 0.3 alpha 1.0
     pause 2.2
     linear 0.3 alpha 0.0
-
-screen achievement_popup(name):
-    $ ach = [a for a in achievement_list if a["name"] == name][0]
-    frame at popup_fade:
-        background Frame("#222c", 12, 12)
-        xalign 0.98
-        yalign 0.98   # Bottom right corner
-        padding (24, 18)
-        xmaximum 420
-        yminimum 90
-        vbox:
-            spacing 8
-            hbox:
-                spacing 16
-                if ach["icon"]:
-                    add ach["icon"] size (64, 64)
-                vbox:
-                    text "Achievement Unlocked!" size 18 color "#ffffff" bold True
-                    text "[ach['name']]" size 26 color "#ffffff" bold True
-                    text ach["desc"] size 16 color "#ccc" xalign 0.0 itallic True
 
 init python:
     def unlock_achievement(name, pause_time=5):
