@@ -1,54 +1,53 @@
+define config.developer = True
+
+default persistent.achievements = {}
+
+#this is the list of all the achievements throughout the game. each one should have a name, description, and an icon.
+#icons should be 64x64 pixels, and should be placed in the "icons" folder with the name "icon_achieve_#_name.png" where X is the number of the achievement and name is a shorted 1-word reference for the achievement
+
+define achievement_list = [
+    {
+        "name": "A New Friend",
+        "desc": "Talk to Elliot for the first time.",
+        "icon": "icons/icon_achieve_1_friend.png"
+    },
+]
+
+#in script.rpy, you can unlock an achievement by calling the function unlock_achievement("name_of_achievement", pause_time=10) 
+#the pause_time is optional and defaults to 5 seconds, which is how long the achievement popup will be displayed before it fades out
+
+
+#everything below this point is the logic for displaying the achievement popup when an achievement is unlocked and shouldn't need to be touched for individual achievement edits
+
+transform popup_fade:
+    alpha 0.0
+    linear 0.3 alpha 1.0
+    pause 2.2
+    linear 0.3 alpha 0.0
+
+screen achievement_popup(name):
+    $ ach = [a for a in achievement_list if a["name"] == name][0]
+    frame at popup_fade:
+        background Frame("#222c", 12, 12)
+        xalign 0.98
+        yalign 0.98   # Bottom right corner
+        padding (24, 18)
+        xmaximum 420
+        yminimum 90
+        vbox:
+            spacing 8
+            hbox:
+                spacing 16
+                if ach["icon"]:
+                    add ach["icon"] size (64, 64)
+                vbox:
+                    text "Achievement Unlocked!" size 18 color "#ffffff" bold True
+                    text "[ach['name']]" size 26 color "#ffffff" bold True
+                    text ach["desc"] size 16 color "#ccc" xalign 0.0 itallic True
+
 init python:
-# each 'achievement(_)' block defines a specific achievement
-
-    config.achievements = [
-        Achievement(
-            "A New Friend", #achievement title
-            "Talk to Elliot for the first time.", #achievement description
-            "gui/achv_friend.png"  #path to achievement icon
-        ),
-        Achievement(
-            "Garden Expert",
-            "Convince the mayor to build a garden.",
-            "gui/achv_garden.png"
-        ),
-        Achievement(
-            "Bee Curious",
-            "Ask Nadia three questions about bees.",
-            "gui/achv_bee.png"
-        ),
-        Achievement(
-            "Food Scientist",
-            "Learn about food science from Amara.",
-            "gui/achv_science.png"
-        ),
-    ]
-
-    screen achievement_popup(name):
-    # Find the achievement object by name
-    $ ach = None
-    for a in config.achievements:
-        if a.name == name:
-            ach = a
-            break
-
-    if ach:
-        frame:
-            background "#222c"
-            xalign 0.98
-            yalign 0.1
-            padding (20, 20)
-            vbox:
-                if ach.icon:
-                    add ach.icon size (64, 64)
-                text "[ach.name]" size 28 color "#ffd700" bold True
-                text ach.description size 20 color "#fff"
-
-    #call this function in script.rpy to unlaoack an achievement! 
-    #name is the achievement title (case sensitive!); pause_time is a duration
-    init python:
-    def unlock_achievement(name):
-        achievement.grant(name)
+    def unlock_achievement(name, pause_time=5):
+        persistent.achievements[name] = True
         renpy.show_screen("achievement_popup", name)
-        renpy.pause(2.5, hard=True)
+        renpy.pause(pause_time, hard=True)
         renpy.hide_screen("achievement_popup")
