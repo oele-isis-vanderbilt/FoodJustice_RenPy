@@ -629,7 +629,7 @@ label start:
         el "You can also check out the science lab, where my friend Riley has been hanging out to learn about food science." 
         $ spoken_list.append("Elliot")
 
-        $ unlock_achievement(" New Friend, 2.5"); 
+        $ unlock_achievement("A New Friend"); 
 
         jump emptylot
 
