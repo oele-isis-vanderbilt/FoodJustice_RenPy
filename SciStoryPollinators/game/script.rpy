@@ -1,10 +1,4 @@
-﻿# The script of the game goes in this file.
-
-# Declare characters used by this game. The color argument colorizes the
-# name of the character.
-
-# regular character talking with dialogue at bottom of screen
-# use the letter to trigger their dialogue rather than typing out full name
+﻿#CHARACTER NAME DEFINIION
 define el = Character("Elliot")
 define a = Character("Amara")
 define r = Character("Riley")
@@ -17,18 +11,22 @@ define c = Character("Cora")
 define v = Character("Victor")
 define t = Character("Tulip")
 
-# variable set up
+# GLOBAL + GAME STATE VARIABLES
 default source_list = []
 default note_list = []
 default tag_list = []
 default visited_list = []
 default spoken_list = []
-default notebook_argument = "Write your draft argument here."
+default notebook_argument = "Draft your argument here."
 default customnotecount = 0
+
+##LOCATION VISIT TRACKING
 default emptylotvisit = False
 default foodlabvisit = False
 default gardenvisit = False
 default hivesvisit = False
+
+##CHARACTER TALK TRACKING
 default rileychat = 0
 default amarachat = 0
 default elliotchat = 0
@@ -39,13 +37,13 @@ default nadiachat = 0
 default victorchat = 0
 default alexchat = 0
 default corachat = 0
+
+##END GAME STATE TRACKING
 default argument_attempts = 0
 default mayor_attempts = 0
 default ca_context = ""
 default ecaresponse = ""
 default mayorconvinced = False
-
-### Code for switching out CA models for the AI agents. Uncomment the ca_link and ca_json for the model you want to use, comment others ###
 
 init python:
     current_label = None
@@ -57,6 +55,7 @@ init python:
         speakers = ", ".join(spoken_list)
         visits = ", ".join(visited_list)
         narrator.add_history(kind="adv",who="Player:",what=eca)
+### Code for switching out CA models for the AI agents. Uncomment the ca_link and ca_json for the model you want to use, comment others ###
 
         ## To use the Llama CA: ##
 
