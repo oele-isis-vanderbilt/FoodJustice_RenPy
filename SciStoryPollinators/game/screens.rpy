@@ -308,6 +308,9 @@ screen navigation():
         if main_menu:
 
             textbutton _("Start") action Start()
+            
+            textbutton "View Achievements" action ShowMenu("achievements_screen")
+
 
         else:
 
@@ -2052,48 +2055,3 @@ screen argument_writing(prompt):
             vscrollbar_unscrollable "hide"
             mousewheel True
             input color "#037426" xmaximum 1200 copypaste True multiline True
-
-screen achievement_popup(name):
-    zorder 200
-    $ ach = [a for a in achievement_list if a["name"] == name][0]
-    frame at popup_fade:
-        background Frame("#222c", 12, 12)
-        xalign 0.98
-        yalign 0.98   # Bottom right corner
-        padding (24, 18)
-        xmaximum 420
-        yminimum 90
-        vbox:
-            spacing 8
-            hbox:
-                spacing 16
-                if ach["icon"]:
-                    add ach["icon"] size (64, 64)
-                vbox:
-                    text "Achievement Unlocked!" size 18 color "#ffffff" bold True
-                    text "[ach['name']]" size 26 color "#ffffff" bold True
-                    text ach["desc"] size 16 color "#ccc" xalign 0.0 italic True
-
-
-screen achievements_screen():
-    tag menu
-    frame:
-        xalign 0.5
-        yalign 0.5
-        padding (40, 40)
-        vbox:
-            spacing 20
-            text "Achievements" size 40
-            for ach in achievement_list:
-                hbox:
-                    spacing 16
-                    if persistent.achievements.get(ach["name"], False):
-                        if ach["icon"]:
-                            add ach["icon"] size (48, 48)
-                        text ach["name"] size 24 color "#aeea00"
-                        text ach["desc"] size 16 color "#fff"
-                    else:
-                        add Solid("#444", xsize=48, ysize=48)
-                        text "???" size 24 color "#888"
-                        text "Locked" size 16 color "#888"
-            textbutton "Return" action Return()
