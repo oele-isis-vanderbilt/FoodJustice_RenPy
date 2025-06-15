@@ -12,12 +12,12 @@ define achievement_list = [
     },
         {
         "name": "Social Butterfly",
-        "desc": "You spoke to everyone in " + locationName + "!",
+        "desc": "You spoke to everyone in town!",
         "icon": "icons/___.png"
     },
         {
         "name": "",
-        "desc": "You visited all the locations in " + locationName + "!",
+        "desc": "You visited all the locations in town!",
         "icon": "icons/___.png"
     },
         {
@@ -34,11 +34,7 @@ define achievement_list = [
 
 #----------DO NOT EDIT ANYTHING BELOW THIS LINE UNLESS YOU KNOW WHAT YOU'RE DOING----------
 
-# Custom functions for checking global conditional achievements
-init python: 
-    def all_characters_achieve()
-        if "Elliot" in spoken_list and "marra" in spoken_list and "Riley" in spoken_list and "Wes" in spoken_list and "Nadia" in spoken_list and "Mayor Watson" in spoken_list and "Cyrus" in spoken_list and "Alex" in spoken_list and "Cora" in spoken_list and "Victor" in spoken_list and "Tulip" in spoken_list:
-    $ unlock_achievement("Talk of the Town")
+
 
 #everything below this point is the logic for displaying the achievement popup when an achievement is unlocked and shouldn't need to be touched for individual achievement edits
 
@@ -119,8 +115,9 @@ screen achievements_screen():
                                             else:
                                                 text ach["name"] size 20 color "#888"
                                                 text ach["desc"] size 14 color "#bbb"
-                            if not persistent.achievements.get(ach["name"], False):
-                                add Solid("#8888", xsize=500, ysize=80) xpos 0 ypos 0
+                                # Overlay must be inside the fixed block, after the frame!
+                                if not persistent.achievements.get(ach["name"], False):
+                                    add Solid("#8888", xsize=500, ysize=80) xpos 0 ypos 0
                     null width 500  # right spacer to center
             else:
                 # Two columns, up to 7 per column
@@ -154,6 +151,6 @@ screen achievements_screen():
                                                 else:
                                                     text ach["name"] size 20 color "#888"
                                                     text ach["desc"] size 14 color "#bbb"
-                                    if not persistent.achievements.get(ach["name"], False):
-                                        add Solid("#8888", xsize=500, ysize=80) xpos 0 ypos 0
+                                        if not persistent.achievements.get(ach["name"], False):
+                                            add Solid("#8888", xsize=500, ysize=80) xpos 0 ypos 0
             textbutton "Return" action Return() xalign 0.5
