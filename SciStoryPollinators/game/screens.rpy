@@ -2030,6 +2030,12 @@ screen learningbuttons():
             hover "images/bee button dark.png"
             action Call("tulipchat", from_current = True)
 
+        imagebutton:
+            tooltip "Achievements"
+            idle "images/___.png"
+            hover "images/__.png"
+            # action (Function(retaindata), Show("achievements_screen")"
+
     $ tooltip = GetTooltip()
     if tooltip:
         nearrect:
