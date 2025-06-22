@@ -11,6 +11,20 @@ define c = Character("Cora")
 define v = Character("Victor")
 define t = Character("Tulip")
 
+define character_dictionary = [
+    { "variable": el, "name": "Elliot",        "chats": 0, "spoken": False },
+    { "variable": a,  "name": "Amara",         "chats": 0, "spoken": False },
+    { "variable": r,  "name": "Riley",         "chats": 0, "spoken": False },
+    { "variable": w,  "name": "Wes",           "chats": 0, "spoken": False },
+    { "variable": n,  "name": "Nadia",         "chats": 0, "spoken": False },
+    { "variable": m,  "name": "Mayor Watson",  "chats": 0, "spoken": False },
+    { "variable": cy, "name": "Cyrus",         "chats": 0, "spoken": False },
+    { "variable": x,  "name": "Alex",          "chats": 0, "spoken": False },
+    { "variable": c,  "name": "Cora",          "chats": 0, "spoken": False },
+    { "variable": v,  "name": "Victor",        "chats": 0, "spoken": False },
+    { "variable": t,  "name": "Tulip",         "chats": 0, "spoken": False },
+]
+
 # GLOBAL + GAME STATE VARIABLES
 default source_list = []
 default note_list = []
@@ -25,18 +39,6 @@ default emptylotvisit = False
 default foodlabvisit = False
 default gardenvisit = False
 default hivesvisit = False
-
-##CHARACTER TALK TRACKING
-default rileychat = 0
-default amarachat = 0
-default elliotchat = 0
-default weschat = 0
-default mayorchat = 0
-default cyruschat = 0
-default nadiachat = 0
-default victorchat = 0
-default alexchat = 0
-default corachat = 0
 
 ##END GAME STATE TRACKING
 default argument_attempts = 0
