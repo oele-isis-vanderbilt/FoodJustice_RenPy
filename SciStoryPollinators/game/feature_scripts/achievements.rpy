@@ -6,54 +6,48 @@ default persistent.achievements = {}
 
 define achievement_list = [
     {
-        "name": "A New Friend", ##NAMES should have a MAX of 38 characters (including spaces)
-        "desc": "Talk to Elliot for the first time.", ##DESCRIPTIONS should have a max of 56 characters (including spaces)
-        "icon": "icons/icon_achieve_1_friend.png" ##ICONS should be a 64x64 pixel white icon on a transparent background, and should be placed in the "icons" folder with the filename "icon_achieve_#_name.png" where X is the number of the achievement and name is a shorted 1-word reference for the achievement
+        "key": "FRIEND",  # <-- comma after each field
+        "name": "A New Friend",
+        "desc": "Talk to Elliot for the first time.",
+        "icon": "icons/icon_achieve_1_friend.png"
     },
-        {
+    {
+        "key": "SOCIAL",
         "name": "Social Butterfly",
         "desc": "You spoke to everyone in town!",
         "icon": "icons/___.png"
     },
-        {
-        "name": "",
-        "desc": "You visited all the locations in town!",
-        "icon": "icons/___.png"
-    },
-        {
-        "name": "Well-Constructed",
-        "desc": "You drafted your first argument.",
-        "icon": "icons/___.png"
-    },
 ]
 
-#in script.rpy, you can unlock an achievement by calling the function 
-##unlock_achievement("name_of_achievement", pause_time=10) 
+# in script.rpy, you can unlock an achievement by calling the function 
+## unlock_achievement("name_of_achievement", pause_time=10) 
 
-#the pause_time is optional and defaults to 5 seconds, which is how long the achievement popup will be displayed before it fades out
+# the pause_time is optional and defaults to 5 seconds, which is how long the achievement popup will be displayed before it fades out
 
 #----------DO NOT EDIT ANYTHING BELOW THIS LINE UNLESS YOU KNOW WHAT YOU'RE DOING----------
 
 
 
-#everything below this point is the logic for displaying the achievement popup when an achievement is unlocked and shouldn't need to be touched for individual achievement edits
-
-transform popup_fade:
-    alpha 0.0
-    linear 0.3 alpha 1.0
-    pause 2.2
-    linear 0.3 alpha 0.0
+# everything below this point is the logic for displaying the achievement popup when an achievement is unlocked and shouldn't need to be touched for individual achievement edits
 
 init python:
-    def unlock_achievement(name, pause_time=5):
-        persistent.achievements[name] = True
-        renpy.show_screen("achievement_popup", name)
+    def unlock_achievement(key, pause_time=5):
+        persistent.achievements[key] = True
+        renpy.show_screen("achievement_popup", key)
         renpy.pause(pause_time, hard=True)
         renpy.hide_screen("achievement_popup")
 
-screen achievement_popup(name):
+    # SOCIAL BUTTERFLY achievement logic
+    ## called at the end of any conversation with any character
+    def achieve_social():
+        # Unlock if all characters in the dictionary have spoken == True
+        if all(char["spoken"] for char in character_dictionary):
+            if not persistent.achievements.get("SOCIAL", False):
+                unlock_achievement("SOCIAL")
+
+screen achievement_popup(key):
     zorder 200
-    $ ach = [a for a in achievement_list if a["name"] == name][0]
+    $ ach = [a for a in achievement_list if a["key"] == key][0]
     frame at popup_fade:
         background Frame("#222c", 12, 12)
         xalign 0.98
@@ -109,14 +103,14 @@ screen achievements_screen():
                                         vbox:
                                             yalign 0.5
                                             spacing 2
-                                            if persistent.achievements.get(ach["name"], False):
+                                            if persistent.achievements.get(ach["key"], False):
                                                 text ach["name"] size 20 color "#aeea00"
                                                 text ach["desc"] size 14 color "#fff"
                                             else:
                                                 text ach["name"] size 20 color "#888"
                                                 text ach["desc"] size 14 color "#bbb"
                                 # Overlay must be inside the fixed block, after the frame!
-                                if not persistent.achievements.get(ach["name"], False):
+                                if not persistent.achievements.get(ach["key"], False):
                                     add Solid("#8888", xsize=500, ysize=80) xpos 0 ypos 0
                     null width 500  # right spacer to center
             else:
@@ -145,12 +139,18 @@ screen achievements_screen():
                                             vbox:
                                                 yalign 0.5
                                                 spacing 2
-                                                if persistent.achievements.get(ach["name"], False):
+                                                if persistent.achievements.get(ach["key"], False):
                                                     text ach["name"] size 20 color "#aeea00"
                                                     text ach["desc"] size 14 color "#fff"
                                                 else:
                                                     text ach["name"] size 20 color "#888"
                                                     text ach["desc"] size 14 color "#bbb"
-                                        if not persistent.achievements.get(ach["name"], False):
+                                        if not persistent.achievements.get(ach["key"], False):
                                             add Solid("#8888", xsize=500, ysize=80) xpos 0 ypos 0
             textbutton "Return" action Return() xalign 0.5
+
+transform popup_fade:
+    alpha 0.0
+    linear 0.3 alpha 1.0
+    pause 2.2
+    linear 0.3 alpha 0.0
