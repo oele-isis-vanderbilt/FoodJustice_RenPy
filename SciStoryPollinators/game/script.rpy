@@ -33,6 +33,8 @@ default visited_list = []
 default spoken_list = []
 default notebook_argument = "Draft your argument here."
 default customnotecount = 0
+default startplace = ""
+default structure = ""
 
 ##LOCATION VISIT TRACKING
 default emptylotvisit = False
