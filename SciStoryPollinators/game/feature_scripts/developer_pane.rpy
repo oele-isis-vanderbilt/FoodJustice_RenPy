@@ -40,10 +40,10 @@ screen developer_overlay():
             vbox:
                 spacing 6
                 text "Developer Overlay" style "dev_title"
-                textbutton "Hide" action Function(toggle_dev_screen)
-                textbutton "Clear Log" action Function(dev_clear)
+                # textbutton "Hide" action Function(toggle_dev_screen)
+                # textbutton "Clear Log" action Function(dev_clear)
                 null height 8
-                text "Messages:" style "dev_label"
+                # text "Messages:" style "dev_label"
 
                 viewport:
                     draggable True

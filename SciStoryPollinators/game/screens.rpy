@@ -1999,8 +1999,8 @@ screen characterselect2(c_left, c_right):
 
 #### Travel and Notebook access - Always available buttons ####
 style side_button:
-    anchor (0.5, 0.5)
-    pos (0.95, 0.15)
+    anchor (1.0, 0.0)
+    pos (0.98, 0.02)
 
 screen learningbuttons():
     zorder 90
@@ -2008,8 +2008,8 @@ screen learningbuttons():
     vbox style "side_button":
         imagebutton:
             tooltip "Travel"
-            idle "images/travel.png"
-            hover "images/traveldark.png"
+            idle Transform("icons/button_travel_light.png", fit="contain", xsize=80)
+            hover Transform("icons/button_travel_dark.png", fit="contain", xsize=80)
             action Jump("travelmenu")
 
         text "\n":
@@ -2017,8 +2017,8 @@ screen learningbuttons():
 
         imagebutton:
             tooltip "Notebook"
-            idle "images/notebook.png"
-            hover "images/notebook dark.png"
+            idle Transform("icons/button_notebook_light.png", fit="contain", xsize=80)
+            hover Transform("icons/button_notebook_dark.png", fit="contain", xsize=80)
             action (Function(retaindata), Show("notebook"))
 
         text "\n":
@@ -2026,9 +2026,12 @@ screen learningbuttons():
 
         imagebutton:
             tooltip "Ask Tulip"
-            idle "images/bee button.png"
-            hover "images/bee button dark.png"
+            idle Transform("icons/button_bee_light.png", fit="contain", xsize=80)
+            hover Transform("icons/button_bee_dark.png", fit="contain", xsize=80)
             action Call("tulipchat", from_current = True)
+
+        text "\n":
+            size 8
 
         imagebutton:
             tooltip "Achievements"
