@@ -2040,9 +2040,9 @@ screen learningbuttons():
 
         imagebutton:
             tooltip "Achievements"
-            idle "images/___.png"
-            hover "images/__.png"
-            # action (Function(retaindata), Show("achievements_screen")"
+            idle Transform("icons/button_achieve_light.png", fit="contain", xsize=80)
+            hover Transform("icons/button_achieve_dark.png", fit="contain", xsize=80)
+            action (Function(retaindata), Show("achievements_screen"))
 
     $ tooltip = GetTooltip()
     if tooltip:
