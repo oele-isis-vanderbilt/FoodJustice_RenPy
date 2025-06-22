@@ -110,7 +110,8 @@ label start:
             t "Yay! Let's zoom!"
         "I guess.":
             t "Don't worry, I'll be right by your side if you need help! We're two bees in a pod. Hehe."
-    
+
+
     jump begin
 
     label travelmenu:
@@ -302,8 +303,12 @@ label start:
                 t "Don't bee a stranger! Hehe."
                 hide tulip
                 with dissolve
+                
+                #tracking speakers & checking for SOCIAL achievement
+                $ update_char_stats("Tulip")
+                $ achieve_social()
+                
                 return
-
     label begin:
     scene expression "empty lot [startplace]"
     with fade
@@ -400,9 +405,13 @@ label start:
         el "If you're interested, you should go talk with the Community Gardeners. Wes and Nadia, the head gardeners, are over at Westgate Community Garden on the other side of the city."
         el "It would be so great if we could have a garden like that in our neighborhood! They even have beehives!"
         el "You can also check out the science lab, where my friend Riley has been hanging out to learn about food science." 
-        $ spoken_list.append("Elliot")
 
-        $ unlock_achievement("A New Friend"); 
+        #FRIEND achievement unlock
+        $ unlock_achievement("FRIEND");
+
+        #checking for SOCIAL achievement; track recent speaker
+        $ update_char_stats("Elliot")
+        $ achieve_social()
 
         jump emptylot
 
@@ -440,14 +449,13 @@ label start:
         show riley smile
         with dissolve
 
-        if rileychat == 0:
+        if get_character_chats("Riley") == 0:
             jump riley_1
         else:
             jump riley_2
 
     label riley_1:
         r "Hi there! Elliot texted me and said he recruited you to help us gather notes for the Southport garden project."
-        $ rileychat = 1
         jump rileyintro
         
     label rileyintro:
@@ -474,7 +482,7 @@ label start:
             "I have a few ideas.":
                 jump riley_plan
             "Not yet, but I will.":
-                jump riley_later
+                jump bye_riley2
     
     label long_intro:
         r "I'm the director of a nonprofit organization called CareWorks. We advocate for the needs of our neighborhood by setting up programs that help the people here." 
@@ -487,7 +495,7 @@ label start:
             "I have a few ideas to help with that.":
                 jump riley_plan
             "I'm going to find some ideas to help!":
-                jump riley_later
+                jump bye_riley2
             "Hmm.":
                 jump not_convinced
     
@@ -504,7 +512,7 @@ label start:
             "I have a few ideas about the garden's benefits, too.":
                 jump riley_plan
             "I should go.":
-                jump riley_later
+                jump bye_riley2
 
     label riley_plan:
         r "I bet if we work together we can make a presentation so persuasive that it blows the socks off the Mayor and runs CityPark right out of town."
@@ -515,7 +523,7 @@ label start:
                 r "Sweet. What do you think we should say to convince the Mayor that a community garden is good for the neighborhood?"
                 jump ca_eval_riley
             "I should gather more notes first.":
-                jump riley_later
+                jump bye_riley2
             "Wait, but what is your job?":
                 jump long_intro
 
@@ -568,9 +576,12 @@ label start:
         jump foodlab
 
 
-    label riley_later:
+    label bye_riley2:
         r "Awesome! If you want to run any ideas by me before you talk to the Mayor, I'd be happy to help you workshop your argument. See ya!"
-        $ spoken_list.append("Riley")
+
+        #checking for SOCIAL achievement; track recent speaker
+        $ update_char_stats("Riley")
+        $ achieve_social()
         jump foodlab
     
     label riley_2:
@@ -687,7 +698,7 @@ label start:
     
     label byeriley:
         r "Keep doing great things! I'll be here if you need me."
-        $ rileychat = rileychat + 1
+        $ update_char_stats("Riley")
         jump foodlab
 
     label amara_chatting:
@@ -697,7 +708,7 @@ label start:
         show amara smile
         with dissolve
 
-        if amarachat == 0:
+        if get_character_chats("Amara") == 0:
             jump amara_1
         else:
             jump amara_2
@@ -705,11 +716,10 @@ label start:
     label amara_1:
 
         a "Hi! I'm Amara - I'm the lead scientist here at the food lab. Great to meet you."
-        $ amarachat = 1
         jump intro_amara_questions
 
     label intro_amara_questions:
-        default amara_menu = set()
+        $ amara_menu = set()
         menu:
             set amara_menu
             "What's a food scientist?":
@@ -719,7 +729,7 @@ label start:
             "What kind of stuff do you do here?":
                 jump lab_stuff
             "Nice to meet you! Gotta go.":
-                jump amara_later
+                jump bye_amara
 
     label foodscientist:
         a "Food scientists use chemistry, biology, and other sciences to study and analyze nutritional content like protein, fats, and vitamins."
@@ -758,14 +768,17 @@ label start:
         $ AddToSet(amara_menu, "What kind of stuff do you do here?")
         jump intro_amara_questions
 
-    label amara_later:
+    label bye_amara:
         a "Oh okay! Well you're welcome to hang out, let me know if you get curious about anything!"
-        $ spoken_list.append("Amara")
+      
+        #checking for SOCIAL achievement; track recent speaker
+        $ update_char_stats("Amara")
+        $ achieve_social()
+        
         jump foodlab
 
     label amara_2:
         a "Hey there! What are you up to?"
-        $ amarachat = amarachat + 1
         jump amara_revisit
 
     label amara_revisit:
@@ -776,7 +789,7 @@ label start:
             "I'm trying to gather evidence about parking [structure]s.":
                 jump parkingquestions
             "Actually, we should talk later.":
-                jump amarabye
+                jump byeamara
     
     label sciencequestions:
         a "What are you curious about?"
@@ -847,7 +860,8 @@ label start:
         a "Wes might know more - he did a lot of that research when he was building the Westgate community garden!"
         jump amara_revisit
 
-    label amarabye:
+    label byeamara:
+
         a "Have a great day! Let me know if I can help with your research."
         jump foodlab
 
@@ -893,7 +907,6 @@ label start:
         v "But the grocery stores here don't sell the kinds of vegetables that my family uses to make the soup extra flavorful and special."
         v "I really want to make a soup that tastes like home. I wonder if the community gardeners would let me grow my own vegetables here?"
         v "I don't even have a balcony at my apartment, much less a yard. But maybe if I lived near a garden, I could learn how to grow things."
-        $ victorchat = 1
 
     label victormenu:
         menu:
@@ -905,7 +918,11 @@ label start:
                 jump victoropinion
             "I'll talk to you later.":
                 v "Okay! See you later."
-                $ spoken_list.append("Victor")
+                
+                #checking for SOCIAL achievement; track recent speaker
+                $ update_char_stats("Victor")
+                $ achieve_social()
+
                 jump garden
 
     label victoropinion:
@@ -923,7 +940,11 @@ label start:
                 jump victormenu
             "I'll talk to you later.":
                 v "Okay! See you later."
-                $ spoken_list.append("Victor")
+
+                #checking for SOCIAL achievement; track recent speaker
+                $ update_char_stats("Victor")
+                $ achieve_social()
+
                 jump garden
             
     label heirloom:
@@ -958,7 +979,7 @@ label start:
         show wes smile
         with dissolve
 
-        if weschat == 0:
+        if get_character_chats("Wes") == 0:
             jump wes_1
         else:
             jump wes_2
@@ -966,7 +987,6 @@ label start:
     label wes_1:
         w "Hey there! Welcome to the Westport Community Garden. Elliot called and said you might come by."
         w "Feel free to explore the garden, and let me know if you are curious about anything."
-        $ weschat = 1
         jump wes_choices
 
     label wes_choices:
@@ -1068,7 +1088,11 @@ label start:
 
     label bye_wes:
         w "It was great talking with you. Come by anytime, kid."
-        $ spoken_list.append("Wes")
+
+        #checking for SOCIAL achievement; track recent speaker
+        $ update_char_stats("Wes")
+        $ achieve_social()
+
         jump garden
 
     label wes_2:
@@ -1084,7 +1108,7 @@ label start:
 
     label bye_wes2:
         w "No problem. Enjoy the garden!"
-        $ weschat = weschat + 1
+        $ update_char_stats("Wes")
         jump garden
 
     label wes_ca:
@@ -1128,7 +1152,7 @@ label start:
         show nadia smile at left
         with dissolve
 
-        show alex smile
+        show alex smile at right
         with dissolve
 
         show cora concern at right
@@ -1156,7 +1180,7 @@ label start:
         show nadia smile
         with dissolve 
 
-        if nadiachat == 0:
+        if get_character_chats("Nadia") == 0:            
             jump nadia_1
         else:
             jump nadia_2
@@ -1164,7 +1188,6 @@ label start:
     label nadia_1:
         n "Hi, I'm Nadia. I'm a beekeeper, though you can probably tell that from the outfit. I take care of the beehives in several community gardens around town." 
         n "If you have any questions about bees, plants, and pollination, I'd be happy to tell you what I know."
-        $ nadiachat = 1
         default nadia_menu = set()
         jump nadia_questions
       
@@ -1230,7 +1253,7 @@ label start:
             "I have a different question.":
                 jump nadia_ca
             "See you later.":
-                jump nadia_bye
+                jump bye_nadia
     
     label beekeeper:
         n "I grew up on a farm, and I always thought bees were amazing. They're so small, but also so coordinated and intelligent!"
@@ -1272,29 +1295,30 @@ label start:
             "I have more questions.":
                 jump nadia_ca
             "No, I should go.":
-                if nadiachat == 1:
-                    jump nadia_bye
+                if get_character_chats("Nadia") == 0:                    
+                    jump bye_nadia
                 else:
-                    jump byenadia2
+                    jump bye_nadia2
     
-    label nadia_bye:
+    label bye_nadia:
         n "It was nice to meet you. Let me know if you have any more questions as you explore the garden!"
-        $ spoken_list.append("Nadia")
+        $ update_char_stats("Nadia")
+        $ achieve_social()
 
         jump bees_chatting
 
     label nadia_2:
         n "Hello dear! Can I help you with anything?"
-        $ nadiachat = nadiachat + 1
 
         menu:
             "I have a question for you.":
                 jump nadia_ca
             "Actually, I'll talk to you later":
-                jump byenadia2
+                jump bye_nadia2
 
-    label byenadia2:
+    label bye_nadia2:
         n "No problem at all. Enjoy your visit!"
+        $ update_char_stats("Nadia")
         jump bees_chatting
 
     label alex_chatting:
@@ -1304,15 +1328,14 @@ label start:
         show alex smile
         with dissolve 
 
-        if alexchat == 0:
+        if get_character_chats("Alex") == 0:
             jump x_1
         else:
             jump x_2
 
     label x_1:
         x "Hi! Are you a gardener?"     
-        $ spoken_list.append("Alex")
-
+    
         menu:
             "No, I'm just visiting.":
                 jump alex_visitor
@@ -1339,7 +1362,7 @@ label start:
             "What kind of food do you wanna grow?":
                 jump alex_growfood
             "Buzz ya later!":
-                jump buzzbye_alex
+                jump bye_alex
 
     label gardenthink:
         x "I like this garden! There's so many bees. Mom thinks they're creepy but I like them!"
@@ -1356,14 +1379,17 @@ label start:
         x "I like blueberries too. We don't get the fresh ones lots but they're way juicier than the frozen bag ones."
         jump questions_alex
 
-    label buzzbye_alex:
+    label bye_alex:
         x "Hahaha! Buzz you later!"
-        $ alexchat = alexchat + 1
+
+        #checking for SOCIAL achievement; track recent speaker
+        $ update_char_stats("Alex")
+        $ achieve_social()
+
         jump bees_chatting
 
     label sadkid:
         x "Ohh..."
-        $ alexchat = alexchat + 1
         jump bees_chatting
 
     label x_2:
@@ -1376,14 +1402,13 @@ label start:
     
     label alex_buzz:
         x "There's a bee by your head. I think it likes you!"
-        $ alexchat = alexchat + 1
 
         show tulip at left
         with dissolve
 
         t "Oh I love that kid. By the way, do you need any help? You can always click my button to say hi if you get bored!"
 
-        $ renpy.call("tulip_help_menu")
+        $ call("tulip_help_menu")
 
         jump bees_chatting
 
@@ -1394,14 +1419,15 @@ label start:
         show cora concern
         with dissolve 
 
-        if corachat == 0:
+        if get_character_chats("Cora") == 0:
             jump cora_1
         else:
             jump cora_2
 
     label cora_1:
         c "Oh Alex, be careful! Don't get too close to the hives! There's so many of them..."
-        $ spoken_list.append("Cora")
+        $ update_char_stats("Cora")
+        $ achieve_social()
 
         menu:
             "Not a fan of bees?":
@@ -1416,17 +1442,19 @@ label start:
             "What do you think of the garden?":
                 jump corathoughts
             "Enjoy the garden.":
-                jump byecora
+                jump bye_cora
 
     label gentlebees:
         c "Hm, well I'll have to take your word for it. I'm not becoming a beekeeper anytime soon."
         c "I am curious about the garden though. They put up flyers all over our neighborhood about wanting to build another garden down the street from our apartment."
 
+       
+
         menu:
             "What do you think of the garden?":
                 jump corathoughts
             "Enjoy the garden.":
-                jump byecora
+                jump bye_cora
 
     label corathoughts:
         c "Other than the bees flying everywhere, it seems like a good place for the neighborhood."
@@ -1441,22 +1469,20 @@ label start:
             "I'm trying to convince the Mayor to build a parking [structure] instead.":
                 jump coraparking
             "Enjoy the garden.":
-                jump byecora
+                jump bye_cora
 
     label coragarden:
         c "Oh! That's great. Will you tell the Mayor the families in the neighborhood want a garden too?"
         c "Maybe we will get to grow our own food after all. Alex will be so excited! We can learn about growing fresh fruits and vegetables together."
-        $ corachat = corachat + 1
         jump bees_chatting
 
     label coraparking:
         c "Oh. That won't really do anything for my family...we don't have a car anyway. I'd rather build something we can all use."
-        $ corachat = corachat + 1
         jump bees_chatting
 
-    label byecora:
+    label bye_cora:
         c "Thank you, dear. You too."
-        $ corachat = corachat + 1
+        $ update_char_stats("Cora")
         jump bees_chatting
 
     label cora_2:
@@ -1466,7 +1492,7 @@ label start:
             "What do you think of the garden?":
                 jump corathoughts
             "Enjoy the garden.":
-                jump byecora
+                jump bye_cora
 
     label corastress:
         c "Oh it's alright, Alex is just - ALEX! Do not touch the bee!!"
@@ -1509,7 +1535,7 @@ label start:
         show cyrus smile
         with dissolve
 
-        if cyruschat == 0:
+        if get_character_chats("Cyrus") == 0:
             jump cy_1
         else:
             jump cy_2
@@ -1517,7 +1543,6 @@ label start:
     label cy_1:
         cy "Hey there, kiddo. Cyrus Murphy, Marketing Executive for CityPark."
         cy "Nice to meet ya."
-        $ cyruschat = 1
 
         menu:
             "Great to meet you!":
@@ -1550,7 +1575,7 @@ label start:
             "We don't want a parking [structure].":
                 jump dislike_garage
             "I gotta go.":
-                jump bye_cy
+                jump bye_cyrus
 
     label cy_pitch:
         cy "This empty lot here is the future site of a CityPark Park Express [structure]! It will be a prime location to encourage new businesses to move in on this street."
@@ -1562,11 +1587,11 @@ label start:
             "We don't want a new parking [structure].":
                 jump dislike_garage
             "I gotta go.":
-                jump bye_cy
+                jump bye_cyrus
     
     label agree_garage:
         cy "That's what I'm talking about - you're a bright kid. Make sure to tell your friends all about CityPark and what a great choice we are for your neighborhood!"
-        jump bye_cy
+        jump bye_cyrus
     
     label dislike_garage:
         cy "Hey now, I know change can be scary, but just think about how much money the parking [structure] could make for the city!"
@@ -1596,7 +1621,9 @@ label start:
         cy "It's a complex problem, kid. Perhaps you should learn more about it before you fall in with these gardeners."
 
         el "Ugh, ignore him. But it is a good idea to talk to the others in the neighborhood. We'll need their support to convince the Mayor!"
-        $ spoken_list.append("Cyrus")
+        $ update_char_stats("Cyrus")
+        $ achieve_social()
+
         jump emptylot
 
     label grocery:
@@ -1610,18 +1637,22 @@ label start:
             "We'll find the evidence.":
                 jump cy_challenge
             "I need to go.":
-                jump bye_cy
+                jump bye_cyrus
 
     label cy_challenge:
         el "That's right! We're working hard to build a persuasive argument for the Mayor to support the community garden project."
 
         cy "Alright kiddo, whatever you say. Best of luck, and may the best argument win."
-        $ spoken_list.append("Cyrus")
+        $ update_char_stats("Cyrus")
+        $ achieve_social()
+
         jump emptylot
 
-    label bye_cy:
+    label bye_cyrus:
         cy "Great talking with you, kiddo! Take it easy."
-        $ spoken_list.append("Cyrus")
+        $ update_char_stats("Cyrus")
+        $ achieve_social()
+
         jump emptylot
 
     label cy_2:
@@ -1635,7 +1666,7 @@ label start:
             "Have you considered how car pollution might impact the neighborhood?":
                 jump cy_pollution
             "Nevermind, I should go.":
-                jump later_cy
+                jump bye_cyrus2
 
     label garage_benefits:
         cy "Ah, so you're coming around to our plan? Wonderful!"
@@ -1657,9 +1688,9 @@ label start:
         cy "What about them? The bees can just go somewhere else to find flowers. We should care more about the people here, and making the local economy stronger."
         jump cy_questions
 
-    label later_cy:
+    label bye_cyrus2:
+        $ update_char_stats("Cyrus")
         cy "Alright then. Tell your friends to sign up for our CityPark newsletter!"
-        $ cyruschat = cyruschat + 1
         jump emptylot
     
     label watson_chatting:
@@ -1669,7 +1700,7 @@ label start:
         show watson smile
         with dissolve
 
-        if mayorchat == 0:
+        if get_character_chats("Mayor") == 0:
             jump mayor_1
         else:
             jump mayor_2
@@ -1677,7 +1708,6 @@ label start:
     label mayor_1:
         m "Hello there! I'm Mayor Watson. I'm out here today gathering community opinions on the empty lot."
         m "Do you have any thoughts about it?"
-        $ mayorchat = 1
 
         menu:
             "I think you should let the Community Gardeners use the lot for growing food.":
@@ -1704,12 +1734,13 @@ label start:
 
     label mayor_request:
         m "If you gather any information you think I'd find interesting, feel free to come back and let me know!"
-        $ spoken_list.append("Mayor Watson")
+        $ update_char_stats("Mayor Watson")
+        $ achieve_social()
+
         jump emptylot
 
     label mayor_2:
         m "Hello there! What can I do for you?"
-        $ mayorchat = mayorchat + 1
 
         menu:
             "What kind of information are you looking for?":
@@ -1790,12 +1821,16 @@ label start:
         else:
             pass
     
-    label byemayor:
+    label bye_mayor:
         m "Thank you for sharing your ideas with me. Engaged citizens make our community stronger!"
+        $ update_char_stats("Mayor Watson")
+
         jump tulip_endgame
 
     label continue_search:
         m "Wonderful. I look forward to hearing your argument when it is ready to share."
+        $ update_char_stats("Mayor Watson")
+
         jump emptylot
 
     label elliot_chatting:
@@ -1818,6 +1853,7 @@ label start:
         el "The folks over at the Food Lab know a lot about soil and nutrients, so they could probably help us figure out what kind of evidence we need to gather to convince the mayor."
         el "And the gardeners at the community garden across town know a whole lot about bees and plants. They could tell us more about what benefits a garden can bring to a neighborhood."
         el "When you feel like you've gathered enough info to present our persuasive argument to the mayor, let me or Riley know, and we can workshop together!"
+        $ update_char_stats("Elliot")
         jump emptylot
 
     label ideasharing:
@@ -1863,6 +1899,8 @@ label start:
                 jump ideasharing
             "That's all for now.":
                 el "Okay! Let me know if you find new evidence later!"
+                $ update_char_stats("Elliot")
+
                 jump emptylot
 
     label tulip_endgame:
@@ -1877,12 +1915,12 @@ label start:
 
         $ note_count = len(note_list)
 
-        if rileychat > 0 and nadiachat > 0 and weschat > 0 and amarachat > 0 and note_count > 5:
+        if get_character_chats("Riley") > 0 and get_character_chats("Nadia") > 0 and get_character_chats("Wes") > 0 and get_character_chats("Amara") > 0 and note_count > 5:
 
             t "Great job sharing your ideas with the Mayor! How do you think it went?"
             jump choices_eval
 
-        elif rileychat == 0 or nadiachat == 0 or weschat == 0 or amarachat == 0:
+        elif get_character_chats("Riley") == 0 or get_character_chats("Nadia") == 0 or get_character_chats("Wes") == 0 or get_character_chats("Amara") == 0:
             t "Nice work sharing your argument! There are more folks around town we should talk to - let's make sure we include evidence from lots of different sources to be extra convincing!"
             jump emptylot
         else:
