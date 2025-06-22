@@ -1485,25 +1485,29 @@ define bubble.thoughtframe = Frame("gui/thoughtbubble.png", 55, 55, 55, 55)
 
 define bubble.properties = {
     "bottom_left" : {
-        "window_background" : Transform(bubble.frame, xzoom=1, yzoom=1),
+        "window_background" : bubble.frame,
+        "xzoom" : 1,
+        "yzoom" : 1,
         "window_bottom_padding" : 27,
     },
-
     "bottom_right" : {
-        "window_background" : Transform(bubble.frame, xzoom=-1, yzoom=1),
+        "window_background" : bubble.frame,
+        "xzoom" : -1,
+        "yzoom" : 1,
         "window_bottom_padding" : 27,
     },
-
     "top_left" : {
-        "window_background" : Transform(bubble.frame, xzoom=1, yzoom=-1),
+        "window_background" : bubble.frame,
+        "xzoom" : 1,
+        "yzoom" : -1,
         "window_top_padding" : 27,
     },
-
     "top_right" : {
-        "window_background" : Transform(bubble.frame, xzoom=-1, yzoom=-1),
+        "window_background" : bubble.frame,
+        "xzoom" : -1,
+        "yzoom" : -1,
         "window_top_padding" : 27,
     },
-
     "thought" : {
         "window_background" : bubble.thoughtframe,
     }
@@ -1998,7 +2002,6 @@ screen characterselect2(c_left, c_right):
         pos (0.8, 0.25)
         action Jump(c_right + "_chatting")
 
-
 #### Travel and Notebook access - Always available buttons ####
 style side_button:
     anchor (1.0, 0.0)
@@ -2015,7 +2018,7 @@ screen learningbuttons():
             action Jump("travelmenu")
 
         text "\n":
-                size 8
+            size 8
 
         imagebutton:
             tooltip "Notebook"
@@ -2024,7 +2027,7 @@ screen learningbuttons():
             action (Function(retaindata), Show("notebook"))
 
         text "\n":
-                size 8
+            size 8
 
         imagebutton:
             tooltip "Ask Tulip"
