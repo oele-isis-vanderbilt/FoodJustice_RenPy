@@ -267,6 +267,8 @@ screen quick_menu():
             textbutton _("Q.Save") action QuickSave()
             textbutton _("Q.Load") action QuickLoad()
             textbutton _("Prefs") action ShowMenu('preferences')
+            textbutton _("Dev") action Function(toggle_dev_screen)   # <-- Add this line
+
 
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
@@ -308,12 +310,17 @@ screen navigation():
         if main_menu:
 
             textbutton _("Start") action Start()
+            
+            textbutton "View Achievements" action ShowMenu("achievements_screen")
+
 
         else:
 
             textbutton _("History") action ShowMenu("history")
 
             textbutton _("Save") action ShowMenu("save")
+
+            textbutton "View Achievements" action ShowMenu("achievements_screen")
 
         textbutton _("Load") action ShowMenu("load")
 
@@ -1478,25 +1485,29 @@ define bubble.thoughtframe = Frame("gui/thoughtbubble.png", 55, 55, 55, 55)
 
 define bubble.properties = {
     "bottom_left" : {
-        "window_background" : Transform(bubble.frame, xzoom=1, yzoom=1),
+        "window_background" : bubble.frame,
+        "xzoom" : 1,
+        "yzoom" : 1,
         "window_bottom_padding" : 27,
     },
-
     "bottom_right" : {
-        "window_background" : Transform(bubble.frame, xzoom=-1, yzoom=1),
+        "window_background" : bubble.frame,
+        "xzoom" : -1,
+        "yzoom" : 1,
         "window_bottom_padding" : 27,
     },
-
     "top_left" : {
-        "window_background" : Transform(bubble.frame, xzoom=1, yzoom=-1),
+        "window_background" : bubble.frame,
+        "xzoom" : 1,
+        "yzoom" : -1,
         "window_top_padding" : 27,
     },
-
     "top_right" : {
-        "window_background" : Transform(bubble.frame, xzoom=-1, yzoom=-1),
+        "window_background" : bubble.frame,
+        "xzoom" : -1,
+        "yzoom" : -1,
         "window_top_padding" : 27,
     },
-
     "thought" : {
         "window_background" : bubble.thoughtframe,
     }
@@ -1991,11 +2002,10 @@ screen characterselect2(c_left, c_right):
         pos (0.8, 0.25)
         action Jump(c_right + "_chatting")
 
-
 #### Travel and Notebook access - Always available buttons ####
 style side_button:
-    anchor (0.5, 0.5)
-    pos (0.95, 0.15)
+    anchor (1.0, 0.0)
+    pos (0.98, 0.02)
 
 screen learningbuttons():
     zorder 90
@@ -2003,27 +2013,36 @@ screen learningbuttons():
     vbox style "side_button":
         imagebutton:
             tooltip "Travel"
-            idle "images/travel.png"
-            hover "images/traveldark.png"
+            idle Transform("icons/button_travel_light.png", fit="contain", xsize=80)
+            hover Transform("icons/button_travel_dark.png", fit="contain", xsize=80)
             action Jump("travelmenu")
 
         text "\n":
-                size 8
+            size 8
 
         imagebutton:
             tooltip "Notebook"
-            idle "images/notebook.png"
-            hover "images/notebook dark.png"
+            idle Transform("icons/button_notebook_light.png", fit="contain", xsize=80)
+            hover Transform("icons/button_notebook_dark.png", fit="contain", xsize=80)
             action (Function(retaindata), Show("notebook"))
 
         text "\n":
-                size 8
+            size 8
 
         imagebutton:
             tooltip "Ask Tulip"
-            idle "images/bee button.png"
-            hover "images/bee button dark.png"
+            idle Transform("icons/button_bee_light.png", fit="contain", xsize=80)
+            hover Transform("icons/button_bee_dark.png", fit="contain", xsize=80)
             action Call("tulipchat", from_current = True)
+
+        text "\n":
+            size 8
+
+        imagebutton:
+            tooltip "Achievements"
+            idle Transform("icons/button_achieve_light.png", fit="contain", xsize=80)
+            hover Transform("icons/button_achieve_dark.png", fit="contain", xsize=80)
+            action (Function(retaindata), Show("achievements_screen"))
 
     $ tooltip = GetTooltip()
     if tooltip:
