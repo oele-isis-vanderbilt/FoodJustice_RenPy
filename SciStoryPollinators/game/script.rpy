@@ -11,7 +11,7 @@ define c = Character("Cora")
 define v = Character("Victor")
 define t = Character("Tulip")
 
-define character_dictionary = [
+define character_directory = [
     { "variable": el, "name": "Elliot",        "chats": 0, "spoken": False },
     { "variable": a,  "name": "Amara",         "chats": 0, "spoken": False },
     { "variable": r,  "name": "Riley",         "chats": 0, "spoken": False },
@@ -25,10 +25,12 @@ define character_dictionary = [
     { "variable": t,  "name": "Tulip",         "chats": 0, "spoken": False },
 ]
 
-# GLOBAL + GAME STATE VARIABLES
+# GLOBAL NOTEBOOK LISTS 
 default source_list = []
 default note_list = []
 default tag_list = []
+
+#GLOBAL GAME STATE VARIABLES
 default visited_list = []
 default spoken_list = []
 default notebook_argument = "Draft your argument here."
