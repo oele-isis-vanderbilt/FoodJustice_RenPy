@@ -25,10 +25,7 @@ define character_directory = [
     { "variable": t,  "name": "Tulip",         "chats": 0, "spoken": False },
 ]
 
-# GLOBAL NOTEBOOK LISTS 
-default source_list = []
-default note_list = []
-default tag_list = []
+
 
 #GLOBAL GAME STATE VARIABLES
 default visited_list = []
