@@ -1,4 +1,9 @@
 #### Custom functions to control adding, editing, and deleting notes, as well as logging to txt file #####
+    # GLOBAL NOTEBOOK LISTS 
+default source_list = []
+default note_list = []
+default tag_list = []
+
 init python:
     import datetime
     from typing import Dict, Any, Optional
@@ -9,6 +14,7 @@ init python:
     # import emscripten
     # result = emscripten.run_script("window.syncFlowPublisher.startPublishing('umesh', 'umesh')")
     
+
 
     def label_callback(label, interaction):
         if not label.startswith("_"):
