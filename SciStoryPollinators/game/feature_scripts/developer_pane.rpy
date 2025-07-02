@@ -39,90 +39,91 @@ screen developer_overlay():
         frame:
             style "dev_frame"
             align (0.01, 0.01)
-            vbox:
-                # spacing 6
-                # text "Developer Overlay" style "dev_title"
-                # textbutton "Hide" action Function(toggle_dev_screen)
-                # textbutton "Clear Log" action Function(dev_clear)
-                # null height 8
-                # text "Messages:" style "dev_label"
-
-                # viewport:
-                #     draggable True
-                #     mousewheel True
-                #     ysize 100
-                #     vbox:
-                #         for msg in dev_screen_messages:
-                #             text msg style "dev_msg"
-                # null height 8
-                null height 12
-
-                text "Location States" style "dev_label"
-                null height 8
+            viewport:
+                draggable True
+                mousewheel True
+                scrollbars "vertical"
+                ysize 900  # Adjust as needed for your window size
                 vbox:
-                    spacing 4
-                    text "Hives Visited? [hivesvisit]" style "dev_msg"
-                    text "Lot Visited? [emptylotvisit]" style "dev_msg"
-                    text "Lab Visited? [foodlabvisit]" style "dev_msg"
-                    text "Garden Visited? [gardenvisit]" style "dev_msg"
-                    text "Starting Place: [startplace]" style "dev_msg"
+                    null height 12
 
+                    text "Game States:" style "dev_label"
                     null height 8
-
-                    text "Set Starting Place:" style "dev_label"
-                    null height 8
-                    
-                    hbox:
-                        spacing 8
-                        for _label, _value, _structure in [("City", "city", "garage"), ("Rural", "rural", "lot"), ("Suburb", "suburb", "lot")]:
-                            vbox:
-                                textbutton _label action [SetVariable("startplace", _value), SetVariable("structure", _structure)] selected (startplace == _value) style "dev_jump_button"
-                                if startplace == _value:
-                                    text "(structure: [_structure])" style "dev_msg"
-              
-                null height 12
-
-                text "Character Stats:" style "dev_label"
-                null height 8
-                vbox:
-                    spacing 4
-                    for char in character_directory:
-                        text "[char['name']] | chats = [char['chats']] | spoken = [char['spoken']]" style "dev_msg"
-               
-                null height 12
-
-                text "Game State Variables:" style "dev_label"
-                null height 8
-                vbox:
-                    spacing 4
-                    text "Argument Attempts: [argument_attempts]" style "dev_msg"
-                    text "Mayor Attempts: [mayor_attempts]" style "dev_msg"
-                    text "Notes: [len(note_list)]" style "dev_msg"
-                    text "Mayor Attempts: [mayor_attempts]" style "dev_msg"
-                    
-
-                    hbox:
-                        spacing 8
+                    vbox:
+                        spacing 4
+                        text "Argument Attempts: [argument_attempts]" style "dev_msg"
+                        text "Mayor Attempts: [mayor_attempts]" style "dev_msg"               
                         text "Mayor Convinced? [mayorconvinced]" style "dev_msg"
-                        textbutton "Toggle" action SetVariable("mayorconvinced", not mayorconvinced) style "dev_jump_button"                   
-                
-                null height 12
-               
-                text "Jump to Conversation:" style "dev_label"
-                null height 8
-                grid 2 dev_grid_rows:
+
+                        hbox:
+                            spacing 8
+                            textbutton "Toggle" action SetVariable("mayorconvinced", not mayorconvinced) style "dev_jump_button"                   
+
+                    null height 12
+
+                    text "Notebook:" style "dev_label"
+                    null height 8
+                    vbox:
+                        spacing 4
+                        $ total_notes = len(notebook)
+                        $ character_saved_notes = len([n for n in notebook if n.get("type") == "character-saved"])
+                        $ user_written_notes = len([n for n in notebook if n.get("type") == "user-written"])
+                        text "Total Note Count: [total_notes]" style "dev_msg"
+                        text "Character-Saved Notes: [character_saved_notes]" style "dev_msg"
+                        text "User-Written Notes: [user_written_notes]" style "dev_msg"
+                        text "Argument Edits: [argument_edits]" style "dev_msg"
+                        textbutton "Add Placeholder Note":
+                            action Function(note, "lorem ipsom...", "example speaker", ["tag1", "tag2"], "character-saved")
+                            style "dev_jump_button"
+
+                    null height 12
+
+                    text "Location States:" style "dev_label"
+                    null height 8
+                    vbox:
+                        spacing 4
+                        text "Hives Visited? [hivesvisit]" style "dev_msg"
+                        text "Lot Visited? [emptylotvisit]" style "dev_msg"
+                        text "Lab Visited? [foodlabvisit]" style "dev_msg"
+                        text "Garden Visited? [gardenvisit]" style "dev_msg"
+                        text "Starting Place: [startplace]" style "dev_msg"
+
+                        null height 8
+
+                        text "Set Starting Place:" style "dev_label"
+                        null height 8
+
+                        hbox:
+                            spacing 8
+                            for _label, _value, _structure in [("City", "city", "garage"), ("Rural", "rural", "lot"), ("Suburb", "suburb", "lot")]:
+                                vbox:
+                                    textbutton _label action [SetVariable("startplace", _value), SetVariable("structure", _structure)] selected (startplace == _value) style "dev_jump_button"
+                                    if startplace == _value:
+                                        text "(structure: [_structure])" style "dev_msg"
+
+                    null height 12
+
+                    text "Character States:" style "dev_label"
+                    null height 8
+                    vbox:
+                        spacing 4
+                        for char in character_directory:
+                            text "[char['name']] | chats = [char['chats']] | spoken = [char['spoken']]" style "dev_msg"
+
+                    null height 12
+
+                    text "Jump to Conversation:" style "dev_label"
+                    null height 8
+                    grid 2 dev_grid_rows:
                         spacing 4
                         for _btn_name, _btn_label in dev_char_labels:
                             textbutton _btn_name action Jump(_btn_label) style "dev_jump_button"
-                            
 
-                
-
-
+                    null height 12
 
 # Styles for the developer overlay
 style dev_frame is default:
-    background "#222f"   # More opaque dark background (f = 15/16, almost solid)
+    background "#222f"
     padding (10, 10, 10, 10)
     xalign 0.0
     yalign 0.0
