@@ -14,7 +14,13 @@ define achievement_list = [
     {
         "key": "SOCIAL",
         "name": "Social Butterfly",
-        "desc": "You spoke to everyone in town!",
+        "desc": "Speak to everyone in town!",
+        "icon": "icons/icon_achieve_1_friend.png"
+    },
+    {
+        "key": "ARGUMENT",
+        "name": "Well-Constructed ",
+        "desc": "Draft your first argument.",
         "icon": "icons/icon_achieve_1_friend.png"
     },
 ]
@@ -37,13 +43,16 @@ init python:
         renpy.pause(pause_time, hard=True)
         renpy.hide_screen("achievement_popup")
 
-    # SOCIAL BUTTERFLY achievement logic
-    ## called at the end of any conversation with any character
     def achieve_social():
         # Unlock if all characters in the dictionary have spoken == True
-        if all(char["spoken"] for char in character_dictionary):
+        if all(char["spoken"] for char in character_directory):
             if not persistent.achievements.get("SOCIAL", False):
                 unlock_achievement("SOCIAL")
+
+    def achieve_argument():
+        if argument_attempts >= 1:
+            if not persistent.achievements.get("ARGUMENT", False):
+                unlock_achievement("ARGUMENT")
 
     def safe_show_say():
         # Only show the say screen if in-game and not in the main menu
@@ -85,7 +94,7 @@ screen achievements_screen():
         xalign 0.5
         yalign 0.5
         padding (20, 20)
-        background Frame("#222c", 12, 12)
+        background Frame("#222222ed", 12, 12)
         has vbox
 
         # Small X button at top-right with padding
@@ -169,7 +178,6 @@ screen achievements_screen():
                                                 text ach["desc"] size 14 color "#bbb"
                                 if not persistent.achievements.get(ach["key"], False):
                                     add Solid("#8888", xsize=500, ysize=80) xpos 0 ypos 0
-        textbutton "Return" action Return() xalign 0.5
 
 transform popup_fade:
     alpha 0.0
