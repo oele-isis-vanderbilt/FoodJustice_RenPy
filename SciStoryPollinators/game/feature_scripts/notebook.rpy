@@ -1,20 +1,19 @@
 #### Custom functions to control adding, editing, and deleting notes, as well as logging to txt file #####
-    # GLOBAL NOTEBOOK LISTS 
-default source_list = []
-default note_list = []
-default tag_list = []
+
+# GLOBAL NOTEBOOK Variables 
+
+default notebook = []
+default note_id_counter = 0
+default notebook_argument = "Draft your argument here."
+default last_notebook_argument = "Draft your argument here."
+default argument_edits = 0
+default customnotecount = 0
 
 init python:
     import datetime
     from typing import Dict, Any, Optional
     import os
     import pygame.scrap
-    # Todo: Remove this later
-    # if renpy.emscripten:
-    # import emscripten
-    # result = emscripten.run_script("window.syncFlowPublisher.startPublishing('umesh', 'umesh')")
-    
-
 
     def label_callback(label, interaction):
         if not label.startswith("_"):
@@ -30,82 +29,93 @@ init python:
     def retaindata():
         renpy.retain_after_load()
 
-    def note(info, speaker, tag):
-        note_list.append(info)
-        source_list.append(speaker)
-        tag_list.append(tag)
+    def note(content, speaker, tag, note_type="character-saved"):
+        global notebook, note_id_counter
+        note_id = note_id_counter
+        notebook.append({
+            "id": note_id,
+            "source": speaker,
+            "content": content,
+            "tags": [tag] if isinstance(tag, str) else tag,
+            "type": note_type
+        })
+        note_id_counter += 1
         renpy.notify("Note Taken!")
-        noteindex = note_list.index(info)
-        notenumber = str(noteindex)
-        # log("Took note #" + notenumber + ": " + info + " (Source: " + speaker + ")")
         log_http(current_user, action="PlayerTookNote", view=current_label, payload={
-            "note": info,
+            "note": content,
             "source": speaker,
             "tag": tag,
-            "note_id": noteindex
+            "note_id": note_id,
+            "type": note_type
         })
-        narrator.add_history(kind="adv",who="You wrote a note:",what=info)
+        narrator.add_history(kind="adv", who="You wrote a note:", what=content)
         renpy.take_screenshot()
         renpy.save("1-1", save_name)
 
-    def deletenote(notetext):
-        noteindex = note_list.index(notetext)
-        notetext = note_list[noteindex]
-        note_source = source_list[noteindex]
-        del note_list[noteindex]
-        del source_list[noteindex]
-        del tag_list[noteindex]
-        renpy.notify("Note Deleted")
-        # log("Player deleted note: " + notetext)
-        log_http(
-            current_user,
-            action="PlayerDeletedNote",
-            view=current_label,
-            payload={"note": notetext, "source": note_source, "note_id": noteindex}
-        )
-        narrator.add_history(kind="adv",who="You erased a note:",what=notetext)
-        renpy.take_screenshot()
-        renpy.save("1-1", save_name)
-    
-    def editnote(oldtext, newnote, newsource, newtag):
-        noteindex = note_list.index(oldtext)
-        note_list[noteindex] = newnote
-        source_list[noteindex] = newsource
-        tag_list[noteindex] = newtag
-        renpy.notify("Note Revised")
-        notenumber = str(noteindex)
-        # log("Player edited note #" + notenumber + " to say: " + newnote + " (Source: " + newsource + ")")
-        log_http(
-            current_user,
-            action="PlayerEditedNote",
-            view=current_label,
-            payload={"note": newnote, "source": newsource, "tag": newtag, "note_id": noteindex}
-        )
-        narrator.add_history(kind="adv",who="You edited a note:",what=newnote)
-        renpy.take_screenshot()
-        renpy.save("1-1", save_name)
-        
+    def deletenote(note_id):
+        global notebook
+        note = next((n for n in notebook if n["id"] == note_id), None)
+        if note:
+            notebook = [n for n in notebook if n["id"] != note_id]
+            renpy.notify("Note Deleted")
+            log_http(
+                current_user,
+                action="PlayerDeletedNote",
+                view=current_label,
+                payload={"note": note["content"], "source": note["source"], "note_id": note_id}
+            )
+            narrator.add_history(kind="adv", who="You erased a note:", what=note["content"])
+            renpy.take_screenshot()
+            renpy.save("1-1", save_name)
+
+    def editnote(note_id, newnote, newsource, newtags):
+        global notebook
+        for n in notebook:
+            if n["id"] == note_id:
+                n["content"] = newnote
+                n["source"] = newsource
+                n["tags"] = [newtags] if isinstance(newtags, str) else newtags
+                renpy.notify("Note Revised")
+                log_http(
+                    current_user,
+                    action="PlayerEditedNote",
+                    view=current_label,
+                    payload={"note": newnote, "source": newsource, "tag": newtags, "note_id": note_id}
+                )
+                narrator.add_history(kind="adv", who="You edited a note:", what=newnote)
+                renpy.take_screenshot()
+                renpy.save("1-1", save_name)
+                break
+
     def draft(argument):
-        global notebook_argument
-        notebook_argument = argument
-        renpy.notify("Draft Argument Updated!")
-        log_http(current_user, action="PlayerSavedArgument", view=current_label, payload={
-            "draft": argument,
-        })
-        narrator.add_history(kind="adv",who="Action",what="(You wrote this argument in your notebook.)")
-        renpy.take_screenshot()
-        renpy.save("1-1", save_name)
+        global notebook_argument, last_notebook_argument, argument_edits
+        if argument != notebook_argument:
+            notebook_argument = argument
+            if argument != last_notebook_argument:
+                argument_edits += 1
+                last_notebook_argument = argument
+            renpy.notify("Draft Argument Updated!")
+            log_http(current_user, action="PlayerSavedArgument", view=current_label, payload={
+                "draft": argument,
+            })
+            narrator.add_history(kind="adv",who="Action",what="(You wrote this argument in your notebook.)")
+            renpy.take_screenshot()
+            renpy.save("1-1", save_name)
 
     def editdraft(newargument):
-        global notebook_argument
-        notebook_argument = newargument
-        renpy.notify("Draft Argument Edited!")
-        log_http(current_user, action="PlayerEditedArgument", view=current_label, payload={
-            "draft": newargument,
-        })
-        narrator.add_history(kind="adv",who="You edited your draft:",what=newargument)
-        renpy.take_screenshot()
-        renpy.save("1-1", save_name)
+        global notebook_argument, last_notebook_argument, argument_edits
+        if newargument != notebook_argument:
+            notebook_argument = newargument
+            if newargument != last_notebook_argument:
+                argument_edits += 1
+                last_notebook_argument = newargument
+            renpy.notify("Draft Argument Edited!")
+            log_http(current_user, action="PlayerEditedArgument", view=current_label, payload={
+                "draft": newargument,
+            })
+            narrator.add_history(kind="adv",who="You edited your draft:",what=newargument)
+            renpy.take_screenshot()
+            renpy.save("1-1", save_name)
 
     def log(action):
         timestamp = datetime.datetime.now()
