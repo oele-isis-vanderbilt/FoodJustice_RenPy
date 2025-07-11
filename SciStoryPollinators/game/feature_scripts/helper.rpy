@@ -19,3 +19,6 @@ init python:
                 return char["chats"]
         return 0
 
+label show_argument_screen:
+    call screen argument_writing("Why should the mayor care about this?")
+    return
