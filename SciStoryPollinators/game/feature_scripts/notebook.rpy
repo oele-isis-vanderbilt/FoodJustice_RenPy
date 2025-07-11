@@ -8,6 +8,9 @@ default notebook_argument = "Draft your argument here."
 default last_notebook_argument = "Draft your argument here."
 default argument_edits = 0
 default customnotecount = 0
+default copied_argument = ""
+
+default user_argument = ""
 
 init python:
     import datetime
@@ -25,6 +28,7 @@ init python:
 
     def copy(text):
         pygame.scrap.put(pygame.SCRAP_TEXT, text.encode("utf-8"))
+        copied_argment = text
 
     def retaindata():
         renpy.retain_after_load()
@@ -243,7 +247,6 @@ screen notebook():
                 idle "images/copy.png"
                 hover "images/copy dark.png"
                 action Function(copy, notebook_argument)
-                # action CopyToClipboard(notebook_argument)
         text notebook_argument:
             size 22
 
@@ -518,3 +521,52 @@ screen characterselect2(c_left, c_right):
         anchor (0.5, 0.0)
         pos (0.8, 0.25)
         action Jump(c_right + "_chatting")
+
+        #### Custom Input Screen for Long Entries ####
+
+screen argument_writing(prompt):
+    modal True
+    zorder 100  # Ensure it appears above other screens
+
+    # Dimmed overlay
+    add Solid("#0008")  # semi-transparent black
+    # Or: add "gui/overlay.png" if you have a custom background image
+
+    # Centered popup frame
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize 1000
+        ysize 400
+        padding (30, 20)
+        background Frame("gui/frame.png", 30, 30)  # Use your preferred GUI frame
+
+        vbox:
+            spacing 15
+            text prompt:
+                size 28
+                color "#ffffff"
+                xalign 0.0
+
+            viewport:
+                ysize 180
+                scrollbars "vertical"
+                mousewheel True
+                vscrollbar_unscrollable "hide"
+
+                input:
+                    color "#037426"
+                    xmaximum 940
+                    copypaste True
+                    multiline True
+                    value VariableInputValue("user_argument")
+
+            hbox:
+                spacing 40
+                xalign 0.0
+                textbutton "Copy from Notebook":
+                    action SetVariable("user_argument", notebook_argument)
+                textbutton "Submit":
+                    action [Function(draft, user_argument), Return()]
+                textbutton "Cancel":
+                    action Return()  # Returns None or current input state if needed
