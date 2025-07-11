@@ -19,31 +19,39 @@ init python:
                 return char["chats"]
         return 0
 
-label toggle_argument_screen:
-    if renpy.get_screen("argument_writing"):
-        hide screen argument_writing
-    else:
-        show screen argument_writing("Why should the mayor care?")
-    return
+    def toggle_argument_screen():
+        if renpy.get_screen("argument_writing"):
+            renpy.hide_screen("argument_writing")
+            if not renpy.get_screen("say"):
+                renpy.show_screen("say")
+            if not renpy.get_screen("quick_menu"):
+                renpy.show_screen("quick_menu")
+        else:
+            # Hide other UI layers
+            renpy.hide_screen("quick_menu")
+            renpy.hide_screen("say")
+            # Open the screen in a new context to prevent click-through
+            renpy.call_in_new_context("show_argument_writing", "Write your argument")
 
 
-label toggle_map_popup:
-    if renpy.get_screen("map_popup"):
-        hide screen map_popup
-    else:
-        show screen map_popup with dissolve
-    return
+    def toggle_map_popup():
+        if renpy.get_screen("map_popup"):
+            renpy.hide_screen("map_popup")
+        else:
+            renpy.show_screen("map_popup")
 
-label toggle_achievements_screen:
-    if renpy.get_screen("achievements_screen"):
-        hide screen achievements_screen
-    else:
-        show screen achievements_screen with dissolve
-    return
+    def toggle_achievements_screen():
+        if renpy.get_screen("achievements_screen"):
+            renpy.hide_screen("achievements_screen")
+        else:
+            renpy.show_screen("achievements_screen")
 
-label toggle_notebook:
-    if renpy.get_screen("notebook"):
-        hide screen notebook
-    else:
-        show screen notebook with dissolve
-    return
+    def toggle_notebook():
+        if renpy.get_screen("notebook"):
+            renpy.hide_screen("notebook")
+        else:
+            renpy.show_screen("notebook")
+
+label show_argument_writing(prompt):
+    call screen argument_writing(prompt)
+return
