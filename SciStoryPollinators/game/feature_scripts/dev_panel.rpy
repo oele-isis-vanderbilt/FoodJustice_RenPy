@@ -2,12 +2,12 @@ default dev_screen_enabled = False
 default dev_screen_messages = []
 
 init python:
-    def dev_print(msg):
-        dev_screen_messages.append(str(msg))
-        dev_screen_messages[:] = dev_screen_messages[-10:]
+    # def dev_print(msg):
+    #     dev_screen_messages.append(str(msg))
+    #     dev_screen_messages[:] = dev_screen_messages[-10:]
 
-    def dev_clear():
-        dev_screen_messages.clear()
+    # def dev_clear():
+    #     dev_screen_messages.clear()
 
     def toggle_dev_screen():
         global dev_screen_enabled
@@ -24,7 +24,7 @@ define dev_char_labels = [
     ("Alex", "alex_chatting"),
     ("Cora", "cora_chatting"),
     ("Cyrus", "cyrus_chatting"),
-    ("Mayor Watson", "watson_chatting"),
+    ("Mayor", "watson_chatting"),
     ("Tulip", "tulipchat"),
 ]
 
