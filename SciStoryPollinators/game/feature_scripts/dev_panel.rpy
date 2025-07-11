@@ -33,7 +33,7 @@ define dev_grid_rows = (len(dev_char_labels) + 1) // 2
 
 # The developer overlay screen
 screen developer_overlay():
-    zorder 2000  # Make sure this is higher than any other screen in your project
+    zorder 5000  # Make sure this is higher than any other screen in your project
 
     if dev_screen_enabled:
         frame:
