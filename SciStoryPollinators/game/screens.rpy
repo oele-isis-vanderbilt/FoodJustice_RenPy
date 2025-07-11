@@ -268,8 +268,7 @@ screen quick_menu():
             textbutton _("Q.Load") action QuickLoad()
             textbutton _("Prefs") action ShowMenu('preferences')
             textbutton _("Dev") action Function(toggle_dev_screen)   # <-- Add this line
-
-
+            textbutton _("QA Panel") action Call("toggle_qa_panel")
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.
