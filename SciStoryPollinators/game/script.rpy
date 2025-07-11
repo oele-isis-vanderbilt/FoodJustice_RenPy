@@ -20,7 +20,7 @@
         { "variable": r,  "name": "Riley",         "chats": 0, "spoken": False },
         { "variable": w,  "name": "Wes",           "chats": 0, "spoken": False },
         { "variable": n,  "name": "Nadia",         "chats": 0, "spoken": False },
-        { "variable": m,  "name": "Mayor Watson",  "chats": 0, "spoken": False },
+        { "variable": m,  "name": "Mayor",         "chats": 0, "spoken": False },
         { "variable": cy, "name": "Cyrus",         "chats": 0, "spoken": False },
         { "variable": x,  "name": "Alex",          "chats": 0, "spoken": False },
         { "variable": c,  "name": "Cora",          "chats": 0, "spoken": False },
@@ -31,8 +31,8 @@
     #GLOBAL GAME STATE VARIABLES
     default visited_list = []
     default spoken_list = []
-    default startplace = ""
-    default structure = ""
+    default startplace = "rural"
+    default structure = "lot"
 
     ##LOCATION VISIT TRACKING
     default emptylotvisit = False
@@ -52,6 +52,9 @@
     with fade
 
     $ current_user = renpy.input("Please enter your player ID")
+    
+    ##comment this out for impl
+    show screen learningbuttons()
 
     narrator "You open your eyes and find yourself surrounded by bright flowers and sweet-smelling fresh air. How did you get here?"
     
@@ -307,10 +310,10 @@
                 
                 return
     label begin:
+    show screen learningbuttons()
     scene expression "empty lot [startplace]"
     with fade
     $ currentlocation = "emptylot"
-    show screen learningbuttons()
 
     show elliot smile
     with dissolve
@@ -1697,7 +1700,7 @@
         show watson smile
         with dissolve
 
-        if get_character_chats("Mayor") == 0:
+        if get_character_chats("Mayor") < 1:
             jump mayor_1
         else:
             jump mayor_2
@@ -1731,7 +1734,7 @@
 
     label mayor_request:
         m "If you gather any information you think I'd find interesting, feel free to come back and let me know!"
-        $ update_char_stats("Mayor Watson")
+        $ update_char_stats("Mayor")
         $ achieve_social()
 
         jump emptylot
@@ -1820,13 +1823,13 @@
     
     label bye_mayor:
         m "Thank you for sharing your ideas with me. Engaged citizens make our community stronger!"
-        $ update_char_stats("Mayor Watson")
+        $ update_char_stats("Mayor")
 
         jump tulip_endgame
 
     label continue_search:
         m "Wonderful. I look forward to hearing your argument when it is ready to share."
-        $ update_char_stats("Mayor Watson")
+        $ update_char_stats("Mayor")
 
         jump emptylot
 
