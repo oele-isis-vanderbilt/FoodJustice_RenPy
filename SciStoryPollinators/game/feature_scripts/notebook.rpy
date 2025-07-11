@@ -9,7 +9,6 @@ default last_notebook_argument = "Draft your argument here."
 default argument_edits = 0
 default customnotecount = 0
 default copied_argument = ""
-
 default user_argument = ""
 
 init python:
@@ -17,7 +16,7 @@ init python:
     from typing import Dict, Any, Optional
     import os
     import pygame.scrap
-
+    
     def label_callback(label, interaction):
         if not label.startswith("_"):
             log_http(current_user, action=f"PlayerJumpedLabel({label}|{interaction})", view=label, payload=None)
@@ -522,24 +521,29 @@ screen characterselect2(c_left, c_right):
         pos (0.8, 0.25)
         action Jump(c_right + "_chatting")
 
-        #### Custom Input Screen for Long Entries ####
+
 
 screen argument_writing(prompt):
     modal True
-    zorder 100  # Ensure it appears above other screens
+    zorder 100
 
-    # Dimmed overlay
-    add Solid("#0008")  # semi-transparent black
-    # Or: add "gui/overlay.png" if you have a custom background image
+    default argumentinput = VariableInputValue("user_argument")  # FIXED
 
-    # Centered popup frame
+    button:
+        action NullAction()
+        xysize (config.screen_width, config.screen_height)
+        style "empty"  # No background
+    # This makes the button eat clicks and not let them pass through
+
+    add Solid("#0008")  # Optional overlay
+
     frame:
         xalign 0.5
         yalign 0.5
         xsize 1000
         ysize 400
         padding (30, 20)
-        background Frame("gui/frame.png", 30, 30)  # Use your preferred GUI frame
+        background Frame("gui/frame.png", 30, 30)
 
         vbox:
             spacing 15
@@ -554,19 +558,55 @@ screen argument_writing(prompt):
                 mousewheel True
                 vscrollbar_unscrollable "hide"
 
-                input:
-                    color "#037426"
-                    xmaximum 940
-                    copypaste True
-                    multiline True
-                    value VariableInputValue("user_argument")
+                button:
+                    action argumentinput.Toggle()
+                    input:
+                        value argumentinput
+                        style "argument_input"
+                        multiline True
+                        copypaste True
 
             hbox:
-                spacing 40
+                spacing 20
                 xalign 0.0
                 textbutton "Copy from Notebook":
+                    style "argument_button"
                     action SetVariable("user_argument", notebook_argument)
+
                 textbutton "Submit":
+                    style "argument_button"
                     action [Function(draft, user_argument), Return()]
+
                 textbutton "Cancel":
-                    action Return()  # Returns None or current input state if needed
+                    style "argument_button"
+                    action Return()
+
+
+# Input field style
+style argument_input is default:
+    background "#ffffff"
+    foreground "#000000"
+    padding (10, 10)
+    xmaximum 940
+    yminimum 180
+    font "DejaVuSans.ttf"
+    
+    size 20
+
+# Button style
+style argument_button is default:
+    background "#1558b0"
+    hover_background "#021b3c"
+    padding (10, 6)
+    xminimum 150
+    yminimum 40
+    font "DejaVuSans.ttf"
+    color "#ffffff"
+    size 18
+    bold True
+
+style argument_button_text is default:
+    bold True
+    color "#fff"
+    size 18
+    font "DejaVuSans.ttf"  
