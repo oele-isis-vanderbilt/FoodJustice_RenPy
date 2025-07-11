@@ -46,6 +46,7 @@
     default ca_context = ""
     default ecaresponse = ""
     default mayorconvinced = False
+    default current_user = ""
 
     # Show a background
     scene flowers muted
