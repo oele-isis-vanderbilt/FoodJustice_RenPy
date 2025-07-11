@@ -3,24 +3,10 @@ label toggle_qa_panel:
         hide screen qa_panel
     else:
         show screen qa_panel
-    return
-
-style qa_textbutton is default:
-    padding (12, 8, 12, 8)
-    background "#1558b0"             
-    hover_background "#021b3c"
-    focus_mask True               
-    xminimum 140
-    yminimum 40
-
-style qa_textbutton_text is default:
-    bold True
-    color "#fff"
-    size 18
-    font "DejaVuSans.ttf"   
+    return  
 
 screen qa_panel():
-    zorder 200
+    zorder 5000
     tag qa_panel
 
     frame:
@@ -46,16 +32,28 @@ screen qa_panel():
                     color "#ffffff"
 
                 textbutton "Write Argument Screen":
-                    action Call("show_argument_screen") style "qa_textbutton"
+                    action Call("toggle_argument_screen") style "qa_textbutton"
+
+                textbutton "Travel Screen":
+                    action Call("toggle_map_popup") style "qa_textbutton"
 
                 textbutton "Achievements":
-                    action [Function(retaindata), Show("achievements_screen")] style "qa_textbutton"
-
-                textbutton "Travel Menu":
-                    action Jump("travelmenu") style "qa_textbutton"
-
-                textbutton "Tulip Chat":
-                    action Call("tulipchat", from_current=True) style "qa_textbutton"
+                    action Call("toggle_achievements_screen") style "qa_textbutton"
 
                 textbutton "Open Notebook":
-                    action [Function(retaindata), Show("notebook")] style "qa_textbutton"
+                    action Call("toggle_notebook") style "qa_textbutton"
+
+
+style qa_textbutton is default:
+    padding (12, 8, 12, 8)
+    background "#1558b0"             
+    hover_background "#021b3c"
+    focus_mask True               
+    xminimum 140
+    yminimum 40
+
+style qa_textbutton_text is default:
+    bold True
+    color "#fff"
+    size 18
+    font "DejaVuSans.ttf" 
