@@ -7,7 +7,15 @@ label toggle_qa_panel:
 
 screen qa_panel():
     zorder 5000
+    modal True
     tag qa_panel
+
+    # Transparent click blocker
+    button:
+        action Hide("qa_panel")
+        xysize (config.screen_width, config.screen_height)
+        style "empty"
+
 
     frame:
         xalign 1.0 
@@ -30,18 +38,19 @@ screen qa_panel():
                 text "QA Tools":
                     size 22
                     color "#ffffff"
+                
 
                 textbutton "Write Argument Screen":
-                    action Call("toggle_argument_screen") style "qa_textbutton"
-
+                    action [Hide("qa_panel"), Function(toggle_argument_screen)] style "qa_textbutton"
                 textbutton "Travel Screen":
-                    action Call("toggle_map_popup") style "qa_textbutton"
-
+                    action [Hide("qa_panel"), Function(toggle_map_popup)] style "qa_textbutton"
                 textbutton "Achievements":
-                    action Call("toggle_achievements_screen") style "qa_textbutton"
-
+                    action [Hide("qa_panel"), Function(toggle_achievements_screen)] style "qa_textbutton"
                 textbutton "Open Notebook":
-                    action Call("toggle_notebook") style "qa_textbutton"
+                    action [Hide("qa_panel"), Function(toggle_notebook)] style "qa_textbutton"
+
+
+
 
 
 style qa_textbutton is default:
