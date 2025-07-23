@@ -171,7 +171,7 @@ style close_button:
 
 screen notebook():
     modal True
-    add "images/notebook page.png"
+    add "images/notebook_tall.png"
     zorder 92
 
     imagebutton:
@@ -275,7 +275,7 @@ screen keyboard_shortcuts():
 screen noteentry():
     modal True
     zorder 93
-    add "images/note background.png"
+    add "images/notebook_wide.png"
 
     if customnotecount == 0:
         default customnote = "Type ideas here"
@@ -364,7 +364,7 @@ screen note_edit(note_id, n, s, t):
 
     modal True
     zorder 93
-    add "images/note background.png"
+    add "images/notebook_wide.png"
 
     imagebutton:
         pos (0.30, 0.17)
@@ -439,7 +439,7 @@ screen note_edit(note_id, n, s, t):
 screen argument_edit(currentargument):
     modal True
     zorder 93
-    add "images/note background.png"
+    add "images/notebook_wide.png"
 
     default newargument = currentargument
     default argumentinput = ScreenVariableInputValue("newargument")
@@ -522,49 +522,43 @@ screen characterselect2(c_left, c_right):
         action Jump(c_right + "_chatting")
 
 
-
 screen argument_writing(prompt):
+
     modal True
     zorder 100
 
-    default argumentinput = VariableInputValue("user_argument")  # FIXED
+    default user_argument = ""
+    default argumentinput = ScreenVariableInputValue("user_argument")
 
     button:
         action NullAction()
         xysize (config.screen_width, config.screen_height)
-        style "empty"  # No background
-    # This makes the button eat clicks and not let them pass through
+        style "empty"
 
-    add Solid("#0008")  # Optional overlay
+    add "notebook_wide.png" xpos 0.5 ypos 0.5 anchor (0.5, 0.5) xsize 1000 ysize 750
 
     frame:
-        xalign 0.5
-        yalign 0.5
-        xsize 1000
-        ysize 400
-        padding (30, 20)
-        background Frame("gui/frame.png", 30, 30)
+        align (0.52, 0.5)
+        background "#23bb7900"
+        xsize 600
+        ysize 720
+        spacing 40
 
         vbox:
-            spacing 15
             text prompt:
                 size 28
-                color "#ffffff"
-                xalign 0.0
-
-            viewport:
-                ysize 180
-                scrollbars "vertical"
-                mousewheel True
-                vscrollbar_unscrollable "hide"
-
-                button:
-                    action argumentinput.Toggle()
-                    input:
-                        value argumentinput
-                        style "argument_input"
-                        multiline True
-                        copypaste True
+            
+            frame:
+                xsize 600
+                ysize 200
+                align (0.5, 0.5)
+                input:
+                    value argumentinput
+                    ymaximum 400
+                    xmaximum 600
+                    style "argument_input"
+                    copypaste True
+                    multiline True
 
             hbox:
                 spacing 20
@@ -581,20 +575,15 @@ screen argument_writing(prompt):
                     style "argument_button"
                     action Return()
 
-
 # Input field style
-style argument_input is default:
+style argument_input:
     background "#ffffff"
-    foreground "#000000"
-    padding (10, 10)
-    xmaximum 940
-    yminimum 180
     font "DejaVuSans.ttf"
-    
     size 20
+    color "#000000"
 
 # Button style
-style argument_button is default:
+style argument_button:
     background "#1558b0"
     hover_background "#021b3c"
     padding (10, 6)
@@ -605,8 +594,10 @@ style argument_button is default:
     size 18
     bold True
 
-style argument_button_text is default:
+style argument_button_text:
     bold True
     color "#fff"
     size 18
     font "DejaVuSans.ttf"  
+    xalign 0.5
+    yalign 0.5
