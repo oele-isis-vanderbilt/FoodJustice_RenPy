@@ -542,7 +542,6 @@ screen argument_writing(prompt):
         background "#23bb7900"
         xsize 600
         ysize 720
-        spacing 40
 
         vbox:
             text prompt:
