@@ -40,6 +40,12 @@ init python:
         else:
             renpy.show_screen("map_popup")
 
+    def toggle_question_input():
+        if renpy.get_screen("dialog_bubble_input"):
+            renpy.hide_screen("dialog_bubble_input")
+        else:
+            renpy.show_screen("dialog_bubble_input")
+
     def toggle_achievements_screen():
         if renpy.get_screen("achievements_screen"):
             renpy.hide_screen("achievements_screen")

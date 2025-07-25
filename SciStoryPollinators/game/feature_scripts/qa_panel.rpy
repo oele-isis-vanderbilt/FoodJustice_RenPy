@@ -39,7 +39,8 @@ screen qa_panel():
                     size 22
                     color "#ffffff"
                 
-
+                textbutton "Question-Asking Screen":
+                    action [Hide("qa_panel"), Function(toggle_question_input)] style "qa_textbutton"
                 textbutton "Write Argument Screen":
                     action [Hide("qa_panel"), Function(toggle_argument_screen)] style "qa_textbutton"
                 textbutton "Travel Screen":
@@ -48,10 +49,6 @@ screen qa_panel():
                     action [Hide("qa_panel"), Function(toggle_achievements_screen)] style "qa_textbutton"
                 textbutton "Open Notebook":
                     action [Hide("qa_panel"), Function(toggle_notebook)] style "qa_textbutton"
-
-
-
-
 
 style qa_textbutton is default:
     padding (12, 8, 12, 8)
