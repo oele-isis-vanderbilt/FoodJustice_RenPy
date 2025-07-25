@@ -101,9 +101,9 @@ screen achievements_screen():
         imagebutton:
             idle Transform("icons/button_exit-popup.png", xysize=(36,36))
             hover Transform("icons/button_exit-popup_hover.png", xysize=(36,36))
-            action [Return(), Function(safe_show_say)]
+            action Hide("achievements_screen")
             anchor (1.0, 0.0)
-            pos (0.98, 0.02)  # 2% padding from top-right
+            pos (0.98, 0.02)
 
         spacing 16
         text "Achievements" size 32 xalign 0.5
