@@ -564,7 +564,7 @@ screen argument_writing(prompt):
                 xalign 0.0
                 textbutton "Copy from Notebook":
                     style "argument_button"
-                    action SetVariable("user_argument", notebook_argument)
+                    action SetScreenVariable("user_argument", notebook_argument)
 
                 textbutton "Submit":
                     style "argument_button"
