@@ -1,8 +1,8 @@
 #### Custom functions to control adding, editing, and deleting notes, as well as logging to txt file #####
 
 # GLOBAL NOTEBOOK Variables 
-
 default notebook = []
+default argument_history = []
 default note_id_counter = 0
 default notebook_argument = "Draft your argument here."
 default last_notebook_argument = "Draft your argument here."
@@ -10,6 +10,10 @@ default argument_edits = 0
 default customnotecount = 0
 default copied_argument = ""
 default user_argument = ""
+default tagLibrary = ["bees", "pollination", "food", "garden", "lab", "family", "kids", "money", "shopping", "cars", "parking lot", "community"]
+default editing_argument = False
+default edited_note_id = None
+
 
 init python:
     import datetime
@@ -32,8 +36,8 @@ init python:
     def retaindata():
         renpy.retain_after_load()
 
-    def note(content, speaker, tag, note_type="character-saved"):
-        global notebook, note_id_counter
+    def new_note(content, speaker, tag, note_type="character-saved"):
+        global notebook, note_id_counter, edited_note_id
         note_id = note_id_counter
         notebook.append({
             "id": note_id,
@@ -43,11 +47,12 @@ init python:
             "type": note_type
         })
         note_id_counter += 1
+        edited_note_id = note_id
         renpy.notify("Note Taken!")
         log_http(current_user, action="PlayerTookNote", view=current_label, payload={
             "note": content,
             "source": speaker,
-            "tag": tag,
+            "tags": tag,
             "note_id": note_id,
             "type": note_type
         })
@@ -71,7 +76,8 @@ init python:
             renpy.take_screenshot()
             renpy.save("1-1", save_name)
 
-    def editnote(note_id, newnote, newsource, newtags):
+    ### replaces the value of note w/ new values
+    def save_note(note_id, newnote, newsource, newtags):
         global notebook
         for n in notebook:
             if n["id"] == note_id:
@@ -83,7 +89,7 @@ init python:
                     current_user,
                     action="PlayerEditedNote",
                     view=current_label,
-                    payload={"note": newnote, "source": newsource, "tag": newtags, "note_id": note_id}
+                    payload={"note": newnote, "source": newsource, "tags": newtags, "note_id": note_id}
                 )
                 narrator.add_history(kind="adv", who="You edited a note:", what=newnote)
                 renpy.take_screenshot()
@@ -91,8 +97,9 @@ init python:
                 break
 
     def draft(argument):
-        global notebook_argument, last_notebook_argument, argument_edits
+        global notebook_argument, last_notebook_argument, argument_edits, argument_history
         if argument != notebook_argument:
+            argument_history.append(notebook_argument)
             notebook_argument = argument
             if argument != last_notebook_argument:
                 argument_edits += 1
@@ -106,8 +113,9 @@ init python:
             renpy.save("1-1", save_name)
 
     def editdraft(newargument):
-        global notebook_argument, last_notebook_argument, argument_edits
+        global notebook_argument, last_notebook_argument, argument_edits, argument_history
         if newargument != notebook_argument:
+            argument_history.append(notebook_argument)
             notebook_argument = newargument
             if newargument != last_notebook_argument:
                 argument_edits += 1
@@ -151,116 +159,229 @@ init python:
             renpy.log(f"{payload}\n")
 
 
-##  Notebook to collect evidence, idea board, etc.
-##
-#################################################################
-
 #### Notebook ######
 
-style note_text:
-    anchor (0.0,0.0)
-    pos (0.325,0.12)
-
-style notebook_title:
-    anchor (0.5,0.0)
-    pos (0.5,0.05)
-
-style close_button:
-    anchor (0.5, 0.0)
-    pos (0.68,0.03)
-
 screen notebook():
+    default editing_argument = False
+    default argument_edit_text = notebook_argument
+    default edit_note_text = ""
+    default edit_note_source = ""
+    default edit_note_tags = ""
+
     modal True
-    add "images/notebook_tall.png"
     zorder 92
 
-    imagebutton:
-        idle "images/close button.png"
-        hover "images/close button dark.png"
-        action Hide(screen="notebook") 
-        style "close_button" 
-    
-    text "Evidence Notebook" style "notebook_title"
+    add "images/notebook_open.png" xpos 0.5 ypos 0.5 anchor (0.5, 0.5) zoom .8
 
+    imagebutton:
+        tooltip "Close Notebook"
+        idle Transform("icons/button_exit.png", xysize=(75, 75))
+        hover Transform(im.MatrixColor("icons/button_exit.png", im.matrix.tint(0.75, 0.75, 0.75)), xysize=(70, 70))
+        action Hide("notebook")
+        anchor (0.5, 0.5)
+        pos (0.792, 0.17)
+
+    ## left side of notebook for notes                
     viewport:
-        anchor (0.0,0.0)
-        pos (0.325,0.12)
-        xsize 740
-        ysize 600
+        anchor (0.5, 0.5)
+        pos (0.325, 0.52)
+        xsize 0.26
+        ysize 0.6
         scrollbars "vertical"
         mousewheel True
         vscrollbar_unscrollable "hide"
         has vbox style "note_text"
 
-        for note in notebook:
+        button:
+            background Solid("#dddddd80")
+            hover_background Solid("#cccccc")   # visible change when hovered
+            padding (12, 10)
+            xfill True
+            xmargin 10
+            ymargin 10
+            ysize 95
+
+            action Function(new_note, "...", "...", ["..."])  
+
+            vbox:
+                yalign 0.5
+                hbox:
+                    yalign 0.5
+                    spacing 20
+
+                    # Icon box (no nested button!)
+                    fixed:
+                        xysize (75, 75)
+                        # padding (10, 10)
+                        add Transform(
+                            "icons/button_add.png",
+                            xysize=(40, 40),
+                            xalign=0.5, yalign=0.5
+                        )
+
+                    text "Add a Note":
+                        size 20
+                        color "#333333"
+                        yalign 0.5
+                        italic True
+
+        $ note_count = len(notebook)
+        for i, note in enumerate(notebook):
             $ s = note["source"] or ""
             $ t = ", ".join(note["tags"]) if note["tags"] else ""
             $ n = note["content"]
             $ note_id = note["id"]
-            text "Source: " + s + "   Tag: " + t:
-                size 15
-            text n id "note":
-                size 22
-            hbox:
-                imagebutton:
-                    tooltip "Delete note"
-                    idle "images/delete note.png"
-                    hover "images/delete note dark.png"
-                    action Confirm("Are you sure you want to delete this note?", yes=Function(deletenote, note_id))
-                imagebutton:
-                    tooltip "Edit note"
-                    idle "images/edit pencil.png"
-                    hover "images/edit pencil dark.png"
-                    action Show("note_edit", None, note_id, n, s, t)
-            text "\n":
-                size 8
-        
-        imagebutton:
-            tooltip "New note"
-            idle "images/takenote.png"
-            hover "images/takenotedark.png"
-            action Show("noteentry")
-            xpos -40
 
+            if edited_note_id == note_id: ### EDIT NOTE MODE
+                frame style "editing_note_frame":
+                    vbox:
+                        spacing 20
+                        xfill True
+                        hbox:
+                            spacing 20
+                            text "Note:" style "note_label" xalign 1.0 xsize 150
+                            frame style "edit_frame":
+                                button:
+                                    action ScreenVariableInputValue("edit_note_text").Toggle()
+                                    input value ScreenVariableInputValue("edit_note_text") style "edit_input" multiline True
+
+                        hbox:
+                            spacing 20
+                            text "Source:" style "note_label" xalign 1.0 xsize 150
+                            frame style "edit_frame":
+                                button:
+                                    action ScreenVariableInputValue("edit_note_source").Toggle()
+                                    input value ScreenVariableInputValue("edit_note_source") style "edit_input"
+
+                        hbox:
+                            spacing 20
+                            text "Tags:" style "note_label" xalign 1.0 xsize 150
+                            frame style "edit_frame":
+                                hbox:
+                                    spacing 4
+                                    xfill True
+                                    box_wrap True
+                                    box_wrap_spacing 6
+
+                                    for tag in tagLibrary:
+                                        $ selected = tag in [t.strip() for t in edit_note_tags.split(",") if t.strip()]
+                                        textbutton tag:
+                                            style selected and "selected_tag_button" or "tag_button"
+                                            selected selected
+                                            action If(
+                                                selected,
+                                                SetScreenVariable(
+                                                    "edit_note_tags",
+                                                    ", ".join([t for t in [tt.strip() for tt in edit_note_tags.split(",") if tt.strip()] if t != tag])
+                                                ),
+                                                SetScreenVariable(
+                                                    "edit_note_tags",
+                                                    ", ".join([t for t in [tt.strip() for tt in edit_note_tags.split(",") if tt.strip()] if t] + [tag])
+                                                )
+                                            )
+
+                        hbox:
+                            spacing 10
+                            xalign 1.0
+                            textbutton "Save Note":
+                                style "standard_button"
+                                action [
+                                    Function(save_note, note_id, edit_note_text, edit_note_source, edit_note_tags),
+                                    SetScreenVariable("edited_note_id", None)
+                                ]
+                            textbutton "Cancel":
+                                style "standard_button"
+                                action SetScreenVariable("edited_note_id", None)
+            else: ## DISPLAY EXISTING NOTES (not in edit mode)
+                frame:
+                    style "note_box"
+                    vbox:
+                        spacing 8
+                        hbox:
+                            xfill True
+                            spacing 4
+                            hbox:
+                                spacing 4
+                                xmaximum 350
+                                box_wrap True
+                                box_wrap_spacing 6
+                                for tag_item in [tag.strip() for tag in t.split(",") if tag.strip()]:
+                                    textbutton tag_item style "tag_button":
+                                        text_style "tag_button_text"
+                            hbox:
+                                spacing 4
+                                xalign 1.0
+                                imagebutton:
+                                    tooltip "Delete note"
+                                    style "imagebutton_note"
+                                    idle "images/delete note.png"
+                                    hover "images/delete note dark.png"
+                                    action Confirm("Are you sure you want to delete this note?", yes=Function(deletenote, note_id))
+                                imagebutton:
+                                    tooltip "Edit note"
+                                    style "imagebutton_note"
+                                    idle "images/edit pencil.png"
+                                    hover "images/edit pencil dark.png"
+                                    action [
+                                        SetScreenVariable("edit_note_text", n),
+                                        SetScreenVariable("edit_note_source", s),
+                                        SetScreenVariable("edit_note_tags", t),
+                                        SetScreenVariable("edited_note_id", note_id)
+                                    ]
+                                    xalign 1.0
+                        text n id "note":
+                            size 22
+                        text "Source: " + s:
+                            size 14
+   
+    ## right side of notebook for argument drafting                 
     viewport:
-        anchor (0.0,0.0)
-        pos (0.325,0.7)
-        xsize 740
-        ysize 200
+        anchor (0.5, 0.5)
+        pos (0.675, 0.52)
+        xsize 0.26
+        ysize 0.6
         scrollbars "vertical"
         mousewheel True
         vscrollbar_unscrollable "hide"
         has vbox style "note_text"
-        hbox:
-            text "Draft Argument for Mayor":
-                size 30
-            imagebutton:
-                tooltip "Edit draft argument"
-                idle "images/edit pencil.png"
-                hover "images/edit pencil dark.png"
-                action Show("argument_edit", None, notebook_argument)
-            text "  ":
-                size 8
-            imagebutton:
-                tooltip "Copy argument"
-                idle "images/copy.png"
-                hover "images/copy dark.png"
-                action Function(copy, notebook_argument)
-        text notebook_argument:
-            size 22
 
-    $ tooltip = GetTooltip()
-    if tooltip:
-        nearrect:
-            focus "tooltip"
+        frame style "editing_note_frame":
+            vbox:
+                if editing_argument:
+                    frame style "edit_frame":
+                        input value ScreenVariableInputValue("argument_edit_text") style "argument_input" multiline True xmaximum 550
+                    hbox:
+                        spacing 10
+                        xalign 1.0
+                        textbutton "Save":
+                            style "standard_button"
+                            action [
+                                Function(editdraft, argument_edit_text),
+                                SetScreenVariable("editing_argument", False),
+                                SetScreenVariable("argument_edit_text", notebook_argument)
+                            ]
+                        textbutton "Cancel":
+                            style "standard_button"
+                            action [
+                                SetScreenVariable("editing_argument", False),
+                                SetScreenVariable("argument_edit_text", notebook_argument)
+                            ]
+                else:
+                    hbox:
+                        imagebutton:
+                            tooltip "Edit draft argument"
+                            idle "images/edit pencil.png"
+                            hover "images/edit pencil dark.png"
+                            action SetScreenVariable("editing_argument", True)
+                    text notebook_argument size 22
 
-            frame:
-                xalign 0.5
-                text tooltip:
-                    size 15
+        if len(argument_history) > 0:
+            text "Previous Drafts:" size 16
+            for prev_arg in reversed(argument_history):
+                frame:
+                    style "note_box"
+                    text prev_arg size 16
 
-style note_input:
-    size 25
 
 ##### Shows key bindings for typing in the input box ######
 
@@ -270,172 +391,8 @@ screen keyboard_shortcuts():
     add "images/keyboard shortcuts.png":
         pos (0.0, 0.15)
 
-###### Custom notetaking for player to add notes to notebook #####
 
-screen noteentry():
-    modal True
-    zorder 93
-    add "images/notebook_wide.png"
-
-    if customnotecount == 0:
-        default customnote = "Type ideas here"
-        default customsource = "What's the source?"
-        default customtag = "What is this evidence about?"
-        add "images/keyboard shortcuts.png":
-            pos (0.0, 0.15)
-    else:
-        default customnote = ""
-        default customsource = ""
-        default customtag = ""
-        imagebutton:
-            pos (0.30, 0.17)
-            tooltip "Show/Hide Shortcuts"
-            idle "images/note clip.png"
-            hover "images/note clip.png"
-            action If(renpy.get_screen("keyboard_shortcuts"), true=Hide("keyboard_shortcuts"), false=Show("keyboard_shortcuts"))
-
-    default noteinput = ScreenVariableInputValue("customnote")
-    default sourceinput = ScreenVariableInputValue("customsource")
-    default taginput = ScreenVariableInputValue("customtag")
-
-    viewport:
-        anchor (0.0,0.0)
-        pos (0.325,0.20)
-        xsize 720
-        ysize 400
-        scrollbars "vertical"
-        vscrollbar_unscrollable "hide"
-        mousewheel True
-        has vbox
-        text "My note: ":
-            size 20
-        button:
-            action noteinput.Toggle()
-            xsize 720
-            input: 
-                value noteinput
-                copypaste True
-                multiline True
-                style "note_input"
-        text "\n" + "I learned this from: ":
-            size 20
-        button:
-            action sourceinput.Toggle()
-            xsize 720
-            input: 
-                value sourceinput
-                copypaste True
-                multiline True
-                style "note_input"
-        text "\n" + "Tag/Label: ":
-            size 20
-        button:
-            action taginput.Toggle()
-            xsize 720
-            input: 
-                value taginput
-                copypaste True
-                multiline True
-                style "note_input"
-    
-    textbutton "Save Note":
-        pos (0.35, 0.6)
-        action (Function(note, customnote, customsource, customtag), IncrementVariable("customnotecount"), Hide("noteentry"), Hide("keyboard_shortcuts"))
-    textbutton "Cancel":
-        pos (0.55, 0.6)
-        action (Hide("noteentry"), Hide("keyboard_shortcuts"))  
-
-    $ tooltip = GetTooltip()
-    if tooltip:
-        nearrect:
-            focus "tooltip"
-
-            frame:
-                xalign 0.5
-                text tooltip:
-                    size 15  
-
-##### Note editing for existing notes in the player's notebook ######
-
-screen note_edit(note_id, n, s, t):
-    default newnote = n
-    default newsource = s
-    default newtag = t
-
-    modal True
-    zorder 93
-    add "images/notebook_wide.png"
-
-    imagebutton:
-        pos (0.30, 0.17)
-        tooltip "Show/Hide Shortcuts"
-        idle "images/note clip.png"
-        hover "images/note clip.png"
-        action If(renpy.get_screen("keyboard_shortcuts"), true=Hide("keyboard_shortcuts"), false=Show("keyboard_shortcuts"))
-
-    default noteinput = ScreenVariableInputValue("newnote")
-    default sourceinput = ScreenVariableInputValue("newsource")
-    default taginput = ScreenVariableInputValue("newtag")
-
-    viewport:
-        anchor (0.0,0.0)
-        pos (0.325,0.20)
-        xsize 720
-        ysize 400
-        scrollbars "vertical"
-        vscrollbar_unscrollable "hide"
-        mousewheel True
-        has vbox
-        text "Note: ":
-            size 20
-        button:
-            action noteinput.Toggle()
-            xsize 720
-            input: 
-                value noteinput
-                copypaste True
-                multiline True
-                style "note_input"
-        text "\n" + "Source: ":
-            size 20
-        button:
-            action sourceinput.Toggle()
-            xsize 720
-            input: 
-                value sourceinput
-                copypaste True
-                multiline True
-                style "note_input"
-        text "\n" + "Tag: ":
-            size 20
-        button:
-            action taginput.Toggle()
-            xsize 720
-            input: 
-                value taginput
-                copypaste True
-                multiline True
-                style "note_input"
-    
-    textbutton "Save Revised Note":
-        pos (0.35, 0.6)
-        action (Function(editnote, note_id, newnote, newsource, newtag), Hide("note_edit"), Hide("keyboard_shortcuts"))
-    textbutton "Cancel":
-        pos (0.55, 0.6)
-        action (Hide("note_edit"), Hide("keyboard_shortcuts"))  
-
-    $ tooltip = GetTooltip()
-    if tooltip:
-        nearrect:
-            focus "tooltip"
-
-            frame:
-                xalign 0.5
-                text tooltip:
-                    size 15  
-
-### Argument Revision in Notebook ###
-
+## Argument Revision in Notebook ###
 screen argument_edit(currentargument):
     modal True
     zorder 93
@@ -482,45 +439,6 @@ screen argument_edit(currentargument):
                 xalign 0.5
                 text tooltip:
                     size 15  
-
-#### Invisible Character Selection Screen ####
-
-screen characterselect3(c_left, c_center, c_right):
-    zorder 80
-
-    button:
-        xysize (600, 900)
-        anchor (0.5, 0.0)
-        pos (0.2, 0.25)
-        action Jump(c_left + "_chatting")
-
-    button:
-        xysize (600, 900)
-        anchor (0.5, 0.0)
-        pos (0.5, 0.25)
-        action Jump(c_center + "_chatting")
-
-    button:
-        xysize (600, 900)
-        anchor (0.5, 0.0)
-        pos (0.8, 0.25)
-        action Jump(c_right + "_chatting")
-
-screen characterselect2(c_left, c_right):
-    zorder 80
-
-    button:
-        xysize (600, 900)
-        anchor (0.5, 0.0)
-        pos (0.2, 0.25)
-        action Jump(c_left + "_chatting")
-
-    button:
-        xysize (600, 900)
-        anchor (0.5, 0.0)
-        pos (0.8, 0.25)
-        action Jump(c_right + "_chatting")
-
 
 screen argument_writing(prompt):
 
@@ -593,10 +511,88 @@ style argument_button:
     size 18
     bold True
 
-style argument_button_text:
-    bold True
-    color "#fff"
-    size 18
-    font "DejaVuSans.ttf"  
+style imagebutton_note:
+    size 50
+
+style note_text:
+    anchor (0.0,0.0)
+    pos (0.325,0.12)
+
+style notebook_title:
+    anchor (0.5,0.0)
+    pos (0.5,0.05)
+
+
+# Style for the notebook edit labels
+style note_label:
+    size 12
+    color "#000000"
+    font "DejaVuSans.ttf"
+    xalign 0.0
+
+# Style for input fields
+style edit_input:
+    padding (2, 2, 2, 2)
+    font "DejaVuSans.ttf"
+    size 14
+    color "#000000"
+    xfill True
+
+# style edit_button:
+#     background "#aaaaaa"
+#     hover_background "#888888"
+#     padding (12, 8)
+#     xminimum 160
+#     yminimum 45
+#     font "DejaVuSans.ttf"
+#     color "#ffffff"
+#     size 10
+
+style note_box:
+    background "#dddddd80"  # grey with ~50% opacity
+    padding (12, 10)
+    xfill True
+    xmargin 10
+    ymargin 10
+    xalign 0.5
+
+style edit_frame:
+    background "#ffffff"
+    padding (10, 10)
+    xfill True  # this makes the frame take all horizontal space
+    xalign 1.0
+
+style editing_note_frame:
+    background "#cccccc40"  # Slightly darker translucent gray
+    padding (20, 20)
+    xfill True
+
+style standard_button:
+    background "#d1c7ff"
+    hover_background "#a79fceff"
+    insensitive_background "#cccccc"
+    padding (6, 4)
+    xminimum 90
+    yminimum 32
+    xalign 1.0
+
+style standard_button_text:
+    font "DejaVuSans-Bold.ttf"  # or use bold True
+    size 10
+    color "#3a3a3a"
+    hover_color "#000000"
     xalign 0.5
     yalign 0.5
+
+style tag_button_text:
+    font "DejaVuSans.ttf"
+    size 12
+    color "#000000"
+    xalign 0.5
+    yalign 0.5
+
+style selected_tag_button:
+    background "#8076ae"
+
+style tag_button:
+    background "#d1c7ff"
