@@ -118,7 +118,7 @@ screen say(who, what):
         tooltip "Write this down"
         idle "images/takenote.png"
         hover "images/takenotedark.png"
-        action Function(note, what, who, " ")
+        action Function(new_note, what, who, " ")
         style "pencil_button"
 
     ## If there's a side image, display it above the text. Do not display on the

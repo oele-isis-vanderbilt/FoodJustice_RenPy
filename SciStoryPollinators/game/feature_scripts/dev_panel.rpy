@@ -73,7 +73,7 @@ screen developer_overlay():
                         text "User-Written Notes: [user_written_notes]" style "dev_msg"
                         text "Argument Edits: [argument_edits]" style "dev_msg"
                         textbutton "Add Placeholder Note":
-                            action Function(note, "lorem ipsom...", "example speaker", ["tag1", "tag2"], "character-saved")
+                            action Function(new_note, "lorem ipsom...", "example speaker", ["tag1", "tag2"], "character-saved")
                             style "dev_jump_button"
 
                     null height 12
