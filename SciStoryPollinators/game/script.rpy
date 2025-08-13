@@ -25,6 +25,11 @@ define character_directory = [
     { "variable": t,  "name": "Tulip",         "chats": 0, "spoken": False },
 ]
 
+# AUDIO 
+define azureKey = "3da59f8a4fc643ffbec6e4c076c77b7b"
+define ecaVoice = "en-US-JennyNeural"
+
+
 # GLOBAL NOTEBOOK LISTS 
 default source_list = []
 default note_list = []
@@ -51,7 +56,21 @@ default ca_context = ""
 default ecaresponse = ""
 default mayorconvinced = False
 
+##Audio
+
+init python:
+    def playAudio(dialogLine: str):
+        if renpy.emscripten:
+            import emscripten
+            test = emscripten.run_script_int(f"window.playAzureAudio(\"{dialogLine}\", \"{ecaVoice}\", \"{azureKey}\", 100);")
+    def stopAudio():
+        if renpy.emscripten:
+            import emscripten
+            test = emscripten.run_script_int(f"window.stopAzureAudio();")
+
 label start:
+
+    play music "JaracandaLoop.wav" volume 0.1
 
     # Show a background
     scene flowers muted
@@ -170,13 +189,15 @@ label start:
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
                 if ecasplit == True:
-
+                    $ playAudio(ecaresponse1)
                     t "[ecaresponse1]"
+                    $ playAudio(ecaresponse2)
                     t "[ecaresponse2]"
-
                 else:
-
+                    $ playAudio(ecaresponse)
                     t "[ecaresponse]"
+
+                $ stopAudio()
 
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
@@ -207,13 +228,16 @@ label start:
                         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
                         if ecasplit == True:
-
+                            $ playAudio(ecaresponse1)
                             t "[ecaresponse1]"
+                            $ playAudio(ecaresponse2)
                             t "[ecaresponse2]"
 
                         else:
-
+                            $ playAudio(ecaresponse)
                             t "[ecaresponse]"
+
+                        $ stopAudio()
 
                         $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
@@ -250,19 +274,21 @@ label start:
                         ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers your question!"
                 
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
-
+                
                 if ecasplit == True:
-
+                    $ playAudio(ecaresponse1)
                     t "[ecaresponse1]"
+                    $ playAudio(ecaresponse2)
                     t "[ecaresponse2]"
 
                 else:
-
+                    $ playAudio(ecaresponse)
                     t "[ecaresponse]"
 
+                $ stopAudio()
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
-
+                
                 t "Any more questions?"
                 menu:
                     "I have another question.":
@@ -283,12 +309,17 @@ label start:
 
                         if ecasplit == True:
 
+                            $ playAudio(ecaresponse1)
                             t "[ecaresponse1]"
+                            $ playAudio(ecaresponse2)
                             t "[ecaresponse2]"
 
                         else:
 
+                            $ playAudio(ecaresponse)
                             t "[ecaresponse]"
+
+                        $ stopAudio()
                         
                         $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
@@ -550,12 +581,16 @@ label start:
 
         if ecasplit == True:
 
+            $ playAudio(ecaresponse1)
             r "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             r "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             r "[ecaresponse]"
+            
+        $ stopAudio()
 
         $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
 
@@ -620,12 +655,18 @@ label start:
 
                 if ecasplit == True:
 
+                    $ playAudio(ecaresponse1)
                     r "[ecaresponse1]"
+                    
+                    $ playAudio(ecaresponse2)
                     r "[ecaresponse2]"
 
                 else:
 
+                    $ playAudio(ecaresponse)
                     r "[ecaresponse]"
+                
+                $ stopAudio()
 
                 jump foodknowledge_loop
             "How can we help everyone have access to healthy food?":
@@ -645,13 +686,16 @@ label start:
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
                 if ecasplit == True:
-
+                    $ playAudio(ecaresponse1)
                     r "[ecaresponse1]"
+                    $ playAudio(ecaresponse2)
                     r "[ecaresponse2]"
 
                 else:
-
+                    $ playAudio(ecaresponse)
                     r "[ecaresponse]"
+                
+                $ stopAudio()
 
                 jump foodknowledge_loop
             "I have another question.":
@@ -689,12 +733,16 @@ label start:
 
         if ecasplit == True:
 
+            $ playAudio(ecaresponse1)
             r "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             r "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             r "[ecaresponse]"
+
+        $ stopAudio()
 
         jump foodknowledge_loop
     
@@ -1078,13 +1126,16 @@ label start:
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
         if ecasplit == True:
-
+            $ playAudio(ecaresponse1)
             w "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             w "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             w "[ecaresponse]"
+
+        $ stopAudio()
 
         jump wes_choices
 
@@ -1133,14 +1184,17 @@ label start:
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
         if ecasplit == True:
-
+            $ playAudio(ecaresponse1)
             w "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             w "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             w "[ecaresponse]"
 
+        $ stopAudio()
+        
         w "Would you like to know anything else?"
 
         jump wes_questions
@@ -1215,13 +1269,16 @@ label start:
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
                 if ecasplit == True:
-
+                    $ playAudio(ecaresponse1)
                     n "[ecaresponse1]"
+                    $ playAudio(ecaresponse2)
                     n "[ecaresponse2]"
 
                 else:
-
+                    $ playAudio(ecaresponse)
                     n "[ecaresponse]"
+
+                $ stopAudio()
 
                 $ AddToSet(nadia_menu, "How do bees help with pollination?")
                 jump nadia_questions
@@ -1242,13 +1299,16 @@ label start:
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
                 if ecasplit == True:
-
+                    $ playAudio(ecaresponse1)
                     n "[ecaresponse1]"
+                    $ playAudio(ecaresponse2)
                     n "[ecaresponse2]"
 
                 else:
-
+                    $ playAudio(ecaresponse)
                     n "[ecaresponse]"
+
+                $ stopAudio()
 
                 $ AddToSet(nadia_menu, "How do plants get pollinated?")
                 jump nadia_questions
@@ -1284,13 +1344,16 @@ label start:
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
         if ecasplit == True:
-
+            $ playAudio(ecaresponse1)
             n "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             n "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             n "[ecaresponse]"
+
+        $ stopAudio()
 
         n "Do you have any other questions?"
         menu:
@@ -1806,13 +1869,16 @@ label start:
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
         if ecasplit == True:
-
+            $ playAudio(ecaresponse1)
             m "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             m "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             m "[ecaresponse]"
+
+        $ stopAudio()
 
         $ mayor_attempts = mayor_attempts + 1
 
@@ -1879,13 +1945,16 @@ label start:
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
         if ecasplit == True:
-
+            $ playAudio(ecaresponse1)
             el "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             el "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             el "[ecaresponse]"
+
+        $ stopAudio()
 
         $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
 
