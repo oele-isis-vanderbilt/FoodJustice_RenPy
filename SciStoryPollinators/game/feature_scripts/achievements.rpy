@@ -41,7 +41,7 @@ init python:
     ## called at the end of any conversation with any character
     def achieve_social():
         # Unlock if all characters in the dictionary have spoken == True
-        if all(char["spoken"] for char in character_dictionary):
+        if all(char["spoken"] for char in character_directory):
             if not persistent.achievements.get("SOCIAL", False):
                 unlock_achievement("SOCIAL")
 
