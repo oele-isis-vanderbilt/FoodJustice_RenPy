@@ -1,63 +1,61 @@
-﻿#CHARACTER NAME DEFINIION
-define el = Character("Elliot")
-define a = Character("Amara")
-define r = Character("Riley")
-define w = Character("Wes")
-define n = Character("Nadia")
-define m = Character("Mayor Watson")
-define cy = Character("Cyrus")
-define x = Character("Alex")
-define c = Character("Cora")
-define v = Character("Victor")
-define t = Character("Tulip")
+﻿label start:
 
-define character_directory = [
-    { "variable": el, "name": "Elliot",        "chats": 0, "spoken": False },
-    { "variable": a,  "name": "Amara",         "chats": 0, "spoken": False },
-    { "variable": r,  "name": "Riley",         "chats": 0, "spoken": False },
-    { "variable": w,  "name": "Wes",           "chats": 0, "spoken": False },
-    { "variable": n,  "name": "Nadia",         "chats": 0, "spoken": False },
-    { "variable": m,  "name": "Mayor Watson",  "chats": 0, "spoken": False },
-    { "variable": cy, "name": "Cyrus",         "chats": 0, "spoken": False },
-    { "variable": x,  "name": "Alex",          "chats": 0, "spoken": False },
-    { "variable": c,  "name": "Cora",          "chats": 0, "spoken": False },
-    { "variable": v,  "name": "Victor",        "chats": 0, "spoken": False },
-    { "variable": t,  "name": "Tulip",         "chats": 0, "spoken": False },
-]
+    # Character definitions and variables can go here if needed
+    #CHARACTER NAME DEFINIION
+    define el = Character("Elliot")
+    define a = Character("Amara")
+    define r = Character("Riley")
+    define w = Character("Wes")
+    define n = Character("Nadia")
+    define m = Character("Mayor Watson")
+    define cy = Character("Cyrus")
+    define x = Character("Alex")
+    define c = Character("Cora")
+    define v = Character("Victor")
+    define t = Character("Tulip")
 
-# GLOBAL NOTEBOOK LISTS 
-default source_list = []
-default note_list = []
-default tag_list = []
+    define character_directory = [
+        { "variable": el, "name": "Elliot",        "chats": 0, "spoken": False },
+        { "variable": a,  "name": "Amara",         "chats": 0, "spoken": False },
+        { "variable": r,  "name": "Riley",         "chats": 0, "spoken": False },
+        { "variable": w,  "name": "Wes",           "chats": 0, "spoken": False },
+        { "variable": n,  "name": "Nadia",         "chats": 0, "spoken": False },
+        { "variable": m,  "name": "Mayor",         "chats": 0, "spoken": False },
+        { "variable": cy, "name": "Cyrus",         "chats": 0, "spoken": False },
+        { "variable": x,  "name": "Alex",          "chats": 0, "spoken": False },
+        { "variable": c,  "name": "Cora",          "chats": 0, "spoken": False },
+        { "variable": v,  "name": "Victor",        "chats": 0, "spoken": False },
+        { "variable": t,  "name": "Tulip",         "chats": 0, "spoken": False },
+    ]
 
-#GLOBAL GAME STATE VARIABLES
-default visited_list = []
-default spoken_list = []
-default notebook_argument = "Draft your argument here."
-default customnotecount = 0
-default startplace = ""
-default structure = ""
+    #GLOBAL GAME STATE VARIABLES
+    default visited_list = []
+    default spoken_list = []
+    default startplace = "rural"
+    default structure = "lot"
 
-##LOCATION VISIT TRACKING
-default emptylotvisit = False
-default foodlabvisit = False
-default gardenvisit = False
-default hivesvisit = False
+    ##LOCATION VISIT TRACKING
+    default emptylotvisit = False
+    default foodlabvisit = False
+    default gardenvisit = False
+    default hivesvisit = False
 
-##END GAME STATE TRACKING
-default argument_attempts = 0
-default mayor_attempts = 0
-default ca_context = ""
-default ecaresponse = ""
-default mayorconvinced = False
-
-label start:
+    ##END GAME STATE TRACKING
+    default argument_attempts = 0
+    default mayor_attempts = 0
+    default ca_context = ""
+    default ecaresponse = ""
+    default mayorconvinced = False
+    default current_user = ""
 
     # Show a background
     scene flowers muted
     with fade
 
     $ current_user = renpy.input("Please enter your player ID")
+    
+    ##comment this out for impl
+    show screen learningbuttons()
 
     narrator "You open your eyes and find yourself surrounded by bright flowers and sweet-smelling fresh air. How did you get here?"
     
@@ -158,6 +156,7 @@ label start:
                 $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
                 $ log("Player input to ECA: " + eca)
                 $ argument_attempts = argument_attempts + 1
+                $ achieve_argument()
 
                 python:
                     try:
@@ -312,10 +311,10 @@ label start:
                 
                 return
     label begin:
+    show screen learningbuttons()
     scene expression "empty lot [startplace]"
     with fade
     $ currentlocation = "emptylot"
-    show screen learningbuttons()
 
     show elliot smile
     with dissolve
@@ -1702,7 +1701,7 @@ label start:
         show watson smile
         with dissolve
 
-        if get_character_chats("Mayor") == 0:
+        if get_character_chats("Mayor") < 1:
             jump mayor_1
         else:
             jump mayor_2
@@ -1736,7 +1735,7 @@ label start:
 
     label mayor_request:
         m "If you gather any information you think I'd find interesting, feel free to come back and let me know!"
-        $ update_char_stats("Mayor Watson")
+        $ update_char_stats("Mayor")
         $ achieve_social()
 
         jump emptylot
@@ -1825,13 +1824,13 @@ label start:
     
     label bye_mayor:
         m "Thank you for sharing your ideas with me. Engaged citizens make our community stronger!"
-        $ update_char_stats("Mayor Watson")
+        $ update_char_stats("Mayor")
 
         jump tulip_endgame
 
     label continue_search:
         m "Wonderful. I look forward to hearing your argument when it is ready to share."
-        $ update_char_stats("Mayor Watson")
+        $ update_char_stats("Mayor")
 
         jump emptylot
 
@@ -1915,13 +1914,11 @@ label start:
         $ renpy.take_screenshot()
         $ renpy.save("1-1", save_name)
 
-        $ note_count = len(note_list)
+        $ note_count = len(notebook)  # <-- updated
 
         if get_character_chats("Riley") > 0 and get_character_chats("Nadia") > 0 and get_character_chats("Wes") > 0 and get_character_chats("Amara") > 0 and note_count > 5:
-
             t "Great job sharing your ideas with the Mayor! How do you think it went?"
             jump choices_eval
-
         elif get_character_chats("Riley") == 0 or get_character_chats("Nadia") == 0 or get_character_chats("Wes") == 0 or get_character_chats("Amara") == 0:
             t "Nice work sharing your argument! There are more folks around town we should talk to - let's make sure we include evidence from lots of different sources to be extra convincing!"
             jump emptylot
