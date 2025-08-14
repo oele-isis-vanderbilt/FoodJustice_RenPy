@@ -60,6 +60,7 @@ jobs:
                 export EXTERNAL_PORT=8082
                 export IMAGE_NAME=foodjustice
                 export IMAGE_TAG=stable
+                export CONTAINER_NAME=foodjustice-container-stable
                 docker compose -p food-justice-deployment-stable build food-justice-service
                 docker compose -p food-justice-deployment-stable down food-justice-service
                 docker compose -p food-justice-deployment-stable up -d food-justice-service
