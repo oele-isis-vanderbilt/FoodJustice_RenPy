@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  release: # Trigger the workflow on release events
+    types: [published]
+
   workflow_dispatch: # Trigger the workflow manually
 
   schedule:
@@ -36,6 +39,30 @@ jobs:
               docker compose -p food-justice-teacher-deployment -f docker-compose.teachers.yml down food-justice-teacher-service
               docker compose -p food-justice-teacher-deployment -f docker-compose.teachers.yml up -d food-justice-teacher-service
             '
+        - name: Build and Deploy game teacher version (Stable)
+          if: github.event_name == 'release'
+          env:
+            PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+            HOST: ${{ secrets.HOST }}
+            USERNAME: ${{ secrets.USERNAME }}
+        
+          run: |
+            echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            ssh-keygen -y -f private_key > /dev/null
+            ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST} '
+              echo "Pulling latest changes from GitHub"
+              rm -rf FoodJusticeDeploymentTeacherStable
+              mkdir FoodJusticeDeploymentTeacherStable && cd FoodJusticeDeploymentTeacherStable
+              git clone https://github.com/oele-isis-vanderbilt/FoodJustice_RenPy.git
+              cd FoodJustice_RenPy
+              sudo chmod 666 /var/run/docker.sock
+              git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
+              export EXTERNAL_PORT=8083
+              docker compose -p food-justice-teacher-deployment-stable -f docker-compose.teachers.yml build food-justice-teacher-service
+              docker compose -p food-justice-teacher-deployment-stable -f docker-compose.teachers.yml down food-justice-teacher-service
+              docker compose -p food-justice-teacher-deployment-stable -f docker-compose.teachers.yml up -d food-justice-teacher-service
+            '
+
 
         - name: Docker Cleanup on JetStream2 VM
           if: github.event_name == 'schedule'

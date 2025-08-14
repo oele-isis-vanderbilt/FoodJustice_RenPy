@@ -8,7 +8,7 @@ COPY ${RENPY_GAME_DIR} /game/${RENPY_GAME_DIR}
 
 ENV SERVICE_URL=""
 
-RUN apt-get update && apt-get install -y libgl1-mesa-glx && \
+RUN apt-get update && apt-get install -y libgl1 && \
     wget https://www.renpy.org/dl/8.3.2/renpy-8.3.2-sdk.tar.bz2 && \
     tar -xf renpy-8.3.2-sdk.tar.bz2 && \
     mv renpy-8.3.2-sdk renpy && \
