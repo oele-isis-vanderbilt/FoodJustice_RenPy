@@ -58,6 +58,8 @@ jobs:
                 sudo chmod 666 /var/run/docker.sock
                 git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
                 export EXTERNAL_PORT=8082
+                export IMAGE_NAME=foodjustice
+                export IMAGE_TAG=stable
                 docker compose -p food-justice-deployment-stable build food-justice-service
                 docker compose -p food-justice-deployment-stable down food-justice-service
                 docker compose -p food-justice-deployment-stable up -d food-justice-service
