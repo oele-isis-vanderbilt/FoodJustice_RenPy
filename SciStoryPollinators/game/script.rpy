@@ -57,20 +57,23 @@ default ecaresponse = ""
 default mayorconvinced = False
 
 ##Audio
-
+define useAudio = False
 init python:
     def playAudio(dialogLine: str):
-        if renpy.emscripten:
-            import emscripten
-            test = emscripten.run_script_int(f"window.playAzureAudio(\"{dialogLine}\", \"{ecaVoice}\", \"{azureKey}\", 100);")
+        if useAudio:
+            if renpy.emscripten:
+                import emscripten
+                test = emscripten.run_script_int(f"window.playAzureAudio(\"{dialogLine}\", \"{ecaVoice}\", \"{azureKey}\", 100);")
     def stopAudio():
-        if renpy.emscripten:
-            import emscripten
-            test = emscripten.run_script_int(f"window.stopAzureAudio();")
+        if useAudio:
+            if renpy.emscripten:
+                import emscripten
+                test = emscripten.run_script_int(f"window.stopAzureAudio();")
 
 label start:
 
-    play music "JaracandaLoop.wav" volume 0.1
+    if useAudio: 
+        play music "JaracandaLoop.wav" volume 0.1
 
     # Show a background
     scene flowers muted
