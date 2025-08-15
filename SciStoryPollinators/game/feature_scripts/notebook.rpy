@@ -13,6 +13,8 @@ default user_argument = ""
 default tagLibrary = ["bees", "pollination", "food", "garden", "lab", "family", "kids", "money", "shopping", "cars", "parking lot", "community"]
 default editing_argument = False
 default edited_note_id = None
+default new_note_text_template = "whats your evidence?"
+default new_note_source_template = "where did you learn this?"
 
 init python:
     import datetime
@@ -193,8 +195,8 @@ screen notebook():
 
             action [
                 Function(new_note, "evidence", "where did you learn this?", []),
-                SetScreenVariable("edit_note_text", "evidence"),
-                SetScreenVariable("edit_note_source", "where did you learn this?"),
+                SetScreenVariable("edit_note_text", new_note_text_template),
+                SetScreenVariable("edit_note_source", new_note_source_template),
                 SetScreenVariable("edit_note_tags", ""),
             ]
 
