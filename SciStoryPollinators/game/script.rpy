@@ -353,6 +353,7 @@
         t "Hey! Sorry to interrupt - but this seems like a good time to show you your notebook!"
 
         t "See this pencil button at the bottom left? Any time you click that, you will make a note of what is being said."
+        $ notebook_unlocked = True
 
         t "If you want to open your notebook and see what notes you've taken, you can click on that button in the top right!"
 

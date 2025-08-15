@@ -49,6 +49,8 @@ screen qa_panel():
                     action [Hide("qa_panel"), Function(toggle_achievements_screen)] style "qa_textbutton"
                 textbutton "Open Notebook":
                     action [Hide("qa_panel"), Function(toggle_notebook)] style "qa_textbutton"
+                textbutton "Unlock Notebook":
+                    action [SetVariable("notebook_unlocked", True)] style "qa_textbutton"
 
 style qa_textbutton is default:
     padding (12, 8, 12, 8)

@@ -133,7 +133,7 @@ screen say(who, what):
                     idle addnote_btn
                     hover darken_hover(addnote_btn)
                     action Function(new_note, who, what, [], "character-dialog")
-            yalign 0.5
+                    yalign 0.5
 
                 if what is not None:
                     text what id "what" style "dialogue"
@@ -1642,12 +1642,16 @@ style side_button:
 
 screen learningbuttons():
     zorder 90
+    $ achieve_btn = Transform("images/imagebutton_achievements.png",  fit="contain", xsize=80)
+    $ bee_btn = Transform("images/imagebutton_bee.png",  fit="contain", xsize=80)
+    $ notebook_btn = Transform("images/imagebutton_notebook.png",  fit="contain", xsize=80)
+    $ map_btn = Transform("images/imagebutton_map.png",  fit="contain", xsize=80)
 
     vbox style "side_button":
         imagebutton:
             tooltip "Travel"
-            idle Transform("icons/button_travel_light.png", fit="contain", xsize=80)
-            hover Transform("icons/button_travel_dark.png", fit="contain", xsize=80)
+            idle map_btn
+            hover darken_hover(map_btn)
             action Jump("travelmenu")
 
         text "\n":
@@ -1655,8 +1659,8 @@ screen learningbuttons():
 
         imagebutton:
             tooltip "Notebook"
-            idle Transform("icons/button_notebook_light.png", fit="contain", xsize=80)
-            hover Transform("icons/button_notebook_dark.png", fit="contain", xsize=80)
+            idle notebook_btn
+            hover darken_hover(notebook_btn)
             action (Function(retaindata), Show("notebook"))
 
         text "\n":
@@ -1664,8 +1668,8 @@ screen learningbuttons():
 
         imagebutton:
             tooltip "Ask Tulip"
-            idle Transform("icons/button_bee_light.png", fit="contain", xsize=80)
-            hover Transform("icons/button_bee_dark.png", fit="contain", xsize=80)
+            idle bee_btn
+            hover darken_hover(bee_btn)
             action Call("tulipchat", from_current = True)
 
         text "\n":
@@ -1673,8 +1677,8 @@ screen learningbuttons():
 
         imagebutton:
             tooltip "Achievements"
-            idle Transform("icons/button_achieve_light.png", fit="contain", xsize=80)
-            hover Transform("icons/button_achieve_dark.png", fit="contain", xsize=80)
+            idle achieve_btn
+            hover darken_hover(achieve_btn)
             action (Function(retaindata), Show("achievements_screen"))
 
     $ tooltip = GetTooltip()
