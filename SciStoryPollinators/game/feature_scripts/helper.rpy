@@ -11,13 +11,18 @@ init python:
         for char in character_directory:
             if char["name"] == char_name:
                 return char["spoken"]
-        return False
+        return ""
 
     def get_character_chats(char_name):
         for char in character_directory:
             if char["name"] == char_name:
                 return char["chats"]
-        return 0
+        return ""
+
+    def get_note_by_id(note_id):
+        for note in notebook: 
+            if note["id"] == note_id:
+                return note
 
     def toggle_argument_screen():
         if renpy.get_screen("argument_writing"):
