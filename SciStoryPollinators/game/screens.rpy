@@ -95,37 +95,60 @@ style frame:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#say
 
-style pencil_button:
-    anchor (0.5, 0.5)
-    pos (0.18, 0.94)
-
 screen say(who, what):
     style_prefix "say"
 
     window:
-        id "window"
+        xfill True
+        yalign 1.0
+        xmargin 300
+        ymargin 20
+        background Frame("gui/nvl.png", 0, 0)
 
-        if who is not None:
+        left_padding 200 
+        right_padding 200
+        top_padding 20
+        bottom_padding 20
 
-            window:
-                id "namebox"
-                style "namebox"
-                text who id "who"
-        
-        text what id "what"
-  
-    imagebutton:
-        tooltip "Write this down"
-        idle "images/takenote.png"
-        hover "images/takenotedark.png"
-        action Function(new_note, what, who, " ")
-        style "pencil_button"
+        vbox:
+            spacing 10
+            xfill True
+            yalign 0.5
 
-    ## If there's a side image, display it above the text. Do not display on the
-    ## phone variant - there's no room.
-    if not renpy.variant("small"):
-        add SideImage() xalign 0.0 yalign 1.0
+            if who is not None:
+                text who id "who" style "label"
 
+            hbox:
+                spacing 16
+                yalign 0.5
+
+                $ line_size = getattr(gui, "text_size", 28)
+                $ target_h  = int(line_size * 2.4)
+                $ iw, ih    = renpy.image_size("images/imagebutton_addnote.png")
+                $ target_w  = int(iw * target_h / float(ih))
+
+                $ addnote_btn = im.Scale("images/imagebutton_addnote.png", target_w, target_h)
+
+                imagebutton:
+                    idle addnote_btn
+                    hover darken_hover(addnote_btn)
+                    action Function(new_note, who, what, [], "character-dialog")
+            yalign 0.5
+
+                if what is not None:
+                    text what id "what" style "dialogue"
+
+
+style say_label:
+    properties gui.text_properties("name", accent=True)
+    bold True
+
+style say_dialogue:
+    properties gui.text_properties("dialogue")
+    # Remove these so the hbox can lay things out:
+    # xpos gui.dialogue_xpos
+    # xsize gui.dialogue_width
+    # ypos gui.dialogue_ypos
 
 ## Make the namebox available for styling through the Character object.
 init python:
@@ -147,30 +170,6 @@ style window:
     ysize gui.textbox_height
 
     background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
-
-style namebox:
-    xpos gui.name_xpos
-    xanchor gui.name_xalign
-    xsize gui.namebox_width
-    ypos gui.name_ypos
-    ysize gui.namebox_height
-
-    background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
-    padding gui.namebox_borders.padding
-
-style say_label:
-    properties gui.text_properties("name", accent=True)
-    xalign gui.name_xalign
-    yalign 0.5
-
-style say_dialogue:
-    properties gui.text_properties("dialogue")
-
-    xpos gui.dialogue_xpos
-    xsize gui.dialogue_width
-    ypos gui.dialogue_ypos
-
-    adjust_spacing False
 
 ## Input screen ################################################################
 ##
