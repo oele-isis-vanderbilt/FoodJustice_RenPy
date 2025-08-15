@@ -33,10 +33,9 @@ init python:
     def retaindata():
         renpy.retain_after_load()
 
-    def new_note(content, speaker, tag, note_type="character-saved"):
+    def new_note(content, speaker, tag, note_type):
         global notebook, note_id_counter, edited_note_id
         note_id = note_id_counter
-        edited_note_id = note_id  # Always set to the newest note
         notebook.append({
             "id": note_id,
             "source": speaker,
@@ -44,9 +43,18 @@ init python:
             "tags": [tag] if isinstance(tag, str) else tag,
             "type": note_type
         })
+        
+        if note_type == "user-written":
+            narrator.add_history(kind="adv", who="You wrote a note: ", what=content)
+        if note_type == "character-dialog":
+            narrator.add_history(kind="adv", who="You saved a note from " + speaker + ": ", what=content)
+        else:
+            edited_note_id = None
+            narrator.add_history(kind="adv", who="A note was added: ", what=content)
+
         note_id_counter += 1
-        renpy.restart_interaction()  # Force UI refresh if needed
         renpy.notify("Note Taken!")
+
         log_http(current_user, action="PlayerTookNote", view=current_label, payload={
             "note": content,
             "source": speaker,
@@ -54,9 +62,12 @@ init python:
             "note_id": note_id,
             "type": note_type
         })
-        narrator.add_history(kind="adv", who="You wrote a note: ", what=content)
+
         renpy.take_screenshot()
         renpy.save("1-1", save_name)
+
+        return note_id
+
     
     def deletenote(note_id):
         global notebook
