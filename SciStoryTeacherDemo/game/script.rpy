@@ -259,7 +259,8 @@ label start:
 
     $ current_user = renpy.input("Please enter a name")
 
-    $ publish_to_syncflow(current_user)
+    # $ publish_to_syncflow(current_user)
+    # uncomment this if you want to collect data (currently uncommented to use for conference demos)
 
     jump demo
 
@@ -596,3 +597,4 @@ label tulip_test:
     # This ends the game.
 
     return
+
