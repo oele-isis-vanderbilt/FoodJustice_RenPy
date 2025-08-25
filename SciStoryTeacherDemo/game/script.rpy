@@ -1,5 +1,5 @@
 ﻿# character set up
-define e = Character("Elliot")
+define el = Character("Elliot")
 define a = Character("Amara")
 define r = Character("Riley")
 define w = Character("Wes")
@@ -259,7 +259,8 @@ label start:
 
     $ current_user = renpy.input("Please enter a name")
 
-    $ publish_to_syncflow(current_user)
+    # $ publish_to_syncflow(current_user)
+    # uncomment this if you want to collect data (currently uncommented to use for conference demos)
 
     jump demo
 
@@ -288,7 +289,12 @@ label tulip_help_menu:
                 $ log("Player input to ECA: " + eca)
                 $ argument_attempts = argument_attempts + 1
 
-                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                python:
+                    try:
+                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                    except Exception as e:
+                        log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
+                        ecaresponse = "Agent took too long to respond. Check connection."
                 
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
@@ -316,9 +322,14 @@ label tulip_help_menu:
                 $ ca_link, ca_json = llama_agent_setup("GameHelp", eca, "tulip", "Tulip")
                 $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
                 $ log("Player input to ECA: " + eca)
-
-                $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
                 
+                python:
+                    try:
+                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                    except Exception as e:
+                        log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
+                        ecaresponse = "Agent took too long to respond. Check connection."
+
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
                 if ecasplit == True:
@@ -379,14 +390,14 @@ label demo:
     show elliot smile at right
     with dissolve
 
-    e "Hi! I'm Elliot. I'll introduce the player to the story's key problem: A group of neighbors are trying to convince the Mayor to use this empty lot to build a community garden."
+    el "Hi! I'm Elliot. I'll introduce the player to the story's key problem: A group of neighbors are trying to convince the Mayor to use this empty lot to build a community garden."
 
     show cyrus smile at left
     with dissolve
 
-    e "However, THAT guy over there - Cyrus Murphy - is a marketing executive who is trying to convince the Mayor to sell the empty lot to a developer who will turn it into a parking garage."
+    el "However, THAT guy over there - Cyrus Murphy - is a marketing executive who is trying to convince the Mayor to sell the empty lot to a developer who will turn it into a parking garage."
 
-    e "Throughout the story, the student will explore different locations, talk to different characters, and gather evidence in their digital notebook to help them figure out what they believe the Mayor should do with the empty lot."
+    el "Throughout the story, the student will explore different locations, talk to different characters, and gather evidence in their digital notebook to help them figure out what they believe the Mayor should do with the empty lot."
 
     hide cyrus smile
     hide elliot smile
@@ -419,8 +430,13 @@ label demo:
     $ log("Player input to ECA: " + eca)
     $ argument_attempts = argument_attempts + 1
 
-    $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
-                        
+    python:
+        try:
+            ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        except Exception as e:
+            log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
+            ecaresponse = "Agent took too long to respond. Check connection."
+
     $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
 
     $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
@@ -460,7 +476,14 @@ label demo:
     $ log_http(current_user, action="PlayerInputToECA", view="nadia", payload=ca_json)
     $ log("Player input to ECA: " + eca)
 
-    $ ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+    
+    python:
+        try:
+            ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        except Exception as e:
+            log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
+            ecaresponse = "Agent took too long to respond. Check connection."
+    
 
     $ log_http(current_user, action="PlayerECAResponse", view="nadia", payload={"eca_response": ecaresponse})
 
@@ -496,7 +519,7 @@ label select_agent:
     narrator "Select which agent you want to try."
 
     $ llama_response = "Agent took too long to respond. Check connection."
-    $ gpt_repsonse = "Agent took too long to respond. Check connection."
+    $ gpt_response = "Agent took too long to respond. Check connection."
     $ flan_response = "Agent took too long to respond. Check connection."
 
     menu:
@@ -518,18 +541,35 @@ label riley_test:
 
     $ log_http(current_user, action="PlayerInputToECA", view="riley", payload=ca_json)
 
-    $ llama_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
-                    
+    python:
+        try:
+            llama_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        except Exception as e:
+            log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
+            llama_response = "Agent took too long to respond. Check connection."
+
     $ log_http(current_user, action="Llama Response", view="riley", payload={"eca_response": llama_response})
 
     $ ca_link, ca_json = flan_agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Riley")
-    $ flan_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
-                    
+
+    python:
+        try:
+            flan_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        except Exception as e:
+            log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
+            flan_response = "Agent took too long to respond. Check connection."
+
     $ log_http(current_user, action="Flan Response", view="riley", payload={"eca_response": flan_response})
 
     $ ca_link, ca_json = gpt_agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Riley")
-    $ gpt_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
-
+    
+    python:
+        try:
+            gpt_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        except Exception as e:
+            log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
+            gpt_response = "Agent took too long to respond. Check connection."
+    
     $ log_http(current_user, action="GPT Response", view="riley", payload={"eca_response": gpt_response})
 
     show screen three_agents(eca, "riley smile", llama_response, gpt_response, flan_response)
@@ -546,17 +586,32 @@ label nadia_test:
 
     $ log_http(current_user, action="PlayerInputToECA", view="nadia", payload=ca_json)
 
-    $ llama_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+    python:
+        try:
+            llama_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        except Exception as e:
+            log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
+            llama_response = "Agent took too long to respond. Check connection."
                         
     $ log_http(current_user, action="Llama Response", view="nadia", payload={"eca_response": llama_response})
 
     $ ca_link, ca_json = flan_agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
-    $ flan_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+    python:
+        try:
+            flan_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        except Exception as e:
+            log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
+            flan_response = "Agent took too long to respond. Check connection."
                         
     $ log_http(current_user, action="Flan Response", view="nadia", payload={"eca_response": flan_response})
 
     $ ca_link, ca_json = gpt_agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
-    $ gpt_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+    python:
+        try:
+            gpt_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        except Exception as e:
+            log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
+            gpt_response = "Agent took too long to respond. Check connection."
     
     $ log_http(current_user, action="GPT Response", view="nadia", payload={"eca_response": gpt_response})
 
@@ -574,17 +629,32 @@ label tulip_test:
     
     $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
 
-    $ llama_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+    python:
+        try:
+            llama_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        except Exception as e:
+            log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
+            llama_response = "Agent took too long to respond. Check connection."
                     
     $ log_http(current_user, action="Llama Response", view="tulip", payload={"eca_response": llama_response})
 
     $ ca_link, ca_json = flan_agent_setup("GameHelp", eca, "tulip", "Tulip")
-    $ flan_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+    python:
+        try:
+            flan_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        except Exception as e:
+            log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
+            flan_response = "Agent took too long to respond. Check connection."
                     
     $ log_http(current_user, action="Flan Response", view="tulip", payload={"eca_response": flan_response})
 
     $ ca_link, ca_json = gpt_agent_setup("GameHelp", eca, "tulip", "Tulip")
-    $ gpt_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+    python:
+        try:
+            gpt_response = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+        except Exception as e:
+            log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
+            gpt_response = "Agent took too long to respond. Check connection."
 
     $ log_http(current_user, action="GPT Response", view="tulip", payload={"eca_response": gpt_response})
 
@@ -596,3 +666,5 @@ label tulip_test:
     # This ends the game.
 
     return
+
+
