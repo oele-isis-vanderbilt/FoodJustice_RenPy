@@ -5,10 +5,10 @@ services:
       dockerfile: Dockerfile
       args:
         - RENPY_GAME_DIR=SciStoryTeacherDemo
-    image: foodjustice-teacher-demo:latest
-    container_name: "foodjustice-container-teacher-demo"
+    image: ${IMAGE_NAME:-foodjustice-teacher-demo}:${IMAGE_TAG:-latest}
+    container_name: ${CONTAINER_NAME:-foodjustice-container-teacher-demo}
     ports:
-      - "8081:8080"
+      - "${EXTERNAL_PORT:-8081}:8080"
     environment:
       - GAME_ROOT_DIR=/code/SciStoryTeacherDemo
     volumes:

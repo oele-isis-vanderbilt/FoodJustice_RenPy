@@ -40,6 +40,32 @@ jobs:
               docker compose -p food-justice-deployment up -d food-justice-service
             '
 
+        - name: Build and Deploy game API (Stable)
+          if: github.event_name == 'release'
+          env:
+            PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+            HOST: ${{ secrets.HOST }}
+            USERNAME: ${{ secrets.USERNAME }}
+          run: |
+              echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+              ssh-keygen -y -f private_key > /dev/null
+              ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST} '
+                echo "Pulling latest changes from GitHub"
+                rm -rf FoodJusticeDeploymentStable
+                mkdir FoodJusticeDeploymentStable && cd FoodJusticeDeploymentStable
+                git clone https://github.com/oele-isis-vanderbilt/FoodJustice_RenPy.git
+                cd FoodJustice_RenPy
+                sudo chmod 666 /var/run/docker.sock
+                git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
+                export EXTERNAL_PORT=8082
+                export IMAGE_NAME=foodjustice
+                export IMAGE_TAG=stable
+                export CONTAINER_NAME=foodjustice-container-stable
+                docker compose -p food-justice-deployment-stable build food-justice-service
+                docker compose -p food-justice-deployment-stable down food-justice-service
+                docker compose -p food-justice-deployment-stable up -d food-justice-service
+              '
+
         - name: Docker Cleanup on JetStream2 VM
           if: github.event_name == 'schedule'
           env:
