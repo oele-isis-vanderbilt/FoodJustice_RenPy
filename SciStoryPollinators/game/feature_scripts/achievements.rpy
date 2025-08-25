@@ -97,10 +97,14 @@ screen achievements_screen():
         background Frame("#222222ed", 12, 12)
         has vbox
 
-        # Small X button at top-right with padding
+        # Close button in the top right corner    
+        $ iw, ih = renpy.image_size("images/imagebutton_close.png")
+        $ exit_btn = Transform("images/imagebutton_close.png", zoom=50.0 / ih)
+
         imagebutton:
-            idle Transform("icons/button_exit-popup.png", xysize=(36,36))
-            hover Transform("icons/button_exit-popup_hover.png", xysize=(36,36))
+            tooltip "Close"
+            idle exit_btn
+            hover darken_hover(exit_btn, 0.40)                        
             action Hide("achievements_screen")
             anchor (1.0, 0.0)
             pos (0.98, 0.02)

@@ -33,6 +33,7 @@
     default spoken_list = []
     default startplace = "rural"
     default structure = "lot"
+    default currentlocation = "emptylot"
 
     ##LOCATION VISIT TRACKING
     default emptylotvisit = False
@@ -81,7 +82,6 @@
             "???" "Hello hello! So glad you're here. I'm absolutely buzzing with excitement!"
 
     t "I'm Tulip! The hive chose me as your guide for today. If you have any trouble while you're exploring, you can ask me for help!"
-
     t "Before we get started, tell me about yourself! What kind of place did you come from?"
 
     menu:
@@ -111,20 +111,7 @@
         "I guess.":
             t "Don't worry, I'll be right by your side if you need help! We're two bees in a pod. Hehe."
 
-
     jump begin
-
-    label travelmenu:
-        narrator "Where would you like to go?"
-        menu:
-            "The empty lot" if currentlocation != "emptylot":
-                jump emptylot
-            "The food lab" if currentlocation != "foodlab":
-                jump foodlab
-            "The community garden" if currentlocation != "garden":
-                jump garden
-            "Nevermind, stay here":
-                $ renpy.rollback(checkpoints=3)
 
     label tulipchat:
         show tulip at left
@@ -325,16 +312,11 @@
     "Friendly Stranger" "Hey what's up - you new to the neighborhood?"
 
     menu:
-
         "Yeah, just moved here!":
             "Friendly Stranger" "Welcome to the neighborhood! I live right down the street."
-
         "Maybe.":
             "Friendly Stranger" "I dunno where you moved from, but we don't do the whole 'mysterious stranger' thing here."
-
-
     "Friendly Stranger" "Anyway, I'm glad you're here, new kid." 
-
     el "I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our lot to those parking guys."
 
     menu:
@@ -344,28 +326,22 @@
     label parkingguys:
         el "That guy over there in the suit is from CityPark. They want to turn our empty lot into a big parking [structure] for the neighborhood."
         el "But me and the other Community Gardeners have been trying to convince Mayor Watson to donate the lot to our food justice project instead."
-
         el "The parking [structure] makes money, but a community garden would be huge for this neighborhood!"
 
         show tulip at left
         with dissolve
 
         t "Hey! Sorry to interrupt - but this seems like a good time to show you your notebook!"
-
-        t "See this pencil button at the bottom left? Any time you click that, you will make a note of what is being said."
         $ notebook_unlocked = True
-
-        t "If you want to open your notebook and see what notes you've taken, you can click on that button in the top right!"
-
+        t "See the + button to the left? This automatically adds whatever is being said to your notebook!"
+        t "If you want to open your notebook and see what notes you've taken, you can click on the Notes button in the top right!"
         t "You can edit notes you've taken, or write your own custom notes! You can also delete notes you don't want."
-
         t "Hope that helps!"
 
         hide tulip
         with dissolve
 
         el "Whoa, a bee just flew past your face! You know, I bet if we built a garden here, the bees would love it."
-
         el "The garden would be great for people too. The nearest grocery store is miles away, and most folks don't have a car."
 
         menu:

@@ -173,11 +173,14 @@ screen notebook():
 
     add "images/notebook_open.png" xpos 0.5 ypos 0.5 anchor (0.5, 0.5) zoom .8
 
-    $ exit_btn = Transform("icons/button_exit-popup.png", xysize=(36, 36))
+    $ iw, ih = renpy.image_size("images/imagebutton_close.png")
+    $ exit_btn = Transform("images/imagebutton_close.png", zoom=50.0 / ih)
 
     imagebutton:
+        tooltip "Close"
         idle exit_btn
         hover darken_hover(exit_btn, 0.40)
+
         action Hide("notebook")
         anchor (0.5, 0.5)
         pos (0.792, 0.17)
@@ -359,21 +362,21 @@ screen notebook():
                                     spacing 4
                                     xalign 1.0
 
-                                    $ iw, ih = renpy.image_size("images/imagebutton_pencil.png")
-                                    $ edit_btn = Transform("images/imagebutton_pencil.png", zoom=50.0 / ih)  # target height = 50px
-                                                                        
                                     $ iw, ih = renpy.image_size("images/imagebutton_trashcan.png")
-                                    $ delete_btn = Transform("images/imagebutton_trashcan.png", zoom=50.0 / ih)  # target height = 50px
+                                    $ delete_btn = Transform("images/imagebutton_trashcan.png", zoom=50.0 / ih)
+                                    
+                                    $ iw, ih = renpy.image_size("images/imagebutton_pencil.png")
+                                    $ edit_btn = Transform("images/imagebutton_pencil.png", zoom=50.0 / ih)
 
                                     imagebutton:
                                         tooltip "Delete note"
                                         idle delete_btn
-                                        hover darken_hover(delete_btn, 0.40)
+                                        hover darken_hover(delete_btn)
                                         action Confirm("Are you sure you want to delete this note?", yes=Function(deletenote, note_id))
                                     imagebutton:
                                         tooltip "Edit note"
                                         idle edit_btn
-                                        hover darken_hover(edit_btn, 0.40)
+                                        hover darken_hover(edit_btn)
                                         action [
                                             SetVariable("edit_note_text", n),
                                             SetVariable("edit_note_source", s),
@@ -381,7 +384,7 @@ screen notebook():
                                             SetVariable("edited_note_id", note_id)
                                         ]
                                         xalign 1.0
-                            text n id "note":
+                            text "Note: " + n:
                                 size 22
                             text "Source: " + s:
                                 size 14

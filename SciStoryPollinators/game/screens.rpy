@@ -122,18 +122,20 @@ screen say(who, what):
                 spacing 16
                 yalign 0.5
 
-                $ line_size = getattr(gui, "text_size", 28)
-                $ target_h  = int(line_size * 2.4)
-                $ iw, ih    = renpy.image_size("images/imagebutton_addnote.png")
-                $ target_w  = int(iw * target_h / float(ih))
+                if who is not None and notebook_unlocked:
 
-                $ addnote_btn = im.Scale("images/imagebutton_addnote.png", target_w, target_h)
+                    $ line_size = getattr(gui, "text_size", 28)
+                    $ target_h  = int(line_size * 2.4)
+                    $ iw, ih    = renpy.image_size("images/imagebutton_addnote.png")
+                    $ target_w  = int(iw * target_h / float(ih))
 
-                imagebutton:
-                    idle addnote_btn
-                    hover darken_hover(addnote_btn)
-                    action Function(new_note, who, what, [], "character-dialog")
-                    yalign 0.5
+                    $ addnote_btn = im.Scale("images/imagebutton_addnote.png", target_w, target_h)
+
+                    imagebutton:
+                        idle addnote_btn
+                        hover darken_hover(addnote_btn)
+                        action Function(new_note, what, who, [], "character-dialog")
+                        yalign 0.5
 
                 if what is not None:
                     text what id "what" style "dialogue"
@@ -1652,7 +1654,7 @@ screen learningbuttons():
             tooltip "Travel"
             idle map_btn
             hover darken_hover(map_btn)
-            action Jump("travelmenu")
+            action (Function(retaindata), Show("map_popup"))
 
         text "\n":
             size 8
