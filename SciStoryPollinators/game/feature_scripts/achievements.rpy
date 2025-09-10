@@ -1,15 +1,18 @@
+# Enable Ren'Py developer features (console, reloads, error tracing, etc.)
 define config.developer = True
 
+# Persistent store of unlocked achievements (survives saves/new games).
+# 'default' sets an initial value only if none exists yet.
 default persistent.achievements = {}
 
-#this is the list of all the achievements throughout the game. each one should have a name, description, and an icon.
-
+# This is the list of all achievements in the game.
+# Each achievement has a unique "key", a display "name", "desc" (description), and "icon" path.
 define achievement_list = [
     {
-        "key": "FRIEND",  # <-- comma after each field
-        "name": "A New Friend",
-        "desc": "Talk to Elliot for the first time.",
-        "icon": "icons/icon_achieve_1_friend.png"
+        "key": "FRIEND",  # Unique ID used by code
+        "name": "A New Friend",  # Title shown to player
+        "desc": "Talk to Elliot for the first time.",  # Subtitle/description
+        "icon": "icons/icon_achieve_1_friend.png"  # 64x64 fits the popup nicely
     },
     {
         "key": "SOCIAL",
@@ -19,72 +22,122 @@ define achievement_list = [
     },
     {
         "key": "ARGUMENT",
-        "name": "Well-Constructed ",
+        "name": "Well-Constructed",
         "desc": "Draft your first argument.",
         "icon": "icons/icon_achieve_1_friend.png"
     },
 ]
 
-# in script.rpy, you can unlock an achievement by calling the function 
-## unlock_achievement("name_of_achievement", pause_time=10) 
-
-# the pause_time is optional and defaults to 5 seconds, which is how long the achievement popup will be displayed before it fades out
+# In script.rpy, you can unlock an achievement by calling:
+## unlock_achievement("name_of_achievement", pause_time=10)
+# 'pause_time' controls how long the popup stays visible (default 5s).
 
 #----------DO NOT EDIT ANYTHING BELOW THIS LINE UNLESS YOU KNOW WHAT YOU'RE DOING----------
 
-
-
-# everything below this point is the logic for displaying the achievement popup when an achievement is unlocked and shouldn't need to be touched for individual achievement edits
+# The functions below implement unlocking + the popup behavior,
+# plus a couple of helper "achieve_*" checkers you can call from story logic.
 
 init python:
+    # Fast lookup for screens
+    achievement_map = {a["key"]: a for a in achievement_list}
+
     def unlock_achievement(key, pause_time=5):
         persistent.achievements[key] = True
         renpy.show_screen("achievement_popup", key)
         renpy.pause(pause_time, hard=True)
         renpy.hide_screen("achievement_popup")
 
+    def ensure_unlocked(key, condition):
+        if condition and not persistent.achievements.get(key, False):
+            unlock_achievement(key)
+
     def achieve_social():
-        # Unlock if all characters in the dictionary have spoken == True
-        if all(char["spoken"] for char in character_directory):
-            if not persistent.achievements.get("SOCIAL", False):
-                unlock_achievement("SOCIAL")
+        # Works if character_directory is a dict or list
+        try:
+            chars = list(character_directory.values())
+        except Exception:
+            chars = character_directory
+        ensure_unlocked("SOCIAL", all(ch.get("spoken") for ch in chars))
 
     def achieve_argument():
-        if argument_attempts >= 1:
-            if not persistent.achievements.get("ARGUMENT", False):
-                unlock_achievement("ARGUMENT")
+        ensure_unlocked("ARGUMENT", argument_attempts >= 1)
 
-    def safe_show_say():
-        # Only show the say screen if in-game and not in the main menu
-        if not renpy.context()._main_menu:
-            renpy.show_screen("say")
 
+# ---------------------------------------------------------------------------
+# Popup shown when an achievement unlocks (bottom-right)
+# ---------------------------------------------------------------------------
 screen achievement_popup(key):
     zorder 200
-    $ ach = [a for a in achievement_list if a["key"] == key][0]
-    frame at popup_fade:
-        background Frame("#222c", 12, 12)
-        xalign 0.98
-        yalign 0.98   # Bottom right corner
-        padding (24, 18)
-        xmaximum 420
-        yminimum 90
-        vbox:
-            spacing 8
-            hbox:
-                spacing 16
-                if ach["icon"]:
-                    add ach["icon"] size (64, 64)
-                vbox:
-                    text "Achievement Unlocked!" size 18 color "#ffffff" bold True
-                    text "[ach['name']]" size 26 color "#ffffff" bold True
-                    text ach["desc"] size 16 color "#ccc" xalign 0.0 italic True
+    
+    $ ach = achievement_map.get(key)
 
+    if ach:
+        frame at popup_fade:
+            background Frame("#222c", 12, 12)
+            xalign 0.98
+            yalign 0.98
+            padding (24, 18)
+            xmaximum 420
+            yminimum 90
+
+            vbox:
+                spacing 8
+                hbox:
+                    spacing 16
+                    if ach["icon"]:
+                        add ach["icon"] size (64, 64)
+                    vbox:
+                        text "Achievement Unlocked!" size 18 color "#ffffff" bold True
+                        text "[ach['name']]" size 26 color "#ffffff" bold True
+                        text ach["desc"] size 16 color "#ccc" xalign 0.0 italic True
+
+# ---------------------------------------------------------------------------
+# Reusable row for the achievements list (reduces duplication)
+# ---------------------------------------------------------------------------
+screen achievement_row(ach, width=700, height=100):
+    fixed:
+        xsize width
+        ysize height
+
+        frame:
+            background Frame("#222c", 12, 12)
+            xsize width
+            ysize height
+            padding (16, 12, 16, 12)
+
+            hbox:
+                yalign 0.5
+                spacing 20
+
+                if ach["icon"]:
+                    add ach["icon"] size (64, 64) yalign 0.5
+
+                $ unlocked = persistent.achievements.get(ach["key"], False)
+                vbox:
+                    yalign 0.5
+                    spacing 4
+                    if unlocked:
+                        text ach["name"] size 26 color "#aeea00"
+                        text ach["desc"] size 16 color "#ffffff"
+                    else:
+                        text ach["name"] size 26 color "#888"
+                        text ach["desc"] size 16 color "#bbb"
+
+        # Semi-transparent veil over locked items
+        if not persistent.achievements.get(ach["key"], False):
+            add Solid("#8888", xsize=width, ysize=height) xpos 0 ypos 0
+
+# ---------------------------------------------------------------------------
+# Achievements menu screen
+# - If total <= 7: single centered column under the header.
+# - If total  > 7: two centered columns; items after the first 7 wrap into column 2.
+# ---------------------------------------------------------------------------
 screen achievements_screen():
     tag menu
     modal True
+    add Solid("#00000080")  # black at 50% opacity, tweak hex/alpha to taste
 
-    # This transparent button absorbs all clicks outside the popup
+    # Absorb clicks outside the panel
     button:
         xysize (config.screen_width, config.screen_height)
         action NullAction()
@@ -93,96 +146,60 @@ screen achievements_screen():
     frame:
         xalign 0.5
         yalign 0.5
-        padding (20, 20)
+        padding (24, 24)
         background Frame("#222222ed", 12, 12)
         has vbox
 
-        # Close button in the top right corner    
-        $ iw, ih = renpy.image_size("images/imagebutton_close.png")
-        $ exit_btn = Transform("images/imagebutton_close.png", zoom=50.0 / ih)
-
-        imagebutton:
-            tooltip "Close"
-            idle exit_btn
-            hover darken_hover(exit_btn, 0.40)                        
-            action Hide("achievements_screen")
-            anchor (1.0, 0.0)
-            pos (0.98, 0.02)
+        # Close button (image optional)
+        $ have_close_img = renpy.loadable("images/imagebutton_close.png")
+        if have_close_img:
+            $ iw, ih = renpy.image_size("images/imagebutton_close.png")
+            $ exit_btn = Transform("images/imagebutton_close.png", zoom=50.0 / ih)
+            imagebutton:
+                tooltip "Close"
+                idle exit_btn
+                hover exit_btn
+                action Hide("achievements_screen")
+                anchor (1.0, 0.0)
+                pos (0.98, 0.02)
+        else:
+            textbutton "✕" action Hide("achievements_screen") xalign 1.0
 
         spacing 16
-        text "Achievements" size 32 xalign 0.5
+        text "Achievements" size 40 xalign 0.5 color "#ffffff" bold True
 
-        $ max_per_col = 7 # Maximum achievements per column 
+        $ max_per_col = 7
         $ total = len(achievement_list)
-        if total <= max_per_col:
-            # Single centered column
-            hbox:
-                spacing 20
-                null width 500  # left spacer to center
-                vbox:
-                    spacing 12
-                    for ach in achievement_list:
-                        fixed:
-                            xsize 500
-                            ysize 80
-                            frame:
-                                background Frame("#222c", 12, 12)
-                                xsize 500
-                                ysize 80
-                                padding (12, 8, 12, 8)
-                                hbox:
-                                    yalign 0.5
-                                    spacing 16
-                                    if ach["icon"]:
-                                        add ach["icon"] size (48, 48) yalign 0.5
-                                    vbox:
-                                        yalign 0.5
-                                        spacing 2
-                                        if persistent.achievements.get(ach["key"], False):
-                                            text ach["name"] size 20 color "#aeea00"
-                                            text ach["desc"] size 14 color "#fff"
-                                        else:
-                                            text ach["name"] size 20 color "#888"
-                                            text ach["desc"] size 14 color "#bbb"
-                        # Overlay must be inside the fixed block, after the frame!
-                        if not persistent.achievements.get(ach["key"], False):
-                            add Solid("#8888", xsize=500, ysize=80) xpos 0 ypos 0
-                null width 500  # right spacer to center
-        else:
-            # Two columns, up to 7 per column
-            $ col1 = achievement_list[:max_per_col]
-            $ col2 = achievement_list[max_per_col:max_per_col*2]
-            hbox:
-                spacing 20
-                for col in [col1, col2]:
-                    vbox:
-                        spacing 12
-                        for ach in col:
-                            fixed:
-                                xsize 500
-                                ysize 80
-                                frame:
-                                    background Frame("#222c", 12, 12)
-                                    xsize 500
-                                    ysize 80
-                                    padding (12, 8, 12, 8)
-                                    hbox:
-                                        yalign 0.5
-                                        spacing 16
-                                        if ach["icon"]:
-                                            add ach["icon"] size (48, 48) yalign 0.5
-                                        vbox:
-                                            yalign 0.5
-                                            spacing 2
-                                            if persistent.achievements.get(ach["key"], False):
-                                                text ach["name"] size 20 color "#aeea00"
-                                                text ach["desc"] size 14 color "#fff"
-                                            else:
-                                                text ach["name"] size 20 color "#888"
-                                                text ach["desc"] size 14 color "#bbb"
-                                if not persistent.achievements.get(ach["key"], False):
-                                    add Solid("#8888", xsize=500, ysize=80) xpos 0 ypos 0
 
+        if total <= max_per_col:
+            # -------- Single centered stack --------
+            vbox:
+                xalign 0.5         # center the whole stack under the header
+                spacing 16
+                for ach in achievement_list:
+                    use achievement_row(ach)
+        else:
+            # -------- Two centered columns --------
+            $ first_col = achievement_list[:max_per_col]     # first 7
+            $ second_col = achievement_list[max_per_col:]    # everything after 7
+
+            hbox:
+                xalign 0.5         # center the column group under the header
+                spacing 24
+
+                vbox:
+                    spacing 16
+                    for ach in first_col:
+                        use achievement_row(ach)
+
+                vbox:
+                    spacing 16
+                    for ach in second_col:
+                        use achievement_row(ach)
+
+# ---------------------------------------------------------------------------
+# Popup animation
+# ---------------------------------------------------------------------------
 transform popup_fade:
     alpha 0.0
     linear 0.3 alpha 1.0
