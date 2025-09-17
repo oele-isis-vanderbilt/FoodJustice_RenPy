@@ -9,24 +9,109 @@ default persistent.achievements = {}
 # Each achievement has a unique "key", a display "name", "desc" (description), and "icon" path.
 define achievement_list = [
     {
-        "key": "FRIEND",  # Unique ID used by code
-        "name": "A New Friend",  # Title shown to player
-        "desc": "Talk to Elliot for the first time.",  # Subtitle/description
-        "icon": "icons/icon_achieve_1_friend.png"  # 64x64 fits the popup nicely
+        "key": "FRIEND",
+        "name": "A New Friend",
+        "desc": "Talk to Elliot for the first time.",
+        "icon": "icons/icon_achieve_FRIEND.png"
     },
     {
         "key": "SOCIAL",
         "name": "Social Butterfly",
-        "desc": "Speak to everyone in town!",
-        "icon": "icons/icon_achieve_1_friend.png"
+        "desc": "Speak to everyone in town.",
+        "icon": "icons/icon_achieve_SOCIAL.png"
+    },
+    {
+        "key": "VISIT",
+        "name": "Local Tourist",
+        "desc": "Visit all the locations in town.",
+        "icon": "icons/icon_achieve_VISIT.png"
     },
     {
         "key": "ARGUMENT",
         "name": "Well-Constructed",
         "desc": "Draft your first argument.",
-        "icon": "icons/icon_achieve_1_friend.png"
+        "icon": "icons/icon_achieve_ARGUMENT.png"
+    },
+    {
+        "key": "REVISION5",
+        "name": "Work in Progress",
+        "desc": "Revise your argument 5 times.",
+        "icon": "icons/icon_achieve_REVISION3.png"
+    },
+    {
+        "key": "FEEDBACK",
+        "name": "Peer Reviewed",
+        "desc": "Get feedback from Riley on your argument.",
+        "icon": "icons/icon_achieve_FEEDBACK.png"
+    },
+    {
+        "key": "NOTES5",
+        "name": "Note to Self",
+        "desc": "Take at least 5 notes.",
+        "icon": "icons/icon_achieve_NOTES5.png"
+    },
+    {
+        "key": "NOTES10",
+        "name": "Duly Noted",
+        "desc": "Take at least 10 notes.",
+        "icon": "icons/icon_achieve_NOTES10.png"
+    },
+    {
+        "key": "GARDENCHAT",
+        "name": "Garden Gossip",
+        "desc": "Ask questions to everyone in the garden.",
+        "icon": "icons/icon_achieve_GARDENCHAT.png"
+    },
+    {
+        "key": "FOODLABCHAT",
+        "name": "Food for Thought",
+        "desc": "Ask questions to everyone in the food lab.",
+        "icon": "icons/icon_achieve_FOODLABCHAT.png"
+    },
+    # {
+    #     "key": "TULIP",
+    #     "name": "Blooming Friendship",
+    #     "desc": "Befriend Tulip.",
+    #     "icon": "icons/icon_achieve_TULIP.png"
+    # },
+    # {
+    #     "key": "NEGATIVE",
+    #     "name": "Reluctant Hero",
+    #     "desc": "You were hesitant to help Elliot and Tulip at first.",
+    #     "icon": "icons/icon_achieve_NEGATIVE.png"
+    # },
+    # {
+    #     "key": "POSITIVE",
+    #     "name": "Eager Beaver",
+    #     "desc": "You were eager to help Elliot and Tulip.",
+    #     "icon": "icons/icon_achieve_POSITIVE.png"
+    # },
+    # {
+    #     "key": "SHUTDOWN",
+    #     "name": "Talk to the Hand",
+    #     "desc": "You shut down Cyrus at every opportunity.",
+    #     "icon": "icons/icon_achieve_SHUTDOWN.png"
+    # },
+    {
+        "key": "UNDECIDED",
+        "name": "Second Try is the Charm",
+        "desc": "The mayor hasn’t been convinced…yet.",
+        "icon": "icons/icon_achieve_UNDECIDED.png"
+    },
+    {
+        "key": "GARDEN",
+        "name": "Seeds of Change",
+        "desc": "Convince the mayor to build a garden.",
+        "icon": "icons/icon_achieve_GARDEN.png"
+    },
+    {
+        "key": "PARKING",
+        "name": "Concrete Jungle",
+        "desc": "Convince the mayor to build a parking lot.",
+        "icon": "icons/icon_achieve_PARKING.png"
     },
 ]
+
 
 # In script.rpy, you can unlock an achievement by calling:
 ## unlock_achievement("name_of_achievement", pause_time=10)
@@ -52,7 +137,6 @@ init python:
             unlock_achievement(key)
 
     def achieve_social():
-        # Works if character_directory is a dict or list
         try:
             chars = list(character_directory.values())
         except Exception:
@@ -61,6 +145,29 @@ init python:
 
     def achieve_argument():
         ensure_unlocked("ARGUMENT", argument_attempts >= 1)
+    
+    def achieve_visit():
+        required_locations = {"Food Lab", "Garden", "Beehives", "Empty Lot"}
+        # Make sure visited_list exists before checking
+        try:
+            visited = set(visited_list)
+        except NameError:
+            visited = set()
+
+        ensure_unlocked("VISIT", required_locations.issubset(visited))
+
+    def achieve_argument():
+        try:
+            edits = argument_edits
+        except NameError:
+            edits = 0
+
+        # Unlock for first draft
+        ensure_unlocked("ARGUMENT", edits >= 1)
+
+        # Unlock for 3 revisions
+        ensure_unlocked("REVISION5", edits >= 3)
+
 
 
 # ---------------------------------------------------------------------------
@@ -73,7 +180,6 @@ screen achievement_popup(key):
 
     if ach:
         frame at popup_fade:
-            background Frame("#222c", 12, 12)
             xalign 0.98
             yalign 0.98
             padding (24, 18)
@@ -94,16 +200,24 @@ screen achievement_popup(key):
 # ---------------------------------------------------------------------------
 # Reusable row for the achievements list (reduces duplication)
 # ---------------------------------------------------------------------------
-screen achievement_row(ach, width=700, height=100):
+screen achievement_row(ach, width=600, height=70):
     fixed:
         xsize width
         ysize height
+        
+        $ unlocked = persistent.achievements.get(ach["key"], False)
 
         frame:
-            background Frame("#222c", 12, 12)
+            if unlocked:
+                background Frame("#ffffff09")
+            else:
+                background Frame("#ffffff32")
             xsize width
             ysize height
-            padding (16, 12, 16, 12)
+            padding (8, 6, 8, 6)
+
+            # if not persistent.achievements.get(ach["key"], False):
+            #     add Solid("#8888", xsize=width, ysize=height) xpos 0 ypos 0
 
             hbox:
                 yalign 0.5
@@ -112,7 +226,6 @@ screen achievement_row(ach, width=700, height=100):
                 if ach["icon"]:
                     add ach["icon"] size (64, 64) yalign 0.5
 
-                $ unlocked = persistent.achievements.get(ach["key"], False)
                 vbox:
                     yalign 0.5
                     spacing 4
@@ -124,8 +237,7 @@ screen achievement_row(ach, width=700, height=100):
                         text ach["desc"] size 16 color "#bbb"
 
         # Semi-transparent veil over locked items
-        if not persistent.achievements.get(ach["key"], False):
-            add Solid("#8888", xsize=width, ysize=height) xpos 0 ypos 0
+
 
 # ---------------------------------------------------------------------------
 # Achievements menu screen
@@ -135,7 +247,7 @@ screen achievement_row(ach, width=700, height=100):
 screen achievements_screen():
     tag menu
     modal True
-    add Solid("#00000080")  # black at 50% opacity, tweak hex/alpha to taste
+    add Solid("#00000080") 
 
     # Absorb clicks outside the panel
     button:
@@ -158,7 +270,7 @@ screen achievements_screen():
             imagebutton:
                 tooltip "Close"
                 idle exit_btn
-                hover exit_btn
+                hover darken_hover(exit_btn, 0.40)
                 action Hide("achievements_screen")
                 anchor (1.0, 0.0)
                 pos (0.98, 0.02)
@@ -168,14 +280,14 @@ screen achievements_screen():
         spacing 16
         text "Achievements" size 40 xalign 0.5 color "#ffffff" bold True
 
-        $ max_per_col = 7
+        $ max_per_col = 8
         $ total = len(achievement_list)
 
         if total <= max_per_col:
             # -------- Single centered stack --------
             vbox:
                 xalign 0.5         # center the whole stack under the header
-                spacing 16
+                spacing 8
                 for ach in achievement_list:
                     use achievement_row(ach)
         else:
@@ -185,15 +297,15 @@ screen achievements_screen():
 
             hbox:
                 xalign 0.5         # center the column group under the header
-                spacing 24
+                spacing 12
 
                 vbox:
-                    spacing 16
+                    spacing 8
                     for ach in first_col:
                         use achievement_row(ach)
 
                 vbox:
-                    spacing 16
+                    spacing 8
                     for ach in second_col:
                         use achievement_row(ach)
 
