@@ -27,10 +27,7 @@ A repo for developing the lightweight, RenPy version of the Food Justice environ
 1. From the terminal, navigate to the parent folder of the RenPy SDK and the FoodJustice_RenPy repo, then run the following command: `./renpy.sh SciStoryPollinators/`
 
 
-:::warning
-If you see a "permission denied" error, run: `chmod +x renpy.sh` from inside the RenPySDK folder first, and then try again.
-
-:::
+::: warning -- If you see a "permission denied" error, run: `chmod +x renpy.sh` from inside the RenPySDK folder first, and then try again. :::
 
 # Launch Instructions \[Web\]
 
