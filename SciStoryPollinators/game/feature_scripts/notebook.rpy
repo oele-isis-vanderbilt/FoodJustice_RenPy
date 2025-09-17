@@ -13,6 +13,9 @@ default user_argument = ""
 default tagLibrary = ["bees", "pollination", "food", "garden", "lab", "family", "kids", "money", "shopping", "cars", "parking lot", "community"]
 default editing_argument = False
 default edited_note_id = None
+default new_note_text_template = "whats your evidence?"
+default new_note_source_template = "where did you learn this?"
+default notebook_unlocked = False
 
 init python:
     import datetime
@@ -31,10 +34,9 @@ init python:
     def retaindata():
         renpy.retain_after_load()
 
-    def new_note(content, speaker, tag, note_type="character-saved"):
+    def new_note(content, speaker, tag, note_type):
         global notebook, note_id_counter, edited_note_id
         note_id = note_id_counter
-        edited_note_id = note_id  # Always set to the newest note
         notebook.append({
             "id": note_id,
             "source": speaker,
@@ -42,9 +44,18 @@ init python:
             "tags": [tag] if isinstance(tag, str) else tag,
             "type": note_type
         })
+        
+        if note_type == "user-written":
+            narrator.add_history(kind="adv", who="You wrote a note: ", what=content)
+        if note_type == "character-dialog":
+            narrator.add_history(kind="adv", who="You saved a note from " + speaker + ": ", what=content)
+        else:
+            edited_note_id = None
+            narrator.add_history(kind="adv", who="A note was added: ", what=content)
+
         note_id_counter += 1
-        renpy.restart_interaction()  # Force UI refresh if needed
         renpy.notify("Note Taken!")
+
         log_http(current_user, action="PlayerTookNote", view=current_label, payload={
             "note": content,
             "source": speaker,
@@ -52,9 +63,12 @@ init python:
             "note_id": note_id,
             "type": note_type
         })
-        narrator.add_history(kind="adv", who="You wrote a note: ", what=content)
+
         renpy.take_screenshot()
         renpy.save("1-1", save_name)
+
+        return note_id
+
     
     def deletenote(note_id):
         global notebook
@@ -159,9 +173,14 @@ screen notebook():
 
     add "images/notebook_open.png" xpos 0.5 ypos 0.5 anchor (0.5, 0.5) zoom .8
 
+    $ iw, ih = renpy.image_size("images/imagebutton_close.png")
+    $ exit_btn = Transform("images/imagebutton_close.png", zoom=50.0 / ih)
+
     imagebutton:
-        idle Transform("icons/button_exit-popup.png", xysize=(36,36))
-        hover Transform("icons/button_exit-popup_hover.png", xysize=(36,36))
+        tooltip "Close"
+        idle exit_btn
+        hover darken_hover(exit_btn, 0.40)
+
         action Hide("notebook")
         anchor (0.5, 0.5)
         pos (0.792, 0.17)
@@ -182,6 +201,9 @@ screen notebook():
         $ top_y = vp_center_y - vp_h/2.0
 
     # ===== STICKY ADD BUTTON (non-scrolling, on top) =====
+        text "Edited Note ID: [edited_note_id]"
+        $ renpy.log("Notebook length: {}".format(len(notebook)))
+
         button:
             anchor (0.5, 0.0)
             pos (vp_center_x, top_y)
@@ -192,12 +214,13 @@ screen notebook():
             padding (12, 10)
 
             action [
-                Function(new_note, "evidence", "where did you learn this?", []),
-                SetScreenVariable("edit_note_text", "evidence"),
-                SetScreenVariable("edit_note_source", "where did you learn this?"),
+                Function(lambda: store.__setattr__('edited_note_id',
+                            new_note("evidence", "where did you learn this?", [], "user-written"))),
+                SetScreenVariable("edit_note_text", new_note_text_template),
+                SetScreenVariable("edit_note_source", new_note_source_template),
                 SetScreenVariable("edit_note_tags", ""),
             ]
-
+            
             vbox:
                 yalign 0.5
                 hbox:
@@ -226,7 +249,8 @@ screen notebook():
                 $ t = ", ".join(note["tags"]) if note["tags"] else ""
                 $ n = note["content"]
                 $ note_id = note["id"]
-### EDIT NOTE MODE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+                ### EDIT NOTE MODE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 if edited_note_id == note_id: 
                     frame style "editing_note_frame":
                         vbox:
@@ -337,17 +361,22 @@ screen notebook():
                                 hbox:
                                     spacing 4
                                     xalign 1.0
+
+                                    $ iw, ih = renpy.image_size("images/imagebutton_trashcan.png")
+                                    $ delete_btn = Transform("images/imagebutton_trashcan.png", zoom=50.0 / ih)
+                                    
+                                    $ iw, ih = renpy.image_size("images/imagebutton_pencil.png")
+                                    $ edit_btn = Transform("images/imagebutton_pencil.png", zoom=50.0 / ih)
+
                                     imagebutton:
                                         tooltip "Delete note"
-                                        style "imagebutton_note"
-                                        idle "images/delete note.png"
-                                        hover "images/delete note dark.png"
+                                        idle delete_btn
+                                        hover darken_hover(delete_btn)
                                         action Confirm("Are you sure you want to delete this note?", yes=Function(deletenote, note_id))
                                     imagebutton:
                                         tooltip "Edit note"
-                                        style "imagebutton_note"
-                                        idle "images/edit pencil.png"
-                                        hover "images/edit pencil dark.png"
+                                        idle edit_btn
+                                        hover darken_hover(edit_btn)
                                         action [
                                             SetVariable("edit_note_text", n),
                                             SetVariable("edit_note_source", s),
@@ -355,7 +384,7 @@ screen notebook():
                                             SetVariable("edited_note_id", note_id)
                                         ]
                                         xalign 1.0
-                            text n id "note":
+                            text "Note: " + n:
                                 size 22
                             text "Source: " + s:
                                 size 14
@@ -398,8 +427,7 @@ screen notebook():
                         hbox:
                             imagebutton:
                                 tooltip "Edit draft argument"
-                                idle "images/edit pencil.png"
-                                hover "images/edit pencil dark.png"
+                                idle "images/imagebutton_addnote.png"
                                 action SetScreenVariable("editing_argument", True)
                         text notebook_argument size 22
 
@@ -412,7 +440,6 @@ screen notebook():
 
 
 ##### Shows key bindings for typing in the input box ######
-
 screen keyboard_shortcuts():
     modal False
     zorder 94
@@ -539,7 +566,6 @@ style argument_button:
     bold True
 
 # IDLE NOTE STYLES
-
 style note_box:
     background "#dddddd80" 
     padding (12, 10)
@@ -555,9 +581,6 @@ style note_text:
 style notebook_title:
     anchor (0.5,0.0)
     pos (0.5,0.05)
-
-style imagebutton_note:
-    size 50
 
 # EDTING NOTES STYLES
 

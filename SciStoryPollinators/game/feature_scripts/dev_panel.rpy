@@ -73,7 +73,10 @@ screen developer_overlay():
                         text "User-Written Notes: [user_written_notes]" style "dev_msg"
                         text "Argument Edits: [argument_edits]" style "dev_msg"
                         textbutton "Add Placeholder Note":
-                            action Function(new_note, "lorem ipsom...", "example speaker", ["tag1", "tag2"], "character-saved")
+                            action Function(new_note, "lorem ipsom...", "example speaker", ["tag1", "tag2"], "placeholder-note")
+                            style "dev_jump_button"
+                        textbutton "Edit Argument":
+                            action Function(save_draft, "lorem ipsom...", "example speaker", ["tag1", "tag2"], "character-saved")
                             style "dev_jump_button"
 
                     null height 12
@@ -105,10 +108,44 @@ screen developer_overlay():
 
                     text "Character States:" style "dev_label"
                     null height 8
+                   
+
                     vbox:
-                        spacing 4
-                        for char in character_directory:
-                            text "[char['name']] | chats = [char['chats']] | spoken = [char['spoken']]" style "dev_msg"
+                        spacing 10
+                        $ col1_width = 200
+                        $ col2_width = 200
+                        $ col3_width = 200
+
+                        grid 3 12:
+                            spacing 10
+
+                            frame:
+                                style "table_cell_frame"
+                                text "Name" style "table_text" xsize col1_width
+                            frame:
+                                style "table_cell_frame"                                    
+                                text "Chats" style "table_text" xsize col2_width
+                            frame:
+                                style "table_cell_frame"
+                                text "Spoken" style "table_text" xsize col3_width
+
+                            python:
+                                characters = [
+                                    "Elliot", "Amara", "Riley", "Wes", "Nadia", "Mayor",
+                                    "Cyrus", "Alex", "Cora", "Victor", "Tulip"
+                                ]
+                            for name in characters:
+                                frame:
+                                    style "table_cell_frame"
+                                    text name style "dev_msg" xsize col1_width
+
+                                frame:
+                                    style "table_cell_frame"
+                                    text "[get_character_chats(name)]" style "dev_msg" xsize col2_width
+
+                                frame:
+                                    style "table_cell_frame"
+                                    text "[get_character_spoken(name)]" style "dev_msg" xsize col3_width
 
                     null height 12
 
@@ -139,12 +176,22 @@ style dev_label is default:
     size 16
     bold True
 
-style dev_msg is default:
+style dev_msg is default: 
+    color "#0f0" 
+    size 14 
+    xalign 0.0
+
+style table_text is default:
     color "#0f0"
     size 14
+    bold True
+
+style table_cell_frame is default:
+    padding (4, 2)
+    xfill False
 
 style dev_jump_button is default:
-    padding (12, 8, 12, 8)
+    padding (12, 8)
     background "#1558b0"               # Button background color
     hover_background "#021b3c"
     focus_mask True                     # Ensures focus is visible

@@ -38,17 +38,21 @@ screen qa_panel():
                 text "QA Tools":
                     size 22
                     color "#ffffff"
-                
-                textbutton "Question-Asking Screen":
-                    action [Hide("qa_panel"), Function(toggle_question_input)] style "qa_textbutton"
-                textbutton "Write Argument Screen":
-                    action [Hide("qa_panel"), Function(toggle_argument_screen)] style "qa_textbutton"
+
+                textbutton "Edit Argument Screen":
+                    action [Hide("qa_panel"), ToggleScreen("argument_edit", currentargument=notebook_argument)]
+                    style "qa_textbutton"
+                textbutton "Share Argument Screen":
+                    action [Hide("qa_panel"), ToggleScreen("argument_sharing", prompt="Share your argument:")]
+                    style "qa_textbutton"
                 textbutton "Travel Screen":
                     action [Hide("qa_panel"), Function(toggle_map_popup)] style "qa_textbutton"
                 textbutton "Achievements":
                     action [Hide("qa_panel"), Function(toggle_achievements_screen)] style "qa_textbutton"
                 textbutton "Open Notebook":
                     action [Hide("qa_panel"), Function(toggle_notebook)] style "qa_textbutton"
+                textbutton "Unlock Notebook":
+                    action [SetVariable("notebook_unlocked", True)] style "qa_textbutton"
 
 style qa_textbutton is default:
     padding (12, 8, 12, 8)

@@ -33,6 +33,7 @@
     default spoken_list = []
     default startplace = "rural"
     default structure = "lot"
+    default currentlocation = "emptylot"
 
     ##LOCATION VISIT TRACKING
     default emptylotvisit = False
@@ -81,7 +82,6 @@
             "???" "Hello hello! So glad you're here. I'm absolutely buzzing with excitement!"
 
     t "I'm Tulip! The hive chose me as your guide for today. If you have any trouble while you're exploring, you can ask me for help!"
-
     t "Before we get started, tell me about yourself! What kind of place did you come from?"
 
     menu:
@@ -111,20 +111,7 @@
         "I guess.":
             t "Don't worry, I'll be right by your side if you need help! We're two bees in a pod. Hehe."
 
-
     jump begin
-
-    label travelmenu:
-        narrator "Where would you like to go?"
-        menu:
-            "The empty lot" if currentlocation != "emptylot":
-                jump emptylot
-            "The food lab" if currentlocation != "foodlab":
-                jump foodlab
-            "The community garden" if currentlocation != "garden":
-                jump garden
-            "Nevermind, stay here":
-                $ renpy.rollback(checkpoints=3)
 
     label tulipchat:
         show tulip at left
@@ -150,7 +137,7 @@
             "I'd like some help with persuading the mayor.":
                 t "I'd be happy to help! If you tell me what evidence you've found, I can give you some advice on improving your persuasive writing."
 
-                $ eca = renpy.input("What should the Mayor do with the empty lot, and why?", screen="argument_writing")
+                $ eca = renpy.input("What should the Mayor do with the empty lot, and why?", screen="argument_sharing")
 
                 $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Tulip")
                 $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
@@ -189,12 +176,13 @@
                 t "Do you have other evidence to share?"
                 menu:
                     "I have more ideas to add.":
-                        $ eca = renpy.input("What should the Mayor do with the empty lot, and why?", screen="argument_writing")
+                        $ eca = renpy.input("What should the Mayor do with the empty lot, and why?", screen="argument_sharing")
 
                         $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Tulip")
                         $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
                         $ log("Player input to ECA: " + eca)
                         $ argument_attempts = argument_attempts + 1
+                        $ achieve_argument()
 
                         python:
                             try:
@@ -217,7 +205,7 @@
                         $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
                         $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
-
+                        
                         if savedraft == True:
                             $ draft(eca)
                         else:
@@ -235,7 +223,7 @@
                         with dissolve
                         return
             "I need help with something else.":
-                $ eca = renpy.input("I love questions! What's your question?", screen="argument_writing")
+                $ eca = renpy.input("I love questions! What's your question?", screen="argument_sharing")
 
                 $ ca_link, ca_json = agent_setup("GameHelp", eca, "tulip", "Tulip")
                 $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
@@ -265,7 +253,7 @@
                 t "Any more questions?"
                 menu:
                     "I have another question.":
-                        $ eca = renpy.input("What's your question?", screen="argument_writing")
+                        $ eca = renpy.input("What's your question?", screen="argument_sharing")
 
                         $ ca_link, ca_json = agent_setup("GameHelp_Collaboration", eca, "tulip", "Tulip")
                         $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
@@ -325,16 +313,11 @@
     "Friendly Stranger" "Hey what's up - you new to the neighborhood?"
 
     menu:
-
         "Yeah, just moved here!":
             "Friendly Stranger" "Welcome to the neighborhood! I live right down the street."
-
         "Maybe.":
             "Friendly Stranger" "I dunno where you moved from, but we don't do the whole 'mysterious stranger' thing here."
-
-
     "Friendly Stranger" "Anyway, I'm glad you're here, new kid." 
-
     el "I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our lot to those parking guys."
 
     menu:
@@ -344,27 +327,22 @@
     label parkingguys:
         el "That guy over there in the suit is from CityPark. They want to turn our empty lot into a big parking [structure] for the neighborhood."
         el "But me and the other Community Gardeners have been trying to convince Mayor Watson to donate the lot to our food justice project instead."
-
         el "The parking [structure] makes money, but a community garden would be huge for this neighborhood!"
 
         show tulip at left
         with dissolve
 
         t "Hey! Sorry to interrupt - but this seems like a good time to show you your notebook!"
-
-        t "See this pencil button at the bottom left? Any time you click that, you will make a note of what is being said."
-
-        t "If you want to open your notebook and see what notes you've taken, you can click on that button in the top right!"
-
+        $ notebook_unlocked = True
+        t "See the + button to the left? This automatically adds whatever is being said to your notebook!"
+        t "If you want to open your notebook and see what notes you've taken, you can click on the Notes button in the top right!"
         t "You can edit notes you've taken, or write your own custom notes! You can also delete notes you don't want."
-
         t "Hope that helps!"
 
         hide tulip
         with dissolve
 
         el "Whoa, a bee just flew past your face! You know, I bet if we built a garden here, the bees would love it."
-
         el "The garden would be great for people too. The nearest grocery store is miles away, and most folks don't have a car."
 
         menu:
@@ -421,6 +399,7 @@
         with dissolve
         $ currentlocation = "foodlab"
         $ visited_list.append("Food Lab")
+        $ achieve_visit()
 
         show amara smile at left
         with dissolve
@@ -529,12 +508,13 @@
                 jump long_intro
 
     label ca_eval_riley:
-        $ eca = renpy.input("My persuasive ideas for the Mayor:", screen="argument_writing")
+        $ eca = renpy.input("My persuasive ideas for the Mayor:", screen="argument_sharing")
 
         $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Riley")
         $ log_http(current_user, action="PlayerInputToECA", view="riley", payload=ca_json)
         $ log("Player input to ECA: " + eca)
         $ argument_attempts = argument_attempts + 1
+        $ achieve_argument()
 
         python:
             try:
@@ -671,7 +651,7 @@
                 jump byeriley
 
     label foodknowledge:
-        $ eca = renpy.input("I'm wondering...", screen="argument_writing")
+        $ eca = renpy.input("I'm wondering...", screen="argument_sharing")
 
         $ ca_link, ca_json = agent_setup("Knowledge_FoodJustice", eca, "riley", "Riley")
         $ log_http(current_user, action="PlayerInputToECA", view="riley", payload=ca_json)
@@ -871,6 +851,7 @@
         with dissolve
         $ currentlocation = "garden"
         $ visited_list.append("Garden")
+        $ achieve_visit()
 
         show victor smile at left
         with dissolve
@@ -1059,7 +1040,7 @@
    
     label gardenquestions:
         w "What would you like to know about the garden?"
-        $ eca = renpy.input("I'm wondering...", screen="argument_writing")
+        $ eca = renpy.input("I'm wondering...", screen="argument_sharing")
 
         $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Wes")
         $ log_http(current_user, action="PlayerInputToECA", view="wes", payload=ca_json)
@@ -1114,7 +1095,7 @@
 
     label wes_ca:
         w "What would you like to know?"
-        $ eca = renpy.input("I'm wondering...", screen="argument_writing")
+        $ eca = renpy.input("I'm wondering...", screen="argument_sharing")
 
         $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Wes")
         $ log_http(current_user, action="PlayerInputToECA", view="wes", payload=ca_json)
@@ -1149,6 +1130,7 @@
         with dissolve
         $ currentlocation = "beehives"
         $ visited_list.append("Beehives")
+        $ achieve_visit()
 
         show nadia smile at left
         with dissolve
@@ -1265,7 +1247,7 @@
         jump nadia_questions
 
     label nadia_ca:
-        $ eca = renpy.input("I'm wondering...", screen="argument_writing")
+        $ eca = renpy.input("I'm wondering...", screen="argument_sharing")
 
         $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
         $ log_http(current_user, action="PlayerInputToECA", view="nadia", payload=ca_json)
@@ -1504,6 +1486,7 @@
         with dissolve
         $ currentlocation = "emptylot"
         $ visited_list.append("Empty Lot")
+        $ achieve_visit()
 
         show elliot smile at left
         with dissolve
@@ -1776,13 +1759,13 @@
     label mayor_eval:
         m "I'd love to hear it. What have you found?"
 
-        $ eca = renpy.input("My persuasive argument for what the Mayor should do with the empty lot:", screen="argument_writing")
+        $ eca = renpy.input("My persuasive argument for what the Mayor should do with the empty lot:", screen="argument_sharing")
 
         $ ca_link, ca_json = agent_setup("FoodJustice_MayorEvaluation", eca, "mayor", "Mayor Watson")
         $ log_http(current_user, action="PlayerInputToECA", view="mayor", payload=ca_json)
         $ log("Player input to ECA: " + eca)
         $ argument_attempts = argument_attempts + 1
-
+        $ achieve_argument()
         python:
             try:
                 ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
@@ -1859,12 +1842,13 @@
 
     label ideasharing:
         el "Sweet. So pretend I'm the mayor! Hey there good citizen! What do you think about this garden idea? Should I support it?"
-        $ eca = renpy.input("My ideas to persuade the mayor:", screen="argument_writing")
+        $ eca = renpy.input("My ideas to persuade the mayor:", screen="argument_sharing")
 
         $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Elliot")
         $ log_http(current_user, action="PlayerInputToECA", view="elliot", payload=ca_json)
         $ log("Player input to ECA: " + eca)
         $ argument_attempts = argument_attempts + 1
+        $ achieve_argument()
 
         python:
             try:
