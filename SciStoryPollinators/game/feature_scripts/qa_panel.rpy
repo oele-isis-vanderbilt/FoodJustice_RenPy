@@ -55,6 +55,8 @@ screen qa_panel():
                     action [SetVariable("notebook_unlocked", True)] style "qa_textbutton"
                 textbutton "Export All Logs (ZIP)":
                     action Function(export_all_logs_zip)
+                textbutton "Sync Logs Now":
+                    action Function(sync_logs_now)
 
 style qa_textbutton is default:
     padding (12, 8, 12, 8)

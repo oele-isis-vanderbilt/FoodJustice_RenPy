@@ -1734,3 +1734,119 @@ PlayerJumpedLabel(save_screen|True)
 
 None
 
+--- Fri Oct 24 12:31:55 2025
+
+--- Fri Oct 24 12:31:59 2025
+
+2025-10-24 12:32:00
+PlayerJumpedLabel(main_menu_screen|True)
+
+None
+
+FetchError("Invalid URL '/player-log': No scheme supplied. Perhaps you meant
+https:///player-log?")
+2025-10-24 12:32:01
+PlayerJumpedLabel(start|True)
+
+None
+
+FetchError("Invalid URL '/player-log': No scheme supplied. Perhaps you meant
+https:///player-log?")
+Notebook length: 0
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+Notebook length: 0
+You hear a quiet buzzing noise getting closer...
+
+Notebook length: 0
+and {size=*1.5}closer...{/size}
+
+Notebook length: 0
+and {size=*2}closer...{/size}
+
+Notebook length: 0
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+Notebook length: 0
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+Notebook length: 0
+2025-10-24 12:32:09
+PlayerDialogueChoice
+
+{'choice': "You're a talking bee??"}
+
+FetchError("Invalid URL '/player-log': No scheme supplied. Perhaps you meant
+https:///player-log?")
+Player chose: You're a talking bee??
+
+???
+A honey bee, to be exact! But yes!
+
+Notebook length: 0
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Notebook length: 0
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+2025-10-24 12:32:12
+PlayerTookNote
+
+{'note': 'evidence', 'source': 'where did you learn this?', 'tags': [],
+'note_id': 0, 'type': 'user-written'}
+
+FetchError("Invalid URL '/player-log': No scheme supplied. Perhaps you meant
+https:///player-log?")
+Notebook length: 1
+Notebook length: 1
+2025-10-24 12:32:13
+PlayerEditedNote
+
+{'note': 'whats your evidence?', 'source': 'where did you learn this?',
+'tags': '', 'note_id': 0}
+
+FetchError("Invalid URL '/player-log': No scheme supplied. Perhaps you meant
+https:///player-log?")
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+2025-10-24 12:32:16
+PlayerJumpedLabel(toggle_qa_panel|True)
+
+None
+
+CallException()
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+2025-10-24 12:32:17
+PlayerLocationChoice
+
+{'startplace': 'suburb'}
+
+NameError("name 'editdraft' is not defined")
+Notebook length: 1
