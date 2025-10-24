@@ -1,30 +1,41 @@
 init python:
+    # ------------------------------------------------------------------
+    # Logging helpers used across the project.
+    #
+    # Two flavors live here:
+    #   1. Scene logs (buffer now, save/export later) via log_event().
+    #   2. Immediate HTTP pings for live tracking via log_http().
+    #
+    # The scene system also manages a persistent archive, an upload queue,
+    # and a one-click ZIP export to help folks grab everything at once.
+    # ------------------------------------------------------------------
     import json, csv, io, time, hashlib, os, zipfile
-    from math import pow
     import datetime
     from typing import Dict, Any, Optional
-    import os
-    import pygame.scrap
 
     # -------------------------
     # Session & buffers
     # -------------------------
+    # Fresh identifier per boot so the same player can be distinguished across sessions.
     SESSION_ID = renpy.random.randint(10**8, 10**9-1)
 
-    _scene_events = []                 # in-memory for the current scene
-    _upload_endpoint = "https://example.com/ingest"  # <- change me
-    _max_persistent_logs = 500         # rolling cap
-    _max_queue = 1000                  # safety cap on unsent queue
+    _scene_events = []  # in-memory scratchpad for the active scene
+    _upload_endpoint = "https://example.com/ingest"  # <- change me before shipping
+    _max_persistent_logs = 500  # keep the newest N archived scene logs
+    _max_queue = 1000  # cap on pending uploads to avoid runaway growth
 
     # -------------------------
     # Utilities
     # -------------------------
+    # Returns a timestamp string so saved files have unique, human-readable names.
     def _now_stamp():
         return time.strftime("%Y%m%d-%H%M%S", time.localtime())
 
+    # Creates a hash fingerprint; used to detect duplicates on the server later.
     def _sha256(text):
         return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
+    # Turns the in-memory scene notes into a CSV string for easy spreadsheet review.
     def _to_csv(events):
         buf = io.StringIO()
         writer = csv.DictWriter(buf, fieldnames=["t","kind","data"])
@@ -35,6 +46,7 @@ init python:
             writer.writerow(row)
         return buf.getvalue()
 
+    # Attempts to trigger a browser download when the game runs on the web; desktop builds skip this.
     def _trigger_web_download(filename, text, mime="text/plain"):
         # Works only on Web builds; on desktop, returns False and we disk-write instead.
         if renpy.emscripten:
@@ -59,6 +71,7 @@ init python:
             return True
         return False
 
+    # Writes the log file to the local save folder and notifies the player.
     def _write_native(filename, text):
         path = os.path.join(config.savedir, filename)
         with open(path, "w", encoding="utf-8") as f:
@@ -68,6 +81,7 @@ init python:
     # -------------------------
     # Public logging API
     # -------------------------
+    # Call during a scene to remember something noteworthy; data is buffered until the scene ends.
     def log_event(kind, payload=None):
         _scene_events.append({
             "t": time.time(),
@@ -75,6 +89,7 @@ init python:
             "data": payload or {}
         })
 
+    # Call once when the scene wraps to save, archive, and queue every buffered event.
     def download_scene_log(scene_name, as_csv=True):
         """
         Call at the end of a scene.
@@ -98,10 +113,10 @@ init python:
             mime = "application/json"
 
         # 2) Mirror into persistent rolling archive
-        _mirror_to_persistent(scene_name, stamp, content, ext)
+        _save_copy_for_export(scene_name, stamp, content, ext)
 
         # 3) Enqueue reliable remote upload
-        _enqueue_for_upload(scene_name, stamp, content, ext)
+        _queue_for_upload(scene_name, stamp, content, ext)
 
         # 4) Download (web) or write to disk (desktop)
         if not _trigger_web_download(fname, content, mime=mime):
@@ -113,7 +128,8 @@ init python:
     # -------------------------
     # Persistent archive
     # -------------------------
-    def _mirror_to_persistent(scene, stamp, content, ext):
+    # Mirrors the scene log into persistent storage so we can export everything later.
+    def _save_copy_for_export(scene, stamp, content, ext):
         if not hasattr(persistent, "logs"):
             persistent.logs = []
         # rolling cap
@@ -133,7 +149,8 @@ init python:
     # -------------------------
     # Store-and-forward upload
     # -------------------------
-    def _enqueue_for_upload(scene, stamp, content, ext):
+    # Adds the scene log to a retry queue that will be posted to the server when possible.
+    def _queue_for_upload(scene, stamp, content, ext):
         if not hasattr(persistent, "unsent"):
             persistent.unsent = []
         if len(persistent.unsent) >= _max_queue:
@@ -151,6 +168,7 @@ init python:
         })
         renpy.save_persistent()
 
+    # Tries to send everything in the upload queue; safe to call often.
     def flush_upload_queue():
         """
         Try to POST everything in persistent.unsent to your server.
@@ -164,7 +182,7 @@ init python:
         sent_count = 0
 
         for item in persistent.unsent:
-            ok = _try_upload(item)
+            ok = _post_queue_item(item)
             if ok:
                 sent_count += 1
             else:
@@ -176,7 +194,8 @@ init python:
         renpy.save_persistent()
         return sent_count
 
-    def _try_upload(item):
+    # Helper that performs a single HTTP POST and notes whether it succeeded.
+    def _post_queue_item(item):
         """
         POST the log to your server; expects HTTP 2xx to count as success.
         The server should de-duplicate via the 'hash' or (session, when) tuple.
@@ -210,6 +229,7 @@ init python:
             return False
 
     # Optional convenience: call this on common transitions
+    # Fire-and-forget version of flush_upload_queue; safe to call behind the scenes.
     def background_flush_uploads():
         """
         Fire-and-forget queue flush. Cheap to call from labels or screens.
@@ -222,6 +242,7 @@ init python:
     # -------------------------
     # Bulk export (ZIP)
     # -------------------------
+    # Creates a ZIP file of every stored scene log so a player can take everything with them.
     def export_all_logs_zip():
         """
         Zips everything in persistent.logs and triggers a download (Web) or writes to disk (desktop).
@@ -287,10 +308,12 @@ init python:
 
 
 init python:
+    # Quick helper that writes a timestamp and message to Ren'Py's developer log.
     def log(action):
         timestamp = datetime.datetime.now()
         renpy.log(timestamp)
         renpy.log(action + "\n")
+    # Sends an immediate status update to the /player-log endpoint; falls back to Ren'Py log on failure.
     def log_http(user: str, payload: Optional[Dict[str, Any]], action: str, view: str = None):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         if os.getenv("SERVICE_URL") is None:
@@ -305,21 +328,27 @@ init python:
             "view": view,
             "payload": payload
         }
+        body = json.dumps(log_entry, ensure_ascii=False).encode("utf-8")
         try:
             renpy.fetch(
                 f"{base_url}/player-log",
                 method="POST",
-                json=log_entry,
+                data=body,
+                headers=[("Content-Type", "application/json")],
+                timeout=10.0,
             )
         except Exception as e:
             renpy.log(timestamp)
             renpy.log(f"{action}\n")
             renpy.log(f"{payload}\n")
+            renpy.log(repr(e))
+    # Ren'Py callback that keeps track of the current label and logs story jumps.
     def label_callback(label, interaction):
         if not label.startswith("_"):
             log_http(current_user, action=f"PlayerJumpedLabel({label}|{interaction})", view=label, payload=None)
             global current_label
             current_label = label
 
+    # Ensures certain data sticks around after loading a save; call once where needed.
     def retaindata():
         renpy.retain_after_load()
