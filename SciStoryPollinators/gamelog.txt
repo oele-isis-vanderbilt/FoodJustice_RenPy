@@ -1850,3 +1850,592 @@ PlayerLocationChoice
 
 NameError("name 'editdraft' is not defined")
 Notebook length: 1
+--- Fri Oct 24 14:30:30 2025
+
+--- Fri Oct 24 14:32:18 2025
+
+--- Fri Oct 24 14:32:19 2025
+
+[log_http buffered] 2025-10-24T18:32:20Z |
+PlayerJumpedLabel(main_menu_screen|True)
+[log_http buffered] 2025-10-24T18:32:21Z | PlayerJumpedLabel(start|True)
+Notebook length: 0
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+Notebook length: 0
+and {size=*1.5}closer...{/size}
+
+Notebook length: 0
+and {size=*2}closer...{/size}
+
+Notebook length: 0
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+Notebook length: 0
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:28Z | PlayerDialogueChoice
+Player chose: Um...hi?
+
+Notebook length: 0
+???
+Hello hello! Don't bee shy. We're going to get along buzzingly!
+
+Notebook length: 0
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Notebook length: 0
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:30Z | PlayerDialogueChoice
+Player chose: I live in a city
+
+[log_http buffered] 2025-10-24T18:32:30Z | PlayerLocationChoice
+Notebook length: 0
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Notebook length: 0
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:32Z | PlayerDialogueChoice
+Player chose: Let's go!
+
+Tulip
+Yay! Let's zoom!
+
+[log_http buffered] 2025-10-24T18:32:32Z | PlayerJumpedLabel(begin|True)
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:33Z | PlayerDialogueChoice
+Player chose: Yeah, just moved here!
+
+Notebook length: 0
+Friendly Stranger
+Welcome to the neighborhood! I live right down the street.
+
+Notebook length: 0
+Friendly Stranger
+Anyway, I'm glad you're here, new kid.
+
+Notebook length: 0
+Elliot
+I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our
+lot to those parking guys.
+
+Choice: What parking guys?
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:35Z | PlayerDialogueChoice
+Player chose: What parking guys?
+
+[log_http buffered] 2025-10-24T18:32:35Z | PlayerJumpedLabel(parkingguys|True)
+Notebook length: 0
+Elliot
+That guy over there in the suit is from CityPark. They want to turn our empty
+lot into a big parking garage for the neighborhood.
+
+Elliot
+But me and the other Community Gardeners have been trying to convince Mayor
+Watson to donate the lot to our food justice project instead.
+
+Notebook length: 0
+Elliot
+The parking garage makes money, but a community garden would be huge for this
+neighborhood!
+
+Notebook length: 0
+Tulip
+Hey! Sorry to interrupt - but this seems like a good time to show you your
+notebook!
+
+Notebook length: 0
+Tulip
+See the + button to the left? This automatically adds whatever is being said
+to your notebook!
+
+Notebook length: 0
+Tulip
+If you want to open your notebook and see what notes you've taken, you can
+click on the Notes button in the top right!
+
+Notebook length: 0
+Tulip
+You can edit notes you've taken, or write your own custom notes! You can also
+delete notes you don't want.
+
+Notebook length: 0
+Tulip
+Hope that helps!
+
+Notebook length: 0
+Elliot
+Whoa, a bee just flew past your face! You know, I bet if we built a garden
+here, the bees would love it.
+
+Notebook length: 0
+Elliot
+The garden would be great for people too. The nearest grocery store is miles
+away, and most folks don't have a car.
+
+Choice: How can I help?
+Choice: What's food justice?
+Choice: Sure, I'll help.
+Choice: Hmm. I should go.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:39Z | PlayerDialogueChoice
+Player chose: How can I help?
+
+[log_http buffered] 2025-10-24T18:32:39Z |
+PlayerJumpedLabel(explain_problem|True)
+Notebook length: 0
+Elliot
+Our food justice project needs space to build a community garden in our
+neighborhood, so that folks here can grow fresh food that doesn't cost so
+much.
+
+Notebook length: 0
+Elliot
+Gardens are awesome, obviously, but for some reason the Mayor says he wants to
+see data about the benefits before making a decision.
+
+Notebook length: 0
+Elliot
+I'm trying to gather some evidence to convince him, but I could really use
+some help.
+
+Choice: What's food justice?
+Choice: I'll see what I can do.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:41Z | PlayerDialogueChoice
+Player chose: What's food justice?
+
+[log_http buffered] 2025-10-24T18:32:41Z |
+PlayerJumpedLabel(foodjusticeexplain|True)
+Notebook length: 0
+Elliot
+Food justice is this idea that everybody deserves access to healthy food that
+they can afford.
+
+Notebook length: 0
+Elliot
+Food in our community should also include stuff that makes sense for each
+person's culture, because not everyone eats the same kinds of foods.
+
+Notebook length: 0
+Elliot
+So many people in the U.S. only have access to fast-food restaurants, gas
+station food, and other places that sell food that is super processed.
+
+Elliot
+There's nothing wrong with eating that food sometimes, but if that's the only
+kind of food people in your neighborhood can buy that is affordable, then
+everyone has more trouble eating healthy and feeling good.
+
+Choice: How can I help?
+Choice: I'll see what I can do.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:42Z | PlayerDialogueChoice
+Player chose: How can I help?
+
+[log_http buffered] 2025-10-24T18:32:42Z |
+PlayerJumpedLabel(explain_problem|True)
+Notebook length: 0
+Elliot
+Our food justice project needs space to build a community garden in our
+neighborhood, so that folks here can grow fresh food that doesn't cost so
+much.
+
+Notebook length: 0
+Elliot
+Gardens are awesome, obviously, but for some reason the Mayor says he wants to
+see data about the benefits before making a decision.
+
+Notebook length: 0
+Elliot
+I'm trying to gather some evidence to convince him, but I could really use
+some help.
+
+Choice: What's food justice?
+Choice: I'll see what I can do.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:44Z | PlayerDialogueChoice
+Player chose: What's food justice?
+
+[log_http buffered] 2025-10-24T18:32:44Z |
+PlayerJumpedLabel(foodjusticeexplain|True)
+Notebook length: 0
+Elliot
+Food justice is this idea that everybody deserves access to healthy food that
+they can afford.
+
+Notebook length: 0
+Elliot
+Food in our community should also include stuff that makes sense for each
+person's culture, because not everyone eats the same kinds of foods.
+
+Notebook length: 0
+Elliot
+So many people in the U.S. only have access to fast-food restaurants, gas
+station food, and other places that sell food that is super processed.
+
+Notebook length: 0
+Elliot
+There's nothing wrong with eating that food sometimes, but if that's the only
+kind of food people in your neighborhood can buy that is affordable, then
+everyone has more trouble eating healthy and feeling good.
+
+Choice: How can I help?
+Choice: I'll see what I can do.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:45Z | PlayerDialogueChoice
+Player chose: How can I help?
+
+[log_http buffered] 2025-10-24T18:32:46Z |
+PlayerJumpedLabel(explain_problem|True)
+Notebook length: 0
+Elliot
+Our food justice project needs space to build a community garden in our
+neighborhood, so that folks here can grow fresh food that doesn't cost so
+much.
+
+Notebook length: 0
+Elliot
+Gardens are awesome, obviously, but for some reason the Mayor says he wants to
+see data about the benefits before making a decision.
+
+Notebook length: 0
+Elliot
+I'm trying to gather some evidence to convince him, but I could really use
+some help.
+
+Choice: What's food justice?
+Choice: I'll see what I can do.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:47Z | PlayerDialogueChoice
+Player chose: What's food justice?
+
+[log_http buffered] 2025-10-24T18:32:47Z |
+PlayerJumpedLabel(foodjusticeexplain|True)
+Notebook length: 0
+Elliot
+Food justice is this idea that everybody deserves access to healthy food that
+they can afford.
+
+Notebook length: 0
+Elliot
+Food in our community should also include stuff that makes sense for each
+person's culture, because not everyone eats the same kinds of foods.
+
+Notebook length: 0
+Elliot
+So many people in the U.S. only have access to fast-food restaurants, gas
+station food, and other places that sell food that is super processed.
+
+Notebook length: 0
+Elliot
+There's nothing wrong with eating that food sometimes, but if that's the only
+kind of food people in your neighborhood can buy that is affordable, then
+everyone has more trouble eating healthy and feeling good.
+
+Choice: How can I help?
+Choice: I'll see what I can do.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:49Z | PlayerDialogueChoice
+Player chose: How can I help?
+
+[log_http buffered] 2025-10-24T18:32:49Z |
+PlayerJumpedLabel(explain_problem|True)
+Notebook length: 0
+Elliot
+Our food justice project needs space to build a community garden in our
+neighborhood, so that folks here can grow fresh food that doesn't cost so
+much.
+
+Notebook length: 0
+Elliot
+Gardens are awesome, obviously, but for some reason the Mayor says he wants to
+see data about the benefits before making a decision.
+
+Notebook length: 0
+Elliot
+I'm trying to gather some evidence to convince him, but I could really use
+some help.
+
+Choice: What's food justice?
+Choice: I'll see what I can do.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:51Z | PlayerDialogueChoice
+Player chose: What's food justice?
+
+[log_http buffered] 2025-10-24T18:32:51Z |
+PlayerJumpedLabel(foodjusticeexplain|True)
+Elliot
+Food justice is this idea that everybody deserves access to healthy food that
+they can afford.
+
+Notebook length: 0
+Elliot
+Food in our community should also include stuff that makes sense for each
+person's culture, because not everyone eats the same kinds of foods.
+
+Notebook length: 0
+Elliot
+So many people in the U.S. only have access to fast-food restaurants, gas
+station food, and other places that sell food that is super processed.
+
+Notebook length: 0
+Elliot
+There's nothing wrong with eating that food sometimes, but if that's the only
+kind of food people in your neighborhood can buy that is affordable, then
+everyone has more trouble eating healthy and feeling good.
+
+Choice: How can I help?
+Choice: I'll see what I can do.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:53Z | PlayerDialogueChoice
+Player chose: How can I help?
+
+[log_http buffered] 2025-10-24T18:32:53Z |
+PlayerJumpedLabel(explain_problem|True)
+Notebook length: 0
+Elliot
+Our food justice project needs space to build a community garden in our
+neighborhood, so that folks here can grow fresh food that doesn't cost so
+much.
+
+Notebook length: 0
+Elliot
+Gardens are awesome, obviously, but for some reason the Mayor says he wants to
+see data about the benefits before making a decision.
+
+Notebook length: 0
+Elliot
+I'm trying to gather some evidence to convince him, but I could really use
+some help.
+
+Choice: What's food justice?
+Choice: I'll see what I can do.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:32:57Z | PlayerDialogueChoice
+Player chose: What's food justice?
+
+[log_http buffered] 2025-10-24T18:32:57Z |
+PlayerJumpedLabel(foodjusticeexplain|True)
+Notebook length: 0
+Elliot
+Food justice is this idea that everybody deserves access to healthy food that
+they can afford.
+
+Notebook length: 0
+Elliot
+Food in our community should also include stuff that makes sense for each
+person's culture, because not everyone eats the same kinds of foods.
+
+Notebook length: 0
+Elliot
+So many people in the U.S. only have access to fast-food restaurants, gas
+station food, and other places that sell food that is super processed.
+
+Notebook length: 0
+Elliot
+There's nothing wrong with eating that food sometimes, but if that's the only
+kind of food people in your neighborhood can buy that is affordable, then
+everyone has more trouble eating healthy and feeling good.
+
+Choice: How can I help?
+Choice: I'll see what I can do.
+
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:33:04Z | PlayerJumpedLabel(emptylot|True)
+Notebook length: 0
+The empty lot isn't much - just a wide patch of dirt. Elliot is exploring,
+likely imagining what a garden would look like here.
+
+Notebook length: 0
+You see two men in suits sizing up the empty lot. You wonder what so many
+people are doing wandering around an empty bit of land.
+
+[log_http buffered] 2025-10-24T18:33:08Z |
+PlayerJumpedLabel(emptylotregular|False)
+Notebook length: 0
+Click the person you want to talk to, or click the map to travel somewhere
+else.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:33:09Z |
+PlayerJumpedLabel(watson_chatting|True)
+[log_http buffered] 2025-10-24T18:33:10Z | PlayerJumpedLabel(mayor_1|True)
+Notebook length: 0
+Mayor Watson
+Hello there! I'm Mayor Watson. I'm out here today gathering community opinions
+on the empty lot.
+
+Notebook length: 0
+Mayor Watson
+Do you have any thoughts about it?
+
+Choice: I think you should let the Community Gardeners use the lot for growing
+food.
+Choice: I think you should let CityPark build a parking [structure] for the
+neighborhood.
+Choice: I'm not sure.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:33:12Z | PlayerDialogueChoice
+Player chose: I think you should let the Community Gardeners use the lot for
+growing food.
+
+[log_http buffered] 2025-10-24T18:33:12Z | PlayerJumpedLabel(garden_m|True)
+Mayor Watson
+Ah, interesting. The garden would provide some food for the neighborhood,
+though the parking garage might be more financially useful for the city.
+
+Notebook length: 0
+Mayor Watson
+I need to consider the research and figure out what is best for our community.
+
+[log_http buffered] 2025-10-24T18:33:13Z |
+PlayerJumpedLabel(mayor_request|True)
+Mayor Watson
+If you gather any information you think I'd find interesting, feel free to
+come back and let me know!
+
+[log_http buffered] 2025-10-24T18:33:13Z | PlayerJumpedLabel(emptylot|True)
+[log_http buffered] 2025-10-24T18:33:13Z |
+PlayerJumpedLabel(emptylotregular|True)
+Notebook length: 0
+Click the person you want to talk to, or click the map to travel somewhere
+else.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:33:15Z |
+PlayerJumpedLabel(cyrus_chatting|True)
+[log_http buffered] 2025-10-24T18:33:16Z | PlayerJumpedLabel(cy_1|True)
+Notebook length: 0
+Cyrus
+Hey there, kiddo. Cyrus Murphy, Marketing Executive for CityPark.
+
+Notebook length: 0
+Cyrus
+Nice to meet ya.
+
+Choice: Great to meet you!
+Choice: Hey.
+Choice: Don't respond.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:33:18Z | PlayerDialogueChoice
+Player chose: Great to meet you!
+
+[log_http buffered] 2025-10-24T18:33:18Z | PlayerJumpedLabel(excited_cy|True)
+Notebook length: 0
+Cyrus
+It's great to see young people in this neighborhood so passionate about growth
+in their community!
+
+Notebook length: 0
+Cyrus
+Our team at CityPark is looking forward to meeting more people like you while
+we get ready to build our new parking garage.
+
+[log_http buffered] 2025-10-24T18:33:19Z | PlayerJumpedLabel(cy_menu|True)
+Choice: New [structure]?
+Choice: Can't wait!
+Choice: We don't want a parking [structure].
+Choice: I gotta go.
+
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:33:29Z | PlayerDialogueChoice
+Player chose: New [structure]?
+
+[log_http buffered] 2025-10-24T18:33:29Z | PlayerJumpedLabel(cy_pitch|True)
+[log_http buffered] 2025-10-24T18:33:30Z | PlayerJumpedLabel(save_screen|True)
+[log_http buffered] 2025-10-24T18:33:30Z |
+PlayerJumpedLabel(toggle_qa_panel|True)
+Notebook length: 0
+[log_http buffered] 2025-10-24T18:33:37Z | PlayerTookNote
+Notebook length: 1
+[log_http buffered] 2025-10-24T18:33:39Z | PlayerEditedNote
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+[log_http buffered] 2025-10-24T18:33:42Z |
+PlayerJumpedLabel(toggle_qa_panel|True)
+Choice: Can't wait!
+Choice: We don't want a new parking [structure].
+Choice: I gotta go.
+
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+[log_http buffered] 2025-10-24T18:33:58Z |
+PlayerJumpedLabel(toggle_qa_panel|True)
+[log_http buffered] 2025-10-24T18:33:58Z | PlayerJumpedLabel(bye_cyrus|True)
+Notebook length: 1
+[log_http buffered] 2025-10-24T18:33:59Z |
+PlayerJumpedLabel(toggle_qa_panel|True)
+[log_http buffered] 2025-10-24T18:33:59Z | PlayerJumpedLabel(emptylot|True)
+[log_http buffered] 2025-10-24T18:34:02Z |
+PlayerJumpedLabel(emptylotregular|True)
+Notebook length: 1
+Notebook length: 1
+[log_http buffered] 2025-10-24T18:34:09Z |
+PlayerJumpedLabel(toggle_qa_panel|True)
+Choice: Can't wait!
+Choice: We don't want a new parking [structure].
+Choice: I gotta go.
+
+Notebook length: 1
+Notebook length: 1
+--- Fri Oct 24 14:34:13 2025
+
+[log_http buffered] 2025-10-24T18:34:16Z |
+PlayerJumpedLabel(main_menu_screen|True)

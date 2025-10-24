@@ -22,7 +22,7 @@ init python:
     import os
     import time
     import zipfile
-    from typing import Dict, Optional
+    from typing import Any, Dict, Optional
 
     # -------------------------
     # Session & configuration
@@ -208,11 +208,17 @@ init python:
     # -------------------------
     # Persistent archive (ZIP export)
     # -------------------------
+    def _ensure_persistent_list(name):
+        data = getattr(persistent, name, None)
+        if not isinstance(data, list):
+            data = []
+            setattr(persistent, name, data)
+        return data
+
     def _save_copy_for_export(scene, stamp, content, ext):
-        if not hasattr(persistent, "logs"):
-            persistent.logs = []
-        if len(persistent.logs) >= _max_persistent_logs:
-            persistent.logs = persistent.logs[-(_max_persistent_logs - 1):]
+        logs = _ensure_persistent_list("logs")
+        if len(logs) >= _max_persistent_logs:
+            logs[:] = logs[-(_max_persistent_logs - 1):]
         entry = {
             "scene": scene,
             "when": stamp,
@@ -221,7 +227,7 @@ init python:
             "hash": _sha256(content),
             "content": content,
         }
-        persistent.logs.append(entry)
+        logs.append(entry)
         renpy.save_persistent()
 
     def export_all_logs_zip():
@@ -282,11 +288,10 @@ init python:
     # Scene upload queue
     # -------------------------
     def _queue_scene_for_upload(scene, stamp, content):
-        if not hasattr(persistent, "unsent"):
-            persistent.unsent = []
-        if len(persistent.unsent) >= _max_scene_queue:
-            persistent.unsent = persistent.unsent[-(_max_scene_queue - 1):]
-        persistent.unsent.append({
+        scene_queue = _ensure_persistent_list("unsent")
+        if len(scene_queue) >= _max_scene_queue:
+            scene_queue[:] = scene_queue[-(_max_scene_queue - 1):]
+        scene_queue.append({
             "scene": scene,
             "when": stamp,
             "session": _current_context()["session_id"],
@@ -300,13 +305,14 @@ init python:
         renpy.save_persistent()
 
     def flush_scene_queue(force=False):
-        if not hasattr(persistent, "unsent") or not persistent.unsent:
+        scene_queue = _ensure_persistent_list("unsent")
+        if not scene_queue:
             return 0
 
         remaining = []
         sent = 0
         now = time.time()
-        for item in persistent.unsent:
+        for item in scene_queue:
             if not force and now < (item.get("next_attempt") or 0.0):
                 remaining.append(item)
                 continue
@@ -319,7 +325,7 @@ init python:
                     item["first_failure"] = now
                 item["next_attempt"] = now + _scene_retry_interval
                 remaining.append(item)
-        persistent.unsent = remaining
+        scene_queue[:] = remaining
         renpy.save_persistent()
         return sent
 
@@ -361,11 +367,10 @@ init python:
     # Event upload queue
     # -------------------------
     def _queue_event_for_retry(event_payload, initial_delay=1.0):
-        if not hasattr(persistent, "event_unsent"):
-            persistent.event_unsent = []
-        if len(persistent.event_unsent) >= _max_event_queue:
-            persistent.event_unsent = persistent.event_unsent[-(_max_event_queue - 1):]
-        persistent.event_unsent.append({
+        event_queue = _ensure_persistent_list("event_unsent")
+        if len(event_queue) >= _max_event_queue:
+            event_queue[:] = event_queue[-(_max_event_queue - 1):]
+        event_queue.append({
             "payload": event_payload,
             "attempts": 1,
             "backoff": 2.0,
@@ -376,13 +381,14 @@ init python:
         renpy.save_persistent()
 
     def flush_event_queue(force=False):
-        if not hasattr(persistent, "event_unsent") or not persistent.event_unsent:
+        event_queue = _ensure_persistent_list("event_unsent")
+        if not event_queue:
             return 0
 
         remaining = []
         sent = 0
         now = time.time()
-        for item in persistent.event_unsent:
+        for item in event_queue:
             if not force and now < (item.get("next_attempt") or 0.0):
                 remaining.append(item)
                 continue
@@ -399,7 +405,7 @@ init python:
                     item["next_attempt"] = now + _event_retry_interval
                     item["backoff"] = _event_retry_interval
                 remaining.append(item)
-        persistent.event_unsent = remaining
+        event_queue[:] = remaining
         renpy.save_persistent()
         return sent
 
@@ -425,8 +431,8 @@ init python:
     # -------------------------
     def _upload_backup_zip(reason="manual"):
         ctx = _current_context()
-        scene_items = list(getattr(persistent, "unsent", []) or [])
-        event_items = list(getattr(persistent, "event_unsent", []) or [])
+        scene_items = list(_ensure_persistent_list("unsent"))
+        event_items = list(_ensure_persistent_list("event_unsent"))
         if not scene_items and not event_items:
             return False
 
