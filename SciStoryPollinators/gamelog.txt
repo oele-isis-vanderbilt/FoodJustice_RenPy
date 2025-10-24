@@ -1106,3 +1106,631 @@ Elliot
 I think watching how the bees explore the garden can help us find some
 evidence to convince the Mayor.
 
+--- Wed Sep 17 14:08:56 2025
+
+--- Wed Sep 17 14:09:00 2025
+
+2025-09-17 14:09:00
+PlayerJumpedLabel(main_menu_screen|True)
+
+None
+
+2025-09-17 14:09:01
+PlayerJumpedLabel(start|True)
+
+None
+
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+2025-09-17 14:09:27
+PlayerJumpedLabel(toggle_qa_panel|True)
+
+None
+
+2025-09-17 14:09:34
+PlayerJumpedLabel(save_screen|True)
+
+None
+
+--- Wed Sep 17 14:22:45 2025
+
+--- Wed Sep 17 14:22:47 2025
+
+2025-09-17 14:22:47
+PlayerJumpedLabel(main_menu_screen|True)
+
+None
+
+2025-09-17 14:22:48
+PlayerJumpedLabel(start|True)
+
+None
+
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+2025-09-17 14:22:57
+PlayerJumpedLabel(toggle_qa_panel|True)
+
+None
+
+2025-09-17 14:23:21
+PlayerJumpedLabel(save_screen|True)
+
+None
+
+--- Wed Sep 17 14:33:34 2025
+
+--- Wed Sep 17 14:33:38 2025
+
+2025-09-17 14:33:38
+PlayerJumpedLabel(main_menu_screen|True)
+
+None
+
+2025-09-17 14:33:39
+PlayerJumpedLabel(start|True)
+
+None
+
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+2025-09-17 14:33:48
+PlayerTookNote
+
+{'note': 'evidence', 'source': 'where did you learn this?', 'tags': [],
+'note_id': 0, 'type': 'user-written'}
+
+Notebook length: 1
+Notebook length: 1
+2025-09-17 14:33:52
+PlayerEditedNote
+
+{'note': 'whats your evidence?', 'source': 'where did you learn this?',
+'tags': '', 'note_id': 0}
+
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+2025-09-17 14:33:58
+PlayerJumpedLabel(toggle_qa_panel|True)
+
+None
+
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+You hear a quiet buzzing noise getting closer...
+
+Notebook length: 1
+and {size=*1.5}closer...{/size}
+
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+2025-09-17 14:34:15
+PlayerJumpedLabel(save_screen|True)
+
+None
+
+--- Wed Sep 17 14:34:59 2025
+
+--- Wed Sep 17 14:35:01 2025
+
+2025-09-17 14:35:01
+PlayerJumpedLabel(main_menu_screen|True)
+
+None
+
+2025-09-17 14:35:03
+PlayerJumpedLabel(start|True)
+
+None
+
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+2025-09-17 14:35:17
+PlayerJumpedLabel(start|True)
+
+None
+
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+--- Wed Sep 17 14:39:33 2025
+
+--- Wed Sep 17 14:39:44 2025
+
+--- Wed Sep 17 14:40:43 2025
+
+2025-09-17 14:40:45
+PlayerJumpedLabel(bye_wes|True)
+
+None
+
+2025-09-17 14:40:47
+PlayerJumpedLabel(save_screen|True)
+
+None
+
+--- Wed Sep 17 14:40:58 2025
+
+--- Wed Sep 17 14:40:59 2025
+
+2025-09-17 14:40:59
+PlayerJumpedLabel(main_menu_screen|True)
+
+None
+
+2025-09-17 14:41:01
+PlayerJumpedLabel(start|True)
+
+None
+
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+2025-09-17 14:41:07
+PlayerJumpedLabel(toggle_qa_panel|True)
+
+None
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+Notebook length: 0
+Player chose: You're a talking bee??
+
+???
+A honey bee, to be exact! But yes!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Notebook length: 0
+Player chose: I live in a rural town
+
+2025-09-17 14:41:29
+PlayerLocationChoice
+
+{'startplace': 'rural'}
+
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+2025-09-17 14:41:30
+PlayerJumpedLabel(begin|True)
+
+None
+
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+Notebook length: 0
+2025-09-17 14:41:33
+PlayerJumpedLabel(save_screen|True)
+
+None
+
+--- Wed Sep 17 15:20:30 2025
+
+--- Wed Sep 17 15:20:32 2025
+
+--- Wed Sep 17 15:29:40 2025
+
+--- Wed Sep 17 15:29:42 2025
+
+2025-09-17 15:29:43
+PlayerJumpedLabel(main_menu_screen|True)
+
+None
+
+2025-09-17 15:29:46
+PlayerJumpedLabel(start|True)
+
+None
+
+Notebook length: 0
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+Notebook length: 0
+and {size=*1.5}closer...{/size}
+
+Notebook length: 0
+and {size=*2}closer...{/size}
+
+Notebook length: 0
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+Notebook length: 0
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+Notebook length: 0
+2025-09-17 15:29:56
+PlayerDialogueChoice
+
+{'choice': "You're a talking bee??"}
+
+Player chose: You're a talking bee??
+
+Notebook length: 0
+???
+A honey bee, to be exact! But yes!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Notebook length: 0
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+Notebook length: 0
+2025-09-17 15:29:59
+PlayerDialogueChoice
+
+{'choice': 'I live in a rural town'}
+
+Player chose: I live in a rural town
+
+2025-09-17 15:29:59
+PlayerLocationChoice
+
+{'startplace': 'rural'}
+
+Notebook length: 0
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Notebook length: 0
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+Notebook length: 0
+2025-09-17 15:30:02
+PlayerDialogueChoice
+
+{'choice': "Let's go!"}
+
+Player chose: Let's go!
+
+Notebook length: 0
+Tulip
+Yay! Let's zoom!
+
+2025-09-17 15:30:02
+PlayerJumpedLabel(begin|True)
+
+None
+
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+2025-09-17 15:30:04
+PlayerDialogueChoice
+
+{'choice': 'Yeah, just moved here!'}
+
+Player chose: Yeah, just moved here!
+
+Friendly Stranger
+Welcome to the neighborhood! I live right down the street.
+
+Notebook length: 0
+Friendly Stranger
+Anyway, I'm glad you're here, new kid.
+
+Notebook length: 0
+Elliot
+I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our
+lot to those parking guys.
+
+Choice: What parking guys?
+
+Notebook length: 0
+2025-09-17 15:30:07
+PlayerJumpedLabel(toggle_qa_panel|True)
+
+None
+
+2025-09-17 15:30:12
+PlayerJumpedLabel(save_screen|True)
+
+None
+
+2025-09-17 15:30:15
+PlayerJumpedLabel(save_screen|True)
+
+None
+
+2025-09-17 15:30:07
+PlayerJumpedLabel(parkingguys|True)
+
+None
+
+2025-09-17 15:30:21
+PlayerJumpedLabel(save_screen|True)
+
+None
+
