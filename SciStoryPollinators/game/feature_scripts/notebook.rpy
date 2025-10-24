@@ -3,19 +3,24 @@
 # GLOBAL NOTEBOOK Variables 
 default notebook = []
 default argument_history = []
+default tagLibrary = ["bees", "pollination", "food", "garden", "lab", "family", "kids", "money", "shopping", "cars", "parking lot", "community"]
+
 default note_id_counter = 0
-default notebook_argument = "Draft your argument here."
-default last_notebook_argument = "Draft your argument here."
+default edited_note_id = None
 default argument_edits = 0
 default customnotecount = 0
 default copied_argument = ""
-default user_argument = ""
-default tagLibrary = ["bees", "pollination", "food", "garden", "lab", "family", "kids", "money", "shopping", "cars", "parking lot", "community"]
-default editing_argument = False
-default edited_note_id = None
+
 default new_note_text_template = "whats your evidence?"
 default new_note_source_template = "where did you learn this?"
+
 default notebook_unlocked = False
+default editing_argument = False
+
+default notebook_argument = "Draft your argument here."
+default last_notebook_argument = "Draft your argument here."
+
+# default user_argument = ""
 
 init python:
     import datetime
@@ -23,16 +28,7 @@ init python:
     import os
     import pygame.scrap
     
-    def label_callback(label, interaction):
-        if not label.startswith("_"):
-            log_http(current_user, action=f"PlayerJumpedLabel({label}|{interaction})", view=label, payload=None)
-            global current_label
-            current_label = label
-
     config.label_callbacks = [label_callback]
-
-    def retaindata():
-        renpy.retain_after_load()
 
     def new_note(content, speaker, tag, note_type):
         global notebook, note_id_counter, edited_note_id
@@ -68,8 +64,6 @@ init python:
         renpy.save("1-1", save_name)
 
         return note_id
-
-    
     def deletenote(note_id):
         global notebook
         note = next((n for n in notebook if n["id"] == note_id), None)
@@ -84,15 +78,20 @@ init python:
             )
             narrator.add_history(kind="adv", who="You erased a note: ", what=note["content"])
             renpy.take_screenshot()
-            renpy.save("1-1", save_name)
-    
+            renpy.save("1-1", save_name) 
+    # def draft ():
+    #     log_http(
+    #             current_user,
+    #             action="PlayerDeletedNote",
+    #             view=current_label,
+    #             payload={"note": note["content"], "source": note["source"], "note_id": note_id}
+    #         )
     def add_tag(tag):
         # add to library if new
         if tag.strip() not in tagLibrary:
             tagLibrary.append(tag)
         
         narrator.add_history(kind="adv", who="You created a new tag: ", what=tag)
-
     def save_note(note_id, newnote, newsource, newtags):
         global notebook
         for n in notebook:
@@ -111,56 +110,22 @@ init python:
                 renpy.take_screenshot()
                 renpy.save("1-1", save_name)
                 break
-
-    def save_draft(argument, edited=False):
+    def save_draft(newcontent, edited=False):
         global notebook_argument, last_notebook_argument, argument_edits, argument_history
-        if argument != notebook_argument:
+        if newcontent != notebook_argument:
             argument_history.append(notebook_argument)
-            notebook_argument = argument
-            if argument != last_notebook_argument:
-                argument_edits += 1
-                last_notebook_argument = argument
+            notebook_argument = newcontent
+            argument_edits += 1
+            last_notebook_argument = newcontent
             renpy.notify("Draft Argument Updated!" if not edited else "Draft Argument Edited!")
             log_http(current_user, action="PlayerEditedArgument" if edited else "PlayerSavedArgument", view=current_label, payload={
-                "draft": argument,
+                "draft": newcontent,
             })
-            narrator.add_history(kind="adv", who="You edited your draft: " if edited else "Action", what=argument)
+            narrator.add_history(kind="adv", who="You edited your draft: " if edited else "Action", what=newcontent)
             renpy.take_screenshot()
             renpy.save("1-1", save_name)
 
-    def log(action):
-        timestamp = datetime.datetime.now()
-        renpy.log(timestamp)
-        renpy.log(action + "\n")
-
-    def log_http(user: str, payload: Optional[Dict[str, Any]], action: str, view: str = None):
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        if os.getenv("SERVICE_URL") is None:
-            base_url = ""
-        else:
-            base_url = os.getenv("SERVICE_URL")
-            
-        log_entry = {
-            "action": action,
-            "timestamp": timestamp,
-            "user": user,
-            "view": view,
-            "payload": payload
-        }
-        try:
-            renpy.fetch(
-                f"{base_url}/player-log",
-                method="POST",
-                json=log_entry,
-            )
-        except Exception as e:
-            renpy.log(timestamp)
-            renpy.log(f"{action}\n")
-            renpy.log(f"{payload}\n")
-
-
 #### Notebook ###### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
-
 screen notebook():
     default editing_argument = False
     default argument_edit_text = notebook_argument
@@ -400,6 +365,10 @@ screen notebook():
             mousewheel True
             vscrollbar_unscrollable "hide"
             has vbox style "note_text"
+            $ iw, ih = renpy.image_size("images/imagebutton_close.png")
+            $ exit_btn = Transform("images/imagebutton_close.png", zoom=50.0 / ih)
+
+
 
             frame style "editing_note_frame":
                 vbox:
@@ -425,9 +394,13 @@ screen notebook():
                                 ]
                     else:
                         hbox:
+                            $ iw, ih = renpy.image_size("images/imagebutton_addnote.png")
+                            $ edit_argument = Transform("images/imagebutton_addnote.png", zoom=50.0 / ih)
+
                             imagebutton:
                                 tooltip "Edit draft argument"
-                                idle "images/imagebutton_addnote.png"
+                                idle edit_argument
+                                hover darken_hover(edit_argument, 0.40)
                                 action SetScreenVariable("editing_argument", True)
                         text notebook_argument size 22
 
@@ -438,114 +411,124 @@ screen notebook():
                         style "note_box"
                         text prev_arg size 16
 
+# ##### Shows key bindings for typing in the input box ######
+# screen keyboard_shortcuts():
+#     modal False
+#     zorder 94
+#     add "images/keyboard shortcuts.png":
+#         pos (0.0, 0.15)
 
-##### Shows key bindings for typing in the input box ######
-screen keyboard_shortcuts():
-    modal False
-    zorder 94
-    add "images/keyboard shortcuts.png":
-        pos (0.0, 0.15)
+# ## Argument Revision in Notebook ###
+# screen argument_edit(currentargument):
+#     modal True
+#     zorder 93
+#     add "images/notebook_wide.png"
 
+#     default newargument = currentargument
+#     default argumentinput = ScreenVariableInputValue("newargument")
+#     $ argument_edits += 1
+#     $ achieve_argument()
 
-## Argument Revision in Notebook ###
-screen argument_edit(currentargument):
-    modal True
-    zorder 93
-    add "images/notebook_wide.png"
+#     imagebutton:
+#         pos (0.30, 0.17)
+#         tooltip "Show/Hide Shortcuts"
+#         idle "images/note clip.png"
+#         hover "images/note clip.png"
+#         action If(renpy.get_screen("keyboard_shortcuts"), true=Hide("keyboard_shortcuts"), false=Show("keyboard_shortcuts"))
 
-    default newargument = currentargument
-    default argumentinput = ScreenVariableInputValue("newargument")
-    $ argument_edits += 1
-    $ achieve_argument()
-
-    imagebutton:
-        pos (0.30, 0.17)
-        tooltip "Show/Hide Shortcuts"
-        idle "images/note clip.png"
-        hover "images/note clip.png"
-        action If(renpy.get_screen("keyboard_shortcuts"), true=Hide("keyboard_shortcuts"), false=Show("keyboard_shortcuts"))
-
-    viewport:
-        anchor (0.0,0.0)
-        pos (0.325,0.20)
-        xsize 720
-        ysize 400
-        scrollbars "vertical"
-        vscrollbar_unscrollable "hide"
-        mousewheel True
-        has vbox
-        text "Draft Argument: ":
-            size 20
-        input value argumentinput color "#037426" xmaximum 720 copypaste True multiline True
+#     viewport:
+#         anchor (0.0,0.0)
+#         pos (0.325,0.20)
+#         xsize 720
+#         ysize 400
+#         scrollbars "vertical"
+#         vscrollbar_unscrollable "hide"
+#         mousewheel True
+#         has vbox
+#         text "Draft Argument: ":
+#             size 20
+#         input value argumentinput color "#037426" xmaximum 720 copypaste True multiline True
     
-    textbutton "Save Revised Note":
-        pos (0.35, 0.6)
-        action (Function(editdraft, newargument), Hide("argument_edit"), Hide("keyboard_shortcuts"))
-    textbutton "Cancel":
-        pos (0.55, 0.6)
-        action (Hide("argument_edit"), Hide("keyboard_shortcuts"))  
+#     textbutton "Save Revised Note":
+#         pos (0.35, 0.6)
+#         # action (Function(editdraft, newargument), Hide("argument_edit"), Hide("keyboard_shortcuts"))
+#     textbutton "Cancel":
+#         pos (0.55, 0.6)
+#         # action (Hide("argument_edit"), Hide("keyboard_shortcuts"))  
 
-    $ tooltip = GetTooltip()
-    if tooltip:
-        nearrect:
-            focus "tooltip"
+#     $ tooltip = GetTooltip()
+#     if tooltip:
+#         nearrect:
+#             focus "tooltip"
 
-            frame:
-                xalign 0.5
-                text tooltip:
-                    size 15  
+#             frame:
+#                 xalign 0.5
+#                 text tooltip:
+#                     size 15  
 
-screen argument_writing(prompt):
-
+screen argument_sharing(prompt):
     modal True
     zorder 100
 
     default user_argument = ""
     default argumentinput = ScreenVariableInputValue("user_argument")
 
-    button:
-        action NullAction()
-        xysize (config.screen_width, config.screen_height)
-        style "empty"
-
-    add "notebook_wide.png" xpos 0.5 ypos 0.5 anchor (0.5, 0.5) xsize 1000 ysize 750
-
     frame:
-        align (0.52, 0.5)
-        background "#23bb7900"
-        xsize 600
-        ysize 720
+        xpos 1.0
+        ypos 1.0
+        anchor (1.0, 1.0)
+        xsize 500
+        ysize 700
+        background Transform("images/screen_speaking.png", fit="contain")
+        padding (40, 28, 40, 80)
 
         vbox:
+            spacing 10
+
             text prompt:
-                size 28
-            
-            frame:
-                xsize 600
-                ysize 200
-                align (0.5, 0.5)
+                size 20
+                bold True
+                xalign 0.0
+
+            # Scrollable input container
+            viewport:
+                xmaximum 400
+                ymaximum 400
+                scrollbars "vertical"
+                mousewheel True
+
                 input:
                     value argumentinput
-                    ymaximum 400
-                    xmaximum 600
-                    style "argument_input"
-                    copypaste True
                     multiline True
+                    copypaste True
+                    style "argument_input"
+                    xmaximum 600
 
-            hbox:
-                spacing 20
-                xalign 0.0
-                textbutton "Copy from Notebook":
-                    style "argument_button"
+            vbox:
+                spacing 10
+                xmaximum 400
+                anchor (0,0)
+                ymaximum 150
+
+                textbutton "Nevermind":
+                    style "standard_button"
+                    action Hide("argument_sharing")
+                    tooltip "Close"
+
+                textbutton "Copy Argument from Notebook":
+                    style "standard_button"
                     action SetScreenVariable("user_argument", notebook_argument)
 
-                textbutton "Submit":
-                    style "argument_button"
-                    action [Function(draft, user_argument), Return()]
+                textbutton "Save Argument in Notebook":
+                    style "standard_button"
+                    action [Function(save_draft, user_argument), Return()]
 
-                textbutton "Cancel":
-                    style "argument_button"
-                    action Return()
+# style tag_button_text:
+#     font "DejaVuSans.ttf"
+#     size 16
+#     color "#000000"
+#     xalign 0.5
+#     yalign 0.5
 
 # ARGUMENT STYLES
 style argument_input:
