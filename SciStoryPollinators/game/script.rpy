@@ -69,6 +69,24 @@ init python:
             if renpy.emscripten:
                 import emscripten
                 test = emscripten.run_script_int(f"window.stopAzureAudio();")
+    def StartAudioRecord():
+        if renpy.emscripten:
+                import emscripten
+                test = emscripten.run_script_int(f"window.microphoneUtil.StartRecordingJS();")
+    def EndAudioRecord():
+        if renpy.emscripten:
+                import emscripten
+                test = emscripten.run_script_int(f"window.microphoneUtil.StopRecordingJS();")
+
+screen my_button_screen():
+    vbox:
+        spacing 20 
+        textbutton "Start Record":
+            action Function(StartAudioRecord)
+            xalign 0.5 
+        textbutton "End Record":
+            action Function(EndAudioRecord)
+            xalign 0.5 
 
 label start:
 
@@ -78,6 +96,9 @@ label start:
     # Show a background
     scene flowers muted
     with fade
+
+
+    show screen my_button_screen
 
     $ current_user = renpy.input("Please enter your player ID")
 
