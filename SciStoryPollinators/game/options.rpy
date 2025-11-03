@@ -61,6 +61,11 @@ define config.has_sound = True
 define config.has_music = True
 define config.has_voice = True
 
+# Disable rollback so scroll gestures can't rewind gameplay.
+define config.rollback_enabled = False
+define config.keymap['rollback'] = []
+define config.keymap['rollforward'] = []
+
 
 ## To allow the user to play a test sound on the sound or voice channel,
 ## uncomment a line below and use it to set a sample sound to play.
