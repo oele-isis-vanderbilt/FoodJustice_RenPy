@@ -598,7 +598,7 @@ screen argument_sharing(prompt):
 
                 textbutton "Nevermind":
                     style "standard_button"
-                    action Hide("argument_sharing")
+                    action Return(None)
                     tooltip "Close"
 
                 textbutton "Copy Argument from Notebook":
@@ -607,7 +607,10 @@ screen argument_sharing(prompt):
 
                 textbutton "Save Argument in Notebook":
                     style "standard_button"
-                    action [Function(save_draft, user_argument), Return()]
+                    action [
+                        Function(argument_edit, user_argument),
+                        Return(user_argument)
+                    ]
 
 # ARGUMENT STYLES
 style argument_input:
