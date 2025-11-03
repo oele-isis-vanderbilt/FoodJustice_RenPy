@@ -66,6 +66,7 @@ init python:
             "tags": tags_list,
             "type": note_type
         })
+        renpy.block_rollback()
         
         if note_type == "user-written":
             narrator.add_history(kind="adv", who="You wrote a note: ", what=content)
@@ -105,7 +106,8 @@ init python:
             )
             narrator.add_history(kind="adv", who="You erased a note: ", what=note["content"])
             renpy.take_screenshot()
-            renpy.save("1-1", save_name) 
+            renpy.save("1-1", save_name)
+            renpy.block_rollback()
     # def draft ():
     #     log_http(
     #             current_user,
@@ -138,6 +140,7 @@ init python:
                 narrator.add_history(kind="adv", who="You edited a note:", what=newnote)
                 renpy.take_screenshot()
                 renpy.save("1-1", save_name)
+                renpy.block_rollback()
                 break
 
     def commit_note(note_id, newnote, newsource, newtags):
@@ -152,10 +155,13 @@ init python:
             ):
                 return
             new_note(newnote, newsource, tags_list, "user-written")
+            renpy.block_rollback()
         else:
             save_note(note_id, newnote, newsource, tags_list)
+            renpy.block_rollback()
     
-    # def toggle_argument_edit():
+    def argument_edit(newcontent):
+        save_draft(newcontent, edited=True)
 
     def save_draft(newcontent, edited=False):
         global notebook_argument, last_notebook_argument, argument_edits, argument_history
@@ -171,6 +177,7 @@ init python:
             narrator.add_history(kind="adv", who="You edited your draft: " if edited else "Action", what=newcontent)
             renpy.take_screenshot()
             renpy.save("1-1", save_name)
+            renpy.block_rollback()
 
 #### Notebook ###### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
 screen notebook():
@@ -397,30 +404,54 @@ screen notebook():
                                             SetVariable("edited_note_id", note_id)
                                         ]
                                         xalign 1.0
-                            text "Note: " + n:
+                            text "{b}Note:{/b} " + n:
                                 size 22
-                            text "Source: " + s:
+                            text "{b}Source:{/b} " + s:
                                 size 14
 
 
         ## right side of notebook for argument drafting                 
-        viewport:
+        frame:
             anchor (0.5, 0.5)
             pos (0.675, 0.52)
             xsize 0.26
             ysize 0.6
-            scrollbars "vertical"
-            mousewheel True
-            vscrollbar_unscrollable "hide"
-            has vbox style "note_text"
-            $ iw, ih = renpy.image_size("images/imagebutton_close.png")
-            $ exit_btn = Transform("images/imagebutton_close.png", zoom=50.0 / ih)
+            background None
+            has vbox
+            spacing 12
 
-            frame style "editing_note_frame":
+            frame:
+                style "editing_note_frame"
+                background (Solid("#d9dcff80") if editing_argument else Solid("#cccccc40"))
                 vbox:
+                    spacing 10
+
+                    hbox:
+                        xfill True
+                        spacing 8
+
+                        text "Current Argument" style "argument_header"
+
+                        $ iw, ih = renpy.image_size("images/imagebutton_pencil.png")
+                        $ edit_argument_idle = Transform("images/imagebutton_pencil.png", zoom=50.0 / ih)
+                        $ edit_argument_active = Transform("images/imagebutton_pencil.png", zoom=50.0 / ih, alpha=0.65)
+
+                        if not editing_argument:
+                            imagebutton:
+                                tooltip "Edit draft argument"
+                                idle edit_argument_idle
+                                hover darken_hover(edit_argument_idle, 0.40)
+                                action [
+                                    SetScreenVariable("argument_edit_text", notebook_argument),
+                                    SetScreenVariable("editing_argument", True)
+                                ]
+                                xalign 1.0
+                                yalign 0.5
+
                     if editing_argument:
-                        frame style "edit_frame":
+                        frame style "current_argument_edit_frame":
                             input value ScreenVariableInputValue("argument_edit_text") style "argument_input" multiline True xmaximum 550
+                        null height 10
                         hbox:
                             spacing 10
                             xalign 1.0
@@ -430,7 +461,6 @@ screen notebook():
                                     Function(argument_edit, argument_edit_text),
                                     SetScreenVariable("editing_argument", False),
                                     SetScreenVariable("argument_edit_text", notebook_argument)
-                                    
                                 ]
                             textbutton "Cancel":
                                 style "standard_button"
@@ -439,23 +469,33 @@ screen notebook():
                                     SetScreenVariable("argument_edit_text", notebook_argument)
                                 ]
                     else:
-                        hbox:
-                            $ iw, ih = renpy.image_size("images/imagebutton_addnote.png")
-                            $ edit_argument = Transform("images/imagebutton_addnote.png", zoom=50.0 / ih)
+                        frame style "current_argument_view_frame":
+                            text notebook_argument style "current_argument_text"
 
-                            imagebutton:
-                                tooltip "Edit draft argument"
-                                idle edit_argument
-                                hover darken_hover(edit_argument, 0.40)
-                                action SetScreenVariable("editing_argument", True)
-                        text notebook_argument size 22
+            viewport:
+                xfill True
+                yfill True
+                scrollbars "vertical"
+                mousewheel True
+                vscrollbar_unscrollable "hide"
+                has vbox
+                spacing 8
 
-            if len(argument_history) > 0:
-                text "Previous Drafts:" size 16
-                for prev_arg in reversed(argument_history):
-                    frame:
-                        style "note_box"
-                        text prev_arg size 16
+                if len(argument_history) > 0:
+                    null height 12
+                    text "Previous Drafts:" style "argument_history_header"
+                    $ history_max_width = int(config.screen_width * 0.26) - 40
+                    for prev_arg in reversed(argument_history):
+                        frame:
+                            style "argument_history_frame"
+                            xmaximum history_max_width
+                            text prev_arg:
+                                style "argument_history_text"
+                                xmaximum history_max_width
+                                xfill True
+                                xalign 0.0
+                                text_align 0.0
+                        add Solid("#00000033", xsize=history_max_width, ysize=2)
 
 # ##### Shows key bindings for typing in the input box ######
 # screen keyboard_shortcuts():
@@ -576,6 +616,48 @@ style argument_input:
     size 20
     color "#000000"
 
+style current_argument_view_frame:
+    background "#ffffff"
+    padding (14, 12)
+    xfill True
+
+style current_argument_edit_frame:
+    background "#ffffff"
+    padding (14, 12)
+    xfill True
+
+style current_argument_text:
+    font "DejaVuSans.ttf"
+    size 22
+    color "#1a1a1a"
+
+style argument_header:
+    font "DejaVuSans-Bold.ttf"
+    size 20
+    color "#1a1a1a"
+    xfill True
+    yalign 0.5
+
+style argument_history_header:
+    font "DejaVuSans-Bold.ttf"
+    size 16
+    color "#1a1a1a"
+    ymargin 8
+
+style argument_history_frame:
+    background "#f2f2f280"
+    padding (10, 8)
+    xfill False
+    xmargin 6
+    ymargin 4
+
+style argument_history_text:
+    font "DejaVuSans.ttf"
+    size 16
+    color "#1f1f1f"
+    text_align 0.0
+    xalign 0.0
+
 style argument_button:
     background "#1558b0"
     hover_background "#021b3c"
@@ -609,11 +691,11 @@ style notebook_title:
 style edit_frame:
     background "#ffffff"
     padding (10, 10)
-    xfill True  # this makes the frame take all horizontal space
+    xfill True 
     xalign 1.0
 
 style editing_note_frame:
-    background "#cccccc40"  # Slightly darker translucent gray
+    background "#cccccc40" 
     padding (20, 20)
     xfill True
 
