@@ -27,17 +27,43 @@ init python:
     from typing import Dict, Any, Optional
     import os
     import pygame.scrap
+    from renpy import store
     
     config.label_callbacks = [label_callback]
+    NEW_NOTE_ID = -1
+
+    def normalize_tags(tags_value):
+        if isinstance(tags_value, str):
+            return [t.strip() for t in tags_value.split(",") if t.strip()]
+        try:
+            iterable = list(tags_value) if tags_value is not None else []
+        except TypeError:
+            return []
+        cleaned = []
+        for tag in iterable:
+            tag_text = str(tag).strip()
+            if tag_text:
+                cleaned.append(tag_text)
+        return cleaned
 
     def new_note(content, speaker, tag, note_type):
         global notebook, note_id_counter, edited_note_id
+        tags_list = normalize_tags(tag)
+        if note_type == "character-dialog":
+            existing = next(
+                (n for n in notebook if n["type"] == "character-dialog" and n["content"] == content and n["source"] == speaker),
+                None
+            )
+            if existing:
+                renpy.notify("Note Already Saved")
+                return existing["id"]
+
         note_id = note_id_counter
         notebook.append({
             "id": note_id,
             "source": speaker,
             "content": content,
-            "tags": [tag] if isinstance(tag, str) else tag,
+            "tags": tags_list,
             "type": note_type
         })
         
@@ -55,7 +81,7 @@ init python:
         log_http(current_user, action="PlayerTookNote", view=current_label, payload={
             "note": content,
             "source": speaker,
-            "tags": tag,
+            "tags": tags_list,
             "note_id": note_id,
             "type": note_type
         })
@@ -64,6 +90,7 @@ init python:
         renpy.save("1-1", save_name)
 
         return note_id
+    
     def deletenote(note_id):
         global notebook
         note = next((n for n in notebook if n["id"] == note_id), None)
@@ -92,24 +119,44 @@ init python:
             tagLibrary.append(tag)
         
         narrator.add_history(kind="adv", who="You created a new tag: ", what=tag)
+    
     def save_note(note_id, newnote, newsource, newtags):
         global notebook
+        updated_tags = normalize_tags(newtags)
         for n in notebook:
             if n["id"] == note_id:
                 n["content"] = newnote
                 n["source"] = newsource
-                n["tags"] = [newtags] if isinstance(newtags, str) else newtags
+                n["tags"] = updated_tags
                 renpy.notify("Note Revised")
                 log_http(
                     current_user,
                     action="PlayerEditedNote",
                     view=current_label,
-                    payload={"note": newnote, "source": newsource, "tags": newtags, "note_id": note_id}
+                    payload={"note": newnote, "source": newsource, "tags": updated_tags, "note_id": note_id}
                 )
                 narrator.add_history(kind="adv", who="You edited a note:", what=newnote)
                 renpy.take_screenshot()
                 renpy.save("1-1", save_name)
                 break
+
+    def commit_note(note_id, newnote, newsource, newtags):
+        tags_list = normalize_tags(newtags)
+        if note_id == NEW_NOTE_ID:
+            newnote_trim = newnote.strip()
+            newsource_trim = newsource.strip()
+            template_note = store.new_note_text_template.strip()
+            template_source = store.new_note_source_template.strip()
+            if (not newnote_trim and not newsource_trim and not tags_list) or (
+                newnote_trim == template_note and newsource_trim == template_source and not tags_list
+            ):
+                return
+            new_note(newnote, newsource, tags_list, "user-written")
+        else:
+            save_note(note_id, newnote, newsource, tags_list)
+    
+    # def toggle_argument_edit():
+
     def save_draft(newcontent, edited=False):
         global notebook_argument, last_notebook_argument, argument_edits, argument_history
         if newcontent != notebook_argument:
@@ -151,7 +198,6 @@ screen notebook():
         pos (0.792, 0.17)
 
     fixed:
-
         # ---- geometry (relative units) ----
         $ vp_center_x, vp_center_y = 0.325, 0.52
         $ vp_w, vp_h = 0.26, 0.6
@@ -165,7 +211,7 @@ screen notebook():
 
         $ top_y = vp_center_y - vp_h/2.0
 
-    # ===== STICKY ADD BUTTON (non-scrolling, on top) =====
+        # ===== STICKY ADD BUTTON (non-scrolling, on top) =====
         text "Edited Note ID: [edited_note_id]"
         $ renpy.log("Notebook length: {}".format(len(notebook)))
 
@@ -179,8 +225,7 @@ screen notebook():
             padding (12, 10)
 
             action [
-                Function(lambda: store.__setattr__('edited_note_id',
-                            new_note("evidence", "where did you learn this?", [], "user-written"))),
+                SetVariable("edited_note_id", NEW_NOTE_ID),
                 SetScreenVariable("edit_note_text", new_note_text_template),
                 SetScreenVariable("edit_note_source", new_note_source_template),
                 SetScreenVariable("edit_note_tags", ""),
@@ -209,7 +254,10 @@ screen notebook():
             has vbox style "note_text"
 
             $ note_count = len(notebook)
-            for i, note in enumerate(reversed(notebook)):
+            $ notes_to_display = list(reversed(notebook))
+            if edited_note_id == NEW_NOTE_ID:
+                $ notes_to_display.insert(0, {"id": NEW_NOTE_ID, "source": edit_note_source, "content": edit_note_text, "tags": normalize_tags(edit_note_tags), "type": "user-written"})
+            for i, note in enumerate(notes_to_display):
                 $ s = note["source"] or ""
                 $ t = ", ".join(note["tags"]) if note["tags"] else ""
                 $ n = note["content"]
@@ -300,7 +348,7 @@ screen notebook():
                                 textbutton "Save Note":
                                     style "standard_button"
                                     action [
-                                        Function(save_note, note_id, edit_note_text, edit_note_source, edit_note_tags),
+                                        Function(commit_note, note_id, edit_note_text, edit_note_source, edit_note_tags),
                                         SetVariable("edited_note_id", None)
                                     ]
                                 textbutton "Cancel":
@@ -343,9 +391,9 @@ screen notebook():
                                         idle edit_btn
                                         hover darken_hover(edit_btn)
                                         action [
-                                            SetVariable("edit_note_text", n),
-                                            SetVariable("edit_note_source", s),
-                                            SetVariable("edit_note_tags", t),
+                                            SetScreenVariable("edit_note_text", n),
+                                            SetScreenVariable("edit_note_source", s),
+                                            SetScreenVariable("edit_note_tags", t),
                                             SetVariable("edited_note_id", note_id)
                                         ]
                                         xalign 1.0
@@ -368,8 +416,6 @@ screen notebook():
             $ iw, ih = renpy.image_size("images/imagebutton_close.png")
             $ exit_btn = Transform("images/imagebutton_close.png", zoom=50.0 / ih)
 
-
-
             frame style "editing_note_frame":
                 vbox:
                     if editing_argument:
@@ -381,7 +427,7 @@ screen notebook():
                             textbutton "Save":
                                 style "standard_button"
                                 action [
-                                    Function(editdraft, argument_edit_text),
+                                    Function(argument_edit, argument_edit_text),
                                     SetScreenVariable("editing_argument", False),
                                     SetScreenVariable("argument_edit_text", notebook_argument)
                                     
@@ -523,13 +569,6 @@ screen argument_sharing(prompt):
                     style "standard_button"
                     action [Function(save_draft, user_argument), Return()]
 
-# style tag_button_text:
-#     font "DejaVuSans.ttf"
-#     size 16
-#     color "#000000"
-#     xalign 0.5
-#     yalign 0.5
-
 # ARGUMENT STYLES
 style argument_input:
     background "#ffffff"
@@ -664,5 +703,3 @@ style edit_tag_support_text:
     xalign 0.5
     yalign 0.5
     italic True
-
-
