@@ -27,19 +27,46 @@ init python:
     from typing import Dict, Any, Optional
     import os
     import pygame.scrap
+    from renpy import store
     
     config.label_callbacks = [label_callback]
+    NEW_NOTE_ID = -1
+
+    def normalize_tags(tags_value):
+        if isinstance(tags_value, str):
+            return [t.strip() for t in tags_value.split(",") if t.strip()]
+        try:
+            iterable = list(tags_value) if tags_value is not None else []
+        except TypeError:
+            return []
+        cleaned = []
+        for tag in iterable:
+            tag_text = str(tag).strip()
+            if tag_text:
+                cleaned.append(tag_text)
+        return cleaned
 
     def new_note(content, speaker, tag, note_type):
         global notebook, note_id_counter, edited_note_id
+        tags_list = normalize_tags(tag)
+        if note_type == "character-dialog":
+            existing = next(
+                (n for n in notebook if n["type"] == "character-dialog" and n["content"] == content and n["source"] == speaker),
+                None
+            )
+            if existing:
+                renpy.notify("Note Already Saved")
+                return existing["id"]
+
         note_id = note_id_counter
         notebook.append({
             "id": note_id,
             "source": speaker,
             "content": content,
-            "tags": [tag] if isinstance(tag, str) else tag,
+            "tags": tags_list,
             "type": note_type
         })
+        renpy.block_rollback()
         
         if note_type == "user-written":
             narrator.add_history(kind="adv", who="You wrote a note: ", what=content)
@@ -55,7 +82,7 @@ init python:
         log_http(current_user, action="PlayerTookNote", view=current_label, payload={
             "note": content,
             "source": speaker,
-            "tags": tag,
+            "tags": tags_list,
             "note_id": note_id,
             "type": note_type
         })
@@ -64,6 +91,7 @@ init python:
         renpy.save("1-1", save_name)
 
         return note_id
+    
     def deletenote(note_id):
         global notebook
         note = next((n for n in notebook if n["id"] == note_id), None)
@@ -78,7 +106,8 @@ init python:
             )
             narrator.add_history(kind="adv", who="You erased a note: ", what=note["content"])
             renpy.take_screenshot()
-            renpy.save("1-1", save_name) 
+            renpy.save("1-1", save_name)
+            renpy.block_rollback()
     # def draft ():
     #     log_http(
     #             current_user,
@@ -92,24 +121,48 @@ init python:
             tagLibrary.append(tag)
         
         narrator.add_history(kind="adv", who="You created a new tag: ", what=tag)
+    
     def save_note(note_id, newnote, newsource, newtags):
         global notebook
+        updated_tags = normalize_tags(newtags)
         for n in notebook:
             if n["id"] == note_id:
                 n["content"] = newnote
                 n["source"] = newsource
-                n["tags"] = [newtags] if isinstance(newtags, str) else newtags
+                n["tags"] = updated_tags
                 renpy.notify("Note Revised")
                 log_http(
                     current_user,
                     action="PlayerEditedNote",
                     view=current_label,
-                    payload={"note": newnote, "source": newsource, "tags": newtags, "note_id": note_id}
+                    payload={"note": newnote, "source": newsource, "tags": updated_tags, "note_id": note_id}
                 )
                 narrator.add_history(kind="adv", who="You edited a note:", what=newnote)
                 renpy.take_screenshot()
                 renpy.save("1-1", save_name)
+                renpy.block_rollback()
                 break
+
+    def commit_note(note_id, newnote, newsource, newtags):
+        tags_list = normalize_tags(newtags)
+        if note_id == NEW_NOTE_ID:
+            newnote_trim = newnote.strip()
+            newsource_trim = newsource.strip()
+            template_note = store.new_note_text_template.strip()
+            template_source = store.new_note_source_template.strip()
+            if (not newnote_trim and not newsource_trim and not tags_list) or (
+                newnote_trim == template_note and newsource_trim == template_source and not tags_list
+            ):
+                return
+            new_note(newnote, newsource, tags_list, "user-written")
+            renpy.block_rollback()
+        else:
+            save_note(note_id, newnote, newsource, tags_list)
+            renpy.block_rollback()
+    
+    def argument_edit(newcontent):
+        save_draft(newcontent, edited=True)
+
     def save_draft(newcontent, edited=False):
         global notebook_argument, last_notebook_argument, argument_edits, argument_history
         if newcontent != notebook_argument:
@@ -124,6 +177,7 @@ init python:
             narrator.add_history(kind="adv", who="You edited your draft: " if edited else "Action", what=newcontent)
             renpy.take_screenshot()
             renpy.save("1-1", save_name)
+            renpy.block_rollback()
 
 #### Notebook ###### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
 screen notebook():
@@ -151,7 +205,6 @@ screen notebook():
         pos (0.792, 0.17)
 
     fixed:
-
         # ---- geometry (relative units) ----
         $ vp_center_x, vp_center_y = 0.325, 0.52
         $ vp_w, vp_h = 0.26, 0.6
@@ -165,7 +218,7 @@ screen notebook():
 
         $ top_y = vp_center_y - vp_h/2.0
 
-    # ===== STICKY ADD BUTTON (non-scrolling, on top) =====
+        # ===== STICKY ADD BUTTON (non-scrolling, on top) =====
         text "Edited Note ID: [edited_note_id]"
         $ renpy.log("Notebook length: {}".format(len(notebook)))
 
@@ -179,8 +232,7 @@ screen notebook():
             padding (12, 10)
 
             action [
-                Function(lambda: store.__setattr__('edited_note_id',
-                            new_note("evidence", "where did you learn this?", [], "user-written"))),
+                SetVariable("edited_note_id", NEW_NOTE_ID),
                 SetScreenVariable("edit_note_text", new_note_text_template),
                 SetScreenVariable("edit_note_source", new_note_source_template),
                 SetScreenVariable("edit_note_tags", ""),
@@ -209,7 +261,10 @@ screen notebook():
             has vbox style "note_text"
 
             $ note_count = len(notebook)
-            for i, note in enumerate(reversed(notebook)):
+            $ notes_to_display = list(reversed(notebook))
+            if edited_note_id == NEW_NOTE_ID:
+                $ notes_to_display.insert(0, {"id": NEW_NOTE_ID, "source": edit_note_source, "content": edit_note_text, "tags": normalize_tags(edit_note_tags), "type": "user-written"})
+            for i, note in enumerate(notes_to_display):
                 $ s = note["source"] or ""
                 $ t = ", ".join(note["tags"]) if note["tags"] else ""
                 $ n = note["content"]
@@ -300,7 +355,7 @@ screen notebook():
                                 textbutton "Save Note":
                                     style "standard_button"
                                     action [
-                                        Function(save_note, note_id, edit_note_text, edit_note_source, edit_note_tags),
+                                        Function(commit_note, note_id, edit_note_text, edit_note_source, edit_note_tags),
                                         SetVariable("edited_note_id", None)
                                     ]
                                 textbutton "Cancel":
@@ -343,48 +398,69 @@ screen notebook():
                                         idle edit_btn
                                         hover darken_hover(edit_btn)
                                         action [
-                                            SetVariable("edit_note_text", n),
-                                            SetVariable("edit_note_source", s),
-                                            SetVariable("edit_note_tags", t),
+                                            SetScreenVariable("edit_note_text", n),
+                                            SetScreenVariable("edit_note_source", s),
+                                            SetScreenVariable("edit_note_tags", t),
                                             SetVariable("edited_note_id", note_id)
                                         ]
                                         xalign 1.0
-                            text "Note: " + n:
+                            text "{b}Note:{/b} " + n:
                                 size 22
-                            text "Source: " + s:
+                            text "{b}Source:{/b} " + s:
                                 size 14
 
 
         ## right side of notebook for argument drafting                 
-        viewport:
+        frame:
             anchor (0.5, 0.5)
             pos (0.675, 0.52)
             xsize 0.26
             ysize 0.6
-            scrollbars "vertical"
-            mousewheel True
-            vscrollbar_unscrollable "hide"
-            has vbox style "note_text"
-            $ iw, ih = renpy.image_size("images/imagebutton_close.png")
-            $ exit_btn = Transform("images/imagebutton_close.png", zoom=50.0 / ih)
+            background None
+            has vbox
+            spacing 12
 
-
-
-            frame style "editing_note_frame":
+            frame:
+                style "editing_note_frame"
+                background (Solid("#d9dcff80") if editing_argument else Solid("#cccccc40"))
                 vbox:
+                    spacing 10
+
+                    hbox:
+                        xfill True
+                        spacing 8
+
+                        text "Current Argument" style "argument_header"
+
+                        $ iw, ih = renpy.image_size("images/imagebutton_pencil.png")
+                        $ edit_argument_idle = Transform("images/imagebutton_pencil.png", zoom=50.0 / ih)
+                        $ edit_argument_active = Transform("images/imagebutton_pencil.png", zoom=50.0 / ih, alpha=0.65)
+
+                        if not editing_argument:
+                            imagebutton:
+                                tooltip "Edit draft argument"
+                                idle edit_argument_idle
+                                hover darken_hover(edit_argument_idle, 0.40)
+                                action [
+                                    SetScreenVariable("argument_edit_text", notebook_argument),
+                                    SetScreenVariable("editing_argument", True)
+                                ]
+                                xalign 1.0
+                                yalign 0.5
+
                     if editing_argument:
-                        frame style "edit_frame":
+                        frame style "current_argument_edit_frame":
                             input value ScreenVariableInputValue("argument_edit_text") style "argument_input" multiline True xmaximum 550
+                        null height 10
                         hbox:
                             spacing 10
                             xalign 1.0
                             textbutton "Save":
                                 style "standard_button"
                                 action [
-                                    Function(editdraft, argument_edit_text),
+                                    Function(argument_edit, argument_edit_text),
                                     SetScreenVariable("editing_argument", False),
                                     SetScreenVariable("argument_edit_text", notebook_argument)
-                                    
                                 ]
                             textbutton "Cancel":
                                 style "standard_button"
@@ -393,23 +469,33 @@ screen notebook():
                                     SetScreenVariable("argument_edit_text", notebook_argument)
                                 ]
                     else:
-                        hbox:
-                            $ iw, ih = renpy.image_size("images/imagebutton_addnote.png")
-                            $ edit_argument = Transform("images/imagebutton_addnote.png", zoom=50.0 / ih)
+                        frame style "current_argument_view_frame":
+                            text notebook_argument style "current_argument_text"
 
-                            imagebutton:
-                                tooltip "Edit draft argument"
-                                idle edit_argument
-                                hover darken_hover(edit_argument, 0.40)
-                                action SetScreenVariable("editing_argument", True)
-                        text notebook_argument size 22
+            viewport:
+                xfill True
+                yfill True
+                scrollbars "vertical"
+                mousewheel True
+                vscrollbar_unscrollable "hide"
+                has vbox
+                spacing 8
 
-            if len(argument_history) > 0:
-                text "Previous Drafts:" size 16
-                for prev_arg in reversed(argument_history):
-                    frame:
-                        style "note_box"
-                        text prev_arg size 16
+                if len(argument_history) > 0:
+                    null height 12
+                    text "Previous Drafts:" style "argument_history_header"
+                    $ history_max_width = int(config.screen_width * 0.26) - 40
+                    for prev_arg in reversed(argument_history):
+                        frame:
+                            style "argument_history_frame"
+                            xmaximum history_max_width
+                            text prev_arg:
+                                style "argument_history_text"
+                                xmaximum history_max_width
+                                xfill True
+                                xalign 0.0
+                                text_align 0.0
+                        add Solid("#00000033", xsize=history_max_width, ysize=2)
 
 # ##### Shows key bindings for typing in the input box ######
 # screen keyboard_shortcuts():
@@ -512,7 +598,7 @@ screen argument_sharing(prompt):
 
                 textbutton "Nevermind":
                     style "standard_button"
-                    action Hide("argument_sharing")
+                    action Return(None)
                     tooltip "Close"
 
                 textbutton "Copy Argument from Notebook":
@@ -521,14 +607,10 @@ screen argument_sharing(prompt):
 
                 textbutton "Save Argument in Notebook":
                     style "standard_button"
-                    action [Function(save_draft, user_argument), Return()]
-
-# style tag_button_text:
-#     font "DejaVuSans.ttf"
-#     size 16
-#     color "#000000"
-#     xalign 0.5
-#     yalign 0.5
+                    action [
+                        Function(argument_edit, user_argument),
+                        Return(user_argument)
+                    ]
 
 # ARGUMENT STYLES
 style argument_input:
@@ -536,6 +618,48 @@ style argument_input:
     font "DejaVuSans.ttf"
     size 20
     color "#000000"
+
+style current_argument_view_frame:
+    background "#ffffff"
+    padding (14, 12)
+    xfill True
+
+style current_argument_edit_frame:
+    background "#ffffff"
+    padding (14, 12)
+    xfill True
+
+style current_argument_text:
+    font "DejaVuSans.ttf"
+    size 22
+    color "#1a1a1a"
+
+style argument_header:
+    font "DejaVuSans-Bold.ttf"
+    size 20
+    color "#1a1a1a"
+    xfill True
+    yalign 0.5
+
+style argument_history_header:
+    font "DejaVuSans-Bold.ttf"
+    size 16
+    color "#1a1a1a"
+    ymargin 8
+
+style argument_history_frame:
+    background "#f2f2f280"
+    padding (10, 8)
+    xfill False
+    xmargin 6
+    ymargin 4
+
+style argument_history_text:
+    font "DejaVuSans.ttf"
+    size 16
+    color "#1f1f1f"
+    text_align 0.0
+    xalign 0.0
 
 style argument_button:
     background "#1558b0"
@@ -570,11 +694,11 @@ style notebook_title:
 style edit_frame:
     background "#ffffff"
     padding (10, 10)
-    xfill True  # this makes the frame take all horizontal space
+    xfill True 
     xalign 1.0
 
 style editing_note_frame:
-    background "#cccccc40"  # Slightly darker translucent gray
+    background "#cccccc40" 
     padding (20, 20)
     xfill True
 
@@ -664,5 +788,3 @@ style edit_tag_support_text:
     xalign 0.5
     yalign 0.5
     italic True
-
-

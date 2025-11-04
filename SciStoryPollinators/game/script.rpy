@@ -138,6 +138,10 @@
                 t "I'd be happy to help! If you tell me what evidence you've found, I can give you some advice on improving your persuasive writing."
 
                 $ eca = renpy.input("What should the Mayor do with the empty lot, and why?", screen="argument_sharing")
+                if not isinstance(eca, str) or not eca.strip():
+                    t "No problem. Let me know when you're ready to share!"
+                    jump tulip_help_menu
+                $ eca = eca.strip()
 
                 $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Tulip")
                 $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
@@ -177,6 +181,12 @@
                 menu:
                     "I have more ideas to add.":
                         $ eca = renpy.input("What should the Mayor do with the empty lot, and why?", screen="argument_sharing")
+                        if not isinstance(eca, str) or not eca.strip():
+                            t "Okay! Come back when you're ready."
+                            hide tulip
+                            with dissolve
+                            return
+                        $ eca = eca.strip()
 
                         $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Tulip")
                         $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
@@ -224,6 +234,12 @@
                         return
             "I need help with something else.":
                 $ eca = renpy.input("I love questions! What's your question?", screen="argument_sharing")
+                if not isinstance(eca, str) or not eca.strip():
+                    t "Okay! I'm here if you need me."
+                    hide tulip
+                    with dissolve
+                    return
+                $ eca = eca.strip()
 
                 $ ca_link, ca_json = agent_setup("GameHelp", eca, "tulip", "Tulip")
                 $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
@@ -254,6 +270,12 @@
                 menu:
                     "I have another question.":
                         $ eca = renpy.input("What's your question?", screen="argument_sharing")
+                        if not isinstance(eca, str) or not eca.strip():
+                            t "No worries! Buzz me again if something comes up."
+                            hide tulip
+                            with dissolve
+                            return
+                        $ eca = eca.strip()
 
                         $ ca_link, ca_json = agent_setup("GameHelp_Collaboration", eca, "tulip", "Tulip")
                         $ log_http(current_user, action="PlayerInputToECA", view="tulip", payload=ca_json)
@@ -482,6 +504,10 @@
     label riley_against:
         r "Oh really? I'm curious why you think that."
         $ progarage = renpy.input("Why do you support the parking [structure]?")
+        if not isinstance(progarage, str) or not progarage.strip():
+            r "Alright, maybe you'll think of a reason later."
+            jump riley_plan
+        $ progarage = progarage.strip()
         $ log("Player argument for garage: " + progarage)
         r "Hmm. That's fair. I still think the garden has more benefits for the people and the environment, but that's worth considering."
         r "The government often relies on data and algorithms. But some things, like the value of a community garden, can't be measured in money alone. It's measured in how it helps empower the people who live here."
@@ -509,6 +535,10 @@
 
     label ca_eval_riley:
         $ eca = renpy.input("My persuasive ideas for the Mayor:", screen="argument_sharing")
+        if not isinstance(eca, str) or not eca.strip():
+            r "No worries. We can brainstorm when you're ready."
+            jump riley_plan
+        $ eca = eca.strip()
 
         $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Riley")
         $ log_http(current_user, action="PlayerInputToECA", view="riley", payload=ca_json)
@@ -652,6 +682,10 @@
 
     label foodknowledge:
         $ eca = renpy.input("I'm wondering...", screen="argument_sharing")
+        if not isinstance(eca, str) or not eca.strip():
+            r "No worries. Ask me again anytime."
+            jump foodknowledge_loop
+        $ eca = eca.strip()
 
         $ ca_link, ca_json = agent_setup("Knowledge_FoodJustice", eca, "riley", "Riley")
         $ log_http(current_user, action="PlayerInputToECA", view="riley", payload=ca_json)
@@ -1041,6 +1075,10 @@
     label gardenquestions:
         w "What would you like to know about the garden?"
         $ eca = renpy.input("I'm wondering...", screen="argument_sharing")
+        if not isinstance(eca, str) or not eca.strip():
+            w "Alright, just flag me down if you think of something."
+            jump wes_choices
+        $ eca = eca.strip()
 
         $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Wes")
         $ log_http(current_user, action="PlayerInputToECA", view="wes", payload=ca_json)
@@ -1096,6 +1134,10 @@
     label wes_ca:
         w "What would you like to know?"
         $ eca = renpy.input("I'm wondering...", screen="argument_sharing")
+        if not isinstance(eca, str) or not eca.strip():
+            w "All good. Come find me if you have another question."
+            jump wes_questions
+        $ eca = eca.strip()
 
         $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Wes")
         $ log_http(current_user, action="PlayerInputToECA", view="wes", payload=ca_json)
@@ -1248,6 +1290,10 @@
 
     label nadia_ca:
         $ eca = renpy.input("I'm wondering...", screen="argument_sharing")
+        if not isinstance(eca, str) or not eca.strip():
+            n "Alright! Come back if you want to talk more about bees."
+            jump nadia_questions
+        $ eca = eca.strip()
 
         $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
         $ log_http(current_user, action="PlayerInputToECA", view="nadia", payload=ca_json)
@@ -1760,6 +1806,10 @@
         m "I'd love to hear it. What have you found?"
 
         $ eca = renpy.input("My persuasive argument for what the Mayor should do with the empty lot:", screen="argument_sharing")
+        if not isinstance(eca, str) or not eca.strip():
+            m "That's alright. Come back when you're ready to share your ideas."
+            jump mayor_2
+        $ eca = eca.strip()
 
         $ ca_link, ca_json = agent_setup("FoodJustice_MayorEvaluation", eca, "mayor", "Mayor Watson")
         $ log_http(current_user, action="PlayerInputToECA", view="mayor", payload=ca_json)
@@ -1843,6 +1893,10 @@
     label ideasharing:
         el "Sweet. So pretend I'm the mayor! Hey there good citizen! What do you think about this garden idea? Should I support it?"
         $ eca = renpy.input("My ideas to persuade the mayor:", screen="argument_sharing")
+        if not isinstance(eca, str) or not eca.strip():
+            el "That's okay! Come back when you're ready to try out an argument."
+            jump elliot_chatting
+        $ eca = eca.strip()
 
         $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Elliot")
         $ log_http(current_user, action="PlayerInputToECA", view="elliot", payload=ca_json)
