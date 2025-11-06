@@ -1,57 +1,104 @@
-﻿label start:
+﻿#CHARACTER NAME DEFINIION
+define el = Character("Elliot")
+define a = Character("Amara")
+define r = Character("Riley")
+define w = Character("Wes")
+define n = Character("Nadia")
+define m = Character("Mayor Watson")
+define cy = Character("Cyrus")
+define x = Character("Alex")
+define c = Character("Cora")
+define v = Character("Victor")
+define t = Character("Tulip")
 
-    # Character definitions and variables can go here if needed
-    #CHARACTER NAME DEFINIION
-    define el = Character("Elliot")
-    define a = Character("Amara")
-    define r = Character("Riley")
-    define w = Character("Wes")
-    define n = Character("Nadia")
-    define m = Character("Mayor Watson")
-    define cy = Character("Cyrus")
-    define x = Character("Alex")
-    define c = Character("Cora")
-    define v = Character("Victor")
-    define t = Character("Tulip")
+define character_directory = [
+    { "variable": el, "name": "Elliot",        "chats": 0, "spoken": False },
+    { "variable": a,  "name": "Amara",         "chats": 0, "spoken": False },
+    { "variable": r,  "name": "Riley",         "chats": 0, "spoken": False },
+    { "variable": w,  "name": "Wes",           "chats": 0, "spoken": False },
+    { "variable": n,  "name": "Nadia",         "chats": 0, "spoken": False },
+    { "variable": m,  "name": "Mayor Watson",  "chats": 0, "spoken": False },
+    { "variable": cy, "name": "Cyrus",         "chats": 0, "spoken": False },
+    { "variable": x,  "name": "Alex",          "chats": 0, "spoken": False },
+    { "variable": c,  "name": "Cora",          "chats": 0, "spoken": False },
+    { "variable": v,  "name": "Victor",        "chats": 0, "spoken": False },
+    { "variable": t,  "name": "Tulip",         "chats": 0, "spoken": False },
+]
 
-    define character_directory = [
-        { "variable": el, "name": "Elliot",        "chats": 0, "spoken": False },
-        { "variable": a,  "name": "Amara",         "chats": 0, "spoken": False },
-        { "variable": r,  "name": "Riley",         "chats": 0, "spoken": False },
-        { "variable": w,  "name": "Wes",           "chats": 0, "spoken": False },
-        { "variable": n,  "name": "Nadia",         "chats": 0, "spoken": False },
-        { "variable": m,  "name": "Mayor",         "chats": 0, "spoken": False },
-        { "variable": cy, "name": "Cyrus",         "chats": 0, "spoken": False },
-        { "variable": x,  "name": "Alex",          "chats": 0, "spoken": False },
-        { "variable": c,  "name": "Cora",          "chats": 0, "spoken": False },
-        { "variable": v,  "name": "Victor",        "chats": 0, "spoken": False },
-        { "variable": t,  "name": "Tulip",         "chats": 0, "spoken": False },
-    ]
+# AUDIO 
+define azureKey = "3da59f8a4fc643ffbec6e4c076c77b7b"
+define ecaVoice = "en-US-JennyNeural"
 
-    #GLOBAL GAME STATE VARIABLES
-    default visited_list = []
-    default spoken_list = []
-    default startplace = "rural"
-    default structure = "lot"
-    default currentlocation = "emptylot"
 
-    ##LOCATION VISIT TRACKING
-    default emptylotvisit = False
-    default foodlabvisit = False
-    default gardenvisit = False
-    default hivesvisit = False
+# GLOBAL NOTEBOOK LISTS 
+default source_list = []
+default note_list = []
+default tag_list = []
 
-    ##END GAME STATE TRACKING
-    default argument_attempts = 0
-    default mayor_attempts = 0
-    default ca_context = ""
-    default ecaresponse = ""
-    default mayorconvinced = False
-    default current_user = ""
+#GLOBAL GAME STATE VARIABLES
+default visited_list = []
+default spoken_list = []
+default notebook_argument = "Draft your argument here."
+default customnotecount = 0
+default startplace = ""
+default structure = ""
+
+##LOCATION VISIT TRACKING
+default emptylotvisit = False
+default foodlabvisit = False
+default gardenvisit = False
+default hivesvisit = False
+
+##END GAME STATE TRACKING
+default argument_attempts = 0
+default mayor_attempts = 0
+default ca_context = ""
+default ecaresponse = ""
+default mayorconvinced = False
+
+##Audio
+define useAudio = False
+init python:
+    def playAudio(dialogLine: str):
+        if useAudio:
+            if renpy.emscripten:
+                import emscripten
+                test = emscripten.run_script_int(f"window.playAzureAudio(\"{dialogLine}\", \"{ecaVoice}\", \"{azureKey}\", 100);")
+    def stopAudio():
+        if useAudio:
+            if renpy.emscripten:
+                import emscripten
+                test = emscripten.run_script_int(f"window.stopAzureAudio();")
+    def StartAudioRecord():
+        if renpy.emscripten:
+                import emscripten
+                test = emscripten.run_script_int(f"window.microphoneUtil.StartRecordingJS();")
+    def EndAudioRecord():
+        if renpy.emscripten:
+                import emscripten
+                test = emscripten.run_script_int(f"window.microphoneUtil.StopRecordingJS();")
+
+screen my_button_screen():
+    vbox:
+        spacing 20 
+        textbutton "Start Record":
+            action Function(StartAudioRecord)
+            xalign 0.5 
+        textbutton "End Record":
+            action Function(EndAudioRecord)
+            xalign 0.5 
+
+label start:
+
+    if useAudio: 
+        play music "JaracandaLoop.wav" volume 0.1
 
     # Show a background
     scene flowers muted
     with fade
+
+
+    show screen my_button_screen
 
     $ current_user = renpy.input("Please enter your player ID")
     
@@ -160,13 +207,15 @@
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
                 if ecasplit == True:
-
+                    $ playAudio(ecaresponse1)
                     t "[ecaresponse1]"
+                    $ playAudio(ecaresponse2)
                     t "[ecaresponse2]"
-
                 else:
-
+                    $ playAudio(ecaresponse)
                     t "[ecaresponse]"
+
+                $ stopAudio()
 
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
@@ -204,13 +253,16 @@
                         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
                         if ecasplit == True:
-
+                            $ playAudio(ecaresponse1)
                             t "[ecaresponse1]"
+                            $ playAudio(ecaresponse2)
                             t "[ecaresponse2]"
 
                         else:
-
+                            $ playAudio(ecaresponse)
                             t "[ecaresponse]"
+
+                        $ stopAudio()
 
                         $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
@@ -253,19 +305,21 @@
                         ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers your question!"
                 
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
-
+                
                 if ecasplit == True:
-
+                    $ playAudio(ecaresponse1)
                     t "[ecaresponse1]"
+                    $ playAudio(ecaresponse2)
                     t "[ecaresponse2]"
 
                 else:
-
+                    $ playAudio(ecaresponse)
                     t "[ecaresponse]"
 
+                $ stopAudio()
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
-
+                
                 t "Any more questions?"
                 menu:
                     "I have another question.":
@@ -292,12 +346,17 @@
 
                         if ecasplit == True:
 
+                            $ playAudio(ecaresponse1)
                             t "[ecaresponse1]"
+                            $ playAudio(ecaresponse2)
                             t "[ecaresponse2]"
 
                         else:
 
+                            $ playAudio(ecaresponse)
                             t "[ecaresponse]"
+
+                        $ stopAudio()
                         
                         $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
@@ -559,12 +618,16 @@
 
         if ecasplit == True:
 
+            $ playAudio(ecaresponse1)
             r "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             r "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             r "[ecaresponse]"
+            
+        $ stopAudio()
 
         $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
 
@@ -629,12 +692,18 @@
 
                 if ecasplit == True:
 
+                    $ playAudio(ecaresponse1)
                     r "[ecaresponse1]"
+                    
+                    $ playAudio(ecaresponse2)
                     r "[ecaresponse2]"
 
                 else:
 
+                    $ playAudio(ecaresponse)
                     r "[ecaresponse]"
+                
+                $ stopAudio()
 
                 jump foodknowledge_loop
             "How can we help everyone have access to healthy food?":
@@ -654,13 +723,16 @@
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
                 if ecasplit == True:
-
+                    $ playAudio(ecaresponse1)
                     r "[ecaresponse1]"
+                    $ playAudio(ecaresponse2)
                     r "[ecaresponse2]"
 
                 else:
-
+                    $ playAudio(ecaresponse)
                     r "[ecaresponse]"
+                
+                $ stopAudio()
 
                 jump foodknowledge_loop
             "I have another question.":
@@ -702,12 +774,16 @@
 
         if ecasplit == True:
 
+            $ playAudio(ecaresponse1)
             r "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             r "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             r "[ecaresponse]"
+
+        $ stopAudio()
 
         jump foodknowledge_loop
     
@@ -1096,13 +1172,16 @@
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
         if ecasplit == True:
-
+            $ playAudio(ecaresponse1)
             w "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             w "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             w "[ecaresponse]"
+
+        $ stopAudio()
 
         jump wes_choices
 
@@ -1155,14 +1234,17 @@
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
         if ecasplit == True:
-
+            $ playAudio(ecaresponse1)
             w "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             w "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             w "[ecaresponse]"
 
+        $ stopAudio()
+        
         w "Would you like to know anything else?"
 
         jump wes_questions
@@ -1238,13 +1320,16 @@
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
                 if ecasplit == True:
-
+                    $ playAudio(ecaresponse1)
                     n "[ecaresponse1]"
+                    $ playAudio(ecaresponse2)
                     n "[ecaresponse2]"
 
                 else:
-
+                    $ playAudio(ecaresponse)
                     n "[ecaresponse]"
+
+                $ stopAudio()
 
                 $ AddToSet(nadia_menu, "How do bees help with pollination?")
                 jump nadia_questions
@@ -1265,13 +1350,16 @@
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
                 if ecasplit == True:
-
+                    $ playAudio(ecaresponse1)
                     n "[ecaresponse1]"
+                    $ playAudio(ecaresponse2)
                     n "[ecaresponse2]"
 
                 else:
-
+                    $ playAudio(ecaresponse)
                     n "[ecaresponse]"
+
+                $ stopAudio()
 
                 $ AddToSet(nadia_menu, "How do plants get pollinated?")
                 jump nadia_questions
@@ -1311,13 +1399,16 @@
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
         if ecasplit == True:
-
+            $ playAudio(ecaresponse1)
             n "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             n "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             n "[ecaresponse]"
+
+        $ stopAudio()
 
         n "Do you have any other questions?"
         menu:
@@ -1838,13 +1929,16 @@
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
         if ecasplit == True:
-
+            $ playAudio(ecaresponse1)
             m "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             m "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             m "[ecaresponse]"
+
+        $ stopAudio()
 
         $ mayor_attempts = mayor_attempts + 1
 
@@ -1916,13 +2010,16 @@
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
         if ecasplit == True:
-
+            $ playAudio(ecaresponse1)
             el "[ecaresponse1]"
+            $ playAudio(ecaresponse2)
             el "[ecaresponse2]"
 
         else:
-
+            $ playAudio(ecaresponse)
             el "[ecaresponse]"
+
+        $ stopAudio()
 
         $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
 
