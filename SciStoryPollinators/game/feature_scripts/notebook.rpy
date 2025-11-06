@@ -619,6 +619,10 @@ screen notebook():
     modal True
     zorder 92
 
+    $ has_note_input = editing_argument or (edited_note_id is not None)
+    if has_note_input:
+        use voice_recording_toggle
+
     add "images/notebook_open.png" xpos 0.5 ypos 0.5 anchor (0.5, 0.5) zoom .8
 
     $ iw, ih = renpy.image_size("images/imagebutton_close.png")
@@ -1025,6 +1029,8 @@ screen argument_sharing(prompt):
 
     default user_argument = ""
     default argumentinput = ScreenVariableInputValue("user_argument")
+
+    use voice_recording_toggle
 
     frame:
         xpos 1.0
