@@ -38,8 +38,6 @@ default tag_list = []
 #GLOBAL GAME STATE VARIABLES
 default visited_list = []
 default spoken_list = []
-default notebook_argument = "Draft your argument here."
-default customnotecount = 0
 default startplace = ""
 default structure = ""
 
@@ -79,14 +77,22 @@ init python:
                 test = emscripten.run_script_int(f"window.microphoneUtil.StopRecordingJS();")
 
 screen my_button_screen():
+    $ recording_tooltip = None
+    if not renpy.emscripten:
+        $ recording_tooltip = "This feature isn't available on desktop."
+
     vbox:
         spacing 20 
         textbutton "Start Record":
             action Function(StartAudioRecord)
             xalign 0.5 
+            if recording_tooltip:
+                tooltip recording_tooltip
         textbutton "End Record":
             action Function(EndAudioRecord)
             xalign 0.5 
+            if recording_tooltip:
+                tooltip recording_tooltip
 
 label start:
 
