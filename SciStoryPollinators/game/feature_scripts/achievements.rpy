@@ -5,6 +5,13 @@ define config.developer = True
 # 'default' sets an initial value only if none exists yet.
 default persistent.achievements = {}
 
+init python:
+    def clear_all_achievements():
+        """Utility helper to wipe all achievement progress."""
+        persistent.achievements.clear()
+        renpy.save_persistent()
+        renpy.notify("All achievements cleared.")
+
 # This is the list of all achievements in the game.
 # Each achievement has a unique "key", a display "name", "desc" (description), and "icon" path.
 define achievement_list = [
@@ -327,7 +334,7 @@ screen achievements_screen():
         spacing 16
         text "Achievements" size 40 xalign 0.5 color "#ffffff" bold True
 
-        $ max_per_col = 8
+        $ max_per_col = 7
         $ total = len(achievement_list)
 
         if total <= max_per_col:
