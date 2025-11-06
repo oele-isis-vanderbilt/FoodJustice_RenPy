@@ -64,6 +64,12 @@ init python:
         else:
             renpy.show_screen("notebook")
 
+    def toggle_voice_recording():
+        global voice_recording_active
+        voice_recording_active = not voice_recording_active
+        status = "started" if voice_recording_active else "stopped"
+        renpy.notify("Voice recording {}".format(status))
+
     from renpy.display.transform import Transform
     from renpy.display.matrix import Matrix
 
