@@ -68,30 +68,30 @@ define achievement_list = [
         "desc": "Ask questions to everyone in the food lab.",
         "icon": "icons/icon_achieve_FOODLABCHAT.png"
     },
-    {
-        "key": "TULIP",
-        "name": "Blooming Friendship",
-        "desc": "Befriend Tulip.",
-        "icon": "icons/icon_achieve_TULIP.png"
-    },
-    {
-        "key": "NEGATIVE",
-        "name": "Reluctant Hero",
-        "desc": "You were hesitant to help Elliot and Tulip at first.",
-        "icon": "icons/icon_achieve_NEGATIVE.png"
-    },
-    {
-        "key": "POSITIVE",
-        "name": "Eager Beaver",
-        "desc": "You were eager to help Elliot and Tulip.",
-        "icon": "icons/icon_achieve_POSITIVE.png"
-    },
-    {
-        "key": "SHUTDOWN",
-        "name": "Talk to the Hand",
-        "desc": "You shut down Cyrus at every opportunity.",
-        "icon": "icons/icon_achieve_SHUTDOWN.png"
-    },
+    # {
+    #     "key": "TULIP",
+    #     "name": "Blooming Friendship",
+    #     "desc": "Befriend Tulip.",
+    #     "icon": "icons/icon_achieve_TULIP.png"
+    # },
+    # {
+    #     "key": "NEGATIVE",
+    #     "name": "Reluctant Hero",
+    #     "desc": "You were hesitant to help Elliot and Tulip at first.",
+    #     "icon": "icons/icon_achieve_NEGATIVE.png"
+    # },
+    # {
+    #     "key": "POSITIVE",
+    #     "name": "Eager Beaver",
+    #     "desc": "You were eager to help Elliot and Tulip.",
+    #     "icon": "icons/icon_achieve_POSITIVE.png"
+    # },
+    # {
+    #     "key": "SHUTDOWN",
+    #     "name": "Talk to the Hand",
+    #     "desc": "You shut down Cyrus at every opportunity.",
+    #     "icon": "icons/icon_achieve_SHUTDOWN.png"
+    # },
     {
         "key": "UNDECIDED",
         "name": "Second Try is the Charm",
@@ -99,19 +99,18 @@ define achievement_list = [
         "icon": "icons/icon_achieve_UNDECIDED.png"
     },
     {
-        "key": "GARDEN",
+        "key": "CONVINCEGARDEN",
         "name": "Seeds of Change",
         "desc": "Convince the mayor to build a garden.",
         "icon": "icons/icon_achieve_GARDEN.png"
     },
     {
-        "key": "PARKING",
+        "key": "CONVINCEPARKING",
         "name": "Concrete Jungle",
         "desc": "Convince the mayor to build a parking lot.",
         "icon": "icons/icon_achieve_PARKING.png"
     },
 ]
-
 
 # In script.rpy, you can unlock an achievement by calling:
 ## unlock_achievement("name_of_achievement", pause_time=10)
@@ -186,13 +185,37 @@ init python:
         spoken_by_name = {ch.get("name"): ch.get("spoken") for ch in directory if isinstance(ch, dict)}
         ensure_unlocked("GARDENCHAT", all(spoken_by_name.get(name) for name in required))
 
+    def achieve_foodlabchat():
+        required = {"Amara", "Riley"}
+        try:
+            directory = list(character_directory.values())
+        except Exception:
+            directory = character_directory
+        spoken_by_name = {ch.get("name"): ch.get("spoken") for ch in directory if isinstance(ch, dict)}
+        ensure_unlocked("FOODLABCHAT", all(spoken_by_name.get(name) for name in required))
+
+    def achieve_undecided():
+        attempts = getattr(renpy.store, "mayor_attempts", 0)
+        convinced = getattr(renpy.store, "mayorconvinced", False)
+        convinced_parking = getattr(renpy.store, "mayor_supports_parking", False)
+        ensure_unlocked("UNDECIDED", attempts >= 1 and not convinced and not convinced_parking)
+
+    def achieve_convincegarden():
+        ensure_unlocked("CONVINCEGARDEN", getattr(renpy.store, "mayorconvinced", False))
+
+    def achieve_convinceparking():
+        attempts = getattr(renpy.store, "mayor_attempts", 0)
+        convinced = getattr(renpy.store, "mayorconvinced", False)
+        convinced_parking = getattr(renpy.store, "mayor_supports_parking", None)
+        if convinced_parking is None:
+            convinced_parking = getattr(renpy.store, "mayor_final_decision", "") == "parking"
+        ensure_unlocked("CONVINCEPARKING", attempts >= 1 and not convinced and convinced_parking)
+
     def achieve_notes10():
         notes = getattr(renpy.store, "notebook", []) or []
         # Ignore any placeholder entries that might be injected from dev tools.
         saved_notes = [n for n in notes if isinstance(n, dict) and n.get("type") != "placeholder-note"]
         ensure_unlocked("NOTES10", len(saved_notes) >= 10)
-
-
 
 # ---------------------------------------------------------------------------
 # Popup shown when an achievement unlocks (bottom-right)
@@ -262,7 +285,6 @@ screen achievement_row(ach, width=600, height=70):
                         text ach["desc"] size 16 color "#bbb"
 
         # Semi-transparent veil over locked items
-
 
 # ---------------------------------------------------------------------------
 # Achievements menu screen
