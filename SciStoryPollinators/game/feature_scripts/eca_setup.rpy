@@ -4,7 +4,7 @@ init python:
     TIMEOUT = 15
 
     def agent_setup(ca_type, eca, llama_ca, character):
-        note_count = len(note_list)
+        note_count = len(notebook)
         speakers = ", ".join(spoken_list)
         visits = ", ".join(visited_list)
         narrator.add_history(kind="adv",who="Player:",what=eca)

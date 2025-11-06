@@ -95,37 +95,62 @@ style frame:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#say
 
-style pencil_button:
-    anchor (0.5, 0.5)
-    pos (0.18, 0.94)
-
 screen say(who, what):
     style_prefix "say"
 
     window:
-        id "window"
+        xfill True
+        yalign 1.0
+        xmargin 300
+        ymargin 20
+        background Frame("gui/nvl.png", 0, 0)
 
-        if who is not None:
+        left_padding 200 
+        right_padding 200
+        top_padding 20
+        bottom_padding 20
 
-            window:
-                id "namebox"
-                style "namebox"
-                text who id "who"
-        
-        text what id "what"
-  
-    imagebutton:
-        tooltip "Write this down"
-        idle "images/takenote.png"
-        hover "images/takenotedark.png"
-        action Function(note, what, who, " ")
-        style "pencil_button"
+        vbox:
+            spacing 10
+            xfill True
+            yalign 0.5
 
-    ## If there's a side image, display it above the text. Do not display on the
-    ## phone variant - there's no room.
-    if not renpy.variant("small"):
-        add SideImage() xalign 0.0 yalign 1.0
+            if who is not None:
+                text who id "who" style "label"
 
+            hbox:
+                spacing 16
+                yalign 0.5
+
+                if who is not None and notebook_unlocked:
+
+                    $ line_size = getattr(gui, "text_size", 28)
+                    $ target_h  = int(line_size * 2.4)
+                    $ iw, ih    = renpy.image_size("images/imagebutton_addnote.png")
+                    $ target_w  = int(iw * target_h / float(ih))
+
+                    $ addnote_btn = im.Scale("images/imagebutton_addnote.png", target_w, target_h)
+
+                    imagebutton:
+                        idle addnote_btn
+                        hover darken_hover(addnote_btn)
+                        action Function(new_note, what, who, [], "character-dialog")
+                        yalign 0.5
+
+                if what is not None:
+                    text what id "what" style "dialogue"
+
+
+style say_label:
+    properties gui.text_properties("name", accent=True)
+    bold True
+
+style say_dialogue:
+    properties gui.text_properties("dialogue")
+    # Remove these so the hbox can lay things out:
+    # xpos gui.dialogue_xpos
+    # xsize gui.dialogue_width
+    # ypos gui.dialogue_ypos
 
 ## Make the namebox available for styling through the Character object.
 init python:
@@ -147,30 +172,6 @@ style window:
     ysize gui.textbox_height
 
     background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
-
-style namebox:
-    xpos gui.name_xpos
-    xanchor gui.name_xalign
-    xsize gui.namebox_width
-    ypos gui.name_ypos
-    ysize gui.namebox_height
-
-    background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
-    padding gui.namebox_borders.padding
-
-style say_label:
-    properties gui.text_properties("name", accent=True)
-    xalign gui.name_xalign
-    yalign 0.5
-
-style say_dialogue:
-    properties gui.text_properties("dialogue")
-
-    xpos gui.dialogue_xpos
-    xsize gui.dialogue_width
-    ypos gui.dialogue_ypos
-
-    adjust_spacing False
 
 ## Input screen ################################################################
 ##
@@ -268,8 +269,7 @@ screen quick_menu():
             textbutton _("Q.Load") action QuickLoad()
             textbutton _("Prefs") action ShowMenu('preferences')
             textbutton _("Dev") action Function(toggle_dev_screen)   # <-- Add this line
-
-
+            textbutton _("QA Panel") action Call("toggle_qa_panel")
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.
@@ -311,16 +311,11 @@ screen navigation():
 
             textbutton _("Start") action Start()
             
-            textbutton "View Achievements" action ShowMenu("achievements_screen")
-
-
         else:
 
             textbutton _("History") action ShowMenu("history")
 
             textbutton _("Save") action ShowMenu("save")
-
-            textbutton "View Achievements" action ShowMenu("achievements_screen")
 
         textbutton _("Load") action ShowMenu("load")
 
@@ -1635,372 +1630,7 @@ style slider_slider:
 #### Custom screens for SciStory ################################
 ##  
 ##  Screens to support learning!
-##  Notebook to collect evidence, idea board, etc.
-##
-#################################################################
 
-#### Notebook ######
-
-style note_text:
-    anchor (0.0,0.0)
-    pos (0.325,0.12)
-
-style notebook_title:
-    anchor (0.5,0.0)
-    pos (0.5,0.05)
-
-style close_button:
-    anchor (0.5, 0.0)
-    pos (0.68,0.03)
-
-screen notebook():
-    modal True
-    add "images/notebook page.png"
-    zorder 92
-
-    imagebutton:
-        idle "images/close button.png"
-        hover "images/close button dark.png"
-        action Hide(screen="notebook") 
-        style "close_button" 
-    
-    text "Evidence Notebook" style "notebook_title"
-
-    viewport:
-        anchor (0.0,0.0)
-        pos (0.325,0.12)
-        xsize 740
-        ysize 600
-        scrollbars "vertical"
-        mousewheel True
-        vscrollbar_unscrollable "hide"
-        has vbox style "note_text"
-
-        for s, n, t in zip(source_list,note_list,tag_list):
-            if s is None:
-                $ s = ""
-            text "Source: " + s + "   Tag: " + t:
-                size 15
-            text n id "note":
-                size 22
-            hbox:
-                imagebutton:
-                    tooltip "Delete note"
-                    idle "images/delete note.png"
-                    hover "images/delete note dark.png"
-                    action Confirm("Are you sure you want to delete this note?", yes=Function(deletenote, n))
-                imagebutton:
-                    tooltip "Edit note"
-                    idle "images/edit pencil.png"
-                    hover "images/edit pencil dark.png"
-                    action Show("note_edit", None, n, s, t)
-            text "\n":
-                size 8
-        
-        imagebutton:
-            tooltip "New note"
-            idle "images/takenote.png"
-            hover "images/takenotedark.png"
-            action Show("noteentry")
-            xpos -40
-
-    viewport:
-        anchor (0.0,0.0)
-        pos (0.325,0.7)
-        xsize 740
-        ysize 200
-        scrollbars "vertical"
-        mousewheel True
-        vscrollbar_unscrollable "hide"
-        has vbox style "note_text"
-        hbox:
-            text "Draft Argument for Mayor":
-                size 30
-            imagebutton:
-                tooltip "Edit draft argument"
-                idle "images/edit pencil.png"
-                hover "images/edit pencil dark.png"
-                action Show("argument_edit", None, notebook_argument)
-            text "  ":
-                size 8
-            imagebutton:
-                tooltip "Copy argument"
-                idle "images/copy.png"
-                hover "images/copy dark.png"
-                action Function(copy, notebook_argument)
-                # action CopyToClipboard(notebook_argument)
-        text notebook_argument:
-            size 22
-
-    $ tooltip = GetTooltip()
-    if tooltip:
-        nearrect:
-            focus "tooltip"
-
-            frame:
-                xalign 0.5
-                text tooltip:
-                    size 15
-
-style note_input:
-    size 25
-
-##### Shows key bindings for typing in the input box ######
-
-screen keyboard_shortcuts():
-    modal False
-    zorder 94
-    add "images/keyboard shortcuts.png":
-        pos (0.0, 0.15)
-
-###### Custom notetaking for player to add notes to notebook #####
-
-screen noteentry():
-    modal True
-    zorder 93
-    add "images/note background.png"
-
-    if customnotecount == 0:
-        default customnote = "Type ideas here"
-        default customsource = "What's the source?"
-        default customtag = "What is this evidence about?"
-        add "images/keyboard shortcuts.png":
-            pos (0.0, 0.15)
-    else:
-        default customnote = ""
-        default customsource = ""
-        default customtag = ""
-        imagebutton:
-            pos (0.30, 0.17)
-            tooltip "Show/Hide Shortcuts"
-            idle "images/note clip.png"
-            hover "images/note clip.png"
-            action If(renpy.get_screen("keyboard_shortcuts"), true=Hide("keyboard_shortcuts"), false=Show("keyboard_shortcuts"))
-
-    default noteinput = ScreenVariableInputValue("customnote")
-    default sourceinput = ScreenVariableInputValue("customsource")
-    default taginput = ScreenVariableInputValue("customtag")
-
-    viewport:
-        anchor (0.0,0.0)
-        pos (0.325,0.20)
-        xsize 720
-        ysize 400
-        scrollbars "vertical"
-        vscrollbar_unscrollable "hide"
-        mousewheel True
-        has vbox
-        text "My note: ":
-            size 20
-        button:
-            action noteinput.Toggle()
-            xsize 720
-            input: 
-                value noteinput
-                copypaste True
-                multiline True
-                style "note_input"
-        text "\n" + "I learned this from: ":
-            size 20
-        button:
-            action sourceinput.Toggle()
-            xsize 720
-            input: 
-                value sourceinput
-                copypaste True
-                multiline True
-                style "note_input"
-        text "\n" + "Tag/Label: ":
-            size 20
-        button:
-            action taginput.Toggle()
-            xsize 720
-            input: 
-                value taginput
-                copypaste True
-                multiline True
-                style "note_input"
-    
-    textbutton "Save Note":
-        pos (0.35, 0.6)
-        action (Function(note, customnote, customsource, customtag), IncrementVariable("customnotecount"), Hide("noteentry"), Hide("keyboard_shortcuts"))
-    textbutton "Cancel":
-        pos (0.55, 0.6)
-        action (Hide("noteentry"), Hide("keyboard_shortcuts"))  
-
-    $ tooltip = GetTooltip()
-    if tooltip:
-        nearrect:
-            focus "tooltip"
-
-            frame:
-                xalign 0.5
-                text tooltip:
-                    size 15  
-
-##### Note editing for existing notes in the player's notebook ######
-
-screen note_edit(n, s, t):
-    default newnote = n
-    default newsource = s
-    default newtag = t
-
-    modal True
-    zorder 93
-    add "images/note background.png"
-
-    imagebutton:
-        pos (0.30, 0.17)
-        tooltip "Show/Hide Shortcuts"
-        idle "images/note clip.png"
-        hover "images/note clip.png"
-        action If(renpy.get_screen("keyboard_shortcuts"), true=Hide("keyboard_shortcuts"), false=Show("keyboard_shortcuts"))
-
-    default noteinput = ScreenVariableInputValue("newnote")
-    default sourceinput = ScreenVariableInputValue("newsource")
-    default taginput = ScreenVariableInputValue("newtag")
-
-    viewport:
-        anchor (0.0,0.0)
-        pos (0.325,0.20)
-        xsize 720
-        ysize 400
-        scrollbars "vertical"
-        vscrollbar_unscrollable "hide"
-        mousewheel True
-        has vbox
-        text "Note: ":
-            size 20
-        button:
-            action noteinput.Toggle()
-            xsize 720
-            input: 
-                value noteinput
-                copypaste True
-                multiline True
-                style "note_input"
-        text "\n" + "Source: ":
-            size 20
-        button:
-            action sourceinput.Toggle()
-            xsize 720
-            input: 
-                value sourceinput
-                copypaste True
-                multiline True
-                style "note_input"
-        text "\n" + "Tag: ":
-            size 20
-        button:
-            action taginput.Toggle()
-            xsize 720
-            input: 
-                value taginput
-                copypaste True
-                multiline True
-                style "note_input"
-    
-    textbutton "Save Revised Note":
-        pos (0.35, 0.6)
-        action (Function(editnote, n, newnote, newsource, newtag), Hide("note_edit"), Hide("keyboard_shortcuts"))
-    textbutton "Cancel":
-        pos (0.55, 0.6)
-        action (Hide("note_edit"), Hide("keyboard_shortcuts"))  
-
-    $ tooltip = GetTooltip()
-    if tooltip:
-        nearrect:
-            focus "tooltip"
-
-            frame:
-                xalign 0.5
-                text tooltip:
-                    size 15  
-
-### Argument Revision in Notebook ###
-
-screen argument_edit(currentargument):
-    modal True
-    zorder 93
-    add "images/note background.png"
-
-    default newargument = currentargument
-    default argumentinput = ScreenVariableInputValue("newargument")
-
-    imagebutton:
-        pos (0.30, 0.17)
-        tooltip "Show/Hide Shortcuts"
-        idle "images/note clip.png"
-        hover "images/note clip.png"
-        action If(renpy.get_screen("keyboard_shortcuts"), true=Hide("keyboard_shortcuts"), false=Show("keyboard_shortcuts"))
-
-    viewport:
-        anchor (0.0,0.0)
-        pos (0.325,0.20)
-        xsize 720
-        ysize 400
-        scrollbars "vertical"
-        vscrollbar_unscrollable "hide"
-        mousewheel True
-        has vbox
-        text "Draft Argument: ":
-            size 20
-        input value argumentinput color "#037426" xmaximum 720 copypaste True multiline True
-    
-    textbutton "Save Revised Note":
-        pos (0.35, 0.6)
-        action (Function(editdraft, newargument), Hide("argument_edit"), Hide("keyboard_shortcuts"))
-    textbutton "Cancel":
-        pos (0.55, 0.6)
-        action (Hide("argument_edit"), Hide("keyboard_shortcuts"))  
-
-    $ tooltip = GetTooltip()
-    if tooltip:
-        nearrect:
-            focus "tooltip"
-
-            frame:
-                xalign 0.5
-                text tooltip:
-                    size 15  
-
-#### Invisible Character Selection Screen ####
-
-screen characterselect3(c_left, c_center, c_right):
-    zorder 80
-
-    button:
-        xysize (600, 900)
-        anchor (0.5, 0.0)
-        pos (0.2, 0.25)
-        action Jump(c_left + "_chatting")
-
-    button:
-        xysize (600, 900)
-        anchor (0.5, 0.0)
-        pos (0.5, 0.25)
-        action Jump(c_center + "_chatting")
-
-    button:
-        xysize (600, 900)
-        anchor (0.5, 0.0)
-        pos (0.8, 0.25)
-        action Jump(c_right + "_chatting")
-
-screen characterselect2(c_left, c_right):
-    zorder 80
-
-    button:
-        xysize (600, 900)
-        anchor (0.5, 0.0)
-        pos (0.2, 0.25)
-        action Jump(c_left + "_chatting")
-
-    button:
-        xysize (600, 900)
-        anchor (0.5, 0.0)
-        pos (0.8, 0.25)
-        action Jump(c_right + "_chatting")
 
 #### Travel and Notebook access - Always available buttons ####
 style side_button:
@@ -2009,21 +1639,25 @@ style side_button:
 
 screen learningbuttons():
     zorder 90
+    $ achieve_btn = Transform("images/imagebutton_achievements.png",  fit="contain", xsize=80)
+    $ bee_btn = Transform("images/imagebutton_bee.png",  fit="contain", xsize=80)
+    $ notebook_btn = Transform("images/imagebutton_notebook.png",  fit="contain", xsize=80)
+    $ map_btn = Transform("images/imagebutton_map.png",  fit="contain", xsize=80)
 
     vbox style "side_button":
         imagebutton:
             tooltip "Travel"
-            idle Transform("icons/button_travel_light.png", fit="contain", xsize=80)
-            hover Transform("icons/button_travel_dark.png", fit="contain", xsize=80)
-            action Jump("travelmenu")
+            idle map_btn
+            hover darken_hover(map_btn)
+            action (Function(retaindata), Show("map_popup"))
 
         text "\n":
             size 8
 
         imagebutton:
             tooltip "Notebook"
-            idle Transform("icons/button_notebook_light.png", fit="contain", xsize=80)
-            hover Transform("icons/button_notebook_dark.png", fit="contain", xsize=80)
+            idle notebook_btn
+            hover darken_hover(notebook_btn)
             action (Function(retaindata), Show("notebook"))
 
         text "\n":
@@ -2031,8 +1665,8 @@ screen learningbuttons():
 
         imagebutton:
             tooltip "Ask Tulip"
-            idle Transform("icons/button_bee_light.png", fit="contain", xsize=80)
-            hover Transform("icons/button_bee_dark.png", fit="contain", xsize=80)
+            idle bee_btn
+            hover darken_hover(bee_btn)
             action Call("tulipchat", from_current = True)
 
         text "\n":
@@ -2040,8 +1674,8 @@ screen learningbuttons():
 
         imagebutton:
             tooltip "Achievements"
-            idle Transform("icons/button_achieve_light.png", fit="contain", xsize=80)
-            hover Transform("icons/button_achieve_dark.png", fit="contain", xsize=80)
+            idle achieve_btn
+            hover darken_hover(achieve_btn)
             action (Function(retaindata), Show("achievements_screen"))
 
     $ tooltip = GetTooltip()
