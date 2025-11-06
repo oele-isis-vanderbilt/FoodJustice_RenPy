@@ -68,30 +68,30 @@ define achievement_list = [
         "desc": "Ask questions to everyone in the food lab.",
         "icon": "icons/icon_achieve_FOODLABCHAT.png"
     },
-    # {
-    #     "key": "TULIP",
-    #     "name": "Blooming Friendship",
-    #     "desc": "Befriend Tulip.",
-    #     "icon": "icons/icon_achieve_TULIP.png"
-    # },
-    # {
-    #     "key": "NEGATIVE",
-    #     "name": "Reluctant Hero",
-    #     "desc": "You were hesitant to help Elliot and Tulip at first.",
-    #     "icon": "icons/icon_achieve_NEGATIVE.png"
-    # },
-    # {
-    #     "key": "POSITIVE",
-    #     "name": "Eager Beaver",
-    #     "desc": "You were eager to help Elliot and Tulip.",
-    #     "icon": "icons/icon_achieve_POSITIVE.png"
-    # },
-    # {
-    #     "key": "SHUTDOWN",
-    #     "name": "Talk to the Hand",
-    #     "desc": "You shut down Cyrus at every opportunity.",
-    #     "icon": "icons/icon_achieve_SHUTDOWN.png"
-    # },
+    {
+        "key": "TULIP",
+        "name": "Blooming Friendship",
+        "desc": "Befriend Tulip.",
+        "icon": "icons/icon_achieve_TULIP.png"
+    },
+    {
+        "key": "NEGATIVE",
+        "name": "Reluctant Hero",
+        "desc": "You were hesitant to help Elliot and Tulip at first.",
+        "icon": "icons/icon_achieve_NEGATIVE.png"
+    },
+    {
+        "key": "POSITIVE",
+        "name": "Eager Beaver",
+        "desc": "You were eager to help Elliot and Tulip.",
+        "icon": "icons/icon_achieve_POSITIVE.png"
+    },
+    {
+        "key": "SHUTDOWN",
+        "name": "Talk to the Hand",
+        "desc": "You shut down Cyrus at every opportunity.",
+        "icon": "icons/icon_achieve_SHUTDOWN.png"
+    },
     {
         "key": "UNDECIDED",
         "name": "Second Try is the Charm",
@@ -168,6 +168,30 @@ init python:
         # Unlock for 3 revisions
         ensure_unlocked("REVISION5", edits >= 3)
 
+    def achieve_feedback():
+        ensure_unlocked("FEEDBACK")
+
+    def achieve_notes5():
+        notes = getattr(renpy.store, "notebook", []) or []
+        # Ignore any placeholder entries that might be injected from dev tools.
+        saved_notes = [n for n in notes if isinstance(n, dict) and n.get("type") != "placeholder-note"]
+        ensure_unlocked("NOTES5", len(saved_notes) >= 5)
+
+    def achieve_gardenchat():
+        required = {"Victor", "Wes", "Nadia", "Alex", "Cora"}
+        try:
+            directory = list(character_directory.values())
+        except Exception:
+            directory = character_directory
+        spoken_by_name = {ch.get("name"): ch.get("spoken") for ch in directory if isinstance(ch, dict)}
+        ensure_unlocked("GARDENCHAT", all(spoken_by_name.get(name) for name in required))
+
+    def achieve_notes10():
+        notes = getattr(renpy.store, "notebook", []) or []
+        # Ignore any placeholder entries that might be injected from dev tools.
+        saved_notes = [n for n in notes if isinstance(n, dict) and n.get("type") != "placeholder-note"]
+        ensure_unlocked("NOTES10", len(saved_notes) >= 10)
+
 
 
 # ---------------------------------------------------------------------------
@@ -183,6 +207,7 @@ screen achievement_popup(key):
             xalign 0.98
             yalign 0.98
             padding (24, 18)
+            background Solid("#333333E6")
             xmaximum 420
             yminimum 90
 
