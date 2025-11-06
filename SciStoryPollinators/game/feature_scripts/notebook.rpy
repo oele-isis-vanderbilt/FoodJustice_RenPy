@@ -3,7 +3,312 @@
 # GLOBAL NOTEBOOK Variables 
 default notebook = []
 default argument_history = []
-default tagLibrary = ["bees", "pollination", "food", "garden", "lab", "family", "kids", "money", "shopping", "cars", "parking lot", "community"]
+
+default tagLibrary = [
+    "access to food",
+    "health / nutrition",
+    "environmental factors",
+    "community action",
+    "economic factors",
+    "cultural factors",
+    "sustainability",
+    "pollinators",
+    "equity / fairness"
+]
+
+default tagBuckets = {
+    "access to food": [
+        "grocery",
+        "groceries",
+        "store",
+        "stores",
+        "supermarket",
+        "market",
+        "markets",
+        "farmers market",
+        "food pantry",
+        "pantry",
+        "access",
+        "available",
+        "availability",
+        "affordable",
+        "affordability",
+        "cost",
+        "costs",
+        "expensive",
+        "price",
+        "prices",
+        "fresh food",
+        "fresh produce",
+        "healthy food",
+        "local food",
+        "local produce",
+        "far away",
+        "no place to buy",
+        "food desert",
+        "transportation",
+        "delivery",
+        "truck",
+        "ship"
+    ],
+
+    "health / nutrition": [
+        "healthy",
+        "healthier",
+        "health",
+        "nutrition",
+        "nutritious",
+        "nutrients",
+        "vitamin",
+        "vitamins",
+        "sugar",
+        "sugars",
+        "salt",
+        "fats",
+        "fat",
+        "protein",
+        "proteins",
+        "calories",
+        "balanced diet",
+        "diet",
+        "junk food",
+        "fast food",
+        "fresh vegetables",
+        "fruits",
+        "veggies",
+        "eat",
+        "eating",
+        "eats",
+        "eaten",
+        "meal",
+        "meals",
+        "energy",
+        "tired",
+        "sick",
+        "disease",
+        "illness",
+        "wellness",
+        "exercise"
+    ],
+
+    "environmental factors": [
+        "environment",
+        "environmental",
+        "ecosystem",
+        "soil",
+        "dirt",
+        "ground",
+        "water",
+        "rainfall",
+        "rainwater",
+        "sunlight",
+        "compost",
+        "composting",
+        "fertilizer",
+        "pollution",
+        "polluted",
+        "trash",
+        "waste",
+        "recycling",
+        "recycle",
+        "reused",
+        "reuse",
+        "nature",
+        "natural",
+        "plants growing",
+        "growing",
+        "grow",
+        "grows",
+        "greenhouse",
+        "clean air",
+        "fresh air"
+    ],
+
+    "community action": [
+        "together",
+        "teamwork",
+        "helping",
+        "help",
+        "helped",
+        "volunteer",
+        "volunteering",
+        "local project",
+        "project",
+        "projects",
+        "group",
+        "working together",
+        "cooperation",
+        "join",
+        "joining",
+        "garden",
+        "community garden"
+    ],
+
+    "economic factors": [
+        "cost",
+        "costs",
+        "price",
+        "prices",
+        "budget",
+        "budgeting",
+        "money",
+        "dollar",
+        "dollars",
+        "funding",
+        "funded",
+        "fundraiser",
+        "donation",
+        "donate",
+        "business",
+        "businesses",
+        "company",
+        "companies",
+        "job",
+        "jobs",
+        "employment",
+        "career",
+        "work",
+        "working",
+        "profit",
+        "sell",
+        "selling",
+        "sales",
+        "buying",
+        "affordable",
+        "expensive",
+        "income",
+        "economy",
+        "economic",
+        "market",
+        "markets"
+    ],
+
+    "cultural factors": [
+        "culture",
+        "cultures",
+        "cultural",
+        "tradition",
+        "traditions",
+        "heritage",
+        "recipe",
+        "recipes",
+        "cook",
+        "cooks",
+        "cooking",
+        "cooked",
+        "cuisine",
+        "flavor",
+        "flavors",
+        "spices",
+        "food culture",
+        "family meal",
+        "family meals",
+        "grandma",
+        "grandfather",
+        "grandparent",
+        "parents",
+        "mom",
+        "dad",
+        "family",
+        "families",
+        "household",
+        "together",
+        "dinner",
+        "celebration"
+    ],
+
+    "sustainability": [
+        "sustainability",
+        "sustainable",
+        "conserve",
+        "conservation",
+        "renewable",
+        "renew",
+        "recycle",
+        "recycling",
+        "reuse",
+        "reused",
+        "reducing waste",
+        "reduce",
+        "reduced",
+        "preserving",
+        "preservation",
+        "protect",
+        "protecting",
+        "eco-friendly",
+        "green",
+        "compost",
+        "composting",
+        "earth",
+        "planet",
+        "resources",
+        "natural resources",
+        "save the earth",
+        "take care of planet"
+    ],
+
+    "pollinators": [
+        "bee",
+        "bees",
+        "beehive",
+        "hives",
+        "honey",
+        "honeybee",
+        "honeybees",
+        "pollinate",
+        "pollinates",
+        "pollination",
+        "pollinator",
+        "pollinators",
+        "nectar",
+        "pollen",
+        "insect",
+        "insects",
+        "butterfly",
+        "butterflies",
+        "bug",
+        "bugs",
+        "flower",
+        "flowers",
+        "crops",
+        "fruit",
+        "fruits",
+        "vegetable",
+        "vegetables",
+        "growing food"
+    ],
+
+    "equity / fairness": [
+        "justice",
+        "fairness",
+        "fair",
+        "unfair",
+        "equal",
+        "equality",
+        "equity",
+        "deserve",
+        "deserving",
+        "everyone",
+        "everybody",
+        "all people",
+        "poor",
+        "poverty",
+        "low-income",
+        "rich",
+        "wealth",
+        "wealthy",
+        "access",
+        "opportunity",
+        "opportunities",
+        "community",
+        "helping others",
+        "help others",
+        "together",
+        "people",
+        "neighborhood"
+    ]
+}
+
 
 default note_id_counter = 0
 default edited_note_id = None
@@ -19,6 +324,7 @@ default editing_argument = False
 
 default notebook_argument = "Draft your argument here."
 default last_notebook_argument = "Draft your argument here."
+default auto_tag_user_notes = True
 
 # default user_argument = ""
 
@@ -26,6 +332,7 @@ init python:
     import datetime
     from typing import Dict, Any, Optional
     import os
+    import re
     import pygame.scrap
     from renpy import store
     
@@ -46,6 +353,83 @@ init python:
                 cleaned.append(tag_text)
         return cleaned
 
+    def auto_character_tags(content, existing_tags=None):
+        """Derive notebook tags from character note content."""
+        library = list(getattr(store, "tagLibrary", []))
+        bucket_map = dict(getattr(store, "tagBuckets", {}))
+        bucket_keys = set(bucket_map.keys())
+        synonym_to_bucket = {}
+
+        for bucket, keywords in bucket_map.items():
+            if not isinstance(keywords, (list, tuple)):
+                continue
+            for keyword in keywords:
+                keyword_text = str(keyword).strip()
+                if not keyword_text:
+                    continue
+                synonym_to_bucket.setdefault(keyword_text.lower(), bucket)
+            synonym_to_bucket.setdefault(str(bucket).strip().lower(), bucket)
+
+        def add_tag(tag_list, seen_set, tag_value):
+            tag_text = str(tag_value).strip()
+            if not tag_text:
+                return
+            key = tag_text.lower()
+            if key not in seen_set:
+                tag_list.append(tag_text)
+                seen_set.add(key)
+
+        tags = []
+        seen = set()
+
+        existing_iterable = normalize_tags(existing_tags)
+        for original_tag in existing_iterable:
+            mapped_bucket = synonym_to_bucket.get(str(original_tag).strip().lower())
+            if mapped_bucket:
+                add_tag(tags, seen, mapped_bucket)
+            else:
+                add_tag(tags, seen, original_tag)
+
+        if not isinstance(content, str):
+            return tags
+
+        text = re.sub(r"[\[\]]", " ", content)
+
+        def matches(keyword):
+            pattern = r"\b{}\b".format(re.escape(keyword))
+            return re.search(pattern, text, flags=re.IGNORECASE)
+
+        for bucket, keywords in bucket_map.items():
+            if not isinstance(keywords, (list, tuple)):
+                continue
+            for keyword in keywords:
+                keyword_text = str(keyword).strip()
+                if keyword_text and matches(keyword_text):
+                    add_tag(tags, seen, bucket)
+                    break
+
+        for tag_name in library:
+            if tag_name in bucket_keys:
+                continue
+            if matches(tag_name):
+                add_tag(tags, seen, tag_name)
+
+        return tags
+
+    def refresh_character_note_tags():
+        """Ensure all character notes reflect current tag matches."""
+        global notebook
+        for note in notebook:
+            if note.get("type") == "character-dialog":
+                current_tags = normalize_tags(note.get("tags", []))
+                note["tags"] = auto_character_tags(note.get("content", ""), current_tags)
+
+    def toggle_auto_tag_user_notes():
+        current = getattr(store, "auto_tag_user_notes", True)
+        new_value = not current
+        store.auto_tag_user_notes = new_value
+        renpy.notify("Auto-tag user notes: {}".format("On" if new_value else "Off"))
+
     def new_note(content, speaker, tag, note_type):
         global notebook, note_id_counter, edited_note_id
         tags_list = normalize_tags(tag)
@@ -57,6 +441,9 @@ init python:
             if existing:
                 renpy.notify("Note Already Saved")
                 return existing["id"]
+            tags_list = auto_character_tags(content, tags_list)
+        elif note_type == "user-written" and getattr(store, "auto_tag_user_notes", True):
+            tags_list = auto_character_tags(content, tags_list)
 
         note_id = note_id_counter
         notebook.append({
@@ -78,6 +465,13 @@ init python:
 
         note_id_counter += 1
         renpy.notify("Note Taken!")
+
+        if note_type == "character-dialog":
+            refresh_character_note_tags()
+            for n in notebook:
+                if n["id"] == note_id:
+                    tags_list = n.get("tags", tags_list)
+                    break
 
         log_http(current_user, action="PlayerTookNote", view=current_label, payload={
             "note": content,
@@ -117,10 +511,12 @@ init python:
     #         )
     def add_tag(tag):
         # add to library if new
-        if tag.strip() not in tagLibrary:
-            tagLibrary.append(tag)
+        new_tag = str(tag).strip()
+        if new_tag and new_tag not in tagLibrary:
+            tagLibrary.append(new_tag)
+            refresh_character_note_tags()
         
-        narrator.add_history(kind="adv", who="You created a new tag: ", what=tag)
+        narrator.add_history(kind="adv", who="You created a new tag: ", what=new_tag or tag)
     
     def save_note(note_id, newnote, newsource, newtags):
         global notebook
@@ -129,6 +525,14 @@ init python:
             if n["id"] == note_id:
                 n["content"] = newnote
                 n["source"] = newsource
+                note_type = n.get("type")
+                should_auto_tag = False
+                if note_type == "character-dialog":
+                    should_auto_tag = True
+                elif note_type == "user-written" and getattr(store, "auto_tag_user_notes", True):
+                    should_auto_tag = True
+                if should_auto_tag:
+                    updated_tags = auto_character_tags(newnote, updated_tags)
                 n["tags"] = updated_tags
                 renpy.notify("Note Revised")
                 log_http(
@@ -143,20 +547,44 @@ init python:
                 renpy.block_rollback()
                 break
 
+    def validate_user_note_inputs(note_text, note_source, tag_values):
+        """Check minimum requirements before saving a user-written note."""
+        words = [w for w in re.findall(r"[A-Za-z0-9']+", note_text or "") if w]
+        note_text_trim = (note_text or "").strip()
+        source_trim = (note_source or "").strip()
+        tag_list = normalize_tags(tag_values)
+
+        template_note = (getattr(store, "new_note_text_template", "") or "").strip()
+        template_source = (getattr(store, "new_note_source_template", "") or "").strip()
+
+        if len(words) < 4 or (template_note and note_text_trim.lower() == template_note.lower()):
+            return False, "Your note needs at least four words before it can be saved."
+
+        if not source_trim or (template_source and source_trim.lower() == template_source.lower()):
+            return False, "Add a source so others know where this note came from."
+
+        if not tag_list:
+            return False, "Pick at least one tag to help organize this note."
+
+        return True, None
+
     def commit_note(note_id, newnote, newsource, newtags):
         tags_list = normalize_tags(newtags)
+
         if note_id == NEW_NOTE_ID:
-            newnote_trim = newnote.strip()
-            newsource_trim = newsource.strip()
-            template_note = store.new_note_text_template.strip()
-            template_source = store.new_note_source_template.strip()
-            if (not newnote_trim and not newsource_trim and not tags_list) or (
-                newnote_trim == template_note and newsource_trim == template_source and not tags_list
-            ):
+            is_valid, message = validate_user_note_inputs(newnote, newsource, tags_list)
+            if not is_valid:
+                renpy.notify(message)
                 return
             new_note(newnote, newsource, tags_list, "user-written")
             renpy.block_rollback()
         else:
+            note = next((n for n in notebook if n["id"] == note_id), None)
+            if note and note.get("type") == "user-written":
+                is_valid, message = validate_user_note_inputs(newnote, newsource, tags_list)
+                if not is_valid:
+                    renpy.notify(message)
+                    return
             save_note(note_id, newnote, newsource, tags_list)
             renpy.block_rollback()
     
@@ -186,6 +614,7 @@ screen notebook():
     default edit_note_text = ""
     default edit_note_source = ""
     default edit_note_tags = ""
+    default filter_tag = None
 
     modal True
     zorder 92
@@ -212,205 +641,242 @@ screen notebook():
         # convert pixel heights to relative (so math matches your % sizes)
         $ scr_h = float(config.screen_height)
         $ btn_h_px = 95
-        $ gap_px   = 10
         $ btn_h = btn_h_px / scr_h
-        $ gap   = gap_px   / scr_h
 
         $ top_y = vp_center_y - vp_h/2.0
 
         # ===== STICKY ADD BUTTON (non-scrolling, on top) =====
         text "Edited Note ID: [edited_note_id]"
         $ renpy.log("Notebook length: {}".format(len(notebook)))
-
-        button:
+        $ all_tags = sorted({tag for note in notebook for tag in note.get("tags", []) if tag})
+        if filter_tag and filter_tag not in all_tags:
+            $ filter_tag = None
+        
+        ## LEFT NOTE SIDE
+        frame:
             anchor (0.5, 0.0)
             pos (vp_center_x, top_y)
             xsize vp_w
-            ysize btn_h
-            background Solid("#dddddd80")
-            hover_background Solid("#cccccc")
-            padding (12, 10)
+            ysize vp_h
+            background None
+            padding (0, 0)
+            has vbox
+            spacing 12
 
-            action [
-                SetVariable("edited_note_id", NEW_NOTE_ID),
-                SetScreenVariable("edit_note_text", new_note_text_template),
-                SetScreenVariable("edit_note_source", new_note_source_template),
-                SetScreenVariable("edit_note_tags", ""),
-            ]
+            ##FILTER FRAME
+            if all_tags:
+                frame style "filter_frame":
+                    has hbox
+                    spacing 6
+                    box_wrap True
+                    box_wrap_spacing 8
+
+                    text "Filter tags:" style "filter_label"
+
+                    $ all_selected = filter_tag is None
+                    textbutton "All":
+                        style all_selected and "selected_tag_button" or "tag_button"
+                        action SetScreenVariable("filter_tag", None)
+
+                    for tag_name in all_tags:
+                        $ selected = filter_tag == tag_name
+                        textbutton tag_name:
+                            style selected and "selected_tag_button" or "tag_button"
+                            action SetScreenVariable("filter_tag", None if selected else tag_name)
             
-            vbox:
-                yalign 0.5
-                hbox:
+            ##ADD NEW NOTE
+            button:
+                xfill True
+                ysize btn_h
+                background Solid("#d9b9f66c")
+                hover_background Solid("#b48ed787")
+                padding (12, 20)
+
+                action [
+                    SetVariable("edited_note_id", NEW_NOTE_ID),
+                    SetScreenVariable("edit_note_text", new_note_text_template),
+                    SetScreenVariable("edit_note_source", new_note_source_template),
+                    SetScreenVariable("edit_note_tags", ""),
+                ]
+                
+                vbox:
                     yalign 0.5
-                    spacing 20
-                    fixed:
-                        xysize (75, 75)
-                        add Transform("icons/button_add.png", xysize=(40, 40), xalign=0.5, yalign=0.5)
-                    text "Add a Note":
-                        style "add_note_text"
+                    hbox:
+                        yalign 0.5
+                        spacing 20
+                        fixed:
+                            xysize (75, 75)
+                            add Transform("icons/button_add.png", xysize=(40, 40), xalign=0.5, yalign=0.5)
+                        text "Add a Note":
+                            style "add_note_text"
+            
+            ##LIST OF ALL NOTES
+            viewport:
+                xfill True
+                yfill True
+                scrollbars "vertical"
+                mousewheel True
+                vscrollbar_unscrollable "hide"
+                draggable True
+                pagekeys True
+                has vbox style "note_text"
+                spacing 12
 
-        # ============ SCROLLABLE LIST ============
-        viewport:
-            anchor (0.5, 0.0)
-            pos (vp_center_x, top_y + btn_h + gap)   # BELOW the button
-            xsize vp_w
-            ysize vp_h - (btn_h + gap)               # shorter by button+gap
-            scrollbars "vertical"
-            mousewheel True
-            vscrollbar_unscrollable "hide"
-            has vbox style "note_text"
+                $ notes_to_display = list(reversed(notebook))
+                if edited_note_id == NEW_NOTE_ID:
+                    $ notes_to_display.insert(0, {"id": NEW_NOTE_ID, "source": edit_note_source, "content": edit_note_text, "tags": normalize_tags(edit_note_tags), "type": "user-written"})
+                if filter_tag:
+                    $ matched_notes = [note for note in notes_to_display if filter_tag in note.get("tags", [])]
+                    $ unmatched_notes = [note for note in notes_to_display if filter_tag not in note.get("tags", [])]
+                    $ notes_to_display = matched_notes + unmatched_notes
 
-            $ note_count = len(notebook)
-            $ notes_to_display = list(reversed(notebook))
-            if edited_note_id == NEW_NOTE_ID:
-                $ notes_to_display.insert(0, {"id": NEW_NOTE_ID, "source": edit_note_source, "content": edit_note_text, "tags": normalize_tags(edit_note_tags), "type": "user-written"})
-            for i, note in enumerate(notes_to_display):
-                $ s = note["source"] or ""
-                $ t = ", ".join(note["tags"]) if note["tags"] else ""
-                $ n = note["content"]
-                $ note_id = note["id"]
-
-                ### EDIT NOTE MODE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                if edited_note_id == note_id: 
-                    frame style "editing_note_frame":
-                        vbox:
-                            spacing 20
-                            xfill True
-                            hbox: ### edit note content
+                for note in notes_to_display:
+                    $ s = note["source"] or ""
+                    $ note_tags = [tag for tag in note.get("tags", []) if tag]
+                    $ t = ", ".join(note_tags) if note_tags else ""
+                    $ n = note["content"]
+                    $ note_id = note["id"]
+                    $ matches_filter = (not filter_tag) or (filter_tag in note_tags)
+                    
+                    ## EDITABLE NOTE
+                    if edited_note_id == note_id:
+                        frame style "editing_note_frame":
+                            vbox:
                                 spacing 20
-                                text "Note:" style "note_label" xalign 1.0 xsize 150
-                                frame style "edit_frame":
-                                    button:
-                                        action ScreenVariableInputValue("edit_note_text").Toggle()
-                                        input value ScreenVariableInputValue("edit_note_text") style "edit_input" multiline True
+                                xfill True
+                                hbox:
+                                    spacing 20
+                                    text "Note:" style "note_label" xalign 1.0 xsize 150
+                                    frame style "edit_frame":
+                                        button:
+                                            action ScreenVariableInputValue("edit_note_text").Toggle()
+                                            input value ScreenVariableInputValue("edit_note_text") style "edit_input" multiline True
 
-                            hbox: ### edit source of note
-                                spacing 20
-                                text "Source:" style "note_label" xalign 1.0 xsize 150
-                                frame style "edit_frame":
-                                    button:
-                                        action ScreenVariableInputValue("edit_note_source").Toggle()
-                                        input value ScreenVariableInputValue("edit_note_source") style "edit_input"
+                                hbox:
+                                    spacing 20
+                                    text "Source:" style "note_label" xalign 1.0 xsize 150
+                                    frame style "edit_frame":
+                                        button:
+                                            action ScreenVariableInputValue("edit_note_source").Toggle()
+                                            input value ScreenVariableInputValue("edit_note_source") style "edit_input"
 
-                            hbox: ### select / deselect tags from tag library
-                                spacing 20
-                                text "Tags:" style "note_label" xalign 1.0 xsize 150
-                                frame style "edit_frame":
+                                hbox:
+                                    spacing 20
+                                    text "Tags:" style "note_label" xalign 1.0 xsize 150
+                                    frame style "edit_frame":
+                                        hbox:
+                                            spacing 4
+                                            xfill True
+                                            box_wrap True
+                                            box_wrap_spacing 6
+
+                                            for tag in tagLibrary:
+                                                $ selected = tag in [t.strip() for t in edit_note_tags.split(",") if t.strip()]
+                                                textbutton tag:
+                                                    style selected and "selected_tag_button" or "tag_button"
+                                                    selected selected
+                                                    action If(
+                                                        selected,
+                                                        SetScreenVariable(
+                                                            "edit_note_tags",
+                                                            ", ".join([t for t in [tt.strip() for tt in edit_note_tags.split(",") if tt.strip()] if t != tag])
+                                                        ),
+                                                        SetScreenVariable(
+                                                            "edit_note_tags",
+                                                            ", ".join([t for t in [tt.strip() for tt in edit_note_tags.split(",") if tt.strip()] if t] + [tag])
+                                                        )
+                                                    )
+
+                                            default creating_tag = False
+                                            default new_tag_name = "YOUR TAG"
+
+                                            if creating_tag:
+                                                hbox:
+                                                    spacing 6
+                                                    frame:
+                                                        style "create_tag_box_active"
+                                                        has hbox
+                                                        button:
+                                                            action ScreenVariableInputValue("new_tag_name").Toggle()
+                                                            input value ScreenVariableInputValue("new_tag_name") style "edit_tag_input"
+
+                                                    textbutton "Save":
+                                                        style "edit_tag_support"
+                                                        action [
+                                                            Function(add_tag, new_tag_name),
+                                                            SetScreenVariable("creating_tag", False)
+                                                        ]
+
+                                                    textbutton "Cancel":
+                                                        style "edit_tag_support"
+                                                        action SetScreenVariable("creating_tag", False)
+                                            else:
+                                                textbutton "Create Tag":
+                                                    style "create_tag_box"
+                                                    action SetScreenVariable("creating_tag", True)
+
+                                hbox:
+                                    spacing 10
+                                    xalign 1.0
+                                    textbutton "Save Note":
+                                        style "standard_button"
+                                        action [
+                                            Function(commit_note, note_id, edit_note_text, edit_note_source, edit_note_tags),
+                                            SetVariable("edited_note_id", None)
+                                        ]
+                                    textbutton "Cancel":
+                                        style "standard_button"
+                                        action SetVariable("edited_note_id", None)
+                    ## NON-EDITABLE NOTE
+                    else:
+                        $ note_style = matches_filter and "note_box" or "note_box_dimmed"
+                        frame:
+                            style note_style
+                            vbox:
+                                spacing 8
+                                hbox:
+                                    xfill True
+                                    spacing 4
                                     hbox:
                                         spacing 4
-                                        xfill True
+                                        xmaximum 350
                                         box_wrap True
                                         box_wrap_spacing 6
-
-                                        # existing tags
-                                        for tag in tagLibrary:
-                                            $ selected = tag in [t.strip() for t in edit_note_tags.split(",") if t.strip()]
-                                            textbutton tag:
-                                                style selected and "selected_tag_button" or "tag_button"
-                                                selected selected
-                                                action If(
-                                                    selected,
-                                                    SetScreenVariable(
-                                                        "edit_note_tags",
-                                                        ", ".join([t for t in [tt.strip() for tt in edit_note_tags.split(",") if tt.strip()] if t != tag])
-                                                    ),
-                                                    SetScreenVariable(
-                                                        "edit_note_tags",
-                                                        ", ".join([t for t in [tt.strip() for tt in edit_note_tags.split(",") if tt.strip()] if t] + [tag])
-                                                    )
-                                                )
-
-                                        # --- inline Create Tag editor ---
-                                        default creating_tag = False
-                                        default new_tag_name = "YOUR TAG"
-
-                                        if creating_tag:
-                                            hbox:
-                                                spacing 6
-                                                frame:
-                                                    style "create_tag_box_active"
-                                                    has hbox
-                                                    button:
-                                                        action ScreenVariableInputValue("new_tag_name").Toggle()
-                                                        input value ScreenVariableInputValue("new_tag_name") style "edit_tag_input"
-
-                                                textbutton "Save":
-                                                    style "edit_tag_support"
-                                                    action [
-                                                        Function(add_tag, new_tag_name),
-                                                        SetScreenVariable("creating_tag", False)
-                                                    ]
-
-                                                textbutton "Cancel":
-                                                    style "edit_tag_support"
-                                                    action SetScreenVariable("creating_tag", False)
-                                        else:
-                                            textbutton "Create Tag":
-                                                style "create_tag_box"
-                                                action SetScreenVariable("creating_tag", True)
-                            
-                            hbox:
-                                spacing 10
-                                xalign 1.0
-                                textbutton "Save Note":
-                                    style "standard_button"
-                                    action [
-                                        Function(commit_note, note_id, edit_note_text, edit_note_source, edit_note_tags),
-                                        SetVariable("edited_note_id", None)
-                                    ]
-                                textbutton "Cancel":
-                                    style "standard_button"
-                                    action SetVariable("edited_note_id", None)
-                                        
-                else: ## DISPLAY EXISTING NOTES (not in edit mode)
-                    frame:
-                        style "note_box"
-                        vbox:
-                            spacing 8
-                            hbox:
-                                xfill True
-                                spacing 4
-                                hbox:
-                                    spacing 4
-                                    xmaximum 350
-                                    box_wrap True
-                                    box_wrap_spacing 6
-                                    for tag_item in [tag.strip() for tag in t.split(",") if tag.strip()]:
-                                        textbutton tag_item style "tag_button":
-                                            text_style "tag_button_text"
-                                hbox:
-                                    spacing 4
-                                    xalign 1.0
-
-                                    $ iw, ih = renpy.image_size("images/imagebutton_trashcan.png")
-                                    $ delete_btn = Transform("images/imagebutton_trashcan.png", zoom=50.0 / ih)
-                                    
-                                    $ iw, ih = renpy.image_size("images/imagebutton_pencil.png")
-                                    $ edit_btn = Transform("images/imagebutton_pencil.png", zoom=50.0 / ih)
-
-                                    imagebutton:
-                                        tooltip "Delete note"
-                                        idle delete_btn
-                                        hover darken_hover(delete_btn)
-                                        action Confirm("Are you sure you want to delete this note?", yes=Function(deletenote, note_id))
-                                    imagebutton:
-                                        tooltip "Edit note"
-                                        idle edit_btn
-                                        hover darken_hover(edit_btn)
-                                        action [
-                                            SetScreenVariable("edit_note_text", n),
-                                            SetScreenVariable("edit_note_source", s),
-                                            SetScreenVariable("edit_note_tags", t),
-                                            SetVariable("edited_note_id", note_id)
-                                        ]
+                                        for tag_item in note_tags:
+                                            textbutton tag_item style "tag_button":
+                                                text_style "tag_button_text"
+                                    hbox:
+                                        spacing 4
                                         xalign 1.0
-                            text "{b}Note:{/b} " + n:
-                                size 22
-                            text "{b}Source:{/b} " + s:
-                                size 14
 
+                                        $ iw, ih = renpy.image_size("images/imagebutton_trashcan.png")
+                                        $ delete_btn = Transform("images/imagebutton_trashcan.png", zoom=50.0 / ih)
 
-        ## right side of notebook for argument drafting                 
+                                        $ iw, ih = renpy.image_size("images/imagebutton_pencil.png")
+                                        $ edit_btn = Transform("images/imagebutton_pencil.png", zoom=50.0 / ih)
+
+                                        imagebutton:
+                                            tooltip "Delete note"
+                                            idle delete_btn
+                                            hover darken_hover(delete_btn)
+                                            action Confirm("Are you sure you want to delete this note?", yes=Function(deletenote, note_id))
+                                        imagebutton:
+                                            tooltip "Edit note"
+                                            idle edit_btn
+                                            hover darken_hover(edit_btn)
+                                            action [
+                                                SetScreenVariable("edit_note_text", n),
+                                                SetScreenVariable("edit_note_source", s),
+                                                SetScreenVariable("edit_note_tags", t),
+                                                SetVariable("edited_note_id", note_id)
+                                            ]
+                                            xalign 1.0
+                                text "{b}Note:{/b} " + n:
+                                    size 22
+                                text "{b}Source:{/b} " + s:
+                                    size 14
+
+        ## RIGHT SIDE OF NOTEBOOK                 
         frame:
             anchor (0.5, 0.5)
             pos (0.675, 0.52)
@@ -419,7 +885,8 @@ screen notebook():
             background None
             has vbox
             spacing 12
-
+        
+            ## CURRENT ARGUMENT  FRAME                
             frame:
                 style "editing_note_frame"
                 background (Solid("#d9dcff80") if editing_argument else Solid("#cccccc40"))
@@ -471,7 +938,7 @@ screen notebook():
                     else:
                         frame style "current_argument_view_frame":
                             text notebook_argument style "current_argument_text"
-
+            ## ARGUMENT HISTORY                
             viewport:
                 xfill True
                 yfill True
@@ -498,59 +965,59 @@ screen notebook():
                         add Solid("#00000033", xsize=history_max_width, ysize=2)
 
 # ##### Shows key bindings for typing in the input box ######
-# screen keyboard_shortcuts():
-#     modal False
-#     zorder 94
-#     add "images/keyboard shortcuts.png":
-#         pos (0.0, 0.15)
+    # screen keyboard_shortcuts():
+    #     modal False
+    #     zorder 94
+    #     add "images/keyboard shortcuts.png":
+    #         pos (0.0, 0.15)
 
-# ## Argument Revision in Notebook ###
-# screen argument_edit(currentargument):
-#     modal True
-#     zorder 93
-#     add "images/notebook_wide.png"
+    # ## Argument Revision in Notebook ###
+    # screen argument_edit(currentargument):
+    #     modal True
+    #     zorder 93
+    #     add "images/notebook_wide.png"
 
-#     default newargument = currentargument
-#     default argumentinput = ScreenVariableInputValue("newargument")
-#     $ argument_edits += 1
-#     $ achieve_argument()
+    #     default newargument = currentargument
+    #     default argumentinput = ScreenVariableInputValue("newargument")
+    #     $ argument_edits += 1
+    #     $ achieve_argument()
 
-#     imagebutton:
-#         pos (0.30, 0.17)
-#         tooltip "Show/Hide Shortcuts"
-#         idle "images/note clip.png"
-#         hover "images/note clip.png"
-#         action If(renpy.get_screen("keyboard_shortcuts"), true=Hide("keyboard_shortcuts"), false=Show("keyboard_shortcuts"))
+    #     imagebutton:
+    #         pos (0.30, 0.17)
+    #         tooltip "Show/Hide Shortcuts"
+    #         idle "images/note clip.png"
+    #         hover "images/note clip.png"
+    #         action If(renpy.get_screen("keyboard_shortcuts"), true=Hide("keyboard_shortcuts"), false=Show("keyboard_shortcuts"))
 
-#     viewport:
-#         anchor (0.0,0.0)
-#         pos (0.325,0.20)
-#         xsize 720
-#         ysize 400
-#         scrollbars "vertical"
-#         vscrollbar_unscrollable "hide"
-#         mousewheel True
-#         has vbox
-#         text "Draft Argument: ":
-#             size 20
-#         input value argumentinput color "#037426" xmaximum 720 copypaste True multiline True
-    
-#     textbutton "Save Revised Note":
-#         pos (0.35, 0.6)
-#         # action (Function(editdraft, newargument), Hide("argument_edit"), Hide("keyboard_shortcuts"))
-#     textbutton "Cancel":
-#         pos (0.55, 0.6)
-#         # action (Hide("argument_edit"), Hide("keyboard_shortcuts"))  
+    #     viewport:
+    #         anchor (0.0,0.0)
+    #         pos (0.325,0.20)
+    #         xsize 720
+    #         ysize 400
+    #         scrollbars "vertical"
+    #         vscrollbar_unscrollable "hide"
+    #         mousewheel True
+    #         has vbox
+    #         text "Draft Argument: ":
+    #             size 20
+    #         input value argumentinput color "#037426" xmaximum 720 copypaste True multiline True
+        
+    #     textbutton "Save Revised Note":
+    #         pos (0.35, 0.6)
+    #         # action (Function(editdraft, newargument), Hide("argument_edit"), Hide("keyboard_shortcuts"))
+    #     textbutton "Cancel":
+    #         pos (0.55, 0.6)
+    #         # action (Hide("argument_edit"), Hide("keyboard_shortcuts"))  
 
-#     $ tooltip = GetTooltip()
-#     if tooltip:
-#         nearrect:
-#             focus "tooltip"
+    #     $ tooltip = GetTooltip()
+    #     if tooltip:
+    #         nearrect:
+    #             focus "tooltip"
 
-#             frame:
-#                 xalign 0.5
-#                 text tooltip:
-#                     size 15  
+    #             frame:
+    #                 xalign 0.5
+    #                 text tooltip:
+    #                     size 15  
 
 screen argument_sharing(prompt):
     modal True
@@ -681,9 +1148,20 @@ style note_box:
     ymargin 10
     xalign 0.5
 
+style note_box_dimmed:
+    background "#dddddd60"
+    foreground Solid("#00000033")
+    padding (12, 10)
+    xfill True
+    xmargin 10
+    ymargin 10
+    xalign 0.5
+
 style note_text:
     anchor (0.0,0.0)
     pos (0.325,0.12)
+    font "DejaVuSans.ttf"
+    size 16
 
 style notebook_title:
     anchor (0.5,0.0)
@@ -754,6 +1232,17 @@ style tag_button_text:
 
 style selected_tag_button:
     background "#8076ae"
+
+style filter_frame:
+    background "#d1c7ff33"
+    padding (8, 8)
+    xfill True
+
+style filter_label:
+    font "DejaVuSans-Bold.ttf"
+    size 14
+    color "#333333"
+    yalign 0.5
 
 # EDITING TAG STYLES
 

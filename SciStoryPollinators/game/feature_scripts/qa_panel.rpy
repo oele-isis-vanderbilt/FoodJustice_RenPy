@@ -53,10 +53,11 @@ screen qa_panel():
                     action [Hide("qa_panel"), Function(toggle_notebook)] style "qa_textbutton"
                 textbutton "Unlock Notebook":
                     action [SetVariable("notebook_unlocked", True)] style "qa_textbutton"
-                textbutton "Export All Logs (ZIP)":
-                    action Function(export_all_logs_zip)
-                textbutton "Sync Logs Now":
-                    action Function(sync_logs_now)
+                $ auto_tag_label = "Auto-Tag User Notes: {}".format("On" if auto_tag_user_notes else "Off")
+                textbutton auto_tag_label:
+                    action Function(toggle_auto_tag_user_notes)
+                    style "qa_textbutton"
+
 
 style qa_textbutton is default:
     padding (12, 8, 12, 8)

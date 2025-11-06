@@ -99,19 +99,18 @@ define achievement_list = [
         "icon": "icons/icon_achieve_UNDECIDED.png"
     },
     {
-        "key": "GARDEN",
+        "key": "CONVINCEGARDEN",
         "name": "Seeds of Change",
         "desc": "Convince the mayor to build a garden.",
         "icon": "icons/icon_achieve_GARDEN.png"
     },
     {
-        "key": "PARKING",
+        "key": "CONVINCEPARKING",
         "name": "Concrete Jungle",
         "desc": "Convince the mayor to build a parking lot.",
         "icon": "icons/icon_achieve_PARKING.png"
     },
 ]
-
 
 # In script.rpy, you can unlock an achievement by calling:
 ## unlock_achievement("name_of_achievement", pause_time=10)
@@ -168,7 +167,55 @@ init python:
         # Unlock for 3 revisions
         ensure_unlocked("REVISION5", edits >= 3)
 
+    def achieve_feedback():
+        ensure_unlocked("FEEDBACK")
 
+    def achieve_notes5():
+        notes = getattr(renpy.store, "notebook", []) or []
+        # Ignore any placeholder entries that might be injected from dev tools.
+        saved_notes = [n for n in notes if isinstance(n, dict) and n.get("type") != "placeholder-note"]
+        ensure_unlocked("NOTES5", len(saved_notes) >= 5)
+
+    def achieve_gardenchat():
+        required = {"Victor", "Wes", "Nadia", "Alex", "Cora"}
+        try:
+            directory = list(character_directory.values())
+        except Exception:
+            directory = character_directory
+        spoken_by_name = {ch.get("name"): ch.get("spoken") for ch in directory if isinstance(ch, dict)}
+        ensure_unlocked("GARDENCHAT", all(spoken_by_name.get(name) for name in required))
+
+    def achieve_foodlabchat():
+        required = {"Amara", "Riley"}
+        try:
+            directory = list(character_directory.values())
+        except Exception:
+            directory = character_directory
+        spoken_by_name = {ch.get("name"): ch.get("spoken") for ch in directory if isinstance(ch, dict)}
+        ensure_unlocked("FOODLABCHAT", all(spoken_by_name.get(name) for name in required))
+
+    def achieve_undecided():
+        attempts = getattr(renpy.store, "mayor_attempts", 0)
+        convinced = getattr(renpy.store, "mayorconvinced", False)
+        convinced_parking = getattr(renpy.store, "mayor_supports_parking", False)
+        ensure_unlocked("UNDECIDED", attempts >= 1 and not convinced and not convinced_parking)
+
+    def achieve_convincegarden():
+        ensure_unlocked("CONVINCEGARDEN", getattr(renpy.store, "mayorconvinced", False))
+
+    def achieve_convinceparking():
+        attempts = getattr(renpy.store, "mayor_attempts", 0)
+        convinced = getattr(renpy.store, "mayorconvinced", False)
+        convinced_parking = getattr(renpy.store, "mayor_supports_parking", None)
+        if convinced_parking is None:
+            convinced_parking = getattr(renpy.store, "mayor_final_decision", "") == "parking"
+        ensure_unlocked("CONVINCEPARKING", attempts >= 1 and not convinced and convinced_parking)
+
+    def achieve_notes10():
+        notes = getattr(renpy.store, "notebook", []) or []
+        # Ignore any placeholder entries that might be injected from dev tools.
+        saved_notes = [n for n in notes if isinstance(n, dict) and n.get("type") != "placeholder-note"]
+        ensure_unlocked("NOTES10", len(saved_notes) >= 10)
 
 # ---------------------------------------------------------------------------
 # Popup shown when an achievement unlocks (bottom-right)
@@ -183,6 +230,7 @@ screen achievement_popup(key):
             xalign 0.98
             yalign 0.98
             padding (24, 18)
+            background Solid("#333333E6")
             xmaximum 420
             yminimum 90
 
@@ -237,7 +285,6 @@ screen achievement_row(ach, width=600, height=70):
                         text ach["desc"] size 16 color "#bbb"
 
         # Semi-transparent veil over locked items
-
 
 # ---------------------------------------------------------------------------
 # Achievements menu screen
