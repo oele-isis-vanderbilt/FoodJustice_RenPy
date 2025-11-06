@@ -173,6 +173,8 @@ style window:
 
     background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
 
+
+
 ## Input screen ################################################################
 ##
 ## This screen is used to display renpy.input. The prompt parameter is used to
@@ -185,6 +187,8 @@ style window:
 
 screen input(prompt):
     style_prefix "input"
+
+    use voice_recording_toggle
 
     window:
 

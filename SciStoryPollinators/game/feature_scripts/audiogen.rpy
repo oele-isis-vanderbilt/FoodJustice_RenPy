@@ -41,3 +41,29 @@ screen my_button_screen():
             xalign 0.5 
             if recording_tooltip:
                 tooltip recording_tooltip
+
+screen voice_recording_toggle():
+    zorder 1000
+    modal False
+
+    frame:
+        style "voice_record_frame"
+        align (0.02, 0.02)
+
+        textbutton ("Stop Voice Recording" if voice_recording_active else "Start Voice Recording"):
+            style "voice_record_button"
+            action Function(toggle_voice_recording)
+
+style voice_record_frame is default
+style voice_record_frame:
+    background Solid("#1b1b1bcc")
+    padding (6, 8)
+    xminimum 200
+
+style voice_record_button is default
+style voice_record_button:
+    background "#2a7de1"
+    hover_background "#1f5eb0"
+    padding (4, 12)
+    color "#ffffff"
+    bold True
