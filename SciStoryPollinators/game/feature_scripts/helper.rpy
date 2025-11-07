@@ -20,6 +20,28 @@ init python:
                 return char["chats"]
         return ""
 
+    def ask_character_question(char_name):
+        for char in character_directory:
+            if char["name"] == char_name:
+                char["questions"] = char.get("questions", 0) + 1
+                break
+
+    def character_approval(char_name, amount, message=None):
+        for char in character_directory:
+            if char["name"] == char_name:
+                char["approval"] = char.get("approval", 0) + amount
+                if message:
+                    renpy.notify(message)
+                break
+
+    def character_disapproval(char_name, amount, message=None):
+        for char in character_directory:
+            if char["name"] == char_name:
+                char["approval"] = char.get("approval", 0) - amount
+                if message:
+                    renpy.notify(message)
+                break
+
     def get_note_by_id(note_id):
         for note in notebook: 
             if note["id"] == note_id:
@@ -69,6 +91,16 @@ init python:
         voice_recording_active = not voice_recording_active
         status = "started" if voice_recording_active else "stopped"
         renpy.notify("Voice recording {}".format(status))
+
+    def request_voice_input():
+        global voice_input_contexts, voice_input_available
+        voice_input_contexts += 1
+        voice_input_available = voice_input_contexts > 0
+
+    def release_voice_input():
+        global voice_input_contexts, voice_input_available
+        voice_input_contexts = max(0, voice_input_contexts - 1)
+        voice_input_available = voice_input_contexts > 0
 
     from renpy.display.transform import Transform
     from renpy.display.matrix import Matrix
