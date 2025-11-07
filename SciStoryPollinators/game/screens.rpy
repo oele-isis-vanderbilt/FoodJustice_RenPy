@@ -188,6 +188,9 @@ style window:
 screen input(prompt):
     style_prefix "input"
 
+    on "show" action Function(request_voice_input)
+    on "hide" action Function(release_voice_input)
+
     use voice_recording_toggle
 
     window:
