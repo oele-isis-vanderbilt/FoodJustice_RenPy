@@ -742,8 +742,10 @@ screen notebook():
                 spacing 12
 
                 $ notes_to_display = list(reversed(notebook))
+                
                 if edited_note_id == NEW_NOTE_ID:
                     $ notes_to_display.insert(0, {"id": NEW_NOTE_ID, "source": edit_note_source, "content": edit_note_text, "tags": normalize_tags(edit_note_tags), "type": "user-written"})
+                
                 if filter_tag:
                     $ matched_notes = [note for note in notes_to_display if filter_tag in note.get("tags", [])]
                     $ unmatched_notes = [note for note in notes_to_display if filter_tag not in note.get("tags", [])]
@@ -1089,24 +1091,53 @@ screen argument_sharing(prompt):
             vbox:
                 spacing 10
                 xmaximum 400
-                anchor (0,0)
                 ymaximum 150
 
-                textbutton "Nevermind":
-                    style "standard_button"
-                    action Return(None)
-                    tooltip "Close"
+                hbox:
+                    spacing 10
+                    xsize 320
+                    xalign 0.5
+                    
+                    frame:
+                        background None
+                        xsize 160
+                        textbutton "Nevermind":
+                            style "standard_button"
+                            action Return(None)
+                            tooltip "Close"
+                            xfill True
 
-                textbutton "Copy Argument from Notebook":
-                    style "standard_button"
-                    action SetScreenVariable("user_argument", notebook_argument)
+                    frame:
+                        background None
+                        xsize 160
+                        textbutton "Share":
+                            style "standard_button"
+                            action Return(user_argument)
+                            xfill True
 
-                textbutton "Save Argument in Notebook":
-                    style "standard_button"
-                    action [
-                        Function(argument_edit, user_argument),
-                        Return(user_argument)
-                    ]
+                hbox:
+                    spacing 10
+                    xsize 320
+                    xalign 0.5
+                    
+                    frame:
+                        background None
+                        xsize 160
+                        textbutton "Copy Argument from Notebook":
+                            style "standard_button"
+                            action SetScreenVariable("user_argument", notebook_argument)
+                            xfill True
+
+                    frame:
+                        background None
+                        xsize 160
+                        textbutton "Save Argument in Notebook":
+                            style "standard_button"
+                            action [
+                                Function(argument_edit, user_argument),
+                                Return(user_argument)
+                            ]
+                            xfill True
 
 # ARGUMENT STYLES
 style argument_input:
@@ -1178,8 +1209,8 @@ style note_box:
     xalign 0.5
 
 style note_box_dimmed:
-    background "#dddddd60"
-    foreground Solid("#00000033")
+    background "#cfcfcf86"
+    foreground Solid("#ffffff86")
     padding (12, 10)
     xfill True
     xmargin 10
@@ -1239,6 +1270,7 @@ style standard_button_text:
     hover_color "#000000"
     xalign 0.5
     yalign 0.5
+    text_align 0.5
 
 style add_note_text:
     size 20
