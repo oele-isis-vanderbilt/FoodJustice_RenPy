@@ -49,6 +49,8 @@ screen qa_panel():
                     action [Hide("qa_panel"), Function(toggle_map_popup)] style "qa_textbutton"
                 textbutton "Achievements":
                     action [Hide("qa_panel"), Function(toggle_achievements_screen)] style "qa_textbutton"
+                textbutton "Clear Achievements":
+                    action Function(clear_all_achievements) style "qa_textbutton"
                 textbutton "Open Notebook":
                     action [Hide("qa_panel"), Function(toggle_notebook)] style "qa_textbutton"
                 textbutton "Unlock Notebook":
