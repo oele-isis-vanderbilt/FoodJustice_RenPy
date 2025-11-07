@@ -558,35 +558,37 @@ init python:
         template_source = (getattr(store, "new_note_source_template", "") or "").strip()
 
         if len(words) < 4 or (template_note and note_text_trim.lower() == template_note.lower()):
-            return False, "Your note needs at least four words before it can be saved."
+            return False, "Can you say more in your note?"
 
         if not source_trim or (template_source and source_trim.lower() == template_source.lower()):
-            return False, "Add a source so others know where this note came from."
-
-        if not tag_list:
-            return False, "Pick at least one tag to help organize this note."
+            return False, "Where did this information come from?"
 
         return True, None
 
     def commit_note(note_id, newnote, newsource, newtags):
+        global edited_note_id
         tags_list = normalize_tags(newtags)
 
         if note_id == NEW_NOTE_ID:
             is_valid, message = validate_user_note_inputs(newnote, newsource, tags_list)
             if not is_valid:
                 renpy.notify(message)
-                return
+                return False
             new_note(newnote, newsource, tags_list, "user-written")
             renpy.block_rollback()
+            edited_note_id = None
+            return True
         else:
             note = next((n for n in notebook if n["id"] == note_id), None)
             if note and note.get("type") == "user-written":
                 is_valid, message = validate_user_note_inputs(newnote, newsource, tags_list)
                 if not is_valid:
                     renpy.notify(message)
-                    return
+                    return False
             save_note(note_id, newnote, newsource, tags_list)
             renpy.block_rollback()
+            edited_note_id = None
+            return True
     
     def argument_edit(newcontent):
         save_draft(newcontent, edited=True)
@@ -615,13 +617,26 @@ screen notebook():
     default edit_note_source = ""
     default edit_note_tags = ""
     default filter_tag = None
+    default voice_request_active = False
 
     modal True
     zorder 92
 
+    on "hide" action If(
+        voice_request_active,
+        true=[Function(release_voice_input), SetScreenVariable("voice_request_active", False)],
+        false=SetScreenVariable("voice_request_active", False)
+    )
+
     $ has_note_input = editing_argument or (edited_note_id is not None)
     if has_note_input:
+        if not voice_request_active:
+            $ request_voice_input()
+            $ voice_request_active = True
         use voice_recording_toggle
+    elif voice_request_active:
+        $ release_voice_input()
+        $ voice_request_active = False
 
     add "images/notebook_open.png" xpos 0.5 ypos 0.5 anchor (0.5, 0.5) zoom .8
 
@@ -824,10 +839,7 @@ screen notebook():
                                     xalign 1.0
                                     textbutton "Save Note":
                                         style "standard_button"
-                                        action [
-                                            Function(commit_note, note_id, edit_note_text, edit_note_source, edit_note_tags),
-                                            SetVariable("edited_note_id", None)
-                                        ]
+                                        action Function(commit_note, note_id, edit_note_text, edit_note_source, edit_note_tags)
                                     textbutton "Cancel":
                                         style "standard_button"
                                         action SetVariable("edited_note_id", None)
@@ -1029,6 +1041,17 @@ screen argument_sharing(prompt):
 
     default user_argument = ""
     default argumentinput = ScreenVariableInputValue("user_argument")
+    default voice_request_active = False
+
+    if not voice_request_active:
+        $ request_voice_input()
+        $ voice_request_active = True
+
+    on "hide" action If(
+        voice_request_active,
+        true=[Function(release_voice_input), SetScreenVariable("voice_request_active", False)],
+        false=SetScreenVariable("voice_request_active", False)
+    )
 
     use voice_recording_toggle
 
