@@ -25,11 +25,6 @@ define character_directory = [
     { "variable": t,  "name": "Tulip",         "chats": 0, "spoken": False },
 ]
 
-# AUDIO 
-define azureKey = "3da59f8a4fc643ffbec6e4c076c77b7b"
-define ecaVoice = "en-US-JennyNeural"
-
-
 # GLOBAL NOTEBOOK LISTS 
 default source_list = []
 default note_list = []
@@ -40,6 +35,7 @@ default visited_list = []
 default spoken_list = []
 default startplace = ""
 default structure = ""
+default voice_recording_active = False
 
 ##LOCATION VISIT TRACKING
 default emptylotvisit = False
@@ -53,46 +49,6 @@ default mayor_attempts = 0
 default ca_context = ""
 default ecaresponse = ""
 default mayorconvinced = False
-
-##Audio
-define useAudio = False
-init python:
-    def playAudio(dialogLine: str):
-        if useAudio:
-            if renpy.emscripten:
-                import emscripten
-                test = emscripten.run_script_int(f"window.playAzureAudio(\"{dialogLine}\", \"{ecaVoice}\", \"{azureKey}\", 100);")
-    def stopAudio():
-        if useAudio:
-            if renpy.emscripten:
-                import emscripten
-                test = emscripten.run_script_int(f"window.stopAzureAudio();")
-    def StartAudioRecord():
-        if renpy.emscripten:
-                import emscripten
-                test = emscripten.run_script_int(f"window.microphoneUtil.StartRecordingJS();")
-    def EndAudioRecord():
-        if renpy.emscripten:
-                import emscripten
-                test = emscripten.run_script_int(f"window.microphoneUtil.StopRecordingJS();")
-
-screen my_button_screen():
-    $ recording_tooltip = None
-    if not renpy.emscripten:
-        $ recording_tooltip = "This feature isn't available on desktop."
-
-    vbox:
-        spacing 20 
-        textbutton "Start Record":
-            action Function(StartAudioRecord)
-            xalign 0.5 
-            if recording_tooltip:
-                tooltip recording_tooltip
-        textbutton "End Record":
-            action Function(EndAudioRecord)
-            xalign 0.5 
-            if recording_tooltip:
-                tooltip recording_tooltip
 
 label start:
 
@@ -1827,7 +1783,7 @@ label start:
         show watson smile
         with dissolve
 
-        if get_character_chats("Mayor") < 1:
+        if get_character_chats("Mayor") is "0"
             jump mayor_1
         else:
             jump mayor_2

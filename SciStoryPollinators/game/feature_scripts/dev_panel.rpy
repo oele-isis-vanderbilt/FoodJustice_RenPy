@@ -13,6 +13,12 @@ init python:
         global dev_screen_enabled
         dev_screen_enabled = not dev_screen_enabled
 
+    def get_char_stat(char_name, key, default=0):
+        for char in character_directory:
+            if char.get("name") == char_name:
+                return char.get(key, default)
+        return default
+
 # List of character conversation labels for jump buttons
 define dev_char_labels = [
     ("Elliot", "elliot_chatting"),
@@ -75,9 +81,9 @@ screen developer_overlay():
                         textbutton "Add Placeholder Note":
                             action Function(new_note, "lorem ipsom...", "example speaker", ["tag1", "tag2"], "placeholder-note")
                             style "dev_jump_button"
-                        textbutton "Edit Argument":
-                            action Function(save_draft, "lorem ipsom...", "example speaker", ["tag1", "tag2"], "character-saved")
-                            style "dev_jump_button"
+                        # textbutton "Edit Argument":
+                        #     action Function(save_draft, "lorem ipsom...", "example speaker", ["tag1", "tag2"], "character-saved")
+                        #     style "dev_jump_button"
 
                     null height 12
 
@@ -112,11 +118,13 @@ screen developer_overlay():
 
                     vbox:
                         spacing 10
-                        $ col1_width = 200
-                        $ col2_width = 200
-                        $ col3_width = 200
+                        $ col1_width = 160
+                        $ col2_width = 100
+                        $ col3_width = 100
+                        $ col4_width = 120
+                        $ col5_width = 120
 
-                        grid 3 12:
+                        grid 5 12:
                             spacing 10
 
                             frame:
@@ -127,7 +135,13 @@ screen developer_overlay():
                                 text "Chats" style "table_text" xsize col2_width
                             frame:
                                 style "table_cell_frame"
-                                text "Spoken" style "table_text" xsize col3_width
+                                text "Questions" style "table_text" xsize col3_width
+                            frame:
+                                style "table_cell_frame"
+                                text "Approval" style "table_text" xsize col4_width
+                            frame:
+                                style "table_cell_frame"
+                                text "Spoken" style "table_text" xsize col5_width
 
                             python:
                                 characters = [
@@ -145,7 +159,15 @@ screen developer_overlay():
 
                                 frame:
                                     style "table_cell_frame"
-                                    text "[get_character_spoken(name)]" style "dev_msg" xsize col3_width
+                                    text "[get_char_stat(name, \"questions\")]" style "dev_msg" xsize col3_width
+
+                                frame:
+                                    style "table_cell_frame"
+                                    text "[get_char_stat(name, \"approval\")]" style "dev_msg" xsize col4_width
+
+                                frame:
+                                    style "table_cell_frame"
+                                    text "[get_character_spoken(name)]" style "dev_msg" xsize col5_width
 
                     null height 12
 
@@ -211,4 +233,3 @@ init -999 python:
 
 # Keybind to toggle the developer overlay (Shift+D)
 define config.keymap['toggle_dev_screen'] = [ 'shift_d' ]
-

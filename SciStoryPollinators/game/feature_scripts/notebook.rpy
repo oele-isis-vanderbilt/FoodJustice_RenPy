@@ -558,35 +558,37 @@ init python:
         template_source = (getattr(store, "new_note_source_template", "") or "").strip()
 
         if len(words) < 4 or (template_note and note_text_trim.lower() == template_note.lower()):
-            return False, "Your note needs at least four words before it can be saved."
+            return False, "Can you say more in your note?"
 
         if not source_trim or (template_source and source_trim.lower() == template_source.lower()):
-            return False, "Add a source so others know where this note came from."
-
-        if not tag_list:
-            return False, "Pick at least one tag to help organize this note."
+            return False, "Where did this information come from?"
 
         return True, None
 
     def commit_note(note_id, newnote, newsource, newtags):
+        global edited_note_id
         tags_list = normalize_tags(newtags)
 
         if note_id == NEW_NOTE_ID:
             is_valid, message = validate_user_note_inputs(newnote, newsource, tags_list)
             if not is_valid:
                 renpy.notify(message)
-                return
+                return False
             new_note(newnote, newsource, tags_list, "user-written")
             renpy.block_rollback()
+            edited_note_id = None
+            return True
         else:
             note = next((n for n in notebook if n["id"] == note_id), None)
             if note and note.get("type") == "user-written":
                 is_valid, message = validate_user_note_inputs(newnote, newsource, tags_list)
                 if not is_valid:
                     renpy.notify(message)
-                    return
+                    return False
             save_note(note_id, newnote, newsource, tags_list)
             renpy.block_rollback()
+            edited_note_id = None
+            return True
     
     def argument_edit(newcontent):
         save_draft(newcontent, edited=True)
@@ -615,9 +617,26 @@ screen notebook():
     default edit_note_source = ""
     default edit_note_tags = ""
     default filter_tag = None
+    default voice_request_active = False
 
     modal True
     zorder 92
+
+    on "hide" action If(
+        voice_request_active,
+        true=[Function(release_voice_input), SetScreenVariable("voice_request_active", False)],
+        false=SetScreenVariable("voice_request_active", False)
+    )
+
+    $ has_note_input = editing_argument or (edited_note_id is not None)
+    if has_note_input:
+        if not voice_request_active:
+            $ request_voice_input()
+            $ voice_request_active = True
+        use voice_recording_toggle
+    elif voice_request_active:
+        $ release_voice_input()
+        $ voice_request_active = False
 
     add "images/notebook_open.png" xpos 0.5 ypos 0.5 anchor (0.5, 0.5) zoom .8
 
@@ -723,8 +742,10 @@ screen notebook():
                 spacing 12
 
                 $ notes_to_display = list(reversed(notebook))
+                
                 if edited_note_id == NEW_NOTE_ID:
                     $ notes_to_display.insert(0, {"id": NEW_NOTE_ID, "source": edit_note_source, "content": edit_note_text, "tags": normalize_tags(edit_note_tags), "type": "user-written"})
+                
                 if filter_tag:
                     $ matched_notes = [note for note in notes_to_display if filter_tag in note.get("tags", [])]
                     $ unmatched_notes = [note for note in notes_to_display if filter_tag not in note.get("tags", [])]
@@ -820,10 +841,7 @@ screen notebook():
                                     xalign 1.0
                                     textbutton "Save Note":
                                         style "standard_button"
-                                        action [
-                                            Function(commit_note, note_id, edit_note_text, edit_note_source, edit_note_tags),
-                                            SetVariable("edited_note_id", None)
-                                        ]
+                                        action Function(commit_note, note_id, edit_note_text, edit_note_source, edit_note_tags)
                                     textbutton "Cancel":
                                         style "standard_button"
                                         action SetVariable("edited_note_id", None)
@@ -1025,6 +1043,19 @@ screen argument_sharing(prompt):
 
     default user_argument = ""
     default argumentinput = ScreenVariableInputValue("user_argument")
+    default voice_request_active = False
+
+    if not voice_request_active:
+        $ request_voice_input()
+        $ voice_request_active = True
+
+    on "hide" action If(
+        voice_request_active,
+        true=[Function(release_voice_input), SetScreenVariable("voice_request_active", False)],
+        false=SetScreenVariable("voice_request_active", False)
+    )
+
+    use voice_recording_toggle
 
     frame:
         xpos 1.0
@@ -1060,24 +1091,53 @@ screen argument_sharing(prompt):
             vbox:
                 spacing 10
                 xmaximum 400
-                anchor (0,0)
                 ymaximum 150
 
-                textbutton "Nevermind":
-                    style "standard_button"
-                    action Return(None)
-                    tooltip "Close"
+                hbox:
+                    spacing 10
+                    xsize 320
+                    xalign 0.5
+                    
+                    frame:
+                        background None
+                        xsize 160
+                        textbutton "Nevermind":
+                            style "standard_button"
+                            action Return(None)
+                            tooltip "Close"
+                            xfill True
 
-                textbutton "Copy Argument from Notebook":
-                    style "standard_button"
-                    action SetScreenVariable("user_argument", notebook_argument)
+                    frame:
+                        background None
+                        xsize 160
+                        textbutton "Share":
+                            style "standard_button"
+                            action Return(user_argument)
+                            xfill True
 
-                textbutton "Save Argument in Notebook":
-                    style "standard_button"
-                    action [
-                        Function(argument_edit, user_argument),
-                        Return(user_argument)
-                    ]
+                hbox:
+                    spacing 10
+                    xsize 320
+                    xalign 0.5
+                    
+                    frame:
+                        background None
+                        xsize 160
+                        textbutton "Copy Argument from Notebook":
+                            style "standard_button"
+                            action SetScreenVariable("user_argument", notebook_argument)
+                            xfill True
+
+                    frame:
+                        background None
+                        xsize 160
+                        textbutton "Save Argument in Notebook":
+                            style "standard_button"
+                            action [
+                                Function(argument_edit, user_argument),
+                                Return(user_argument)
+                            ]
+                            xfill True
 
 # ARGUMENT STYLES
 style argument_input:
@@ -1149,8 +1209,8 @@ style note_box:
     xalign 0.5
 
 style note_box_dimmed:
-    background "#dddddd60"
-    foreground Solid("#00000033")
+    background "#cfcfcf86"
+    foreground Solid("#ffffff86")
     padding (12, 10)
     xfill True
     xmargin 10
@@ -1210,6 +1270,7 @@ style standard_button_text:
     hover_color "#000000"
     xalign 0.5
     yalign 0.5
+    text_align 0.5
 
 style add_note_text:
     size 20
