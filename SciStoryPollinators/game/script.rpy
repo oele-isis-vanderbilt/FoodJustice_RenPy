@@ -1783,7 +1783,7 @@ label start:
         show watson smile
         with dissolve
 
-        if get_character_chats("Mayor") < 1:
+        if get_character_chats("Mayor") is "0"
             jump mayor_1
         else:
             jump mayor_2
