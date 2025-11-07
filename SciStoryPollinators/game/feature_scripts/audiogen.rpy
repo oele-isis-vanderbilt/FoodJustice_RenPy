@@ -45,14 +45,19 @@ screen my_button_screen():
 screen voice_recording_toggle():
     zorder 1000
     modal False
+    $ recording_tooltip = None
 
-    frame:
-        style "voice_record_frame"
-        align (0.02, 0.02)
+    if voice_input_available:
+        if not renpy.emscripten:
+            $ recording_tooltip = "This feature isn't available on desktop."
 
-        textbutton ("Stop Voice Recording" if voice_recording_active else "Start Voice Recording"):
-            style "voice_record_button"
-            action Function(toggle_voice_recording)
+        frame:
+            style "voice_record_frame"
+            align (0.02, 0.02)
+
+            textbutton ("Stop Voice Recording" if voice_recording_active else "Start Voice Recording"):
+                style "voice_record_button"
+                action Function(toggle_voice_recording)
 
 style voice_record_frame is default
 style voice_record_frame:
