@@ -1,6 +1,7 @@
 init python:
 
     import renpy.store as store
+    from renpy.display.core import EndInteraction
 
     def _voice_features_active():
         return getattr(store, "voice_features_enabled", True)
@@ -69,6 +70,26 @@ init python:
             renpy.hide_screen("argument_sharing")
         else:
             renpy.show_screen("argument_sharing")
+
+    def safe_renpy_input(prompt="", screen=None, **kwargs):
+        """Collect player input via Ren'Py and always return a safe string."""
+
+        def _do_call():
+            if screen:
+                return renpy.call_screen(screen, prompt=prompt, **kwargs)
+            return renpy.input(prompt, **kwargs)
+
+        try:
+            response = renpy.invoke_in_new_context(_do_call)
+        except EndInteraction as exc:
+            response = getattr(exc, "value", "")
+        if response is None:
+            return ""
+        if isinstance(response, bytes):
+            return response.decode("utf-8", errors="ignore")
+        if not isinstance(response, str):
+            return str(response)
+        return response
 
 
 
