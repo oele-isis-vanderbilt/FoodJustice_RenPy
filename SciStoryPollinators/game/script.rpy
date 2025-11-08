@@ -1,4 +1,3 @@
-﻿#CHARACTER NAME DEFINIION
 define el = Character("Elliot")
 define a = Character("Amara")
 define r = Character("Riley")
@@ -12,17 +11,17 @@ define v = Character("Victor")
 define t = Character("Tulip")
 
 define character_directory = [
-    { "variable": el, "name": "Elliot",        "chats": 0, "spoken": False },
-    { "variable": a,  "name": "Amara",         "chats": 0, "spoken": False },
-    { "variable": r,  "name": "Riley",         "chats": 0, "spoken": False },
-    { "variable": w,  "name": "Wes",           "chats": 0, "spoken": False },
-    { "variable": n,  "name": "Nadia",         "chats": 0, "spoken": False },
-    { "variable": m,  "name": "Mayor Watson",  "chats": 0, "spoken": False },
-    { "variable": cy, "name": "Cyrus",         "chats": 0, "spoken": False },
-    { "variable": x,  "name": "Alex",          "chats": 0, "spoken": False },
-    { "variable": c,  "name": "Cora",          "chats": 0, "spoken": False },
-    { "variable": v,  "name": "Victor",        "chats": 0, "spoken": False },
-    { "variable": t,  "name": "Tulip",         "chats": 0, "spoken": False },
+    { "variable": el, "name": "Elliot",        "chats": 0, "questions": 0, "approval": 0, "spoken": False },
+    { "variable": a,  "name": "Amara",         "chats": 0, "questions": 0, "approval": 0, "spoken": False },
+    { "variable": r,  "name": "Riley",         "chats": 0, "questions": 0, "approval": 0, "spoken": False },
+    { "variable": w,  "name": "Wes",           "chats": 0, "questions": 0, "approval": 0, "spoken": False },
+    { "variable": n,  "name": "Nadia",         "chats": 0, "questions": 0, "approval": 0, "spoken": False },
+    { "variable": m,  "name": "Mayor Watson",  "chats": 0, "questions": 0, "approval": 0, "spoken": False },
+    { "variable": cy, "name": "Cyrus",         "chats": 0, "questions": 0, "approval": 0, "spoken": False },
+    { "variable": x,  "name": "Alex",          "chats": 0, "questions": 0, "approval": 0, "spoken": False },
+    { "variable": c,  "name": "Cora",          "chats": 0, "questions": 0, "approval": 0, "spoken": False },
+    { "variable": v,  "name": "Victor",        "chats": 0, "questions": 0, "approval": 0, "spoken": False },
+    { "variable": t,  "name": "Tulip",         "chats": 0, "questions": 0, "approval": 0, "spoken": False },
 ]
 
 # GLOBAL NOTEBOOK LISTS 
@@ -36,6 +35,9 @@ default spoken_list = []
 default startplace = ""
 default structure = ""
 default voice_recording_active = False
+default voice_input_contexts = 0
+default voice_input_available = False
+default voice_features_enabled = True
 
 ##LOCATION VISIT TRACKING
 default emptylotvisit = False
@@ -59,14 +61,10 @@ label start:
     scene flowers muted
     with fade
 
+    hide screen learningbuttons
 
-    show screen my_button_screen
-
-    $ current_user = renpy.input("Please enter your player ID")
+    $ current_user = safe_renpy_input("Please enter your player ID")
     
-    ##comment this out for impl
-    show screen learningbuttons()
-
     narrator "You open your eyes and find yourself surrounded by bright flowers and sweet-smelling fresh air. How did you get here?"
     
     narrator "You hear a quiet buzzing noise getting closer..."
@@ -146,7 +144,7 @@ label start:
             "I'd like some help with persuading the mayor.":
                 t "I'd be happy to help! If you tell me what evidence you've found, I can give you some advice on improving your persuasive writing."
 
-                $ eca = renpy.input("What should the Mayor do with the empty lot, and why?", screen="argument_sharing")
+                $ eca = safe_renpy_input("What should the Mayor do with the empty lot, and why?", screen="argument_sharing")
                 if not isinstance(eca, str) or not eca.strip():
                     t "No problem. Let me know when you're ready to share!"
                     jump tulip_help_menu
@@ -191,7 +189,7 @@ label start:
                 t "Do you have other evidence to share?"
                 menu:
                     "I have more ideas to add.":
-                        $ eca = renpy.input("What should the Mayor do with the empty lot, and why?", screen="argument_sharing")
+                        $ eca = safe_renpy_input("What should the Mayor do with the empty lot, and why?", screen="argument_sharing")
                         if not isinstance(eca, str) or not eca.strip():
                             t "Okay! Come back when you're ready."
                             hide tulip
@@ -247,7 +245,7 @@ label start:
                         with dissolve
                         return
             "I need help with something else.":
-                $ eca = renpy.input("I love questions! What's your question?", screen="argument_sharing")
+                $ eca = safe_renpy_input("I love questions! What's your question?", screen="argument_sharing")
                 if not isinstance(eca, str) or not eca.strip():
                     t "Okay! I'm here if you need me."
                     hide tulip
@@ -285,7 +283,7 @@ label start:
                 t "Any more questions?"
                 menu:
                     "I have another question.":
-                        $ eca = renpy.input("What's your question?", screen="argument_sharing")
+                        $ eca = safe_renpy_input("What's your question?", screen="argument_sharing")
                         if not isinstance(eca, str) or not eca.strip():
                             t "No worries! Buzz me again if something comes up."
                             hide tulip
@@ -365,6 +363,7 @@ label start:
 
     menu:
         "What parking guys?":
+            $ character_approval("Elliot", 0)
             jump parkingguys
     
     label parkingguys:
@@ -390,8 +389,11 @@ label start:
 
         menu:
             "How can I help?":
+                $ ask_character_question("Elliot")
                 jump explain_problem
             "What's food justice?":
+                $ ask_character_question("Elliot")
+                $ character_approval("Elliot", 1, "Elliot appreciates your curiosity.")
                 jump foodjusticeexplain
             "Sure, I'll help.":
                 jump agreement
@@ -404,6 +406,8 @@ label start:
         el "I'm trying to gather some evidence to convince him, but I could really use some help."
         menu: 
             "What's food justice?":
+                $ ask_character_question("Elliot")
+                $ character_approval("Elliot", 1, "Elliot appreciates your curiosity.")
                 jump foodjusticeexplain
             "I'll see what I can do.":
                 jump talk_later
@@ -419,6 +423,7 @@ label start:
         el "There's nothing wrong with eating that food sometimes, but if that's the only kind of food people in your neighborhood can buy that is affordable, then everyone has more trouble eating healthy and feeling good."
         menu:
             "How can I help?":
+                $ ask_character_question("Elliot")
                 jump explain_problem
             "I'll see what I can do.":
                 jump talk_later
@@ -501,6 +506,8 @@ label start:
 
         menu:
             "Wait, but what is your job?":
+                $ ask_character_question("Riley")
+                $ character_approval("Riley", 1, "Riley explains patiently.")
                 jump long_intro
             "I have a few ideas.":
                 jump riley_plan
@@ -524,7 +531,7 @@ label start:
     
     label riley_against:
         r "Oh really? I'm curious why you think that."
-        $ progarage = renpy.input("Why do you support the parking [structure]?")
+        $ progarage = safe_renpy_input("Why do you support the parking [structure]?")
         if not isinstance(progarage, str) or not progarage.strip():
             r "Alright, maybe you'll think of a reason later."
             jump riley_plan
@@ -535,6 +542,8 @@ label start:
         
         menu:
             "Wait, but what is your job?":
+                $ ask_character_question("Riley")
+                $ character_approval("Riley", 1, "Riley explains patiently.")
                 jump long_intro
             "I have a few ideas about the garden's benefits, too.":
                 jump riley_plan
@@ -552,10 +561,12 @@ label start:
             "I should gather more notes first.":
                 jump bye_riley2
             "Wait, but what is your job?":
+                $ ask_character_question("Riley")
+                $ character_approval("Riley", 1, "Riley explains patiently.")
                 jump long_intro
 
     label ca_eval_riley:
-        $ eca = renpy.input("My persuasive ideas for the Mayor:", screen="argument_sharing")
+        $ eca = safe_renpy_input("My persuasive ideas for the Mayor:", screen="argument_sharing")
         if not isinstance(eca, str) or not eca.strip():
             r "No worries. We can brainstorm when you're ready."
             jump riley_plan
@@ -625,6 +636,8 @@ label start:
         
         menu:
             "What do you know about food justice?":
+                $ ask_character_question("Riley")
+                $ character_approval("Riley", 1, "Riley appreciates your interest.")
                 jump ca_foodjustice
             "I have some ideas for our pitch to the Mayor.":
                 r "Amazing! What ideas have you found about how we should use the empty lot?"
@@ -637,6 +650,8 @@ label start:
 
         menu:
             "Why is access to healthy food important?":
+                $ ask_character_question("Riley")
+                $ character_approval("Riley", 1, "Riley seems encouraged by your support.")
                 $ eca = "Why is access to healthy food important?"
 
                 $ ca_link, ca_json = agent_setup("Knowledge_FoodJustice", eca, "riley", "Riley")
@@ -669,6 +684,8 @@ label start:
 
                 jump foodknowledge_loop
             "How can we help everyone have access to healthy food?":
+                $ ask_character_question("Riley")
+                $ character_approval("Riley", 1, "Riley seems encouraged by your support.")
                 $ eca = "How can we help everyone have access to healthy food?"
 
                 $ ca_link, ca_json = agent_setup("Knowledge_FoodJustice", eca, "riley", "Riley")
@@ -698,6 +715,8 @@ label start:
 
                 jump foodknowledge_loop
             "I have another question.":
+                $ ask_character_question("Riley")
+                $ character_approval("Riley", 1, "Riley is glad you want to learn more.")
                 jump foodknowledge
             "Nevermind.":
                 jump byeriley
@@ -707,6 +726,8 @@ label start:
 
         menu:
             "I have another question.":
+                $ ask_character_question("Riley")
+                $ character_approval("Riley", 1, "Riley is glad you want to learn more.")
                 jump foodknowledge
             "I have some ideas for our pitch to the Mayor.":
                 r "Amazing! What ideas have you found about how we should use the empty lot?"
@@ -715,7 +736,7 @@ label start:
                 jump byeriley
 
     label foodknowledge:
-        $ eca = renpy.input("I'm wondering...", screen="argument_sharing")
+        $ eca = safe_renpy_input("I'm wondering...", screen="argument_sharing")
         if not isinstance(eca, str) or not eca.strip():
             r "No worries. Ask me again anytime."
             jump foodknowledge_loop
@@ -776,10 +797,15 @@ label start:
         menu:
             set amara_menu
             "What's a food scientist?":
+                $ ask_character_question("Amara")
+                $ character_approval("Amara", 1, "Amara smiles, pleased you asked.")
                 jump foodscientist
             "Do you know anything about the garden project?":
+                $ ask_character_question("Amara")
+                $ character_approval("Amara", 1, "Amara seems glad you asked.")
                 jump garden_info
             "What kind of stuff do you do here?":
+                $ ask_character_question("Amara")
                 jump lab_stuff
             "Nice to meet you! Gotta go.":
                 jump bye_amara
@@ -797,6 +823,8 @@ label start:
 
         menu:
             "Why?":
+                $ ask_character_question("Amara")
+                $ character_approval("Amara", 1, "Amara seems glad you're listening.")
                 jump reasons
             "Yeah, me too.":
                 a "I knew I liked you!"
@@ -840,6 +868,8 @@ label start:
                 a "Oh, I'm full of facts. Maybe I can help!"
                 jump sciencequestions
             "I'm trying to gather evidence about parking [structure]s.":
+                $ ask_character_question("Amara")
+                $ character_approval("Amara", 1, "Amara nods thoughtfully.")
                 jump parkingquestions
             "Actually, we should talk later.":
                 jump byeamara
@@ -849,10 +879,14 @@ label start:
 
         menu: 
             "Why does genetic diversity in plants matter?":
+                $ ask_character_question("Amara")
+                $ character_approval("Amara", 1, "Amara smiles, happy to explain.")
                 jump genetics
             "What do you know about soil quality?":
+                $ ask_character_question("Amara")
                 jump soil
             "What do gardens do for the environment?":
+                $ ask_character_question("Amara")
                 jump environment
             "See you later.":
                 jump foodlab
@@ -862,11 +896,12 @@ label start:
             a "And just like with people, diversity makes plants stronger. Genetic diversity means that plants have lots of unique traits, so that a pest or weather change that harms one plant might not bother another."
             a "When our local ecosystem has a large variety of plants with diverse genetics, the overall ecosystem is healthier and more resilient."
             
-            menu:
-                "Tell me more!":
-                    jump genetics2
-                "I have a different question.":
-                    jump sciencequestions
+        menu:
+            "Tell me more!":
+                $ ask_character_question("Amara")
+                jump genetics2
+            "I have a different question.":
+                jump sciencequestions
 
         label genetics2:
             a "Okay! So the thing with big farms and genetic diversity is that many of them like to pick the strongest and best-producing plants to grow over and over."
@@ -879,11 +914,12 @@ label start:
             a "Different plants need different amounts of nutrients, but they all need the same ones - the big ones are nitrogen, phosphorus, and potassium. But calcium, magnesium, and sulfur are important too."
             a "It's very important to keep track of the nutrients in the soil, because healthier soil can grow stronger plants, more food, and in some cases even healthier food."
             
-            menu:
-                "Tell me more!":
-                    jump soil2
-                "I have a different question.":
-                    jump sciencequestions
+        menu:
+            "Tell me more!":
+                $ ask_character_question("Amara")
+                jump soil2
+            "I have a different question.":
+                jump sciencequestions
 
         label soil2:
             a "Some people like to grow their own food, because then they can be in control of the soil quality and the kinds of pesticides that are used on the food they eat."
@@ -895,11 +931,12 @@ label start:
             a "For our air, gardens help to filter pollution, especially if you have large plants like trees that can filter out lots of pollutants. Plants also produce oxygen for us to breathe."
             a "Local gardens also let us grow food that doesn't need to be driven a long way in order to get to us - so they help to make our food system more sustainable."
             
-            menu:
-                "Tell me more!":
-                    jump environment2
-                "I have a different question.":
-                    jump sciencequestions
+        menu:
+            "Tell me more!":
+                $ ask_character_question("Amara")
+                jump environment2
+            "I have a different question.":
+                jump sciencequestions
 
         label environment2:
             a "Food systems are so big and complex, and there isn't just one right answer for how to get healthy food to people and how to do it well. But I love complicated problems! That's why I'm a scientist."
@@ -965,10 +1002,16 @@ label start:
     label victormenu:
         menu:
             "Do you live nearby?":
+                $ ask_character_question("Victor")
+                $ character_approval("Victor", 1, "Victor nods politely.")
                 jump gardenfar
             "Do you know a lot about growing things?":
+                $ ask_character_question("Victor")
+                $ character_approval("Victor", 1, "Victor seems pleased by your question.")
                 jump gardenknowledge
             "So you like the garden idea?":
+                $ ask_character_question("Victor")
+                $ character_approval("Victor", 1, "Victor smiles approvingly.")
                 jump victoropinion
             "I'll talk to you later.":
                 v "Okay! See you later."
@@ -987,8 +1030,12 @@ label start:
     label heirloommenu:
         menu:
             "What's heirloom produce?":
+                $ ask_character_question("Victor")
+                $ character_approval("Victor", 1, "Victor enjoys explaining.")
                 jump heirloom
             "Why do you want to grow heirloom produce?":
+                $ ask_character_question("Victor")
+                $ character_approval("Victor", 1, "Victor lights up as he explains.")
                 jump whyheirloom
             "I have a different question":
                 jump victormenu
@@ -1048,10 +1095,16 @@ label start:
         menu:
             set wes_menu
             "Tell me about the food you're growing.":
+                $ ask_character_question("Wes")
+                $ character_approval("Wes", 1, "Wes grins and starts explaining.")
                 jump growing_food
             "Is the garden good for the neighborhood?":
+                $ ask_character_question("Wes")
+                $ character_approval("Wes", 1, "Wes brightens at your question.")
                 jump garden_benefits
             "How can we pollinate plants in the garden?":
+                $ ask_character_question("Wes")
+                $ character_approval("Wes", 1, "Wes seems excited by your enthusiasm.")
                 jump wes_plants
             "I have a different question.":
                 jump gardenquestions
@@ -1075,10 +1128,16 @@ label start:
     label pollen_questions:
         menu:
             "What are pollinators?":
+                $ ask_character_question("Wes")
+                $ character_approval("Wes", 1, "Wes nods and begins to teach.")
                 jump wes_pollen
             "What types of pollinators exist?":
+                $ ask_character_question("Wes")
+                $ character_approval("Wes", 1, "Wes nods and begins to teach.")
                 jump types_pollinators
             "How do plants help pollinators?":
+                $ ask_character_question("Wes")
+                $ character_approval("Wes", 1, "Wes nods and begins to teach.")
                 jump plants_help
             "I have a different question.":
                 jump gardenquestions
@@ -1112,7 +1171,7 @@ label start:
    
     label gardenquestions:
         w "What would you like to know about the garden?"
-        $ eca = renpy.input("I'm wondering...", screen="argument_sharing")
+        $ eca = safe_renpy_input("I'm wondering...", screen="argument_sharing")
         if not isinstance(eca, str) or not eca.strip():
             w "Alright, just flag me down if you think of something."
             jump wes_choices
@@ -1163,6 +1222,8 @@ label start:
     label wes_questions:
         menu:
             "I have a question about the garden":
+                $ ask_character_question("Wes")
+                $ character_approval("Wes", 1, "Wes listens closely.")
                 jump wes_ca
             "I should go.":
                 jump bye_wes2
@@ -1174,7 +1235,7 @@ label start:
 
     label wes_ca:
         w "What would you like to know?"
-        $ eca = renpy.input("I'm wondering...", screen="argument_sharing")
+        $ eca = safe_renpy_input("I'm wondering...", screen="argument_sharing")
         if not isinstance(eca, str) or not eca.strip():
             w "All good. Come find me if you have another question."
             jump wes_questions
@@ -1264,8 +1325,12 @@ label start:
         menu:
             set nadia_menu
             "Why did you become a beekeeper?":
+                $ ask_character_question("Nadia")
+                $ character_approval("Nadia", 1, "Nadia smiles warmly.")
                 jump beekeeper
             "How do bees help with pollination?":
+                $ ask_character_question("Nadia")
+                $ character_approval("Nadia", 1, "Nadia nods and explains.")
                 $ eca = "How do bees help with pollination?"
 
                 $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
@@ -1296,6 +1361,8 @@ label start:
                 $ AddToSet(nadia_menu, "How do bees help with pollination?")
                 jump nadia_questions
             "How do plants get pollinated?":
+                $ ask_character_question("Nadia")
+                $ character_approval("Nadia", 1, "Nadia enjoys sharing her knowledge.")
                 $ eca = "How do plants get pollinated?"
 
                 $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
@@ -1326,6 +1393,7 @@ label start:
                 $ AddToSet(nadia_menu, "How do plants get pollinated?")
                 jump nadia_questions
             "I have a different question.":
+                $ ask_character_question("Nadia")
                 jump nadia_ca
             "See you later.":
                 jump bye_nadia
@@ -1339,7 +1407,7 @@ label start:
         jump nadia_questions
 
     label nadia_ca:
-        $ eca = renpy.input("I'm wondering...", screen="argument_sharing")
+        $ eca = safe_renpy_input("I'm wondering...", screen="argument_sharing")
         if not isinstance(eca, str) or not eca.strip():
             n "Alright! Come back if you want to talk more about bees."
             jump nadia_questions
@@ -1394,6 +1462,7 @@ label start:
 
         menu:
             "I have a question for you.":
+                $ ask_character_question("Nadia")
                 jump nadia_ca
             "Actually, I'll talk to you later":
                 jump bye_nadia2
@@ -1438,10 +1507,16 @@ label start:
     label questions_alex:
         menu:
             "What do you think about the garden?":
+                $ ask_character_question("Alex")
+                $ character_approval("Alex", 1, "Alex smiles shyly.")
                 jump gardenthink
             "Do you live near the empty lot?":
+                $ ask_character_question("Alex")
+                $ character_approval("Alex", 1, "Alex nods and tells you more.")
                 jump alex_lot
             "What kind of food do you wanna grow?":
+                $ ask_character_question("Alex")
+                $ character_approval("Alex", 1, "Alex looks excited to share.")
                 jump alex_growfood
             "Buzz ya later!":
                 jump bye_alex
@@ -1520,8 +1595,12 @@ label start:
 
         menu:
             "They're pretty gentle, actually.":
+                $ ask_character_question("Cora")
+                $ character_approval("Cora", 1, "Cora relaxes a little.")
                 jump gentlebees
             "What do you think of the garden?":
+                $ ask_character_question("Cora")
+                $ character_approval("Cora", 1, "Cora appreciates being asked.")
                 jump corathoughts
             "Enjoy the garden.":
                 jump bye_cora
@@ -1534,6 +1613,8 @@ label start:
 
         menu:
             "What do you think of the garden?":
+                $ ask_character_question("Cora")
+                $ character_approval("Cora", 1, "Cora appreciates being asked.")
                 jump corathoughts
             "Enjoy the garden.":
                 jump bye_cora
@@ -1547,6 +1628,8 @@ label start:
 
         menu:
             "I'm working to convince the Mayor to build a garden in your neighborhood.":
+                $ ask_character_question("Cora")
+                $ character_approval("Cora", 2, "Cora smiles warmly at your support.")
                 jump coragarden
             "I'm trying to convince the Mayor to build a parking [structure] instead.":
                 jump coraparking
@@ -1570,8 +1653,11 @@ label start:
     label cora_2:
         menu:
             "How's it going?":
+                $ ask_character_question("Cora")
                 jump corastress
             "What do you think of the garden?":
+                $ ask_character_question("Cora")
+                $ character_approval("Cora", 1, "Cora appreciates being asked.")
                 jump corathoughts
             "Enjoy the garden.":
                 jump bye_cora
@@ -1627,13 +1713,16 @@ label start:
         cy "Hey there, kiddo. Cyrus Murphy, Marketing Executive for CityPark."
         cy "Nice to meet ya."
 
-        menu:
-            "Great to meet you!":
-                jump excited_cy
-            "Hey.":
-                jump normal_cy
-            "Don't respond.":
-                jump dislike_cy
+    menu:
+        "Great to meet you!":
+            $ character_approval("Cyrus", 2, "Cyrus appreciates your enthusiasm.")
+            jump excited_cy
+        "Hey.":
+            $ character_approval("Cyrus", 0)
+            jump normal_cy
+        "Don't respond.":
+            $ character_disapproval("Cyrus", 2, "Cyrus looks put off by your silence.")
+            jump dislike_cy
 
     label excited_cy:
         cy "It's great to see young people in this neighborhood so passionate about growth in their community!"
@@ -1652,12 +1741,17 @@ label start:
     label cy_menu:
         menu:
             "New [structure]?":
+                $ ask_character_question("Cyrus")
+                $ character_approval("Cyrus", 1, "Cyrus is pleased you're curious.")
                 jump cy_pitch
             "Can't wait!":
+                $ character_approval("Cyrus", 2, "Cyrus grins at your support.")
                 jump agree_garage
             "We don't want a parking [structure].":
+                $ character_disapproval("Cyrus", 2, "Cyrus stiffens at your pushback.")
                 jump dislike_garage
             "I gotta go.":
+                $ character_approval("Cyrus", 0)
                 jump bye_cyrus
 
     label cy_pitch:
@@ -1666,10 +1760,13 @@ label start:
 
         menu:
             "Can't wait!":
+                $ character_approval("Cyrus", 2, "Cyrus grins at your support.")
                 jump agree_garage
             "We don't want a new parking [structure].":
+                $ character_disapproval("Cyrus", 2, "Cyrus stiffens at your pushback.")
                 jump dislike_garage
             "I gotta go.":
+                $ character_approval("Cyrus", 0)
                 jump bye_cyrus
     
     label agree_garage:
@@ -1694,10 +1791,14 @@ label start:
 
         menu:
             "Actually, a grocery store sounds nice.":
+                $ ask_character_question("Cyrus")
+                $ character_approval("Cyrus", 2, "Cyrus nods in agreement.")
                 jump grocery
             "A garden is better for the neighborhood, and I'm gonna prove it.":
+                $ character_disapproval("Cyrus", 3, "Cyrus bristles at the challenge.")
                 jump cy_challenge
             "I'm not sure.":
+                $ character_approval("Cyrus", 0)
                 jump unsure
     
     label unsure:
@@ -1718,8 +1819,10 @@ label start:
 
         menu:
             "We'll find the evidence.":
+                $ character_disapproval("Cyrus", 1, "Cyrus smirks, unconvinced.")
                 jump cy_challenge
             "I need to go.":
+                $ character_approval("Cyrus", 0)
                 jump bye_cyrus
 
     label cy_challenge:
@@ -1745,8 +1848,12 @@ label start:
     label cy_questions:
         menu:
             "What evidence do you have about the benefits of the parking [structure]?":
+                $ ask_character_question("Cyrus")
+                $ character_approval("Cyrus", 1, "Cyrus seems pleased by your professionalism.")
                 jump garage_benefits
             "Have you considered how car pollution might impact the neighborhood?":
+                $ ask_character_question("Cyrus")
+                $ character_approval("Cyrus", 1, "Cyrus seems thoughtful.")
                 jump cy_pollution
             "Nevermind, I should go.":
                 jump bye_cyrus2
@@ -1762,6 +1869,7 @@ label start:
         
         menu:
             "What about the pollinators?":
+                $ ask_character_question("Cyrus")
                 jump cy_bees
             "I guess you're right.":
                 cy "That's the spirit. CityPark will make this neighborhood a shopping hotspot for the city!"
@@ -1783,7 +1891,7 @@ label start:
         show watson smile
         with dissolve
 
-        if get_character_chats("Mayor") is "0"
+        if get_character_chats("Mayor") < 1:
             jump mayor_1
         else:
             jump mayor_2
@@ -1858,7 +1966,7 @@ label start:
     label mayor_eval:
         m "I'd love to hear it. What have you found?"
 
-        $ eca = renpy.input("My persuasive argument for what the Mayor should do with the empty lot:", screen="argument_sharing")
+        $ eca = safe_renpy_input("My persuasive argument for what the Mayor should do with the empty lot:", screen="argument_sharing")
         if not isinstance(eca, str) or not eca.strip():
             m "That's alright. Come back when you're ready to share your ideas."
             jump mayor_2
@@ -1948,7 +2056,7 @@ label start:
 
     label ideasharing:
         el "Sweet. So pretend I'm the mayor! Hey there good citizen! What do you think about this garden idea? Should I support it?"
-        $ eca = renpy.input("My ideas to persuade the mayor:", screen="argument_sharing")
+        $ eca = safe_renpy_input("My ideas to persuade the mayor:", screen="argument_sharing")
         if not isinstance(eca, str) or not eca.strip():
             el "That's okay! Come back when you're ready to try out an argument."
             jump elliot_chatting

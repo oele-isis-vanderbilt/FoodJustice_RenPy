@@ -1,5 +1,22 @@
 init python:
 
+    import renpy.store as store
+
+    def _voice_features_active():
+        return getattr(store, "voice_features_enabled", True)
+
+    def set_voice_features_enabled(enabled):
+        enabled = bool(enabled)
+        store.voice_features_enabled = enabled
+        if not enabled:
+            store.voice_input_contexts = 0
+            store.voice_input_available = False
+            store.voice_recording_active = False
+        renpy.notify("Voice features {}".format("enabled" if enabled else "disabled"))
+
+    def toggle_voice_features_enabled():
+        set_voice_features_enabled(not _voice_features_active())
+
     # --- character stats functions ---
     def update_char_stats(char_name):
         for char in character_directory:
@@ -87,20 +104,34 @@ init python:
             renpy.show_screen("notebook")
 
     def toggle_voice_recording():
+        if not _voice_features_active():
+            renpy.notify("Voice features disabled")
+            return
         global voice_recording_active
         voice_recording_active = not voice_recording_active
         status = "started" if voice_recording_active else "stopped"
         renpy.notify("Voice recording {}".format(status))
 
     def request_voice_input():
-        global voice_input_contexts, voice_input_available
-        voice_input_contexts += 1
-        voice_input_available = voice_input_contexts > 0
+        # Keep track of active contexts requesting speech-to-text.
+        if not _voice_features_active():
+            store.voice_input_contexts = 0
+            store.voice_input_available = False
+            return False
+        store.voice_input_contexts = getattr(store, "voice_input_contexts", 0) + 1
+        store.voice_input_available = store.voice_input_contexts > 0
+        return True
 
     def release_voice_input():
-        global voice_input_contexts, voice_input_available
-        voice_input_contexts = max(0, voice_input_contexts - 1)
-        voice_input_available = voice_input_contexts > 0
+        # Release a context, clamping at zero so we never underflow.
+        if not _voice_features_active():
+            store.voice_input_contexts = 0
+            store.voice_input_available = False
+            return False
+        current = getattr(store, "voice_input_contexts", 0)
+        store.voice_input_contexts = max(0, current - 1)
+        store.voice_input_available = store.voice_input_contexts > 0
+        return True
 
     from renpy.display.transform import Transform
     from renpy.display.matrix import Matrix
