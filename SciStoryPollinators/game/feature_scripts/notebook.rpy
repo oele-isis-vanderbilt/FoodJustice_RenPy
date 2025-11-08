@@ -1270,7 +1270,6 @@ style standard_button_text:
     hover_color "#000000"
     xalign 0.5
     yalign 0.5
-    text_align 0.5
 
 style add_note_text:
     size 20
