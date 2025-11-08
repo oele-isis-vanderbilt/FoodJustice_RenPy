@@ -67,6 +67,15 @@ screen developer_overlay():
 
                     null height 12
 
+                    text "QA Toggles:" style "dev_label"
+                    null height 8
+                    vbox:
+                        spacing 4
+                        text "Voice Features Enabled? [voice_features_enabled]" style "dev_msg"
+                        textbutton "Toggle Voice Features" action Function(toggle_voice_features_enabled) style "dev_jump_button"
+
+                    null height 12
+
                     text "Notebook:" style "dev_label"
                     null height 8
                     vbox:
