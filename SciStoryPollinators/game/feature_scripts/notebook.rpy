@@ -430,9 +430,18 @@ init python:
         store.auto_tag_user_notes = new_value
         renpy.notify("Auto-tag user notes: {}".format("On" if new_value else "Off"))
 
+    def _tag_origin(manual, auto_added):
+        if auto_added and manual:
+            return "mixed"
+        if auto_added:
+            return "auto"
+        return "player"
+
     def new_note(content, speaker, tag, note_type):
         global notebook, note_id_counter, edited_note_id
-        tags_list = normalize_tags(tag)
+        requested_tags = normalize_tags(tag)
+        tags_list = list(requested_tags)
+        auto_added_tags = []
         if note_type == "character-dialog":
             existing = next(
                 (n for n in notebook if n["type"] == "character-dialog" and n["content"] == content and n["source"] == speaker),
@@ -444,6 +453,7 @@ init python:
             tags_list = auto_character_tags(content, tags_list)
         elif note_type == "user-written" and getattr(store, "auto_tag_user_notes", True):
             tags_list = auto_character_tags(content, tags_list)
+        auto_added_tags = [t for t in tags_list if t not in requested_tags]
 
         note_id = note_id_counter
         notebook.append({
@@ -477,12 +487,21 @@ init python:
             "note": content,
             "source": speaker,
             "tags": tags_list,
+            "requested_tags": requested_tags,
+            "auto_tags_added": auto_added_tags,
+            "auto_tagged": bool(auto_added_tags),
+            "tag_origin": _tag_origin(requested_tags, auto_added_tags),
             "note_id": note_id,
             "type": note_type
         })
 
         renpy.take_screenshot()
         renpy.save("1-1", save_name)
+
+        for achievement_fn in ("achieve_notes5", "achieve_notes10"):
+            fn = globals().get(achievement_fn)
+            if callable(fn):
+                fn()
 
         return note_id
     
@@ -521,8 +540,12 @@ init python:
     def save_note(note_id, newnote, newsource, newtags):
         global notebook
         updated_tags = normalize_tags(newtags)
+        manual_tags = list(updated_tags)
         for n in notebook:
             if n["id"] == note_id:
+                previous_content = n["content"]
+                previous_source = n["source"]
+                previous_tags = normalize_tags(n.get("tags", []))
                 n["content"] = newnote
                 n["source"] = newsource
                 note_type = n.get("type")
@@ -533,13 +556,35 @@ init python:
                     should_auto_tag = True
                 if should_auto_tag:
                     updated_tags = auto_character_tags(newnote, updated_tags)
+                auto_added_tags = [t for t in updated_tags if t not in manual_tags]
                 n["tags"] = updated_tags
                 renpy.notify("Note Revised")
+                changes = []
+                if previous_content != newnote:
+                    changes.append(f"content updated")
+                if previous_source != newsource:
+                    changes.append(f"source {previous_source} -> {newsource}")
+                added = sorted(set(updated_tags) - set(previous_tags))
+                removed = sorted(set(previous_tags) - set(updated_tags))
+                if added:
+                    changes.append(f"tags added: {', '.join(added)}")
+                if removed:
+                    changes.append(f"tags removed: {', '.join(removed)}")
                 log_http(
                     current_user,
                     action="PlayerEditedNote",
                     view=current_label,
-                    payload={"note": newnote, "source": newsource, "tags": updated_tags, "note_id": note_id}
+                    payload={
+                        "note": newnote,
+                        "source": newsource,
+                        "tags": updated_tags,
+                        "note_id": note_id,
+                        "changes": changes,
+                        "tags_added": added,
+                        "tags_removed": removed,
+                        "auto_tags_added": auto_added_tags,
+                        "tag_origin": _tag_origin(manual_tags, auto_added_tags),
+                    }
                 )
                 narrator.add_history(kind="adv", who="You edited a note:", what=newnote)
                 renpy.take_screenshot()
@@ -595,6 +640,7 @@ init python:
 
     def save_draft(newcontent, edited=False):
         global notebook_argument, last_notebook_argument, argument_edits, argument_history
+        previous = notebook_argument
         if newcontent != notebook_argument:
             argument_history.append(notebook_argument)
             notebook_argument = newcontent
@@ -603,11 +649,20 @@ init python:
             renpy.notify("Draft Argument Updated!" if not edited else "Draft Argument Edited!")
             log_http(current_user, action="PlayerEditedArgument" if edited else "PlayerSavedArgument", view=current_label, payload={
                 "draft": newcontent,
+                "previous": previous,
+                "change_summary": {
+                    "previous_length": len(previous or ""),
+                    "new_length": len(newcontent or ""),
+                    "delta_length": len(newcontent or "") - len(previous or "")
+                }
             })
             narrator.add_history(kind="adv", who="You edited your draft: " if edited else "Action", what=newcontent)
             renpy.take_screenshot()
             renpy.save("1-1", save_name)
             renpy.block_rollback()
+            fn = globals().get("achieve_argument")
+            if callable(fn):
+                fn()
 
 #### Notebook ###### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
 screen notebook():
@@ -1270,7 +1325,6 @@ style standard_button_text:
     hover_color "#000000"
     xalign 0.5
     yalign 0.5
-    text_align 0.5
 
 style add_note_text:
     size 20

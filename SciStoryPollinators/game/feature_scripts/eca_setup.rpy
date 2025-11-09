@@ -54,6 +54,10 @@ init python:
         return ca_link, ca_json
 
     def eca_length_check(response):
+        if response is None:
+            response = ""
+        elif not isinstance(response, str):
+            response = str(response)
         checker = "." 
         if len(response) > 200 and checker in response:
             multi_response = [x.strip() for x in response.split(".")]

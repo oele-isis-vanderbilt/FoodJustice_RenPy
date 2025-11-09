@@ -1,20 +1,182 @@
+default last_spoken_character = None
+default last_player_choice = None
+
 init python:
-    import json, csv, io, time, hashlib, os, zipfile
+    import json, csv, io, time, hashlib, os, zipfile, random
     from math import pow
     import datetime
     from typing import Dict, Any, Optional
+    from functools import partial
+    import contextlib
     import os
     import pygame.scrap
 
     # -------------------------
     # Session & buffers
     # -------------------------
-    SESSION_ID = renpy.random.randint(10**8, 10**9-1)
+    SESSION_ID = random.randint(10**8, 10**9 - 1)
 
     _scene_events = []                 # in-memory for the current scene
     _upload_endpoint = "https://example.com/ingest"  # <- change me
     _max_persistent_logs = 500         # rolling cap
     _max_queue = 1000                  # safety cap on unsent queue
+    _dialogue_origin_stack = [{"source": "script", "details": None}]
+    _active_choice_log = None
+
+    def _current_dialogue_origin():
+        top = _dialogue_origin_stack[-1]
+        return {"source": top.get("source"), "details": top.get("details")}
+
+    def start_generated_dialogue(kind="eca", metadata=None):
+        """Mark subsequent dialogue lines as being generated (e.g., ECA)."""
+        payload = {"source": kind or "generated", "details": metadata or {}}
+        _dialogue_origin_stack.append(payload)
+
+    def finish_generated_dialogue():
+        """Pop the last generated dialogue marker."""
+        if len(_dialogue_origin_stack) > 1:
+            _dialogue_origin_stack.pop()
+
+    @contextlib.contextmanager
+    def dialogue_origin(kind="script", metadata=None):
+        start_generated_dialogue(kind, metadata)
+        try:
+            yield
+        finally:
+            finish_generated_dialogue()
+
+    def remember_menu_choice(caption):
+        """Called from the choice screen when a button is clicked."""
+        global _active_choice_log
+        _active_choice_log = {
+            "text": caption,
+            "timestamp": time.time(),
+            "delivery": "menu",
+            "is_question": False,
+            "question_target": None,
+            "auto_generated": False,
+        }
+
+    def _choice_payload(extra=None):
+        if not _active_choice_log:
+            return None
+        payload = dict(_active_choice_log)
+        payload["origin"] = _current_dialogue_origin()
+        if extra:
+            payload.update(extra)
+        return payload
+
+    def log_player_choice(extra=None):
+        """Send the buffered choice info to the logging endpoint."""
+        global last_player_choice
+        payload = _choice_payload(extra=extra)
+        if not payload:
+            return
+        log_http(
+            current_user,
+            action="PlayerDialogueChoice",
+            view=current_label,
+            payload=payload,
+        )
+        last_player_choice = payload
+        clear_pending_choice()
+
+    def clear_pending_choice():
+        global _active_choice_log
+        _active_choice_log = None
+
+    def mark_choice_as_question(target):
+        global _active_choice_log
+        if _active_choice_log:
+            _active_choice_log["is_question"] = True
+            _active_choice_log["question_target"] = target
+
+    def annotate_choice(**kwargs):
+        global _active_choice_log
+        if not _active_choice_log:
+            return
+        _active_choice_log.update({k: v for k, v in kwargs.items() if v is not None})
+
+    def active_choice_caption(fallback=True):
+        if _active_choice_log and _active_choice_log.get("text"):
+            return _active_choice_log["text"]
+        if fallback and last_player_choice:
+            return last_player_choice.get("text")
+        return None
+
+    def log_player_input(text, prompt="", screen=None, input_type="manual", is_question=False, metadata=None):
+        entry = {
+            "text": text,
+            "prompt": prompt,
+            "screen": screen,
+            "delivery": input_type,
+            "is_question": bool(is_question),
+            "metadata": metadata or {},
+        }
+        log_http(
+            current_user,
+            action="PlayerDialogueInput",
+            view=current_label,
+            payload=entry,
+        )
+
+    def log_player_script_line(text, source="scripted", metadata=None):
+        payload = {
+            "text": text,
+            "delivery": source,
+            "metadata": metadata or {},
+        }
+        log_http(
+            current_user,
+            action="PlayerDialogueLine",
+            view=current_label,
+            payload=payload,
+        )
+
+    def character_dialogue_callback(event, interact=True, metadata=None, **kwargs):
+        if event != "show" or not metadata:
+            return
+        text = kwargs.get("what") or ""
+        start = kwargs.get("start", 0)
+        end = kwargs.get("end", len(text))
+        snippet = text[start:end].strip()
+        if not snippet:
+            return
+        origin = _current_dialogue_origin()
+        payload = {
+            "speaker_id": metadata.get("id"),
+            "speaker_name": metadata.get("name"),
+            "text": snippet,
+            "role": metadata.get("role", "npc"),
+            "content_source": origin.get("source"),
+            "content_metadata": origin.get("details"),
+            "segment_start": start,
+            "segment_end": end,
+        }
+        action = "NPCDialogueLine" if payload["role"] != "player" else "PlayerDialogueLine"
+        log_http(
+            current_user,
+            action=action,
+            view=current_label,
+            payload=payload,
+        )
+        global last_spoken_character
+        last_spoken_character = payload["speaker_id"]
+
+    def attach_character_callbacks():
+        """Bind dialogue callbacks to every character in the directory."""
+        import renpy
+        directory = list(getattr(renpy.store, "character_directory", []))
+        for entry in directory:
+            char = entry.get("variable")
+            if not char:
+                continue
+            metadata = {
+                "id": entry.get("id") or entry.get("name"),
+                "name": entry.get("name"),
+                "role": entry.get("role", "npc"),
+            }
+            char.callback = partial(character_dialogue_callback, metadata=metadata)
 
     # -------------------------
     # Utilities
@@ -284,6 +446,13 @@ init python:
     # -------------------------
     # At game start or main menu, try flushing anything pending.
     config.start_callbacks.append(lambda: background_flush_uploads())
+
+
+init 10 python:
+    try:
+        attach_character_callbacks()
+    except Exception:
+        pass
 
 
 init python:

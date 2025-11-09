@@ -1,5 +1,39 @@
 init python:
 
+    import renpy.store as store
+    from renpy.display.core import EndInteraction
+
+    def _log_approval_change(char_name, delta, new_total, message, change_type):
+        payload = {
+            "character": char_name,
+            "delta": delta,
+            "new_total": new_total,
+            "change_type": change_type,
+            "choice": active_choice_caption(),
+            "message": message,
+        }
+        log_http(
+            current_user,
+            action="CharacterApprovalChanged",
+            view=current_label,
+            payload=payload,
+        )
+
+    def _voice_features_active():
+        return getattr(store, "voice_features_enabled", True)
+
+    def set_voice_features_enabled(enabled):
+        enabled = bool(enabled)
+        store.voice_features_enabled = enabled
+        if not enabled:
+            store.voice_input_contexts = 0
+            store.voice_input_available = False
+            store.voice_recording_active = False
+        renpy.notify("Voice features {}".format("enabled" if enabled else "disabled"))
+
+    def toggle_voice_features_enabled():
+        set_voice_features_enabled(not _voice_features_active())
+
     # --- character stats functions ---
     def update_char_stats(char_name):
         for char in character_directory:
@@ -25,11 +59,14 @@ init python:
             if char["name"] == char_name:
                 char["questions"] = char.get("questions", 0) + 1
                 break
+        mark_choice_as_question(char_name)
 
     def character_approval(char_name, amount, message=None):
         for char in character_directory:
             if char["name"] == char_name:
                 char["approval"] = char.get("approval", 0) + amount
+                annotate_choice(approval_delta=amount, approval_character=char_name)
+                _log_approval_change(char_name, amount, char["approval"], message, "gain")
                 if message:
                     renpy.notify(message)
                 break
@@ -38,6 +75,8 @@ init python:
         for char in character_directory:
             if char["name"] == char_name:
                 char["approval"] = char.get("approval", 0) - amount
+                annotate_choice(approval_delta=-amount, approval_character=char_name)
+                _log_approval_change(char_name, -amount, char["approval"], message, "loss")
                 if message:
                     renpy.notify(message)
                 break
@@ -52,6 +91,37 @@ init python:
             renpy.hide_screen("argument_sharing")
         else:
             renpy.show_screen("argument_sharing")
+
+    def safe_renpy_input(prompt="", screen=None, **kwargs):
+        """Collect player input via Ren'Py and always return a safe string."""
+
+        def _do_call():
+            if screen:
+                return renpy.call_screen(screen, prompt=prompt, **kwargs)
+            return renpy.input(prompt, **kwargs)
+
+        try:
+            response = renpy.invoke_in_new_context(_do_call)
+        except EndInteraction as exc:
+            response = getattr(exc, "value", "")
+        if response is None:
+            return ""
+        if isinstance(response, bytes):
+            return response.decode("utf-8", errors="ignore")
+        if not isinstance(response, str):
+            return str(response)
+        text = response
+        if text:
+            is_question = "?" in (prompt or "")
+            log_player_input(
+                text,
+                prompt=prompt,
+                screen=screen,
+                input_type="manual",
+                is_question=is_question,
+                metadata={"source": "safe_renpy_input", "stripped": text.strip()},
+            )
+        return text
 
 
 
@@ -87,20 +157,34 @@ init python:
             renpy.show_screen("notebook")
 
     def toggle_voice_recording():
+        if not _voice_features_active():
+            renpy.notify("Voice features disabled")
+            return
         global voice_recording_active
         voice_recording_active = not voice_recording_active
         status = "started" if voice_recording_active else "stopped"
         renpy.notify("Voice recording {}".format(status))
 
     def request_voice_input():
-        global voice_input_contexts, voice_input_available
-        voice_input_contexts += 1
-        voice_input_available = voice_input_contexts > 0
+        # Keep track of active contexts requesting speech-to-text.
+        if not _voice_features_active():
+            store.voice_input_contexts = 0
+            store.voice_input_available = False
+            return False
+        store.voice_input_contexts = getattr(store, "voice_input_contexts", 0) + 1
+        store.voice_input_available = store.voice_input_contexts > 0
+        return True
 
     def release_voice_input():
-        global voice_input_contexts, voice_input_available
-        voice_input_contexts = max(0, voice_input_contexts - 1)
-        voice_input_available = voice_input_contexts > 0
+        # Release a context, clamping at zero so we never underflow.
+        if not _voice_features_active():
+            store.voice_input_contexts = 0
+            store.voice_input_available = False
+            return False
+        current = getattr(store, "voice_input_contexts", 0)
+        store.voice_input_contexts = max(0, current - 1)
+        store.voice_input_available = store.voice_input_contexts > 0
+        return True
 
     from renpy.display.transform import Transform
     from renpy.display.matrix import Matrix
