@@ -112,6 +112,7 @@ label start:
                 
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
+                $ start_generated_dialogue("eca", {"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
                 if ecasplit == True:
                     $ playAudio(ecaresponse1)
                     t "[ecaresponse1]"
@@ -120,6 +121,7 @@ label start:
                 else:
                     $ playAudio(ecaresponse)
                     t "[ecaresponse]"
+                $ finish_generated_dialogue()
 
                 $ stopAudio()
 
@@ -128,7 +130,7 @@ label start:
                 $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
 
                 if savedraft == True:
-                    $ draft(eca)
+                    $ save_draft(eca)
                 else:
                     pass
                
@@ -158,6 +160,7 @@ label start:
 
                         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
+                        $ start_generated_dialogue("eca", {"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
                         if ecasplit == True:
                             $ playAudio(ecaresponse1)
                             t "[ecaresponse1]"
@@ -167,6 +170,7 @@ label start:
                         else:
                             $ playAudio(ecaresponse)
                             t "[ecaresponse]"
+                        $ finish_generated_dialogue()
 
                         $ stopAudio()
 
@@ -175,7 +179,7 @@ label start:
                         $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
                         
                         if savedraft == True:
-                            $ draft(eca)
+                            $ save_draft(eca)
                         else:
                             pass
 
@@ -212,6 +216,7 @@ label start:
                 
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
                 
+                $ start_generated_dialogue("eca", {"character": "Tulip", "context": "GameHelp"})
                 if ecasplit == True:
                     $ playAudio(ecaresponse1)
                     t "[ecaresponse1]"
@@ -221,6 +226,7 @@ label start:
                 else:
                     $ playAudio(ecaresponse)
                     t "[ecaresponse]"
+                $ finish_generated_dialogue()
 
                 $ stopAudio()
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
@@ -250,6 +256,7 @@ label start:
                         
                         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
+                        $ start_generated_dialogue("eca", {"character": "Tulip", "context": "GameHelp_Collaboration"})
                         if ecasplit == True:
 
                             $ playAudio(ecaresponse1)
@@ -261,6 +268,7 @@ label start:
 
                             $ playAudio(ecaresponse)
                             t "[ecaresponse]"
+                        $ finish_generated_dialogue()
 
                         $ stopAudio()
                         
@@ -535,6 +543,7 @@ label start:
 
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
+        $ start_generated_dialogue("eca", {"character": "Riley", "context": "FoodJustice_RileyEvaluation"})
         if ecasplit == True:
 
             $ playAudio(ecaresponse1)
@@ -545,13 +554,15 @@ label start:
         else:
             $ playAudio(ecaresponse)
             r "[ecaresponse]"
+        $ finish_generated_dialogue()
             
         $ stopAudio()
+        $ achieve_feedback()
 
         $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
 
         if savedraft == True:
-            $ draft(eca)
+            $ save_draft(eca)
         else:
             pass
 
@@ -613,6 +624,7 @@ label start:
                   
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
+                $ start_generated_dialogue("eca", {"character": "Riley", "context": "Knowledge_FoodJustice"})
                 if ecasplit == True:
 
                     $ playAudio(ecaresponse1)
@@ -623,8 +635,11 @@ label start:
 
                 else:
 
-                    $ playAudio(ecaresponse)
-                    r "[ecaresponse]"
+            $ playAudio(ecaresponse)
+            r "[ecaresponse]"
+        $ finish_generated_dialogue()
+                $ finish_generated_dialogue()
+                $ finish_generated_dialogue()
                 
                 $ stopAudio()
 
@@ -1138,6 +1153,7 @@ label start:
 
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
+        $ start_generated_dialogue("eca", {"character": "Wes", "context": "Knowledge_Pollination"})
         if ecasplit == True:
             $ playAudio(ecaresponse1)
             w "[ecaresponse1]"
@@ -1147,6 +1163,8 @@ label start:
         else:
             $ playAudio(ecaresponse)
             w "[ecaresponse]"
+        $ finish_generated_dialogue()
+        $ finish_generated_dialogue()
 
         $ stopAudio()
 
@@ -1292,6 +1310,7 @@ label start:
 
                 $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
+                $ start_generated_dialogue("eca", {"character": "Nadia", "context": "Knowledge_Pollination"})
                 if ecasplit == True:
                     $ playAudio(ecaresponse1)
                     n "[ecaresponse1]"
@@ -1301,6 +1320,8 @@ label start:
                 else:
                     $ playAudio(ecaresponse)
                     n "[ecaresponse]"
+                $ finish_generated_dialogue()
+                $ finish_generated_dialogue()
 
                 $ stopAudio()
 
@@ -1374,6 +1395,7 @@ label start:
 
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
+        $ start_generated_dialogue("eca", {"character": "Nadia", "context": "Knowledge_Pollination"})
         if ecasplit == True:
             $ playAudio(ecaresponse1)
             n "[ecaresponse1]"
@@ -1383,6 +1405,7 @@ label start:
         else:
             $ playAudio(ecaresponse)
             n "[ecaresponse]"
+        $ finish_generated_dialogue()
 
         $ stopAudio()
 
@@ -1934,9 +1957,11 @@ label start:
 
         if "Accept." in ecaresponse:
             $ mayorconvinced = True
+            $ mayor_supports_parking = False
             $ ecaresponse = ecaresponse.replace("Accept. ", "", 1)
             $ log_http(current_user, action="MayorEvaluation", view="mayor", payload={"mayor_convinced": "Convincing Argument"})
         elif "Reject." in ecaresponse:
+            $ mayorconvinced = False
             $ ecaresponse = ecaresponse.replace("Reject. ", "", 1)
             $ log_http(current_user, action="MayorEvaluation", view="mayor", payload={"mayor_convinced": "Not Convinced"})
         else:
@@ -1944,6 +1969,7 @@ label start:
 
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
+        $ start_generated_dialogue("eca", {"character": "Mayor Watson", "context": "FoodJustice_MayorEvaluation"})
         if ecasplit == True:
             $ playAudio(ecaresponse1)
             m "[ecaresponse1]"
@@ -1953,15 +1979,20 @@ label start:
         else:
             $ playAudio(ecaresponse)
             m "[ecaresponse]"
+        $ finish_generated_dialogue()
 
         $ stopAudio()
 
         $ mayor_attempts = mayor_attempts + 1
+        if mayorconvinced == True:
+            $ achieve_convincegarden()
+        else:
+            $ achieve_undecided()
 
         $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
 
         if savedraft == True:
-            $ draft(eca)
+            $ save_draft(eca)
         else:
             pass
     
@@ -2025,6 +2056,7 @@ label start:
         
         $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
 
+        $ start_generated_dialogue("eca", {"character": "Elliot", "context": "FoodJustice_RileyEvaluation"})
         if ecasplit == True:
             $ playAudio(ecaresponse1)
             el "[ecaresponse1]"
@@ -2034,13 +2066,14 @@ label start:
         else:
             $ playAudio(ecaresponse)
             el "[ecaresponse]"
+        $ finish_generated_dialogue()
 
         $ stopAudio()
 
         $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
 
         if savedraft == True:
-            $ draft(eca)
+            $ save_draft(eca)
         else:
             pass
 
@@ -2123,6 +2156,8 @@ label start:
             jump final_parking
 
     label final_garden:
+        $ mayor_supports_parking = False
+        $ achieve_convincegarden()
         scene expression "garden [startplace]"
         with dissolve
 
@@ -2179,6 +2214,8 @@ label start:
         jump end
 
     label final_parking:
+        $ mayor_supports_parking = True
+        $ achieve_convinceparking()
         scene expression "parking [startplace]"
         with dissolve
 
