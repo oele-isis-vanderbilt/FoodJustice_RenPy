@@ -134,6 +134,18 @@ init python:
 
     def unlock_achievement(key, pause_time=5):
         persistent.achievements[key] = True
+        ach = achievement_map.get(key, {})
+        log_http(
+            current_user,
+            action="AchievementUnlocked",
+            view=current_label,
+            payload={
+                "achievement": key,
+                "name": ach.get("name"),
+                "location": getattr(renpy.store, "currentlocation", None),
+                "character_in_discussion": last_spoken_character,
+            },
+        )
         renpy.show_screen("achievement_popup", key)
         renpy.pause(pause_time, hard=True)
         renpy.hide_screen("achievement_popup")
@@ -142,87 +154,75 @@ init python:
         if condition and not persistent.achievements.get(key, False):
             unlock_achievement(key)
 
-    def achieve_social():
-        try:
-            chars = list(character_directory.values())
-        except Exception:
-            chars = character_directory
-        ensure_unlocked("SOCIAL", all(ch.get("spoken") for ch in chars))
+    def _character_records():
+        directory = character_directory
+        if isinstance(directory, dict):
+            directory = list(directory.values())
+        return [ch for ch in directory if isinstance(ch, dict)]
 
-    def achieve_argument():
-        ensure_unlocked("ARGUMENT", argument_attempts >= 1)
-    
+    def _spoken_by_name():
+        spoken = {}
+        for ch in _character_records():
+            name = ch.get("name")
+            if name:
+                spoken[name] = ch.get("spoken")
+        return spoken
+
+    def achieve_social():
+        chars = _character_records()
+        ensure_unlocked("SOCIAL", chars and all(ch.get("spoken") for ch in chars))
+        achieve_gardenchat()
+        achieve_foodlabchat()
+
     def achieve_visit():
         required_locations = {"Food Lab", "Garden", "Beehives", "Empty Lot"}
-        # Make sure visited_list exists before checking
-        try:
-            visited = set(visited_list)
-        except NameError:
-            visited = set()
-
+        visited = set(getattr(renpy.store, "visited_list", []) or [])
         ensure_unlocked("VISIT", required_locations.issubset(visited))
 
     def achieve_argument():
-        try:
-            edits = argument_edits
-        except NameError:
-            edits = 0
+        attempts = getattr(renpy.store, "argument_attempts", 0)
+        edits = getattr(renpy.store, "argument_edits", 0)
 
-        # Unlock for first draft
-        ensure_unlocked("ARGUMENT", edits >= 1)
-
-        # Unlock for 3 revisions
-        ensure_unlocked("REVISION5", edits >= 3)
+        ensure_unlocked("ARGUMENT", attempts >= 1 or edits >= 1)
+        ensure_unlocked("REVISION5", edits >= 5)
 
     def achieve_feedback():
-        ensure_unlocked("FEEDBACK")
+        ensure_unlocked("FEEDBACK", True)
 
     def achieve_notes5():
         notes = getattr(renpy.store, "notebook", []) or []
-        # Ignore any placeholder entries that might be injected from dev tools.
         saved_notes = [n for n in notes if isinstance(n, dict) and n.get("type") != "placeholder-note"]
         ensure_unlocked("NOTES5", len(saved_notes) >= 5)
 
+    def achieve_notes10():
+        notes = getattr(renpy.store, "notebook", []) or []
+        saved_notes = [n for n in notes if isinstance(n, dict) and n.get("type") != "placeholder-note"]
+        ensure_unlocked("NOTES10", len(saved_notes) >= 10)
+
     def achieve_gardenchat():
         required = {"Victor", "Wes", "Nadia", "Alex", "Cora"}
-        try:
-            directory = list(character_directory.values())
-        except Exception:
-            directory = character_directory
-        spoken_by_name = {ch.get("name"): ch.get("spoken") for ch in directory if isinstance(ch, dict)}
-        ensure_unlocked("GARDENCHAT", all(spoken_by_name.get(name) for name in required))
+        spoken = _spoken_by_name()
+        ensure_unlocked("GARDENCHAT", all(spoken.get(name) for name in required))
 
     def achieve_foodlabchat():
         required = {"Amara", "Riley"}
-        try:
-            directory = list(character_directory.values())
-        except Exception:
-            directory = character_directory
-        spoken_by_name = {ch.get("name"): ch.get("spoken") for ch in directory if isinstance(ch, dict)}
-        ensure_unlocked("FOODLABCHAT", all(spoken_by_name.get(name) for name in required))
+        spoken = _spoken_by_name()
+        ensure_unlocked("FOODLABCHAT", all(spoken.get(name) for name in required))
 
     def achieve_undecided():
         attempts = getattr(renpy.store, "mayor_attempts", 0)
         convinced = getattr(renpy.store, "mayorconvinced", False)
-        convinced_parking = getattr(renpy.store, "mayor_supports_parking", False)
-        ensure_unlocked("UNDECIDED", attempts >= 1 and not convinced and not convinced_parking)
+        supports_parking = getattr(renpy.store, "mayor_supports_parking", False)
+        ensure_unlocked("UNDECIDED", attempts >= 1 and not convinced and not supports_parking)
 
     def achieve_convincegarden():
         ensure_unlocked("CONVINCEGARDEN", getattr(renpy.store, "mayorconvinced", False))
 
     def achieve_convinceparking():
-        attempts = getattr(renpy.store, "mayor_attempts", 0)
-        convinced = getattr(renpy.store, "mayorconvinced", False)
-        convinced_parking = getattr(renpy.store, "mayor_supports_parking", None)
-        if convinced_parking is None:
-            convinced_parking = getattr(renpy.store, "mayor_final_decision", "") == "parking"
-        ensure_unlocked("CONVINCEPARKING", attempts >= 1 and not convinced and convinced_parking)
-
-    def achieve_notes10():
-        notes = getattr(renpy.store, "notebook", []) or []
-        # Ignore any placeholder entries that might be injected from dev tools.
-        saved_notes = [n for n in notes if isinstance(n, dict) and n.get("type") != "placeholder-note"]
-        ensure_unlocked("NOTES10", len(saved_notes) >= 10)
+        supports_parking = getattr(renpy.store, "mayor_supports_parking", None)
+        if supports_parking is None:
+            supports_parking = getattr(renpy.store, "mayor_final_decision", "") == "parking"
+        ensure_unlocked("CONVINCEPARKING", bool(supports_parking))
 
 # ---------------------------------------------------------------------------
 # Popup shown when an achievement unlocks (bottom-right)
