@@ -228,7 +228,12 @@ screen choice(items):
 
     vbox:
         for i in items:
-            textbutton i.caption action [i.action, Function(narrator.add_history, kind="adv",who=__("Choice:"),what=__(i.caption)), Function(log_http, current_user, action="PlayerDialogueChoice", view="choicemenu", payload={"choice": i.caption})]
+            textbutton i.caption action [
+                Function(remember_menu_choice, i.caption),
+                i.action,
+                Function(narrator.add_history, kind="adv", who=__("Choice:"), what=__(i.caption)),
+                Function(log_player_choice),
+            ]
 
 
 style choice_vbox is vbox
