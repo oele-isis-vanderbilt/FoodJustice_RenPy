@@ -3,6 +3,22 @@ init python:
     import renpy.store as store
     from renpy.display.core import EndInteraction
 
+    def _log_approval_change(char_name, delta, new_total, message, change_type):
+        payload = {
+            "character": char_name,
+            "delta": delta,
+            "new_total": new_total,
+            "change_type": change_type,
+            "choice": active_choice_caption(),
+            "message": message,
+        }
+        log_http(
+            current_user,
+            action="CharacterApprovalChanged",
+            view=current_label,
+            payload=payload,
+        )
+
     def _voice_features_active():
         return getattr(store, "voice_features_enabled", True)
 
@@ -43,11 +59,14 @@ init python:
             if char["name"] == char_name:
                 char["questions"] = char.get("questions", 0) + 1
                 break
+        mark_choice_as_question(char_name)
 
     def character_approval(char_name, amount, message=None):
         for char in character_directory:
             if char["name"] == char_name:
                 char["approval"] = char.get("approval", 0) + amount
+                annotate_choice(approval_delta=amount, approval_character=char_name)
+                _log_approval_change(char_name, amount, char["approval"], message, "gain")
                 if message:
                     renpy.notify(message)
                 break
@@ -56,6 +75,8 @@ init python:
         for char in character_directory:
             if char["name"] == char_name:
                 char["approval"] = char.get("approval", 0) - amount
+                annotate_choice(approval_delta=-amount, approval_character=char_name)
+                _log_approval_change(char_name, -amount, char["approval"], message, "loss")
                 if message:
                     renpy.notify(message)
                 break
@@ -89,7 +110,18 @@ init python:
             return response.decode("utf-8", errors="ignore")
         if not isinstance(response, str):
             return str(response)
-        return response
+        text = response
+        if text:
+            is_question = "?" in (prompt or "")
+            log_player_input(
+                text,
+                prompt=prompt,
+                screen=screen,
+                input_type="manual",
+                is_question=is_question,
+                metadata={"source": "safe_renpy_input", "stripped": text.strip()},
+            )
+        return text
 
 
 
