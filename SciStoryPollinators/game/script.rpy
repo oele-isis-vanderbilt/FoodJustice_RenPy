@@ -634,13 +634,9 @@ label start:
                     r "[ecaresponse2]"
 
                 else:
-
-            $ playAudio(ecaresponse)
-            r "[ecaresponse]"
-        $ finish_generated_dialogue()
+                    $ playAudio(ecaresponse)
+                    r "[ecaresponse]"
                 $ finish_generated_dialogue()
-                $ finish_generated_dialogue()
-                
                 $ stopAudio()
 
                 jump foodknowledge_loop
