@@ -101,7 +101,7 @@ init python:
             return renpy.input(prompt, **kwargs)
 
         try:
-            response = _do_call()
+            response = renpy.invoke_in_new_context(_do_call)
         except EndInteraction as exc:
             response = getattr(exc, "value", "")
         if response is None:
