@@ -317,7 +317,6 @@ default customnotecount = 0
 default copied_argument = ""
 
 default new_note_text_template = "whats your evidence?"
-default new_note_source_template = "where did you learn this?"
 
 default notebook_unlocked = False
 default editing_argument = False
