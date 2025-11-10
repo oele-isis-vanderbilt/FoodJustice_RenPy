@@ -243,6 +243,16 @@ def load_rpy_module(relative_path: str, module_name: str):
         literal = _extract_literal_list(text, "achievement_list")
         if literal is not None:
             predefs["achievement_list"] = literal
+        predefs.setdefault("log_http", lambda *args, **kwargs: None)
+        predefs.setdefault("current_user", "test-user")
+        predefs.setdefault("current_label", "test-label")
+        predefs.setdefault("last_spoken_character", "Elliot")
+        predefs.setdefault("last_spoken_character", "Elliot")
+    if "helper.rpy" in relative_path:
+        predefs.setdefault("log_player_input", lambda *args, **kwargs: None)
+        predefs.setdefault("log_http", lambda *args, **kwargs: None)
+        predefs.setdefault("current_user", "test-user")
+        predefs.setdefault("current_label", "test-label")
 
     global_scope = module.__dict__
     global_scope.update(

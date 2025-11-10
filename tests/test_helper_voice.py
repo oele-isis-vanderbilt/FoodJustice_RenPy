@@ -45,18 +45,74 @@ def test_toggle_voice_recording_handles_disabled_features(helper_module, renpy_s
 
 # Speech input UI can raise EndInteraction when underlying OS audio tools fail.
 # safe_renpy_input should convert that into an empty string instead of crashing.
-def test_safe_input_handles_endinteraction(helper_module, renpy_module):
+def test_safe_input_handles_endinteraction(helper_module, renpy_module, monkeypatch):
     EndInteraction = renpy_module.display.core.EndInteraction
-    original = renpy_module.invoke_in_new_context
 
-    def raising(fn, *args, **kwargs):
+    def raising(prompt="", **kwargs):
         raise EndInteraction()
 
-    renpy_module.invoke_in_new_context = raising
+    monkeypatch.setattr(renpy_module, "input", raising)
 
-    try:
-        value = helper_module.safe_renpy_input("Say something")
-    finally:
-        renpy_module.invoke_in_new_context = original
+    value = helper_module.safe_renpy_input("Say something")
 
     assert value == ""
+
+
+def test_safe_input_discards_non_string(helper_module, renpy_module, monkeypatch):
+    logged = []
+    monkeypatch.setattr(helper_module, "log_player_input", lambda *a, **k: logged.append((a, k)))
+
+    def returns_bool(prompt="", **kwargs):
+        return True
+
+    monkeypatch.setattr(renpy_module, "input", returns_bool)
+
+    value = helper_module.safe_renpy_input("Share something")
+
+    assert value == ""
+    assert logged == []
+
+
+def test_safe_input_logs_manual_entries(helper_module, renpy_module, monkeypatch):
+    captured = []
+
+    def fake_log(text, **kwargs):
+        captured.append((text, kwargs))
+
+    monkeypatch.setattr(helper_module, "log_player_input", fake_log)
+    monkeypatch.setattr(renpy_module, "input", lambda prompt="", **kwargs: "   My idea   ")
+
+    value = helper_module.safe_renpy_input("Prompt with ?")
+
+    assert value == "   My idea   "
+    assert captured, "log_player_input should be invoked for manual entries."
+    text, kwargs = captured[0]
+    assert text == "   My idea   "
+    assert kwargs["prompt"] == "Prompt with ?"
+    assert kwargs["screen"] is None
+    assert kwargs["is_question"] is True
+    assert kwargs["metadata"]["stripped"] == "My idea"
+
+
+def test_safe_input_prefers_call_screen_when_provided(helper_module, renpy_module, monkeypatch):
+    log_calls = []
+    monkeypatch.setattr(helper_module, "log_player_input", lambda *a, **k: log_calls.append((a, k)))
+
+    def fake_call_screen(name, **kwargs):
+        assert name == "argument_sharing"
+        assert kwargs["prompt"] == "Share soon"
+        return "Screen text"
+
+    def fail_input(*args, **kwargs):
+        raise AssertionError("renpy.input should not be used when screen is provided")
+
+    monkeypatch.setattr(renpy_module, "call_screen", fake_call_screen)
+    monkeypatch.setattr(renpy_module, "input", fail_input)
+
+    value = helper_module.safe_renpy_input("Share soon", screen="argument_sharing")
+
+    assert value == "Screen text"
+    assert log_calls, "log_player_input should record screen submissions."
+    args, kwargs = log_calls[0]
+    assert args[0] == "Screen text"
+    assert kwargs["screen"] == "argument_sharing"

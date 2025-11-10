@@ -101,15 +101,15 @@ init python:
             return renpy.input(prompt, **kwargs)
 
         try:
-            response = renpy.invoke_in_new_context(_do_call)
+            response = _do_call()
         except EndInteraction as exc:
             response = getattr(exc, "value", "")
         if response is None:
             return ""
         if isinstance(response, bytes):
-            return response.decode("utf-8", errors="ignore")
+            response = response.decode("utf-8", errors="ignore")
         if not isinstance(response, str):
-            return str(response)
+            return ""
         text = response
         if text:
             is_question = "?" in (prompt or "")
