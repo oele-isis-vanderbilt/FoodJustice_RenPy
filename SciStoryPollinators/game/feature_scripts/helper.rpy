@@ -3,6 +3,20 @@ init python:
     import renpy.store as store
     from renpy.display.core import EndInteraction
 
+    _screen_response_cache = {}
+
+    def cache_screen_response(screen_name, text):
+        """Remember the most recent text a modal input screen tried to return."""
+        if not screen_name:
+            return
+        _screen_response_cache[screen_name] = text or ""
+
+    def consume_screen_response(screen_name):
+        """Retrieve and clear the cached response for a screen, if any."""
+        if not screen_name:
+            return ""
+        return _screen_response_cache.pop(screen_name, "")
+
     def _log_approval_change(char_name, delta, new_total, message, change_type):
         payload = {
             "character": char_name,
@@ -101,6 +115,8 @@ init python:
             return renpy.input(prompt, **kwargs)
 
         try:
+            if screen:
+                cache_screen_response(screen, "")
             response = renpy.invoke_in_new_context(_do_call)
         except EndInteraction as exc:
             response = getattr(exc, "value", "")
@@ -109,8 +125,14 @@ init python:
         if isinstance(response, bytes):
             response = response.decode("utf-8", errors="ignore")
         if not isinstance(response, str):
-            return ""
+            fallback = consume_screen_response(screen)
+            if fallback:
+                response = fallback
+            else:
+                return ""
         text = response
+        if screen:
+            consume_screen_response(screen)
         if text:
             is_question = "?" in (prompt or "")
             log_player_input(

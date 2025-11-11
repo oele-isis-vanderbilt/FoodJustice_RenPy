@@ -116,3 +116,17 @@ def test_safe_input_prefers_call_screen_when_provided(helper_module, renpy_modul
     args, kwargs = log_calls[0]
     assert args[0] == "Screen text"
     assert kwargs["screen"] == "argument_sharing"
+
+
+def test_safe_input_uses_cached_screen_response(helper_module, renpy_module, monkeypatch):
+    monkeypatch.setattr(helper_module, "log_player_input", lambda *a, **k: None)
+
+    def fake_call_screen(name, **kwargs):
+        helper_module.cache_screen_response(name, "Cached argument text")
+        return True
+
+    monkeypatch.setattr(renpy_module, "call_screen", fake_call_screen)
+
+    value = helper_module.safe_renpy_input("Share now", screen="argument_sharing")
+
+    assert value == "Cached argument text"

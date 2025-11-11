@@ -842,7 +842,10 @@ screen argument_sharing(prompt):
                         xsize 160
                         textbutton "Share":
                             style "standard_button"
-                            action Return(user_argument)
+                            action [
+                                Function(cache_screen_response, "argument_sharing", user_argument),
+                                Return(user_argument)
+                            ]
                             xfill True
 
                 hbox:
@@ -865,6 +868,7 @@ screen argument_sharing(prompt):
                             style "standard_button"
                             action [
                                 Function(argument_edit, user_argument),
+                                Function(cache_screen_response, "argument_sharing", user_argument),
                                 Return(user_argument)
                             ]
                             xfill True

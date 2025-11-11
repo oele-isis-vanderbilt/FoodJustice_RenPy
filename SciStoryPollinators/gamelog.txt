@@ -1,1 +1,578 @@
-﻿
+﻿--- Tue Nov 11 13:02:40 2025
+
+--- Tue Nov 11 13:02:42 2025
+
+2025-11-11 13:02:42
+PlayerJumpedLabel(main_menu_screen|True)
+
+None
+
+2025-11-11 13:02:43
+PlayerJumpedLabel(start|True)
+
+None
+
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+2025-11-11 13:02:49
+PlayerDialogueChoice
+
+{'text': 'Um...hi?', 'timestamp': 1762884169.639498, 'delivery': 'menu',
+'is_question': False, 'question_target': None, 'auto_generated': False,
+'origin': {'source': 'script', 'details': None}}
+
+Player chose: Um...hi?
+
+???
+Hello hello! Don't bee shy. We're going to get along buzzingly!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+2025-11-11 13:02:51
+PlayerDialogueChoice
+
+{'text': 'I live in a city', 'timestamp': 1762884171.008379, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: I live in a city
+
+2025-11-11 13:02:51
+PlayerLocationChoice
+
+{'startplace': 'city'}
+
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+2025-11-11 13:02:52
+PlayerDialogueChoice
+
+{'text': "Let's go!", 'timestamp': 1762884172.573962, 'delivery': 'menu',
+'is_question': False, 'question_target': None, 'auto_generated': False,
+'origin': {'source': 'script', 'details': None}}
+
+Player chose: Let's go!
+
+Tulip
+Yay! Let's zoom!
+
+2025-11-11 13:02:52
+PlayerJumpedLabel(begin|True)
+
+None
+
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+2025-11-11 13:02:54
+PlayerJumpedLabel(tulipchat|True)
+
+None
+
+Notebook length: 0
+Tulip
+Hi human friend! How's it going?
+
+2025-11-11 13:02:55
+PlayerJumpedLabel(tulip_help_menu|False)
+
+None
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+Notebook length: 0
+2025-11-11 13:02:57
+PlayerDialogueChoice
+
+{'text': 'I need help with something else.', 'timestamp': 1762884177.6220832,
+'delivery': 'menu', 'is_question': False, 'question_target': None,
+'auto_generated': False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: I need help with something else.
+
+Notebook length: 0
+Tulip
+Okay! I'm here if you need me.
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+--- Tue Nov 11 13:14:54 2025
+
+--- Tue Nov 11 13:14:54 2025
+
+2025-11-11 13:14:54
+PlayerJumpedLabel(main_menu_screen|True)
+
+None
+
+--- Tue Nov 11 13:14:59 2025
+
+--- Tue Nov 11 13:15:03 2025
+
+2025-11-11 13:15:03
+PlayerJumpedLabel(main_menu_screen|True)
+
+None
+
+2025-11-11 13:15:04
+PlayerJumpedLabel(start|True)
+
+None
+
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+2025-11-11 13:15:10
+PlayerDialogueChoice
+
+{'text': "You're a talking bee??", 'timestamp': 1762884910.057981, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: You're a talking bee??
+
+???
+A honey bee, to be exact! But yes!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+2025-11-11 13:15:11
+PlayerDialogueChoice
+
+{'text': 'I live in a rural town', 'timestamp': 1762884911.327651, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: I live in a rural town
+
+2025-11-11 13:15:11
+PlayerLocationChoice
+
+{'startplace': 'rural'}
+
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+2025-11-11 13:15:12
+PlayerDialogueChoice
+
+{'text': "Let's go!", 'timestamp': 1762884912.914877, 'delivery': 'menu',
+'is_question': False, 'question_target': None, 'auto_generated': False,
+'origin': {'source': 'script', 'details': None}}
+
+Player chose: Let's go!
+
+Tulip
+Yay! Let's zoom!
+
+2025-11-11 13:15:13
+PlayerJumpedLabel(begin|True)
+
+None
+
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+Notebook length: 0
+2025-11-11 13:15:14
+PlayerJumpedLabel(tulipchat|True)
+
+None
+
+Notebook length: 0
+Tulip
+Hi human friend! How's it going?
+
+2025-11-11 13:15:15
+PlayerJumpedLabel(tulip_help_menu|False)
+
+None
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+Notebook length: 0
+2025-11-11 13:15:16
+PlayerDialogueChoice
+
+{'text': 'I need help with something else.', 'timestamp': 1762884916.6619048,
+'delivery': 'menu', 'is_question': False, 'question_target': None,
+'auto_generated': False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: I need help with something else.
+
+2025-11-11 13:15:21
+PlayerDialogueInput
+
+{'text': 'whats going on', 'prompt': "I love questions! What's your
+question?", 'screen': 'argument_sharing', 'delivery': 'manual', 'is_question':
+True, 'metadata': {'source': 'safe_renpy_input', 'stripped': 'whats going
+on'}}
+
+2025-11-11 13:15:21
+PlayerInputToECA
+
+{'userID': '', 'query': 'whats going on', 'gameState': {'contextType':
+'GameHelp', 'numNotes': 0, 'customNotes': 0, 'numArgument': 0,
+'currentSpeaker': 'Tulip', 'spokeToNPC': '', 'visitLocation': '',
+'currentLocation': 'emptylot', 'argument': ''}}
+
+2025-11-11 13:15:21.307566
+Player input to ECA: whats going on
+
+Notebook length: 0
+Tulip
+It sounds like you're just getting started! Try talking to people in the
+community, like Elliot over at the empty lot, to gather information and take
+notes.
+
+2025-11-11 13:15:30
+PlayerECAResponse
+
+{'eca_response': "It sounds like you're just getting started! Try talking to
+people in the community, like Elliot over at the empty lot, to gather
+information and take notes."}
+
+Notebook length: 0
+Tulip
+Any more questions?
+
+Choice: I have another question.
+Choice: No, that's all.
+
+Notebook length: 0
+2025-11-11 13:15:32
+PlayerDialogueChoice
+
+{'text': "No, that's all.", 'timestamp': 1762884932.2371871, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: No, that's all.
+
+Notebook length: 0
+Tulip
+Okay! I'm here if you need me.
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+2025-11-11 13:15:34
+PlayerDialogueChoice
+
+{'text': 'Yeah, just moved here!', 'timestamp': 1762884934.467647, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: Yeah, just moved here!
+
+Friendly Stranger
+Welcome to the neighborhood! I live right down the street.
+
+Notebook length: 0
+Friendly Stranger
+Anyway, I'm glad you're here, new kid.
+
+Notebook length: 0
+Elliot
+I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our
+lot to those parking guys.
+
+Choice: What parking guys?
+
+Notebook length: 0
+2025-11-11 13:15:36
+PlayerDialogueChoice
+
+{'text': 'What parking guys?', 'timestamp': 1762884936.2661068, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: What parking guys?
+
+2025-11-11 13:15:36
+CharacterApprovalChanged
+
+{'character': 'Elliot', 'delta': 0, 'new_total': 0, 'change_type': 'gain',
+'choice': 'What parking guys?', 'message': None}
+
+2025-11-11 13:15:36
+PlayerJumpedLabel(parkingguys|True)
+
+None
+
+Elliot
+That guy over there in the suit is from CityPark. They want to turn our empty
+lot into a big parking lot for the neighborhood.
+
+Elliot
+But me and the other Community Gardeners have been trying to convince Mayor
+Watson to donate the lot to our food justice project instead.
+
+Notebook length: 0
+Elliot
+The parking lot makes money, but a community garden would be huge for this
+neighborhood!
+
+Notebook length: 0
+Tulip
+Hey! Sorry to interrupt - but this seems like a good time to show you your
+notebook!
+
+Notebook length: 0
+Tulip
+See the + button to the left? This automatically adds whatever is being said
+to your notebook!
+
+Notebook length: 0
+Tulip
+If you want to open your notebook and see what notes you've taken, you can
+click on the Notes button in the top right!
+
+Notebook length: 0
+Tulip
+You can edit notes you've taken, or write your own custom notes! You can also
+delete notes you don't want.
+
+Notebook length: 0
+Tulip
+Hope that helps!
+
+Notebook length: 0
+Elliot
+Whoa, a bee just flew past your face! You know, I bet if we built a garden
+here, the bees would love it.
+
+Notebook length: 0
+Notebook length: 0
+2025-11-11 13:15:39
+PlayerJumpedLabel(foodlab|True)
+
+None
+
+You step into a bustling room full of scientific equipment. A woman in a lab
+coat is currently sorting vials on a nearby counter.
+
+Over by the table, another person is sorting papers and taking notes. You see
+brightly colored posters that read 'Community Gardeners'.
+
+2025-11-11 13:15:40
+PlayerJumpedLabel(labregular|False)
+
+None
+
+Notebook length: 0
+Click the person you want to talk to, or click the map to travel somewhere
+else.
+
+Notebook length: 0
+2025-11-11 13:15:41
+PlayerJumpedLabel(riley_chatting|True)
+
+None
+
+2025-11-11 13:15:42
+PlayerJumpedLabel(riley_1|True)
+
+None
+
+Riley
+Hi there! Elliot texted me and said he recruited you to help us gather notes
+for the Southport garden project.
+
+2025-11-11 13:15:42
+PlayerJumpedLabel(rileyintro|True)
+
+None
+
+Notebook length: 0
+Riley
+We're so grateful for your help! I'm Riley. I'm a member of the Community
+Gardeners.
+
+Notebook length: 0
+Riley
+My job is to advocate for the neighborhood and write persuasive proposals to
+help us get things we need for the community.
+
+Notebook length: 0
+Riley
+Sometimes the city's budget office forgets about the important things, like
+green spaces where we can breathe fresh air.
+
+Riley
+What do you think about the empty lot?
+
+Choice: I think a community garden is a better idea than a parking
+[structure].
+Choice: I'm not sure, the parking [structure] actually sounds like a good
+idea.
+Choice: I've already got some ideas to persuade the Mayor!
+
+Notebook length: 0
+2025-11-11 13:15:45
+PlayerDialogueChoice
+
+{'text': "I've already got some ideas to persuade the Mayor!", 'timestamp':
+1762884945.284204, 'delivery': 'menu', 'is_question': False,
+'question_target': None, 'auto_generated': False, 'origin': {'source':
+'script', 'details': None}}
+
+Player chose: I've already got some ideas to persuade the Mayor!
+
+2025-11-11 13:15:45
+PlayerJumpedLabel(riley_plan|True)
+
+None
+
+Riley
+I bet if we work together we can make a presentation so persuasive that it
+blows the socks off the Mayor and runs CityPark right out of town.
+
+Notebook length: 0
+Riley
+I'd love to hear your ideas!
+
+Choice: Sure, I'll share my ideas.
+Choice: I should gather more notes first.
+Choice: Wait, but what is your job?
+
+Notebook length: 0
+2025-11-11 13:15:46
+PlayerDialogueChoice
+
+{'text': "Sure, I'll share my ideas.", 'timestamp': 1762884946.7230961,
+'delivery': 'menu', 'is_question': False, 'question_target': None,
+'auto_generated': False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: Sure, I'll share my ideas.
+
+Riley
+Sweet. What do you think we should say to convince the Mayor that a community
+garden is good for the neighborhood?
+
+2025-11-11 13:15:47
+PlayerJumpedLabel(ca_eval_riley|True)
+
+None
+
+2025-11-11 13:15:58
+PlayerDialogueInput
+
+{'text': 'i think the lot should be a garden because people need food!',
+'prompt': 'My persuasive ideas for the Mayor:', 'screen': 'argument_sharing',
+'delivery': 'manual', 'is_question': False, 'metadata': {'source':
+'safe_renpy_input', 'stripped': 'i think the lot should be a garden because
+people need food!'}}
+
+2025-11-11 13:15:58
+PlayerInputToECA
+
+{'userID': '', 'query': 'i think the lot should be a garden because people
+need food!', 'gameState': {'contextType': 'FoodJustice_RileyEvaluation',
+'numNotes': 0, 'customNotes': 0, 'numArgument': 0, 'currentSpeaker': 'Riley',
+'spokeToNPC': '', 'visitLocation': 'Food Lab', 'currentLocation': 'foodlab',
+'argument': ''}}
+
+2025-11-11 13:15:58.917965
+Player input to ECA: i think the lot should be a garden because people need
+food!
+
+2025-11-11 13:16:02
+PlayerECAResponse
+
+{'eca_response': "That's a great start! To make your argument stronger, try
+talking to Amara about how processed foods impact health, or Nadia about how a
+garden can help pollinators. Gathering more specific evidence will help
+convince the Mayor."}
+
+Notebook length: 0
