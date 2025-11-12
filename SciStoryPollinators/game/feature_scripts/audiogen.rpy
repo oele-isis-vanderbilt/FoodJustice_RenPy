@@ -3,7 +3,7 @@ define azureKey = "3da59f8a4fc643ffbec6e4c076c77b7b"
 define ecaVoice = "en-US-JennyNeural"
 
 ##Audio
-define useAudio = False
+define useAudio = True
 init python:
     def playAudio(dialogLine: str):
         if useAudio:
