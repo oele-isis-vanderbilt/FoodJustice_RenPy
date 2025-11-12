@@ -25,48 +25,48 @@ init python:
                 test = emscripten.run_script_int(f"window.microphoneUtil.StopRecordingJS();")
 
 screen my_button_screen():
-    # $ recording_tooltip = None
-    # if not renpy.emscripten:
-    #     $ recording_tooltip = "This feature isn't available on desktop."
-
-    # vbox:
-    #     spacing 20 
-    #     textbutton "Start Record":
-    #         action Function(StartAudioRecord)
-    #         xalign 0.5 
-    #         if recording_tooltip:
-    #             tooltip recording_tooltip
-    #     textbutton "End Record":
-    #         action Function(EndAudioRecord)
-    #         xalign 0.5 
-    #         if recording_tooltip:
-    #             tooltip recording_tooltip
-
-    zorder 1000
-    modal False
     $ recording_tooltip = None
+    if not renpy.emscripten:
+        $ recording_tooltip = "This feature isn't available on desktop."
 
-    if voice_input_available:
-        if not renpy.emscripten:
-            $ recording_tooltip = "This feature isn't available on desktop."
+    vbox:
+        spacing 20 
+        textbutton "Start Record":
+            action Function(StartAudioRecord)
+            xalign 0.5 
+            if recording_tooltip:
+                tooltip recording_tooltip
+        textbutton "End Record":
+            action Function(EndAudioRecord)
+            xalign 0.5 
+            if recording_tooltip:
+                tooltip recording_tooltip
 
-        vbox:
-            frame:
-                style "voice_record_frame"
+    # zorder 1000
+    # modal False
+    # $ recording_tooltip = None
 
-                textbutton ("Start Voice Recording"):
-                    style "tag_button"
-                    action [
-                        Function(StartAudioRecord)
-                        style "edit_tag_support"
-                    ]
+    # if voice_input_available:
+    #     if not renpy.emscripten:
+    #         $ recording_tooltip = "This feature isn't available on desktop."
 
-                textbutton ("Stop Voice Recording"):
-                    style "tag_button"
-                    action [
-                        Function(EndAudioRecord)
-                        style "edit_tag_support"
-                    ]
+    #     vbox:
+    #         frame:
+    #             style "voice_record_frame"
+
+    #             textbutton ("Start Voice Recording"):
+    #                 style "tag_button"
+    #                 action [
+    #                     Function(StartAudioRecord),
+    #                     style "edit_tag_support"
+    #                 ]
+
+    #             textbutton ("Stop Voice Recording"):
+    #                 style "tag_button"
+    #                 action [
+    #                     Function(EndAudioRecord),
+    #                     style "edit_tag_support"
+    #                 ]
                      
 
 
