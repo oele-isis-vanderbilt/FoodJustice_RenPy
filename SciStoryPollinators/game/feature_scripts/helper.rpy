@@ -73,7 +73,20 @@ init python:
 
     def get_character_chats(char_name):
         record = _find_character_record(char_name)
-        return int(record.get("chats", 0)) if record else 0
+        if not record:
+            return 0
+
+        value = record.get("chats", 0)
+        if isinstance(value, int):
+            return value
+
+        try:
+            clean_value = int(value)
+        except (TypeError, ValueError):
+            clean_value = 0
+
+        record["chats"] = clean_value
+        return clean_value
 
     def ask_character_question(char_name):
         record = _find_character_record(char_name)
@@ -184,35 +197,35 @@ init python:
         else:
             renpy.show_screen("notebook")
 
-    def toggle_voice_recording():
-        if not _voice_features_active():
-            renpy.notify("Voice features disabled")
-            return
-        global voice_recording_active
-        voice_recording_active = not voice_recording_active
-        status = "started" if voice_recording_active else "stopped"
-        renpy.notify("Voice recording {}".format(status))
+    # def toggle_voice_recording():
+    #     if not _voice_features_active():
+    #         renpy.notify("Voice features disabled")
+    #         return
+    #     global voice_recording_active
+    #     voice_recording_active = not voice_recording_active
+    #     status = "started" if voice_recording_active else "stopped"
+    #     renpy.notify("Voice recording {}".format(status))
 
-    def request_voice_input():
-        # Keep track of active contexts requesting speech-to-text.
-        if not _voice_features_active():
-            store.voice_input_contexts = 0
-            store.voice_input_available = False
-            return False
-        store.voice_input_contexts = getattr(store, "voice_input_contexts", 0) + 1
-        store.voice_input_available = store.voice_input_contexts > 0
-        return True
+    # def request_voice_input():
+    #     # Keep track of active contexts requesting speech-to-text.
+    #     if not _voice_features_active():
+    #         store.voice_input_contexts = 0
+    #         store.voice_input_available = False
+    #         return False
+    #     store.voice_input_contexts = getattr(store, "voice_input_contexts", 0) + 1
+    #     store.voice_input_available = store.voice_input_contexts > 0
+    #     return True
 
-    def release_voice_input():
-        # Release a context, clamping at zero so we never underflow.
-        if not _voice_features_active():
-            store.voice_input_contexts = 0
-            store.voice_input_available = False
-            return False
-        current = getattr(store, "voice_input_contexts", 0)
-        store.voice_input_contexts = max(0, current - 1)
-        store.voice_input_available = store.voice_input_contexts > 0
-        return True
+    # def release_voice_input():
+    #     # Release a context, clamping at zero so we never underflow.
+    #     if not _voice_features_active():
+    #         store.voice_input_contexts = 0
+    #         store.voice_input_available = False
+    #         return False
+    #     current = getattr(store, "voice_input_contexts", 0)
+    #     store.voice_input_contexts = max(0, current - 1)
+    #     store.voice_input_available = store.voice_input_contexts > 0
+    #     return True
 
     from renpy.display.transform import Transform
     from renpy.display.matrix import Matrix
