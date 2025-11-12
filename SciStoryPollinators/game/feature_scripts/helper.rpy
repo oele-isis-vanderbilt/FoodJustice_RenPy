@@ -49,30 +49,36 @@ init python:
         set_voice_features_enabled(not _voice_features_active())
 
     # --- character stats functions ---
-    def update_char_stats(char_name):
+    def _find_character_record(char_name):
+        target = (char_name or "").strip().lower()
+        if not target:
+            return None
         for char in character_directory:
-            if char["name"] == char_name:
-                char["chats"] += 1
-                char["spoken"] = True
-                break
+            name = (char.get("name") or "").strip().lower()
+            if not name:
+                continue
+            if name == target or name.startswith(target):
+                return char
+        return None
+
+    def update_char_stats(char_name):
+        record = _find_character_record(char_name)
+        if record:
+            record["chats"] += 1
+            record["spoken"] = True
 
     def get_character_spoken(char_name):
-        for char in character_directory:
-            if char["name"] == char_name:
-                return char["spoken"]
-        return ""
+        record = _find_character_record(char_name)
+        return bool(record and record.get("spoken"))
 
     def get_character_chats(char_name):
-        for char in character_directory:
-            if char["name"] == char_name:
-                return char["chats"]
-        return ""
+        record = _find_character_record(char_name)
+        return int(record.get("chats", 0)) if record else 0
 
     def ask_character_question(char_name):
-        for char in character_directory:
-            if char["name"] == char_name:
-                char["questions"] = char.get("questions", 0) + 1
-                break
+        record = _find_character_record(char_name)
+        if record:
+            record["questions"] = record.get("questions", 0) + 1
         mark_choice_as_question(char_name)
 
     def character_approval(char_name, amount, message=None):

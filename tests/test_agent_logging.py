@@ -54,8 +54,14 @@ def test_agent_setup_argument_context(eca_module, renpy_module):
         "FoodJustice_RileyEvaluation", "Text", "riley", "Riley"
     )
 
-    assert link.endswith("/riley")
+    assert link.endswith("/foodjustice/respond")
+    assert payload["agent_role"] == "FoodJustice_RileyEvaluation"
+    assert payload["agent_id"] == "riley"
+    assert payload["user_query"] == "Text"
+    assert payload["query"] == "argument evaluation"
     assert payload["gameState"]["contextType"] == "FoodJustice_RileyEvaluation"
+    assert payload["gameState"]["agent_role"] == "FoodJustice_RileyEvaluation"
+    assert payload["gameState"]["agent_id"] == "riley"
     assert payload["gameState"]["numNotes"] == 2
     assert payload["gameState"]["argument"] == "Text"
     assert history, "Narrator history should capture the utterance."

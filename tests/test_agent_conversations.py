@@ -19,23 +19,23 @@ def _prep_agent_state(eca_module):
 
 # Parameterized smoke test: ensures agent_setup builds correct payloads per CA type/character.
 @pytest.mark.parametrize(
-    "ca_type,llama,character,utterance,expect_argument,expect_query",
+    "ca_type,llama,character,utterance,expect_argument",
     [
-        ("FoodJustice_RileyEvaluation", "riley", "Tulip", "Draft argument", True, "argument evaluation"),
-        ("FoodJustice_MayorEvaluation", "mayor", "Mayor Watson", "Mayor argument", True, "argument evaluation"),
-        ("GameHelp", "tulip", "Tulip", "How do I progress?", False, "How do I progress?"),
-        ("Knowledge_Pollination", "garden", "Nadia", "Tell me about bees", False, "Tell me about bees"),
-        ("Knowledge_FoodJustice", "riley", "Riley", "Food justice facts?", False, "Food justice facts?"),
+        ("FoodJustice_RileyEvaluation", "riley", "Tulip", "Draft argument", True),
+        ("FoodJustice_MayorEvaluation", "mayor", "Mayor Watson", "Mayor argument", True),
+        ("GameHelp", "tulip", "Tulip", "How do I progress?", False),
+        ("Knowledge_Pollination", "garden", "Nadia", "Tell me about bees", False),
+        ("Knowledge_FoodJustice", "riley", "Riley", "Food justice facts?", False),
     ],
 )
 def test_agent_setup_builds_context(
-    eca_module, ca_type, llama, character, utterance, expect_argument, expect_query
+    eca_module, ca_type, llama, character, utterance, expect_argument
 ):
     history = _prep_agent_state(eca_module)
 
     link, payload = eca_module.agent_setup(ca_type, utterance, llama, character)
 
-    assert link.endswith(f"/{llama}")
+    assert link.endswith("/foodjustice/respond")
     state = payload["gameState"]
     assert state["contextType"] == ca_type
     assert state["numNotes"] == len(eca_module.notebook)
@@ -46,10 +46,16 @@ def test_agent_setup_builds_context(
     assert state["currentLocation"] == eca_module.currentlocation
     if expect_argument:
         assert state["argument"] == utterance
-        assert payload["query"] == "argument evaluation"
     else:
         assert state["argument"] == ""
-        assert payload["query"] == expect_query
+
+    assert payload["agent_role"] == ca_type
+    assert payload["agent_id"] == llama
+    assert payload["user_query"] == utterance
+    if expect_argument:
+        assert payload["query"] == "argument evaluation"
+    else:
+        assert payload["query"] == utterance
 
     assert history, "Player utterance should be recorded in narrator history."
 
