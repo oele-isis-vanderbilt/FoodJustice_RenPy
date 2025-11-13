@@ -146,9 +146,7 @@ init python:
                 "character_in_discussion": last_spoken_character,
             },
         )
-        renpy.show_screen("achievement_popup", key)
-        renpy.pause(pause_time, hard=True)
-        renpy.hide_screen("achievement_popup")
+        renpy.call_in_new_context("_show_achievement_popup_ctx", key, pause_time)
 
     def ensure_unlocked(key, condition):
         if condition and not persistent.achievements.get(key, False):
@@ -251,6 +249,12 @@ screen achievement_popup(key):
                         text "Achievement Unlocked!" size 18 color "#ffffff" bold True
                         text "[ach['name']]" size 26 color "#ffffff" bold True
                         text ach["desc"] size 16 color "#ccc" xalign 0.0 italic True
+
+label _show_achievement_popup_ctx(key, pause_time=5):
+    $ renpy.show_screen("achievement_popup", key)
+    $ renpy.pause(pause_time, hard=True)
+    $ renpy.hide_screen("achievement_popup")
+    return
 
 # ---------------------------------------------------------------------------
 # Reusable row for the achievements list (reduces duplication)
