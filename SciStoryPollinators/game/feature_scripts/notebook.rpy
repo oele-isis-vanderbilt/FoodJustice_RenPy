@@ -138,7 +138,7 @@ init python:
             "tags": tags_list,
             "type": note_type
         })
-        renpy.block_rollback()
+        # renpy.block_rollback()
         
         if note_type == "user-written":
             narrator.add_history(kind="adv", who="You wrote a note: ", what=content)
