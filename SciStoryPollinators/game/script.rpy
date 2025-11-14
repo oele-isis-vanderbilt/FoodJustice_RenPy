@@ -1242,7 +1242,7 @@ label start:
         show nadia smile at left
         with dissolve
 
-        show alex smile at right
+        show alex smile
         with dissolve
 
         show cora concern at right
