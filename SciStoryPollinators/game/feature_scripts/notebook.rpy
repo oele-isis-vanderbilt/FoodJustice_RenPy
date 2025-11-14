@@ -873,7 +873,6 @@ screen argument_sharing(prompt):
                             action [
                                 Function(argument_edit, user_argument),
                                 Function(cache_screen_response, "argument_sharing", user_argument),
-                                Return(user_argument)
                             ]
                             xfill True
 
