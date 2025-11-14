@@ -27,6 +27,7 @@ init python:
     _max_queue = 1000                  # safety cap on unsent queue
     _dialogue_origin_stack = [{"source": "script", "details": None}]
     _active_choice_log = None
+    _last_label_event_key = None
 
     # Return the latest dialogue origin by peeking the stack so reports know which system produced a line.
     def _current_dialogue_origin():
@@ -465,36 +466,54 @@ init 10 python:
 
 
 init python:
-    # Write a timestamped string to Ren'Py's developer log so we have a local breadcrumb even if network calls fail.
+    def _normalize_timestamp(ts):
+        if isinstance(ts, datetime.datetime):
+            return ts.strftime("%Y-%m-%d %H:%M:%S")
+        if ts:
+            return str(ts)
+        return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    def _log_locally(timestamp, action, payload):
+        stamp = _normalize_timestamp(timestamp)
+        renpy.log(stamp)
+        renpy.log(f"{action}\n")
+        if payload is not None:
+            renpy.log(f"{payload}\n")
+
+    # Write a timestamped string to Ren'Py's developer log so we always mirror important actions locally.
     def log(action):
         timestamp = datetime.datetime.now()
-        renpy.log(timestamp)
-        renpy.log(action + "\n")
-    # Construct the REST payload, POST it via renpy.fetch, and fall back to renpy.log so every action is recorded somewhere.
+        _log_locally(timestamp, action, None)
+
+    # Construct the REST payload, POST it via renpy.fetch, and still fall back to renpy.log so every action is recorded.
     def log_http(user: str, payload: Optional[Dict[str, Any]], action: str, view: str = None):
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        if os.getenv("SERVICE_URL") is None:
-            base_url = ""
-        else:
-            base_url = os.getenv("SERVICE_URL")
-            
+        timestamp = datetime.datetime.now()
+        timestamp_str = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        base_url = (os.getenv("SERVICE_URL") or "").strip()
         log_entry = {
             "action": action,
-            "timestamp": timestamp,
+            "timestamp": timestamp_str,
             "user": user,
             "view": view,
             "payload": payload
         }
+
+        _log_locally(timestamp, action, payload)
+
+        # Skip remote logging on Web builds unless an explicit SERVICE_URL is provided.
+        if renpy.emscripten and not base_url:
+            return
+
+        endpoint = "/player-log" if not base_url else f"{base_url.rstrip('/')}/player-log"
         try:
             renpy.fetch(
-                f"{base_url}/player-log",
+                endpoint,
                 method="POST",
                 json=log_entry,
             )
-        except Exception as e:
-            renpy.log(timestamp)
-            renpy.log(f"{action}\n")
-            renpy.log(f"{payload}\n")
+        except Exception:
+            # Remote logging failures are tolerated; the local log already captured the entry.
+            pass
 
     # Send friendly notebook activity strings alongside structured logs so facilitators can follow along.
     def log_notebook_event(message, extra=None):
@@ -512,10 +531,22 @@ init python:
         log_notebook_event("Player closed the notebook")
     # Log every label jump (ignoring private _ labels) by reporting it through log_http so analysts know what screen the player is on.
     def label_callback(label, interaction):
-        if not label.startswith("_"):
-            log_http(current_user, action=f"PlayerJumpedLabel({label}|{interaction})", view=label, payload=None)
-            global current_label
-            current_label = label
+        global current_label, _last_label_event_key
+        if label.startswith("_"):
+            return
+        current_label = label
+
+        key = (label, bool(interaction))
+        if _last_label_event_key == key:
+            return
+        _last_label_event_key = key
+
+        log_http(
+            current_user,
+            action=f"PlayerJumpedLabel({label}|{interaction})",
+            view=label,
+            payload=None,
+        )
 
     # Call renpy.retain_after_load() so our session buffers survive save/load cycles and we don't lose pending logs.
     def retaindata():
