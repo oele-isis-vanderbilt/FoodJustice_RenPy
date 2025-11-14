@@ -5,6 +5,7 @@ init python:
     import re
     import pygame.scrap
     from renpy import store
+    _last_notebook_length_logged = None
 
     if not hasattr(store, "new_note_text_template"):
         store.new_note_text_template = "whats your evidence?"
@@ -104,6 +105,15 @@ init python:
         new_value = not current
         store.auto_tag_user_notes = new_value
         renpy.notify("Auto-tag user notes: {}".format("On" if new_value else "Off"))
+
+    def log_notebook_length(length):
+        """Only log notebook length when it actually changes."""
+        global _last_notebook_length_logged
+        length = int(length)
+        if _last_notebook_length_logged == length:
+            return
+        _last_notebook_length_logged = length
+        renpy.log("Notebook length: {}".format(length))
 
     def _tag_origin(manual, auto_added):
         if auto_added and manual:
@@ -365,7 +375,7 @@ screen notebook():
     #     $ release_voice_input()
     #     $ voice_request_active = False
 
-    # use my_button_screen
+    use my_button_screen
 
 
     add "images/notebook_open.png" xpos 0.5 ypos 0.5 anchor (0.5, 0.5) zoom .8
@@ -396,7 +406,7 @@ screen notebook():
 
         # ===== STICKY ADD BUTTON (non-scrolling, on top) =====
         text "Edited Note ID: [edited_note_id]"
-        $ renpy.log("Notebook length: {}".format(len(notebook)))
+        $ log_notebook_length(len(notebook))
         $ all_tags = sorted({tag for note in notebook for tag in note.get("tags", []) if tag})
         if filter_tag and filter_tag not in all_tags:
             $ filter_tag = None
@@ -786,7 +796,7 @@ screen argument_sharing(prompt):
     #     false=SetScreenVariable("voice_request_active", False)
     # )
 
-    # use my_button_screen
+    use my_button_screen
 
     frame:
         xpos 1.0
