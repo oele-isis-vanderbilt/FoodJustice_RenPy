@@ -190,7 +190,7 @@ screen input(prompt):
 
     # on "show" action Function(request_voice_input)
     # on "hide" action Function(release_voice_input)
-    use my_button_screen
+    # use my_button_screen
 
     window:
 
