@@ -177,8 +177,6 @@ init python:
             fn = globals().get(achievement_fn)
             if callable(fn):
                 fn()
-
-        return note_id
     
     def deletenote(note_id):
         global notebook
@@ -308,7 +306,6 @@ init python:
             save_note(note_id, newnote, newsource, tags_list)
             renpy.block_rollback()
             edited_note_id = None
-            return True
     
     def argument_edit(newcontent):
         save_draft(newcontent, edited=True)
@@ -368,7 +365,7 @@ screen notebook():
     #     $ release_voice_input()
     #     $ voice_request_active = False
 
-    use my_button_screen
+    # use my_button_screen
 
 
     add "images/notebook_open.png" xpos 0.5 ypos 0.5 anchor (0.5, 0.5) zoom .8
@@ -789,7 +786,7 @@ screen argument_sharing(prompt):
     #     false=SetScreenVariable("voice_request_active", False)
     # )
 
-    use my_button_screen
+    # use my_button_screen
 
     frame:
         xpos 1.0
