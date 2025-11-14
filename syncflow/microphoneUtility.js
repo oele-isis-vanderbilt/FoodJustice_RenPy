@@ -59,6 +59,9 @@ class MicrophoneUtility {
                         })
                         .then(data => {
                             console.log('Upload successful:', data);
+
+                            var asrResponse = data.TranscribedInputUtterance;
+                            window.renpy_exec("ASRresponse(\""+asrResponse+"\")");
                         })
                         .catch(error => {
                             console.error('Error during upload:', error);

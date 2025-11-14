@@ -17,12 +17,15 @@ init python:
                 test = emscripten.run_script_int(f"window.stopAzureAudio();")
     def StartAudioRecord():
         if renpy.emscripten:
-                import emscripten
-                test = emscripten.run_script_int(f"window.microphoneUtil.StartRecordingJS();")
+            import emscripten
+            test = emscripten.run_script_int(f"window.microphoneUtil.StartRecordingJS();")
     def EndAudioRecord():
         if renpy.emscripten:
-                import emscripten
-                test = emscripten.run_script_int(f"window.microphoneUtil.StopRecordingJS();")
+            import emscripten
+            test = emscripten.run_script_int(f"window.microphoneUtil.StopRecordingJS();")
+    
+    def ASRresponse(txt):
+        renpy.notify("test call worked: "+txt)
 
 screen my_button_screen():
     $ recording_tooltip = None
