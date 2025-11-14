@@ -1,7 +1,7 @@
 label start:
 
-    if useAudio: 
-        play music "JaracandaLoop.wav" volume 0.1
+    # if useAudio: 
+    #     play music "JaracandaLoop.wav" volume 0.1
 
     # Show a background
     scene flowers muted
