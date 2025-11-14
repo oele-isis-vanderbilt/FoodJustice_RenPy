@@ -48,4 +48,8 @@ COPY ./syncflow/livekit-client.umd.min.js /code/${RENPY_GAME_DIR}/livekit-client
 
 COPY ./syncflow/syncflow-publisher.js /code/${RENPY_GAME_DIR}/syncflow-publisher.js
 
+COPY ./syncflow/azuretts.js /code/${RENPY_GAME_DIR}/azuretts.js
+
+COPY ./syncflow/microphoneUtility.js /code/${RENPY_GAME_DIR}/microphoneUtility.js
+
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080", "--proxy-headers"]

@@ -1,5 +1,10 @@
-default last_spoken_character = None
-default last_player_choice = None
+# This file keeps track of everything the player does (dialogue, clicks,
+# uploads) so we can review the session later or send it to a server.
+# The goal is to make the flow understandable even if you are not familiar
+# with Ren'Py or networking code.
+
+default last_spoken_character = None   # remembers who spoke last on screen
+default last_player_choice = None      # remembers the most recent menu choice
 
 init python:
     import json, csv, io, time, hashlib, os, zipfile, random
@@ -22,21 +27,24 @@ init python:
     _max_queue = 1000                  # safety cap on unsent queue
     _dialogue_origin_stack = [{"source": "script", "details": None}]
     _active_choice_log = None
+    _last_label_event_key = None
 
+    # Return the latest dialogue origin by peeking the stack so reports know which system produced a line.
     def _current_dialogue_origin():
         top = _dialogue_origin_stack[-1]
         return {"source": top.get("source"), "details": top.get("details")}
 
+    # Push a new origin entry so upcoming lines are tagged as generated content for later analytics.
     def start_generated_dialogue(kind="eca", metadata=None):
-        """Mark subsequent dialogue lines as being generated (e.g., ECA)."""
         payload = {"source": kind or "generated", "details": metadata or {}}
         _dialogue_origin_stack.append(payload)
 
+    # Pop the origin stack when generated dialogue ends so script lines resume normal tagging.
     def finish_generated_dialogue():
-        """Pop the last generated dialogue marker."""
         if len(_dialogue_origin_stack) > 1:
             _dialogue_origin_stack.pop()
 
+    # Context manager that wraps a section with start/finish logic so custom origins auto-clean when the block exits.
     @contextlib.contextmanager
     def dialogue_origin(kind="script", metadata=None):
         start_generated_dialogue(kind, metadata)
@@ -45,8 +53,8 @@ init python:
         finally:
             finish_generated_dialogue()
 
+    # Cache the clicked menu option, storing timestamp and flags so we can ship a complete record once the choice resolves.
     def remember_menu_choice(caption):
-        """Called from the choice screen when a button is clicked."""
         global _active_choice_log
         _active_choice_log = {
             "text": caption,
@@ -57,6 +65,7 @@ init python:
             "auto_generated": False,
         }
 
+    # Clone the pending choice dict, merge in any overrides, and attach origin info so uploads are consistent.
     def _choice_payload(extra=None):
         if not _active_choice_log:
             return None
@@ -66,8 +75,8 @@ init python:
             payload.update(extra)
         return payload
 
+    # POST the prepared choice payload via log_http so downstream dashboards know what the player selected and when.
     def log_player_choice(extra=None):
-        """Send the buffered choice info to the logging endpoint."""
         global last_player_choice
         payload = _choice_payload(extra=extra)
         if not payload:
@@ -81,22 +90,26 @@ init python:
         last_player_choice = payload
         clear_pending_choice()
 
+    # Drop the cached choice so the next click starts fresh and duplicate rows are avoided.
     def clear_pending_choice():
         global _active_choice_log
         _active_choice_log = None
 
+    # Mark the pending choice as a question and log the addressee so transcripts can describe conversational intent.
     def mark_choice_as_question(target):
         global _active_choice_log
         if _active_choice_log:
             _active_choice_log["is_question"] = True
             _active_choice_log["question_target"] = target
 
+    # Update the pending choice with ad-hoc metadata (tone, branch tags, etc.) so later analysis has richer context.
     def annotate_choice(**kwargs):
         global _active_choice_log
         if not _active_choice_log:
             return
         _active_choice_log.update({k: v for k, v in kwargs.items() if v is not None})
 
+    # Return the text of the current or previous choice so UI or narration can reference what was asked and why.
     def active_choice_caption(fallback=True):
         if _active_choice_log and _active_choice_log.get("text"):
             return _active_choice_log["text"]
@@ -104,6 +117,7 @@ init python:
             return last_player_choice.get("text")
         return None
 
+    # Capture what the player typed, record the prompt/screen used, and send it upstream so custom responses are auditable.
     def log_player_input(text, prompt="", screen=None, input_type="manual", is_question=False, metadata=None):
         entry = {
             "text": text,
@@ -120,6 +134,7 @@ init python:
             payload=entry,
         )
 
+    # Record lines auto-delivered by the protagonist by packaging the text plus metadata and forwarding via log_http.
     def log_player_script_line(text, source="scripted", metadata=None):
         payload = {
             "text": text,
@@ -133,6 +148,7 @@ init python:
             payload=payload,
         )
 
+    # Listen for Ren'Py's dialogue events, slice the shown text, and log who spoke so conversation history stays complete.
     def character_dialogue_callback(event, interact=True, metadata=None, **kwargs):
         if event != "show" or not metadata:
             return
@@ -163,8 +179,8 @@ init python:
         global last_spoken_character
         last_spoken_character = payload["speaker_id"]
 
+    # Iterate over the character directory, wiring our callback to each one so speech logging happens automatically.
     def attach_character_callbacks():
-        """Bind dialogue callbacks to every character in the directory."""
         import renpy
         directory = list(getattr(renpy.store, "character_directory", []))
         for entry in directory:
@@ -181,12 +197,15 @@ init python:
     # -------------------------
     # Utilities
     # -------------------------
+    # Build a sortable YYYYMMDD-HHMMSS stamp using local time so filenames are readable and chronological.
     def _now_stamp():
         return time.strftime("%Y%m%d-%H%M%S", time.localtime())
 
+    # Hash any text via SHA-256 so uploads and archives can detect duplicates cheaply.
     def _sha256(text):
         return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
+    # Write the scene event list into CSV format by iterating rows so educators can open the file in spreadsheets.
     def _to_csv(events):
         buf = io.StringIO()
         writer = csv.DictWriter(buf, fieldnames=["t","kind","data"])
@@ -197,8 +216,8 @@ init python:
             writer.writerow(row)
         return buf.getvalue()
 
+    # When on Web builds, inject JS that streams the data into a Blob so the browser prompts a download without server help.
     def _trigger_web_download(filename, text, mime="text/plain"):
-        # Works only on Web builds; on desktop, returns False and we disk-write instead.
         if renpy.emscripten:
             import emscripten
             safe_text = text.replace("`", "\\`")
@@ -221,6 +240,7 @@ init python:
             return True
         return False
 
+    # Write the log file under config.savedir so desktop players can find it even without a browser download step.
     def _write_native(filename, text):
         path = os.path.join(config.savedir, filename)
         with open(path, "w", encoding="utf-8") as f:
@@ -230,6 +250,7 @@ init python:
     # -------------------------
     # Public logging API
     # -------------------------
+    # Append an event dict (type plus payload) into the scene buffer so later exports capture everything that happened.
     def log_event(kind, payload=None):
         _scene_events.append({
             "t": time.time(),
@@ -237,14 +258,9 @@ init python:
             "data": payload or {}
         })
 
+    # Wrap up a scene by serializing buffered events, mirroring them locally, queuing an upload,
+    # and delivering a file to the player so no data is lost between story beats.
     def download_scene_log(scene_name, as_csv=True):
-        """
-        Call at the end of a scene.
-        1) Serializes the scene log
-        2) Mirrors into persistent archive
-        3) Enqueues for remote upload (store-and-forward)
-        4) Triggers a user download (web) OR writes to disk (desktop)
-        """
         if not _scene_events:
             return
 
@@ -275,6 +291,7 @@ init python:
     # -------------------------
     # Persistent archive
     # -------------------------
+    # Store the log in persistent data (with a size cap) so future sessions or admin tools can reopen past scenes.
     def _mirror_to_persistent(scene, stamp, content, ext):
         if not hasattr(persistent, "logs"):
             persistent.logs = []
@@ -295,6 +312,7 @@ init python:
     # -------------------------
     # Store-and-forward upload
     # -------------------------
+    # Push an upload job (content plus hash) into persistent.unsent so the game can retry when connectivity returns.
     def _enqueue_for_upload(scene, stamp, content, ext):
         if not hasattr(persistent, "unsent"):
             persistent.unsent = []
@@ -313,11 +331,8 @@ init python:
         })
         renpy.save_persistent()
 
+    # Iterate over the unsent queue, call _try_upload for each entry, and prune successes so the backlog stays manageable.
     def flush_upload_queue():
-        """
-        Try to POST everything in persistent.unsent to your server.
-        Safe to call often (e.g., at main menu, scene start, or after a successful upload).
-        """
         if not hasattr(persistent, "unsent") or not persistent.unsent:
             return 0
 
@@ -338,11 +353,9 @@ init python:
         renpy.save_persistent()
         return sent_count
 
+    # Perform the cross-platform HTTP POST via renpy.fetch, count 2xx responses as success,
+    # and record errors so operators know why an item keeps retrying.
     def _try_upload(item):
-        """
-        POST the log to your server; expects HTTP 2xx to count as success.
-        The server should de-duplicate via the 'hash' or (session, when) tuple.
-        """
         try:
             # renpy.fetch is cross-platform; on Web it maps to JS fetch.
             # You can add headers like auth tokens here.
@@ -372,10 +385,8 @@ init python:
             return False
 
     # Optional convenience: call this on common transitions
+    # Call flush_upload_queue() inside a blanket try/except so story transitions can trigger uploads without scaring players.
     def background_flush_uploads():
-        """
-        Fire-and-forget queue flush. Cheap to call from labels or screens.
-        """
         try:
             flush_upload_queue()
         except Exception:
@@ -384,10 +395,8 @@ init python:
     # -------------------------
     # Bulk export (ZIP)
     # -------------------------
+    # Bundle every persistent log into a ZIP (plus manifest) so facilitators can pull full transcripts via one download.
     def export_all_logs_zip():
-        """
-        Zips everything in persistent.logs and triggers a download (Web) or writes to disk (desktop).
-        """
         if not hasattr(persistent, "logs") or not persistent.logs:
             renpy.notify("No logs to export.")
             return
@@ -446,6 +455,7 @@ init python:
     # -------------------------
     # At game start or main menu, try flushing anything pending.
     config.start_callbacks.append(lambda: background_flush_uploads())
+    # ^ keeps the upload queue from growing if the player pauses on the title screen.
 
 
 init 10 python:
@@ -456,39 +466,88 @@ init 10 python:
 
 
 init python:
+    def _normalize_timestamp(ts):
+        if isinstance(ts, datetime.datetime):
+            return ts.strftime("%Y-%m-%d %H:%M:%S")
+        if ts:
+            return str(ts)
+        return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    def _log_locally(timestamp, action, payload):
+        stamp = _normalize_timestamp(timestamp)
+        renpy.log(stamp)
+        renpy.log(f"{action}\n")
+        if payload is not None:
+            renpy.log(f"{payload}\n")
+
+    # Write a timestamped string to Ren'Py's developer log so we always mirror important actions locally.
     def log(action):
         timestamp = datetime.datetime.now()
-        renpy.log(timestamp)
-        renpy.log(action + "\n")
+        _log_locally(timestamp, action, None)
+
+    # Construct the REST payload, POST it via renpy.fetch, and still fall back to renpy.log so every action is recorded.
     def log_http(user: str, payload: Optional[Dict[str, Any]], action: str, view: str = None):
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        if os.getenv("SERVICE_URL") is None:
-            base_url = ""
-        else:
-            base_url = os.getenv("SERVICE_URL")
-            
+        timestamp = datetime.datetime.now()
+        timestamp_str = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        base_url = (os.getenv("SERVICE_URL") or "").strip()
         log_entry = {
             "action": action,
-            "timestamp": timestamp,
+            "timestamp": timestamp_str,
             "user": user,
             "view": view,
             "payload": payload
         }
+
+        _log_locally(timestamp, action, payload)
+
+        # Skip remote logging on Web builds unless an explicit SERVICE_URL is provided.
+        if renpy.emscripten and not base_url:
+            return
+
+        endpoint = "/player-log" if not base_url else f"{base_url.rstrip('/')}/player-log"
         try:
             renpy.fetch(
-                f"{base_url}/player-log",
+                endpoint,
                 method="POST",
                 json=log_entry,
             )
-        except Exception as e:
-            renpy.log(timestamp)
-            renpy.log(f"{action}\n")
-            renpy.log(f"{payload}\n")
-    def label_callback(label, interaction):
-        if not label.startswith("_"):
-            log_http(current_user, action=f"PlayerJumpedLabel({label}|{interaction})", view=label, payload=None)
-            global current_label
-            current_label = label
+        except Exception:
+            # Remote logging failures are tolerated; the local log already captured the entry.
+            pass
 
+    # Send friendly notebook activity strings alongside structured logs so facilitators can follow along.
+    def log_notebook_event(message, extra=None):
+        payload = {"message": message}
+        if extra:
+            payload.update({k: v for k, v in extra.items() if v is not None})
+        log_http(current_user, action="NotebookEvent", view=current_label, payload=payload)
+
+    # Record when the player opens the notebook UI.
+    def log_notebook_opened():
+        log_notebook_event("Player opened the notebook")
+
+    # Record when the player closes the notebook UI.
+    def log_notebook_closed():
+        log_notebook_event("Player closed the notebook")
+    # Log every label jump (ignoring private _ labels) by reporting it through log_http so analysts know what screen the player is on.
+    def label_callback(label, interaction):
+        global current_label, _last_label_event_key
+        if label.startswith("_"):
+            return
+        current_label = label
+
+        key = (label, bool(interaction))
+        if _last_label_event_key == key:
+            return
+        _last_label_event_key = key
+
+        log_http(
+            current_user,
+            action=f"PlayerJumpedLabel({label}|{interaction})",
+            view=label,
+            payload=None,
+        )
+
+    # Call renpy.retain_after_load() so our session buffers survive save/load cycles and we don't lose pending logs.
     def retaindata():
         renpy.retain_after_load()

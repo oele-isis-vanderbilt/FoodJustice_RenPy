@@ -146,6 +146,11 @@ init python:
                 "character_in_discussion": last_spoken_character,
             },
         )
+        renpy.invoke_in_new_context(_achievement_popup_task, key, pause_time)
+
+    def _achievement_popup_task(key, pause_time=5):
+        if not key:
+            return
         renpy.show_screen("achievement_popup", key)
         renpy.pause(pause_time, hard=True)
         renpy.hide_screen("achievement_popup")
@@ -251,6 +256,10 @@ screen achievement_popup(key):
                         text "Achievement Unlocked!" size 18 color "#ffffff" bold True
                         text "[ach['name']]" size 26 color "#ffffff" bold True
                         text ach["desc"] size 16 color "#ccc" xalign 0.0 italic True
+
+label _show_achievement_popup_ctx(key=None, pause_time=5):
+    $ _achievement_popup_task(key, pause_time)
+    return
 
 # ---------------------------------------------------------------------------
 # Reusable row for the achievements list (reduces duplication)

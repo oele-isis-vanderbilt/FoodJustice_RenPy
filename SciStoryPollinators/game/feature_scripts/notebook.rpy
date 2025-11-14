@@ -5,6 +5,7 @@ init python:
     import re
     import pygame.scrap
     from renpy import store
+    _last_notebook_length_logged = None
 
     if not hasattr(store, "new_note_text_template"):
         store.new_note_text_template = "whats your evidence?"
@@ -105,6 +106,15 @@ init python:
         store.auto_tag_user_notes = new_value
         renpy.notify("Auto-tag user notes: {}".format("On" if new_value else "Off"))
 
+    def log_notebook_length(length):
+        """Only log notebook length when it actually changes."""
+        global _last_notebook_length_logged
+        length = int(length)
+        if _last_notebook_length_logged == length:
+            return
+        _last_notebook_length_logged = length
+        renpy.log("Notebook length: {}".format(length))
+
     def _tag_origin(manual, auto_added):
         if auto_added and manual:
             return "mixed"
@@ -138,7 +148,7 @@ init python:
             "tags": tags_list,
             "type": note_type
         })
-        renpy.block_rollback()
+        # renpy.block_rollback()
         
         if note_type == "user-written":
             narrator.add_history(kind="adv", who="You wrote a note: ", what=content)
@@ -177,8 +187,6 @@ init python:
             fn = globals().get(achievement_fn)
             if callable(fn):
                 fn()
-
-        return note_id
     
     def deletenote(note_id):
         global notebook
@@ -308,7 +316,6 @@ init python:
             save_note(note_id, newnote, newsource, tags_list)
             renpy.block_rollback()
             edited_note_id = None
-            return True
     
     def argument_edit(newcontent):
         save_draft(newcontent, edited=True)
@@ -347,26 +354,29 @@ screen notebook():
     default edit_note_source = ""
     default edit_note_tags = ""
     default filter_tag = None
-    default voice_request_active = False
+    # default voice_request_active = False
 
     modal True
     zorder 92
 
-    on "hide" action If(
-        voice_request_active,
-        true=[Function(release_voice_input), SetScreenVariable("voice_request_active", False)],
-        false=SetScreenVariable("voice_request_active", False)
-    )
+    # on "hide" action If(
+    #     voice_request_active,
+    #     true=[Function(release_voice_input), SetScreenVariable("voice_request_active", False)],
+    #     false=SetScreenVariable("voice_request_active", False)
+    # )
 
-    $ has_note_input = editing_argument or (edited_note_id is not None)
-    if has_note_input:
-        if not voice_request_active:
-            $ request_voice_input()
-            $ voice_request_active = True
-        use voice_recording_toggle
-    elif voice_request_active:
-        $ release_voice_input()
-        $ voice_request_active = False
+    # $ has_note_input = editing_argument or (edited_note_id is not None)
+    # if has_note_input:
+    #     if not voice_request_active:
+    #         $ request_voice_input()
+    #         $ voice_request_active = True
+    #     use voice_recording_toggle
+    # elif voice_request_active:
+    #     $ release_voice_input()
+    #     $ voice_request_active = False
+
+    use my_button_screen
+
 
     add "images/notebook_open.png" xpos 0.5 ypos 0.5 anchor (0.5, 0.5) zoom .8
 
@@ -396,7 +406,7 @@ screen notebook():
 
         # ===== STICKY ADD BUTTON (non-scrolling, on top) =====
         text "Edited Note ID: [edited_note_id]"
-        $ renpy.log("Notebook length: {}".format(len(notebook)))
+        $ log_notebook_length(len(notebook))
         $ all_tags = sorted({tag for note in notebook for tag in note.get("tags", []) if tag})
         if filter_tag and filter_tag not in all_tags:
             $ filter_tag = None
@@ -502,6 +512,7 @@ screen notebook():
                                         button:
                                             action ScreenVariableInputValue("edit_note_text").Toggle()
                                             input value ScreenVariableInputValue("edit_note_text") style "edit_input" multiline True
+                                            
 
                                 hbox:
                                     spacing 20
@@ -773,19 +784,19 @@ screen argument_sharing(prompt):
 
     default user_argument = ""
     default argumentinput = ScreenVariableInputValue("user_argument")
-    default voice_request_active = False
+    # default voice_request_active = False
 
-    if not voice_request_active:
-        $ request_voice_input()
-        $ voice_request_active = True
+    # if not voice_request_active:
+    #     $ request_voice_input()
+    #     $ voice_request_active = True
 
-    on "hide" action If(
-        voice_request_active,
-        true=[Function(release_voice_input), SetScreenVariable("voice_request_active", False)],
-        false=SetScreenVariable("voice_request_active", False)
-    )
+    # on "hide" action If(
+    #     voice_request_active,
+    #     true=[Function(release_voice_input), SetScreenVariable("voice_request_active", False)],
+    #     false=SetScreenVariable("voice_request_active", False)
+    # )
 
-    use voice_recording_toggle
+    use my_button_screen
 
     frame:
         xpos 1.0
@@ -869,7 +880,6 @@ screen argument_sharing(prompt):
                             action [
                                 Function(argument_edit, user_argument),
                                 Function(cache_screen_response, "argument_sharing", user_argument),
-                                Return(user_argument)
                             ]
                             xfill True
 

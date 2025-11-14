@@ -2407,3 +2407,680 @@ None
 
 Notebook length: 0
 Notebook length: 0
+--- Fri Nov 14 13:25:31 2025
+
+--- Fri Nov 14 13:29:19 2025
+
+--- Fri Nov 14 13:29:20 2025
+
+2025-11-14 13:29:20
+PlayerJumpedLabel(main_menu_screen|True)
+
+None
+
+2025-11-14 13:29:22
+PlayerJumpedLabel(start|True)
+
+None
+
+2025-11-14 13:29:24
+PlayerDialogueInput
+
+{'text': 'mo', 'prompt': 'Please enter your player ID', 'screen': None,
+'delivery': 'manual', 'is_question': False, 'metadata': {'source':
+'safe_renpy_input', 'stripped': 'mo'}}
+
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+2025-11-14 13:29:28
+PlayerDialogueChoice
+
+{'text': "You're a talking bee??", 'timestamp': 1763144968.388268, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: You're a talking bee??
+
+???
+A honey bee, to be exact! But yes!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+2025-11-14 13:29:29
+PlayerDialogueChoice
+
+{'text': 'I live in a rural town', 'timestamp': 1763144969.7972631,
+'delivery': 'menu', 'is_question': False, 'question_target': None,
+'auto_generated': False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: I live in a rural town
+
+2025-11-14 13:29:29
+PlayerLocationChoice
+
+{'startplace': 'rural'}
+
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+2025-11-14 13:29:31
+PlayerDialogueChoice
+
+{'text': "Let's go!", 'timestamp': 1763144971.4539368, 'delivery': 'menu',
+'is_question': False, 'question_target': None, 'auto_generated': False,
+'origin': {'source': 'script', 'details': None}}
+
+Player chose: Let's go!
+
+Tulip
+Yay! Let's zoom!
+
+2025-11-14 13:29:31
+PlayerJumpedLabel(begin|True)
+
+None
+
+Notebook length: 0
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+Notebook length: 0
+Notebook length: 0
+2025-11-14 13:29:35
+PlayerDialogueChoice
+
+{'text': 'Yeah, just moved here!', 'timestamp': 1763144975.466759, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: Yeah, just moved here!
+
+Friendly Stranger
+Welcome to the neighborhood! I live right down the street.
+
+Notebook length: 0
+Friendly Stranger
+Anyway, I'm glad you're here, new kid.
+
+Notebook length: 0
+Elliot
+I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our
+lot to those parking guys.
+
+Choice: What parking guys?
+
+Notebook length: 0
+2025-11-14 13:29:37
+PlayerDialogueChoice
+
+{'text': 'What parking guys?', 'timestamp': 1763144977.2562501, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: What parking guys?
+
+2025-11-14 13:29:37
+CharacterApprovalChanged
+
+{'character': 'Elliot', 'delta': 0, 'new_total': 0, 'change_type': 'gain',
+'choice': 'What parking guys?', 'message': None}
+
+2025-11-14 13:29:37
+PlayerJumpedLabel(parkingguys|True)
+
+None
+
+Notebook length: 0
+Elliot
+That guy over there in the suit is from CityPark. They want to turn our empty
+lot into a big parking lot for the neighborhood.
+
+Notebook length: 0
+Elliot
+But me and the other Community Gardeners have been trying to convince Mayor
+Watson to donate the lot to our food justice project instead.
+
+Notebook length: 0
+Elliot
+The parking lot makes money, but a community garden would be huge for this
+neighborhood!
+
+Notebook length: 0
+Tulip
+Hey! Sorry to interrupt - but this seems like a good time to show you your
+notebook!
+
+Tulip
+See the + button to the left? This automatically adds whatever is being said
+to your notebook!
+
+Notebook length: 0
+Tulip
+If you want to open your notebook and see what notes you've taken, you can
+click on the Notes button in the top right!
+
+Notebook length: 0
+2025-11-14 13:29:40
+PlayerTookNote
+
+{'note': "You can edit notes you've taken, or write your own custom notes! You
+can also delete notes you don't want.", 'source': 'Tulip', 'tags': [],
+'requested_tags': [], 'auto_tags_added': [], 'auto_tagged': False,
+'tag_origin': 'player', 'note_id': 0, 'type': 'character-dialog'}
+
+Notebook length: 1
+Tulip
+You can edit notes you've taken, or write your own custom notes! You can also
+delete notes you don't want.
+
+Notebook length: 1
+Tulip
+Hope that helps!
+
+Elliot
+Whoa, a bee just flew past your face! You know, I bet if we built a garden
+here, the bees would love it.
+
+Notebook length: 1
+Elliot
+The garden would be great for people too. The nearest grocery store is miles
+away, and most folks don't have a car.
+
+Choice: How can I help?
+Choice: What's food justice?
+Choice: Sure, I'll help.
+Choice: Hmm. I should go.
+
+Notebook length: 1
+2025-11-14 13:29:44
+PlayerDialogueChoice
+
+{'text': 'Hmm. I should go.', 'timestamp': 1763144984.7632372, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: Hmm. I should go.
+
+2025-11-14 13:29:44
+PlayerJumpedLabel(talk_later|True)
+
+None
+
+Notebook length: 1
+Elliot
+If you're interested, you should go talk with the Community Gardeners. Wes and
+Nadia, the head gardeners, are over at Westgate Community Garden on the other
+side of the city.
+
+Notebook length: 1
+Elliot
+It would be so great if we could have a garden like that in our neighborhood!
+They even have beehives!
+
+Notebook length: 1
+Elliot
+You can also check out the science lab, where my friend Riley has been hanging
+out to learn about food science.
+
+2025-11-14 13:29:45
+AchievementUnlocked
+
+{'achievement': 'FRIEND', 'name': 'A New Friend', 'location': 'emptylot',
+'character_in_discussion': None}
+
+2025-11-14 13:29:50
+PlayerJumpedLabel(emptylot|True)
+
+None
+
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+2025-11-14 13:30:00
+PlayerEditedArgument
+
+{'draft': 'Draft your argument here. this is morgan ', 'previous': 'Draft your
+argument here.', 'change_summary': {'previous_length': 25, 'new_length': 41,
+'delta_length': 16}}
+
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+2025-11-14 13:30:11
+PlayerEditedArgument
+
+{'draft': 'Draft your argument here. this is morgan  dlfk jas;ldkjf ;as',
+'previous': 'Draft your argument here. this is morgan ', 'change_summary':
+{'previous_length': 41, 'new_length': 60, 'delta_length': 19}}
+
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+2025-11-14 13:30:13
+PlayerEditedArgument
+
+{'draft': 'Draft your argument here. this is morgan  dlfk jas;ldkjf ;as
+al;skjd f;lakjsd f', 'previous': 'Draft your argument here. this is morgan
+dlfk jas;ldkjf ;as', 'change_summary': {'previous_length': 60, 'new_length':
+79, 'delta_length': 19}}
+
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+2025-11-14 13:30:17
+PlayerEditedArgument
+
+{'draft': 'Draft your argument here. this is morgan  dlfk jas;ldkjf ;as
+al;skjd f;lakjsd f alksjdf ;laksj d;aslkdfj ', 'previous': 'Draft your
+argument here. this is morgan  dlfk jas;ldkjf ;as al;skjd f;lakjsd f',
+'change_summary': {'previous_length': 79, 'new_length': 105, 'delta_length':
+26}}
+
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+2025-11-14 13:30:20
+PlayerEditedArgument
+
+{'draft': 'Draft your argument here. this is morgan  dlfk jas;ldkjf ;as
+al;skjd f;lakjsd f alksjdf ;laksj d;aslkdfj  a;sdj f;alskdj f;laksjdf ',
+'previous': 'Draft your argument here. this is morgan  dlfk jas;ldkjf ;as
+al;skjd f;lakjsd f alksjdf ;laksj d;aslkdfj ', 'change_summary':
+{'previous_length': 105, 'new_length': 131, 'delta_length': 26}}
+
+2025-11-14 13:30:20
+AchievementUnlocked
+
+{'achievement': 'REVISION5', 'name': 'Work in Progress', 'location':
+'emptylot', 'character_in_discussion': None}
+
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+The empty lot isn't much - just a wide patch of dirt. Elliot is exploring,
+likely imagining what a garden would look like here.
+
+Notebook length: 1
+You see two men in suits sizing up the empty lot. You wonder what so many
+people are doing wandering around an empty bit of land.
+
+2025-11-14 13:30:51
+PlayerJumpedLabel(emptylotregular|False)
+
+None
+
+Notebook length: 1
+Click the person you want to talk to, or click the map to travel somewhere
+else.
+
+Notebook length: 1
+2025-11-14 13:30:52
+PlayerJumpedLabel(watson_chatting|True)
+
+None
+
+2025-11-14 13:30:53
+PlayerJumpedLabel(mayor_1|True)
+
+None
+
+Notebook length: 1
+Mayor Watson
+Hello there! I'm Mayor Watson. I'm out here today gathering community opinions
+on the empty lot.
+
+Notebook length: 1
+Mayor Watson
+Do you have any thoughts about it?
+
+Choice: I think you should let the Community Gardeners use the lot for growing
+food.
+Choice: I think you should let CityPark build a parking [structure] for the
+neighborhood.
+Choice: I'm not sure.
+
+Notebook length: 1
+2025-11-14 13:30:56
+PlayerDialogueChoice
+
+{'text': 'I think you should let the Community Gardeners use the lot for
+growing food.', 'timestamp': 1763145056.017905, 'delivery': 'menu',
+'is_question': False, 'question_target': None, 'auto_generated': False,
+'origin': {'source': 'script', 'details': None}}
+
+Player chose: I think you should let the Community Gardeners use the lot for
+growing food.
+
+2025-11-14 13:30:56
+PlayerJumpedLabel(garden_m|True)
+
+None
+
+Mayor Watson
+Ah, interesting. The garden would provide some food for the neighborhood,
+though the parking lot might be more financially useful for the city.
+
+Notebook length: 1
+Mayor Watson
+I need to consider the research and figure out what is best for our community.
+
+2025-11-14 13:30:56
+PlayerJumpedLabel(mayor_request|True)
+
+None
+
+Notebook length: 1
+Mayor Watson
+If you gather any information you think I'd find interesting, feel free to
+come back and let me know!
+
+2025-11-14 13:30:56
+PlayerJumpedLabel(emptylot|True)
+
+None
+
+2025-11-14 13:30:59
+PlayerJumpedLabel(emptylotregular|True)
+
+None
+
+Notebook length: 1
+Click the person you want to talk to, or click the map to travel somewhere
+else.
+
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+Notebook length: 1
+2025-11-14 13:32:00
+PlayerJumpedLabel(watson_chatting|True)
+
+None
+
+2025-11-14 13:32:02
+PlayerJumpedLabel(mayor_2|True)
+
+None
+
+Notebook length: 1
+Mayor Watson
+Hello there! What can I do for you?
+
+Choice: What kind of information are you looking for?
+Choice: How can we convince you to support the Community Garden?
+Choice: I have a persuasive argument to share about the empty lot.
+
+Notebook length: 1
+2025-11-14 13:32:04
+PlayerDialogueChoice
+
+{'text': 'How can we convince you to support the Community Garden?',
+'timestamp': 1763145124.1112478, 'delivery': 'menu', 'is_question': False,
+'question_target': None, 'auto_generated': False, 'origin': {'source':
+'script', 'details': None}}
+
+Player chose: How can we convince you to support the Community Garden?
+
+2025-11-14 13:32:04
+PlayerJumpedLabel(good_argument|True)
+
+None
+
+Notebook length: 1
+Mayor Watson
+A persuasive argument brings together many different types of evidence and
+tells a good story about why someone should agree with your point of view.
+
+Notebook length: 1
+Mayor Watson
+If I am going to support the Community Garden project, I need to know how the
+garden will benefit the people in the community.
+
+Notebook length: 1
+Mayor Watson
+I also need to be convinced that the benefits of the garden are more important
+than the money and business that the parking lot will bring.
+
+Choice: I'll look for some evidence.
+Choice: I have an argument to share about the empty lot.
+
+Notebook length: 1
+2025-11-14 13:32:09
+PlayerDialogueChoice
+
+{'text': "I'll look for some evidence.", 'timestamp': 1763145129.4942179,
+'delivery': 'menu', 'is_question': False, 'question_target': None,
+'auto_generated': False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: I'll look for some evidence.
+
+2025-11-14 13:32:09
+PlayerJumpedLabel(continue_search|True)
+
+None
+
+Notebook length: 1
+Mayor Watson
+Wonderful. I look forward to hearing your argument when it is ready to share.
+
+2025-11-14 13:32:10
+PlayerJumpedLabel(emptylot|True)
+
+None
+
+2025-11-14 13:32:10
+PlayerJumpedLabel(emptylotregular|True)
+
+None
+
+Notebook length: 1
+Click the person you want to talk to, or click the map to travel somewhere
+else.
+
+Notebook length: 1
+2025-11-14 13:32:11
+PlayerJumpedLabel(watson_chatting|True)
+
+None
+
+2025-11-14 13:32:12
+PlayerJumpedLabel(mayor_2|True)
+
+None
+
+Notebook length: 1

@@ -1,7 +1,7 @@
 label start:
 
-    if useAudio: 
-        play music "JaracandaLoop.wav" volume 0.1
+    # if useAudio: 
+    #     play music "JaracandaLoop.wav" volume 0.1
 
     # Show a background
     scene flowers muted
@@ -485,7 +485,7 @@ label start:
     
     label riley_against:
         r "Oh really? I'm curious why you think that."
-        $ progarage = safe_renpy_input("Why do you support the parking [structure]?")
+        $ progarage = safe_renpy_input("Why do you support the parking [structure]?", screen="argument_sharing")
         if not isinstance(progarage, str) or not progarage.strip():
             r "Alright, maybe you'll think of a reason later."
             jump riley_plan
@@ -1242,7 +1242,7 @@ label start:
         show nadia smile at left
         with dissolve
 
-        show alex smile at right
+        show alex smile
         with dissolve
 
         show cora concern at right
