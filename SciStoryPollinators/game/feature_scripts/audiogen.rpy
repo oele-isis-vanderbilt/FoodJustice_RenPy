@@ -24,23 +24,23 @@ init python:
                 import emscripten
                 test = emscripten.run_script_int(f"window.microphoneUtil.StopRecordingJS();")
 
-screen my_button_screen():
-    $ recording_tooltip = None
-    if not renpy.emscripten:
-        $ recording_tooltip = "This feature isn't available on desktop."
+# screen my_button_screen():
+#     $ recording_tooltip = None
+#     if not renpy.emscripten:
+#         $ recording_tooltip = "This feature isn't available on desktop."
 
-    vbox:
-        spacing 20 
-        textbutton "Start Record":
-            action Function(StartAudioRecord)
-            xalign 0.5 
-            if recording_tooltip:
-                tooltip recording_tooltip
-        textbutton "End Record":
-            action Function(EndAudioRecord)
-            xalign 0.5 
-            if recording_tooltip:
-                tooltip recording_tooltip
+#     vbox:
+#         spacing 20 
+#         textbutton "Start Record":
+#             action Function(StartAudioRecord)
+#             xalign 0.5 
+#             if recording_tooltip:
+#                 tooltip recording_tooltip
+#         textbutton "End Record":
+#             action Function(EndAudioRecord)
+#             xalign 0.5 
+#             if recording_tooltip:
+#                 tooltip recording_tooltip
 
     # zorder 1000
     # modal False
@@ -67,19 +67,3 @@ screen my_button_screen():
     #                     Function(EndAudioRecord),
     #                     style "edit_tag_support"
     #                 ]
-                     
-
-
-style tag_button:
-    background "#d1c7ff"
-    padding (4, 4)
-
-style tag_button_text:
-    font "DejaVuSans.ttf"
-    size 14
-    color "#000000"
-    xalign 0.5
-    yalign 0.5
-
-style selected_tag_button:
-    background "#8076ae"
