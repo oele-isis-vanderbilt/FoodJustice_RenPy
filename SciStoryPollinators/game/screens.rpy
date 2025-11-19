@@ -5,6 +5,16 @@
 init offset = -1
 
 
+init python:
+    def add_dialogue_note_and_pause(dialogue_text, speaker_name):
+        """
+        Saves the current line to the notebook without letting the click
+        advance the dialogue interaction.
+        """
+        new_note(dialogue_text or "", speaker_name or "", [], "character-dialog")
+        renpy.restart_interaction()
+
+
 ################################################################################
 ## Styles
 ################################################################################
@@ -98,6 +108,9 @@ style frame:
 screen say(who, what):
     style_prefix "say"
 
+    if overlay_dialogue_block_count > 0:
+        key "dismiss" action NullAction()
+
     window:
         xfill True
         yalign 1.0
@@ -134,7 +147,7 @@ screen say(who, what):
                     imagebutton:
                         idle addnote_btn
                         hover darken_hover(addnote_btn)
-                        action Function(new_note, what, who, [], "character-dialog")
+                        action Function(add_dialogue_note_and_pause, what, who)
                         yalign 0.5
 
                 if what is not None:
@@ -1678,7 +1691,11 @@ screen learningbuttons():
             tooltip "Ask Tulip"
             idle bee_btn
             hover darken_hover(bee_btn)
-            action Call("tulipchat", from_current = True)
+            action [
+                Function(lock_dialogue_advancement, "tulip"),
+                Call("tulipchat", from_current = True),
+                Function(unlock_dialogue_advancement, "tulip"),
+            ]
 
         text "\n":
             size 8
