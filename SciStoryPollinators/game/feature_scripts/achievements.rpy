@@ -311,6 +311,8 @@ screen achievements_screen():
     tag menu
     modal True
     add Solid("#00000080") 
+    on "show" action Function(lock_dialogue_advancement, "achievements")
+    on "hide" action Function(unlock_dialogue_advancement, "achievements")
 
     # Absorb clicks outside the panel
     button:

@@ -17,6 +17,26 @@ init python:
             return ""
         return _screen_response_cache.pop(screen_name, "")
 
+    def lock_dialogue_advancement(source=None):
+        """
+        Increment a shared counter so the say screen knows to ignore dismiss
+        clicks while a modal UI is layered on top.
+        """
+        current = getattr(store, "overlay_dialogue_block_count", 0)
+        store.overlay_dialogue_block_count = current + 1
+
+    def unlock_dialogue_advancement(source=None):
+        """Release a previously acquired dialogue lock."""
+        current = getattr(store, "overlay_dialogue_block_count", 0)
+        if current <= 0:
+            store.overlay_dialogue_block_count = 0
+            return
+        store.overlay_dialogue_block_count = current - 1
+
+    def dialogue_advancement_locked():
+        """Return True while any popup has requested a dialogue lock."""
+        return getattr(store, "overlay_dialogue_block_count", 0) > 0
+
     def _log_approval_change(char_name, delta, new_total, message, change_type):
         payload = {
             "character": char_name,

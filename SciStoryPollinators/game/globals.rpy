@@ -42,6 +42,7 @@ default voice_recording_active = False
 default voice_input_contexts = 0
 default voice_input_available = False
 default voice_features_enabled = True
+default overlay_dialogue_block_count = 0
 
 ##LOCATION VISIT TRACKING
 default emptylotvisit = False

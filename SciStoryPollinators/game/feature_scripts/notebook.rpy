@@ -358,6 +358,8 @@ screen notebook():
 
     modal True
     zorder 92
+    on "show" action Function(lock_dialogue_advancement, "notebook")
+    on "hide" action Function(unlock_dialogue_advancement, "notebook")
 
     # on "hide" action If(
     #     voice_request_active,

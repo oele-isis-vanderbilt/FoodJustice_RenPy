@@ -34,6 +34,8 @@ init python:
 
 screen map_popup():
     modal True   # make clicks go only to this screen
+    on "show" action Function(lock_dialogue_advancement, "map_popup")
+    on "hide" action Function(unlock_dialogue_advancement, "map_popup")
     default shown_w = 750
     default shown_h = 750
 
