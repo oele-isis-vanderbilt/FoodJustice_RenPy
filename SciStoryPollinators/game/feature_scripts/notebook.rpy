@@ -405,7 +405,6 @@ screen notebook():
         $ top_y = vp_center_y - vp_h/2.0
 
         # ===== STICKY ADD BUTTON (non-scrolling, on top) =====
-        text "Edited Note ID: [edited_note_id]"
         $ log_notebook_length(len(notebook))
         $ all_tags = sorted({tag for note in notebook for tag in note.get("tags", []) if tag})
         if filter_tag and filter_tag not in all_tags:
@@ -644,6 +643,10 @@ screen notebook():
             background None
             has vbox
             spacing 12
+
+            $ argument_column_width = int(config.screen_width * 0.26)
+            $ argument_box_width = max(argument_column_width - 40, 250)
+            $ argument_box_max_height = int(config.screen_height * 0.3)
         
             ## CURRENT ARGUMENT  FRAME                
             frame:
@@ -676,7 +679,14 @@ screen notebook():
 
                     if editing_argument:
                         frame style "current_argument_edit_frame":
-                            input value ScreenVariableInputValue("argument_edit_text") style "argument_input" multiline True xmaximum 550
+                            viewport:
+                                xfill True
+                                ymaximum argument_box_max_height
+                                scrollbars "vertical"
+                                mousewheel True
+                                draggable False
+                                has vbox
+                                input value ScreenVariableInputValue("argument_edit_text") style "argument_input" multiline True xmaximum argument_box_width
                         null height 10
                         hbox:
                             spacing 10
@@ -696,7 +706,13 @@ screen notebook():
                                 ]
                     else:
                         frame style "current_argument_view_frame":
-                            text notebook_argument style "current_argument_text"
+                            viewport:
+                                xfill True
+                                ymaximum argument_box_max_height
+                                scrollbars "vertical"
+                                mousewheel True
+                                draggable False
+                                text notebook_argument style "current_argument_text" xmaximum argument_box_width
             ## ARGUMENT HISTORY                
             viewport:
                 xfill True
