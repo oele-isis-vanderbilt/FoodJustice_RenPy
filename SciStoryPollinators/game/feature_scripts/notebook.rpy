@@ -92,13 +92,42 @@ init python:
 
         return tags
 
+    def _auto_tagging_enabled(note_type):
+        if note_type == "character-dialog":
+            return True
+        if note_type == "user-written":
+            return getattr(store, "auto_tag_user_notes", True)
+        return False
+
     def refresh_character_note_tags():
         """Ensure all character notes reflect current tag matches."""
         global notebook
         for note in notebook:
-            if note.get("type") == "character-dialog":
-                current_tags = normalize_tags(note.get("tags", []))
-                note["tags"] = auto_character_tags(note.get("content", ""), current_tags)
+            if note.get("type") != "character-dialog":
+                continue
+
+            blocked_list = sorted(set(normalize_tags(note.get("blocked_auto_tags", []))))
+            blocked_set = set(blocked_list)
+            current_tags = normalize_tags(note.get("tags", []))
+            auto_tags = auto_character_tags(note.get("content", ""), [])
+            allowed_auto = [tag for tag in auto_tags if tag not in blocked_set]
+
+            if allowed_auto:
+                manual_seen = set()
+                manual_portion = []
+                for tag in current_tags:
+                    if tag in allowed_auto:
+                        continue
+                    if tag in manual_seen:
+                        continue
+                    manual_portion.append(tag)
+                    manual_seen.add(tag)
+                updated_tags = manual_portion + [tag for tag in allowed_auto if tag not in manual_portion]
+            else:
+                updated_tags = list(current_tags)
+
+            note["tags"] = updated_tags
+            note["blocked_auto_tags"] = blocked_list
 
     def toggle_auto_tag_user_notes():
         current = getattr(store, "auto_tag_user_notes", True)
@@ -232,15 +261,36 @@ init python:
                 n["content"] = newnote
                 n["source"] = newsource
                 note_type = n.get("type")
-                should_auto_tag = False
-                if note_type == "character-dialog":
-                    should_auto_tag = True
-                elif note_type == "user-written" and getattr(store, "auto_tag_user_notes", True):
-                    should_auto_tag = True
-                if should_auto_tag:
-                    updated_tags = auto_character_tags(newnote, updated_tags)
-                auto_added_tags = [t for t in updated_tags if t not in manual_tags]
-                n["tags"] = updated_tags
+                blocked_set = set(normalize_tags(n.get("blocked_auto_tags", [])))
+                allowed_auto = []
+
+                if _auto_tagging_enabled(note_type):
+                    auto_candidates = auto_character_tags(newnote, [])
+                    for tag in auto_candidates:
+                        if tag in updated_tags:
+                            blocked_set.discard(tag)
+                        elif tag in previous_tags or tag in blocked_set:
+                            blocked_set.add(tag)
+                    allowed_auto = [tag for tag in auto_candidates if tag not in blocked_set]
+
+                if allowed_auto:
+                    manual_seen = set()
+                    manual_portion = []
+                    for tag in updated_tags:
+                        if tag in allowed_auto:
+                            continue
+                        if tag in manual_seen:
+                            continue
+                        manual_portion.append(tag)
+                        manual_seen.add(tag)
+                    final_tags = manual_portion + [tag for tag in allowed_auto if tag not in manual_portion]
+                else:
+                    final_tags = list(updated_tags)
+
+                auto_added_tags = list(allowed_auto)
+                manual_tags = [tag for tag in final_tags if tag not in auto_added_tags]
+                n["tags"] = final_tags
+                n["blocked_auto_tags"] = sorted(blocked_set)
                 renpy.notify("Note Revised")
                 changes = []
                 if previous_content != newnote:
@@ -574,12 +624,17 @@ screen notebook():
                                             if creating_tag:
                                                 hbox:
                                                     spacing 6
-                                                    frame:
+                                                    $ tag_input_value = ScreenVariableInputValue("new_tag_name")
+                                                    $ tag_input_bg = "#f1edff" if active_input_field == "tags" else "#f5f3fe"
+                                                    button:
                                                         style "create_tag_box_active"
-                                                        has hbox
-                                                        button:
-                                                            action ScreenVariableInputValue("new_tag_name").Toggle()
-                                                            input value ScreenVariableInputValue("new_tag_name") style "edit_tag_input"
+                                                        background tag_input_bg
+                                                        hover_background tag_input_bg
+                                                        action [
+                                                            SetScreenVariable("active_input_field", "tags"),
+                                                            tag_input_value.Toggle()
+                                                        ]
+                                                        input value tag_input_value style "edit_tag_input"
 
                                                     textbutton "Save":
                                                         style "edit_tag_support"
@@ -692,21 +747,32 @@ screen notebook():
                                 hover darken_hover(edit_argument_idle, 0.40)
                                 action [
                                     SetScreenVariable("argument_edit_text", notebook_argument),
-                                    SetScreenVariable("editing_argument", True)
+                                    SetScreenVariable("editing_argument", True),
+                                    SetScreenVariable("active_input_field", "argument"),
                                 ]
                                 xalign 1.0
                                 yalign 0.5
 
                     if editing_argument:
+                        $ argument_input_value = ScreenVariableInputValue("argument_edit_text")
+                        $ argument_field_color = "#f1edff" if active_input_field == "argument" else "#ffffff"
                         frame style "current_argument_edit_frame":
-                            viewport:
-                                xfill True
-                                ymaximum argument_box_max_height
-                                scrollbars "vertical"
-                                mousewheel True
-                                draggable False
-                                has vbox
-                                input value ScreenVariableInputValue("argument_edit_text") style "argument_input" multiline True xmaximum argument_box_width
+                            button:
+                                style "argument_input_button"
+                                background argument_field_color
+                                hover_background argument_field_color
+                                action [
+                                    SetScreenVariable("active_input_field", "argument"),
+                                    argument_input_value.Toggle()
+                                ]
+                                viewport:
+                                    xfill True
+                                    ymaximum argument_box_max_height
+                                    scrollbars "vertical"
+                                    mousewheel True
+                                    draggable False
+                                    has vbox
+                                    input value argument_input_value style "argument_input" multiline True xmaximum argument_box_width
                         null height 10
                         hbox:
                             spacing 10
@@ -716,13 +782,15 @@ screen notebook():
                                 action [
                                     Function(argument_edit, argument_edit_text),
                                     SetScreenVariable("editing_argument", False),
-                                    SetScreenVariable("argument_edit_text", notebook_argument)
+                                    SetScreenVariable("argument_edit_text", notebook_argument),
+                                    SetScreenVariable("active_input_field", None),
                                 ]
                             textbutton "Cancel":
                                 style "standard_button"
                                 action [
                                     SetScreenVariable("editing_argument", False),
-                                    SetScreenVariable("argument_edit_text", notebook_argument)
+                                    SetScreenVariable("argument_edit_text", notebook_argument),
+                                    SetScreenVariable("active_input_field", None),
                                 ]
                     else:
                         frame style "current_argument_view_frame":
@@ -1034,6 +1102,22 @@ style edit_input:
     color "#000000"
     xfill True
 
+style edit_input_container:
+    background "#ffffff"
+    hover_background "#ffffff"
+    padding (10, 10)
+    xfill True
+    xalign 1.0
+    focus_mask None
+
+style argument_input_button:
+    background "#ffffff"
+    hover_background "#ffffff"
+    padding (0, 0)
+    xfill True
+    xalign 0.0
+    focus_mask None
+
 style standard_button:
     background "#d1c7ff"
     hover_background "#a79fceff"
@@ -1099,6 +1183,9 @@ style create_tag_box_text:
 style create_tag_box_active:
     padding (6, 4)
     background "#f5f3fe"
+    hover_background "#f5f3fe"
+    xfill True
+    focus_mask None
 
 style edit_tag_input:
     font "DejaVuSans.ttf"
