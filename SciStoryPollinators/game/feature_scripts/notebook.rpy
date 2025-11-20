@@ -502,6 +502,8 @@ screen notebook():
                     
                     ## EDITABLE NOTE
                     if edited_note_id == note_id:
+                        $ note_input_max_height = int(config.screen_height * 0.05)
+                        $ source_input_max_height = int(config.screen_height * 0.05)
                         frame style "editing_note_frame":
                             vbox:
                                 spacing 20
@@ -509,24 +511,40 @@ screen notebook():
                                 hbox:
                                     spacing 20
                                     text "Note:" style "note_label" xalign 1.0 xsize 150
-                                    frame style "edit_frame":
-                                        button:
-                                            action ScreenVariableInputValue("edit_note_text").Toggle()
-                                            input value ScreenVariableInputValue("edit_note_text") style "edit_input" multiline True
-                                            
+                                    $ note_input_value = ScreenVariableInputValue("edit_note_text")
+                                    $ note_field_color = "#f1edff" if active_input_field == "note" else "#ffffff"
+                                    button:
+                                        style "edit_input_container"
+                                        background note_field_color
+                                        hover_background note_field_color
+                                        action [
+                                            SetScreenVariable("active_input_field", "note"),
+                                            note_input_value.Toggle()
+                                        ]
+                                        input value note_input_value style "edit_input" multiline True
+                                        
 
                                 hbox:
                                     spacing 20
                                     text "Source:" style "note_label" xalign 1.0 xsize 150
-                                    frame style "edit_frame":
-                                        button:
-                                            action ScreenVariableInputValue("edit_note_source").Toggle()
-                                            input value ScreenVariableInputValue("edit_note_source") style "edit_input"
+                                    $ source_input_value = ScreenVariableInputValue("edit_note_source")
+                                    $ source_field_color = "#f1edff" if active_input_field == "source" else "#ffffff"
+                                    button:
+                                        style "edit_input_container"
+                                        background source_field_color
+                                        hover_background source_field_color
+                                        action [
+                                            SetScreenVariable("active_input_field", "source"),
+                                            source_input_value.Toggle()
+                                        ]
+                                        input value source_input_value style "edit_input"
 
                                 hbox:
                                     spacing 20
                                     text "Tags:" style "note_label" xalign 1.0 xsize 150
+                                    $ tags_field_color = "#f1edff" if active_input_field == "tags" else "#ffffff"
                                     frame style "edit_frame":
+                                        background tags_field_color
                                         hbox:
                                             spacing 4
                                             xfill True
