@@ -175,7 +175,8 @@ init python:
             "source": speaker,
             "content": content,
             "tags": tags_list,
-            "type": note_type
+            "type": note_type,
+            "blocked_auto_tags": []
         })
         # renpy.block_rollback()
         
@@ -252,7 +253,6 @@ init python:
     def save_note(note_id, newnote, newsource, newtags):
         global notebook
         updated_tags = normalize_tags(newtags)
-        manual_tags = list(updated_tags)
         for n in notebook:
             if n["id"] == note_id:
                 previous_content = n["content"]
@@ -297,8 +297,8 @@ init python:
                     changes.append(f"content updated")
                 if previous_source != newsource:
                     changes.append(f"source {previous_source} -> {newsource}")
-                added = sorted(set(updated_tags) - set(previous_tags))
-                removed = sorted(set(previous_tags) - set(updated_tags))
+                added = sorted(set(final_tags) - set(previous_tags))
+                removed = sorted(set(previous_tags) - set(final_tags))
                 if added:
                     changes.append(f"tags added: {', '.join(added)}")
                 if removed:
@@ -310,7 +310,7 @@ init python:
                     payload={
                         "note": newnote,
                         "source": newsource,
-                        "tags": updated_tags,
+                        "tags": final_tags,
                         "note_id": note_id,
                         "changes": changes,
                         "tags_added": added,
@@ -366,7 +366,7 @@ init python:
             save_note(note_id, newnote, newsource, tags_list)
             renpy.block_rollback()
             edited_note_id = None
-    
+
     def argument_edit(newcontent):
         save_draft(newcontent, edited=True)
 
@@ -396,6 +396,35 @@ init python:
             if callable(fn):
                 fn()
 
+    def _note_has_meaningful_input(note_text, note_source, note_tags):
+        """Return True when the player has entered real content for a new note."""
+        text = (note_text or "").strip()
+        source = (note_source or "").strip()
+        template_note = (getattr(store, "new_note_text_template", "") or "").strip().lower()
+        template_source = (getattr(store, "new_note_source_template", "") or "").strip().lower()
+
+        if text and (not template_note or text.lower() != template_note):
+            return True
+        if source and (not template_source or source.lower() != template_source):
+            return True
+        return bool(normalize_tags(note_tags))
+
+    def autosave_notebook_edits(note_id, note_text, note_source, note_tags, editing_argument_active, argument_text):
+        """Persist any in-progress note or argument edits when closing the notebook."""
+        if editing_argument_active:
+            pending_argument = argument_text or ""
+            if pending_argument != notebook_argument:
+                argument_edit(pending_argument)
+
+        if note_id is None:
+            return
+
+        # Avoid saving placeholder notes when the player closes without typing anything.
+        if note_id == NEW_NOTE_ID and not _note_has_meaningful_input(note_text, note_source, note_tags):
+            return
+
+        commit_note(note_id, note_text, note_source, note_tags)
+
 #### Notebook ###### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
 screen notebook():
     default editing_argument = False
@@ -403,13 +432,25 @@ screen notebook():
     default edit_note_text = ""
     default edit_note_source = ""
     default edit_note_tags = ""
+    default active_input_field = None
     default filter_tag = None
     # default voice_request_active = False
 
     modal True
     zorder 92
     on "show" action Function(lock_dialogue_advancement, "notebook")
-    on "hide" action Function(unlock_dialogue_advancement, "notebook")
+    on "hide" action [
+        Function(
+            autosave_notebook_edits,
+            edited_note_id,
+            edit_note_text,
+            edit_note_source,
+            edit_note_tags,
+            editing_argument,
+            argument_edit_text,
+        ),
+        Function(unlock_dialogue_advancement, "notebook")
+    ]
 
     # on "hide" action If(
     #     voice_request_active,
@@ -507,6 +548,7 @@ screen notebook():
                     SetScreenVariable("edit_note_text", new_note_text_template),
                     SetScreenVariable("edit_note_source", new_note_source_template),
                     SetScreenVariable("edit_note_tags", ""),
+                    SetScreenVariable("active_input_field", "note"),
                 ]
                 
                 vbox:
@@ -640,16 +682,23 @@ screen notebook():
                                                         style "edit_tag_support"
                                                         action [
                                                             Function(add_tag, new_tag_name),
-                                                            SetScreenVariable("creating_tag", False)
+                                                            SetScreenVariable("creating_tag", False),
+                                                            SetScreenVariable("active_input_field", None)
                                                         ]
 
                                                     textbutton "Cancel":
                                                         style "edit_tag_support"
-                                                        action SetScreenVariable("creating_tag", False)
+                                                        action [
+                                                            SetScreenVariable("creating_tag", False),
+                                                            SetScreenVariable("active_input_field", None)
+                                                        ]
                                             else:
                                                 textbutton "Create Tag":
                                                     style "create_tag_box"
-                                                    action SetScreenVariable("creating_tag", True)
+                                                    action [
+                                                        SetScreenVariable("creating_tag", True),
+                                                        SetScreenVariable("active_input_field", "tags")
+                                                    ]
 
                                 hbox:
                                     spacing 10
@@ -659,7 +708,10 @@ screen notebook():
                                         action Function(commit_note, note_id, edit_note_text, edit_note_source, edit_note_tags)
                                     textbutton "Cancel":
                                         style "standard_button"
-                                        action SetVariable("edited_note_id", None)
+                                        action [
+                                            SetVariable("edited_note_id", None),
+                                            SetScreenVariable("active_input_field", None)
+                                        ]
                     ## NON-EDITABLE NOTE
                     else:
                         $ note_style = matches_filter and "note_box" or "note_box_dimmed"
@@ -701,6 +753,7 @@ screen notebook():
                                                 SetScreenVariable("edit_note_text", n),
                                                 SetScreenVariable("edit_note_source", s),
                                                 SetScreenVariable("edit_note_tags", t),
+                                                SetScreenVariable("active_input_field", "note"),
                                                 SetVariable("edited_note_id", note_id)
                                             ]
                                             xalign 1.0
