@@ -123,3 +123,29 @@ def test_deletenote_removes_and_logs(notebook_module, renpy_module):
     assert logs and logs[0][0][0] == "tester"
     assert history and history[-1]["who"].startswith("You erased")
     assert shots["count"] == 1
+
+
+def test_save_note_allows_tag_override(notebook_module, renpy_store):
+    _setup_notebook_module(notebook_module)
+    renpy_store.tagBuckets = {"pollinators": ["bee"]}
+
+    note_id = notebook_module.new_note("Bees help us.", "Player", [], "user-written")
+    assert notebook_module.notebook[0]["tags"] == ["pollinators"]
+
+    notebook_module.save_note(note_id, "Bees help us.", "Player", [])
+    assert notebook_module.notebook[0]["tags"] == []
+
+    notebook_module.save_note(note_id, "Bees help all gardens.", "Player", [])
+    assert notebook_module.notebook[0]["tags"] == []
+
+
+def test_character_note_tag_block_survives_refresh(notebook_module, renpy_store):
+    _setup_notebook_module(notebook_module)
+    renpy_store.tagBuckets = {"pollinators": ["bee"]}
+
+    first_id = notebook_module.new_note("Bee facts.", "Elliot", [], "character-dialog")
+    notebook_module.save_note(first_id, "Bee facts.", "Elliot", [])
+    assert notebook_module.notebook[0]["tags"] == []
+
+    notebook_module.new_note("New bee hint!", "Elliot", [], "character-dialog")
+    assert notebook_module.notebook[0]["tags"] == []
