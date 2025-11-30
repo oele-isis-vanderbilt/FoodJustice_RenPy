@@ -206,12 +206,41 @@ init python:
             )
         return text
 
+    def collect_player_argument(prompt="", screen="argument_sharing"):
+        """
+        Request argument text from the player while tolerating stripped-down
+        builds where the custom argument input helpers/screens are missing.
+        """
+        try:
+            if callable(safe_renpy_input):
+                return safe_renpy_input(prompt, screen=screen)
+        except NameError:
+            pass
+        except Exception as exc:
+            logger = globals().get("log_event")
+            if callable(logger):
+                logger("ArgumentInputFailed", {"prompt": prompt, "error": repr(exc)})
+        try:
+            fallback = renpy.input(prompt)
+        except Exception as exc:
+            logger = globals().get("log_event")
+            if callable(logger):
+                logger("ArgumentInputFailed", {"prompt": prompt, "error": repr(exc), "stage": "renpy.input"})
+            return ""
+        if fallback is None:
+            return ""
+        if isinstance(fallback, bytes):
+            fallback = fallback.decode("utf-8", errors="ignore")
+        if not isinstance(fallback, str):
+            fallback = str(fallback)
+        return fallback
+
     def argument_sharing(prompt=""):
         """
         Backwards-compatible helper so legacy script calls to argument_sharing(...)
         still invoke the modern safe input workflow.
         """
-        return safe_renpy_input(prompt, screen="argument_sharing")
+        return collect_player_argument(prompt, screen="argument_sharing")
 
 
 

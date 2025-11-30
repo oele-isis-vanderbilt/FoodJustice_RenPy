@@ -485,7 +485,7 @@ label start:
     
     label riley_against:
         r "Oh really? I'm curious why you think that."
-        $ progarage = safe_renpy_input("Why do you support the parking [structure]?", screen="argument_sharing")
+        $ progarage = collect_player_argument("Why do you support the parking [structure]?")
         if not isinstance(progarage, str) or not progarage.strip():
             r "Alright, maybe you'll think of a reason later."
             jump riley_plan

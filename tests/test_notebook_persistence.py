@@ -90,6 +90,19 @@ def test_auto_tag_respects_toggle(notebook_module, renpy_store):
     assert notebook_module.notebook[0]["tags"] == ["custom"]
 
 
+def test_new_note_can_disable_auto_tagging(notebook_module, renpy_store):
+    _setup_notebook_module(notebook_module)
+    renpy_store.tagBuckets = {"pollinators": ["bee"]}
+
+    note_id = notebook_module.new_note(
+        "Bees love the community garden.", "Riley", ["FEEDBACK"], "character-dialog", allow_auto_tagging=False
+    )
+
+    assert note_id == 0
+    assert notebook_module.notebook[0]["tags"] == ["FEEDBACK"]
+    assert notebook_module.notebook[0].get("auto_tagging_locked") is True
+
+
 # Ensures deletenote updates notebook state, logs, notifications, and screenshots.
 def test_deletenote_removes_and_logs(notebook_module, renpy_module):
     history = _setup_notebook_module(notebook_module)
