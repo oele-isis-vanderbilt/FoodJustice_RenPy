@@ -2051,7 +2051,7 @@ label start:
                 ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
             except Exception as e:
                 log_http(current_user, action="AgentError", view="elliot", payload={"details": str(e)})
-                ecaresponse = "I'm having some trouble right now. Why don't you try asking Riley about this argument and see if she can give you some feedback?"
+                ecaresponse = "I'm having some trouble right now. Why don't you try asking Riley about this argument and see if they can give you some feedback?"
 
         $ log_http(current_user, action="PlayerECAResponse", view="elliot", payload={"eca_response": ecaresponse})
         
