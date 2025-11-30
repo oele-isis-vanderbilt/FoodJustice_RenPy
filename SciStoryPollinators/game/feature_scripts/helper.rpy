@@ -206,6 +206,13 @@ init python:
             )
         return text
 
+    def argument_sharing(prompt=""):
+        """
+        Backwards-compatible helper so legacy script calls to argument_sharing(...)
+        still invoke the modern safe input workflow.
+        """
+        return safe_renpy_input(prompt, screen="argument_sharing")
+
 
 
     def toggle_argument_edit_screen():
