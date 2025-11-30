@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 ## Initialization
 ################################################################################
 
@@ -6,6 +6,22 @@ init offset = -1
 
 
 init python:
+    def _save_dialogue_note(dialogue_text, speaker_name):
+        tags = []
+        allow_auto_tagging = True
+
+        if is_argument_feedback_dialogue():
+            tags = ["FEEDBACK"]
+            allow_auto_tagging = False
+
+        return new_note(
+            dialogue_text or "",
+            speaker_name or "",
+            tags,
+            "character-dialog",
+            allow_auto_tagging=allow_auto_tagging,
+        )
+
     def add_dialogue_note_and_pause(dialogue_text, speaker_name):
         """
         Saves the current line to the notebook without letting the click
