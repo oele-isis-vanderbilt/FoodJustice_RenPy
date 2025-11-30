@@ -4,6 +4,7 @@ define config.developer = True
 # Persistent store of unlocked achievements (survives saves/new games).
 # 'default' sets an initial value only if none exists yet.
 default persistent.achievements = {}
+default achievement_popup_uid = 0
 
 init python:
     def clear_all_achievements():
@@ -132,6 +133,10 @@ init python:
     # Fast lookup for screens
     achievement_map = {a["key"]: a for a in achievement_list}
 
+    def _next_achievement_popup_uid():
+        renpy.store.achievement_popup_uid += 1
+        return renpy.store.achievement_popup_uid
+
     def unlock_achievement(key, pause_time=5):
         persistent.achievements[key] = True
         ach = achievement_map.get(key, {})
@@ -146,14 +151,20 @@ init python:
                 "character_in_discussion": last_spoken_character,
             },
         )
-        renpy.invoke_in_new_context(_achievement_popup_task, key, pause_time)
+        _show_achievement_popup(key, pause_time)
 
-    def _achievement_popup_task(key, pause_time=5):
+    def _show_achievement_popup(key, pause_time=5):
         if not key:
             return
-        renpy.show_screen("achievement_popup", key)
-        renpy.pause(pause_time, hard=True)
+
+        uid = _next_achievement_popup_uid()
         renpy.hide_screen("achievement_popup")
+        renpy.show_screen("achievement_popup", key=key, uid=uid, duration=pause_time)
+        renpy.restart_interaction()
+
+    def _hide_achievement_popup(uid):
+        if uid == renpy.store.achievement_popup_uid:
+            renpy.hide_screen("achievement_popup")
 
     def ensure_unlocked(key, condition):
         if condition and not persistent.achievements.get(key, False):
@@ -232,12 +243,15 @@ init python:
 # ---------------------------------------------------------------------------
 # Popup shown when an achievement unlocks (bottom-right)
 # ---------------------------------------------------------------------------
-screen achievement_popup(key):
+screen achievement_popup(key, uid=None, duration=5):
     zorder 200
     
     $ ach = achievement_map.get(key)
 
     if ach:
+        if duration:
+            timer duration action Function(_hide_achievement_popup, uid)
+
         frame at popup_fade:
             xalign 0.98
             yalign 0.98
@@ -258,7 +272,7 @@ screen achievement_popup(key):
                         text ach["desc"] size 16 color "#ccc" xalign 0.0 italic True
 
 label _show_achievement_popup_ctx(key=None, pause_time=5):
-    $ _achievement_popup_task(key, pause_time)
+    $ _show_achievement_popup(key, pause_time)
     return
 
 # ---------------------------------------------------------------------------
