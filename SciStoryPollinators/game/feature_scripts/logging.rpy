@@ -28,11 +28,33 @@ init python:
     _dialogue_origin_stack = [{"source": "script", "details": None}]
     _active_choice_log = None
     _last_label_event_key = None
+    _default_feedback_contexts = {
+        "FoodJustice_RileyEvaluation",
+        "FoodJustice_MayorEvaluation",
+    }
 
     # Return the latest dialogue origin by peeking the stack so reports know which system produced a line.
     def _current_dialogue_origin():
         top = _dialogue_origin_stack[-1]
         return {"source": top.get("source"), "details": top.get("details")}
+
+    # Helper for other systems to detect when dialogue is AI feedback on player arguments.
+    def is_argument_feedback_dialogue():
+        origin = _current_dialogue_origin()
+        if origin.get("source") != "eca":
+            return False
+        details = origin.get("details")
+        context = None
+        if isinstance(details, dict):
+            context = details.get("context")
+        configured = getattr(renpy.store, "argument_feedback_contexts", None)
+        if configured is None:
+            configured = _default_feedback_contexts
+        try:
+            contexts = set(configured)
+        except TypeError:
+            contexts = set(_default_feedback_contexts)
+        return context in contexts
 
     # Push a new origin entry so upcoming lines are tagged as generated content for later analytics.
     def start_generated_dialogue(kind="eca", metadata=None):
