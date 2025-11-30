@@ -105,6 +105,8 @@ init python:
         for note in notebook:
             if note.get("type") != "character-dialog":
                 continue
+            if note.get("auto_tagging_locked"):
+                continue
 
             blocked_list = sorted(set(normalize_tags(note.get("blocked_auto_tags", []))))
             blocked_set = set(blocked_list)
@@ -151,7 +153,7 @@ init python:
             return "auto"
         return "player"
 
-    def new_note(content, speaker, tag, note_type):
+    def new_note(content, speaker, tag, note_type, allow_auto_tagging=True):
         global notebook, note_id_counter, edited_note_id
         requested_tags = normalize_tags(tag)
         tags_list = list(requested_tags)
@@ -164,20 +166,24 @@ init python:
             if existing:
                 renpy.notify("Note Already Saved")
                 return existing["id"]
-            tags_list = auto_character_tags(content, tags_list)
-        elif note_type == "user-written" and getattr(store, "auto_tag_user_notes", True):
+            if allow_auto_tagging:
+                tags_list = auto_character_tags(content, tags_list)
+        elif note_type == "user-written" and getattr(store, "auto_tag_user_notes", True) and allow_auto_tagging:
             tags_list = auto_character_tags(content, tags_list)
         auto_added_tags = [t for t in tags_list if t not in requested_tags]
 
         note_id = note_id_counter
-        notebook.append({
+        note_record = {
             "id": note_id,
             "source": speaker,
             "content": content,
             "tags": tags_list,
             "type": note_type,
             "blocked_auto_tags": []
-        })
+        }
+        if not allow_auto_tagging:
+            note_record["auto_tagging_locked"] = True
+        notebook.append(note_record)
         # renpy.block_rollback()
         
         if note_type == "user-written":
@@ -191,7 +197,7 @@ init python:
         note_id_counter += 1
         renpy.notify("Note Taken!")
 
-        if note_type == "character-dialog":
+        if note_type == "character-dialog" and allow_auto_tagging:
             refresh_character_note_tags()
             for n in notebook:
                 if n["id"] == note_id:
@@ -205,6 +211,7 @@ init python:
             "requested_tags": requested_tags,
             "auto_tags_added": auto_added_tags,
             "auto_tagged": bool(auto_added_tags),
+            "auto_tagging_allowed": bool(allow_auto_tagging),
             "tag_origin": _tag_origin(requested_tags, auto_added_tags),
             "note_id": note_id,
             "type": note_type
@@ -264,7 +271,7 @@ init python:
                 blocked_set = set(normalize_tags(n.get("blocked_auto_tags", [])))
                 allowed_auto = []
 
-                if _auto_tagging_enabled(note_type):
+                if _auto_tagging_enabled(note_type) and not n.get("auto_tagging_locked"):
                     auto_candidates = auto_character_tags(newnote, [])
                     for tag in auto_candidates:
                         if tag in updated_tags:
