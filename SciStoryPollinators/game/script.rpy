@@ -573,10 +573,12 @@ label start:
                 jump ca_eval_riley
             "That's all for now.":
                 r "Okay! Let me know if I can help as you gather more notes."
+                $ update_char_stats("Riley")
                 jump foodlab
     
     label not_convinced:
         r "Hey, I'm used to convincing skeptical people. Don't you worry! I bet if you talk to folks around town and hear what they have to say, you might see it a little differently."
+        $ update_char_stats("Riley")
         jump foodlab
 
 
@@ -846,7 +848,7 @@ label start:
                 $ ask_character_question("Amara")
                 jump environment
             "See you later.":
-                jump foodlab
+                jump byeamara
 
         label genetics:
             a "Oh, plant genetics are so interesting. Like people, plants have DNA that carries information about the different kinds of traits they have."
@@ -910,6 +912,7 @@ label start:
     label byeamara:
 
         a "Have a great day! Let me know if I can help with your research."
+        $ update_char_stats("Amara")
         jump foodlab
 
     label garden:
