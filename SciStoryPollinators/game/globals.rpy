@@ -57,6 +57,10 @@ default ca_context = ""
 default ecaresponse = ""
 default mayorconvinced = False
 default mayor_supports_parking = False
+default argument_feedback_contexts = [
+    "FoodJustice_RileyEvaluation",
+    "FoodJustice_MayorEvaluation"
+]
 
 #### Custom functions to control adding, editing, and deleting notes, as well as logging to txt file #####
 
