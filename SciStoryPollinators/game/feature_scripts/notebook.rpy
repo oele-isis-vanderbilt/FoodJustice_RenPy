@@ -11,6 +11,15 @@ init python:
         store.new_note_text_template = "whats your evidence?"
     if not hasattr(store, "new_note_source_template"):
         store.new_note_source_template = "where did you learn this?"
+    if not hasattr(store, "manual_note_template_used"):
+        store.manual_note_template_used = False
+
+    manual_notes_exist = any(
+        note.get("type") == "user-written"
+        for note in getattr(store, "notebook", [])
+    )
+    if manual_notes_exist and not getattr(store, "manual_note_template_used", False):
+        store.manual_note_template_used = True
     
     config.label_callbacks = [label_callback]
     NEW_NOTE_ID = -1
@@ -360,6 +369,7 @@ init python:
                 renpy.notify(message)
                 return False
             new_note(newnote, newsource, tags_list, "user-written")
+            store.manual_note_template_used = True
             renpy.block_rollback()
             edited_note_id = None
             return True
@@ -552,8 +562,14 @@ screen notebook():
 
                 action [
                     SetVariable("edited_note_id", NEW_NOTE_ID),
-                    SetScreenVariable("edit_note_text", new_note_text_template),
-                    SetScreenVariable("edit_note_source", new_note_source_template),
+                    SetScreenVariable(
+                        "edit_note_text",
+                        new_note_text_template if not manual_note_template_used else "",
+                    ),
+                    SetScreenVariable(
+                        "edit_note_source",
+                        new_note_source_template if not manual_note_template_used else "",
+                    ),
                     SetScreenVariable("edit_note_tags", ""),
                     SetScreenVariable("active_input_field", "note"),
                 ]

@@ -382,6 +382,8 @@ default copied_argument = ""
 
 default new_note_text_template = "whats your evidence?"
 
+default manual_note_template_used = False
+
 default notebook_unlocked = False
 default editing_argument = False
 
