@@ -171,3 +171,36 @@ If your evidence isn’t strong or complete enough, **CityPark’s parking garag
 
 
 
+# Tech Stack
+
+## **Game Client**
+
+* Ren’Py drives both SciStoryPollinators (student edition) and SciStoryTeacherDemo, with extensive Python helpers layered into scripts; the logging module records every dialogue line, choice, and upload-ready payload so gameplay analytics stay synchronized with back-end services
+* The in-game notebook runs on custom tag normalization/auto-tagging logic that inspects dialogue text, enforces player overrides, and logs edits so saved notes remain queryable for later analysis
+* Conversational-agent hooks assemble HTTP payloads that encode the player’s state (visited locations, notes, argument attempts) before calling hosted Food Justice agents, plus response-splitting safeguards for long LLM replies
+* Voice features are toggled via Ren’Py screens that proxy to browser JavaScript, enabling Azure TTS playback and mic recording on the web build
+
+## **Realtime + Voice Integrations**
+
+* The exported web build loads custom helpers: azuretts.js streams speech from Azure Cognitive Services, microphoneUtility.js uploads WAV blobs to the ASR endpoint, and syncflow-publisher.js forwards telemetry and screen shares to LiveKit/SyncFlow rooms when enabled
+
+## **Backend Service**
+
+* A FastAPI app logs player events, serves the packaged Ren’Py build, and fan-outs routers for SyncFlow controls and admin auth; logging is persisted through rotating file handlers so live sessions can be audited
+* Configuration relies on Pydantic settings models that read .env.app and .env.syncflow, define JWT claims, and expose runtime toggles for camera/mic/screen capture per session
+* The /syncflow API authenticates against project credentials (syncflow-python-client) to create LiveKit sessions and mint access tokens, while a lightweight admin login issues signed cookies backed by bcrypt/pyjwt
+
+## **Control Dashboard**
+
+* Observability for facilitators lives in a SvelteKit + Vite single-page app styled with Tailwind/Flowbite; scripts provide dev/build/lint routines and TypeScript tooling for the ControlDashboard bundle served by the FastAPI middleware
+
+## **Dependencies & Tooling**
+
+* Python requirements stay minimal—FastAPI (with Uvicorn extras), bcrypt, PyJWT, and the SyncFlow client—while requirements-dev.txt pins pytest for the harnessed unit suite
+* The automated pytest harness stubs Ren’Py/Pygame modules so you can validate labels, notebook logic, logging caps, travel pins, and agent payloads without launching the engine
+
+## **Deployment**
+
+* A multi-stage Dockerfile builds the Ren’Py web bundle, compiles the dashboard, installs service deps, and finally runs uvicorn app.main:app; docker-compose variants point the container at either the student or teacher build and mount log volumes/env secrets
+
+
