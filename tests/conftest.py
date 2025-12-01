@@ -255,6 +255,17 @@ def load_rpy_module(relative_path: str, module_name: str):
         predefs.setdefault("current_label", "test-label")
 
     global_scope = module.__dict__
+    predefs.setdefault(
+        "notify_with_history",
+        lambda message, history_who="Notification", history_what=None, **kwargs: sys.modules["renpy"].notify(
+            message
+        ),
+    )
+    predefs.setdefault(
+        "set_current_location",
+        lambda location, source=None, description=None: setattr(sys.modules["renpy"].store, "currentlocation", location),
+    )
+
     global_scope.update(
         {
             "__file__": str(path),
