@@ -388,6 +388,16 @@ screen achievements_screen():
                     for ach in second_col:
                         use achievement_row(ach)
 
+    $ tooltip = GetTooltip()
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+
+            frame:
+                xalign 0.5
+                text tooltip:
+                    size 15
+
 # ---------------------------------------------------------------------------
 # Popup animation
 # ---------------------------------------------------------------------------

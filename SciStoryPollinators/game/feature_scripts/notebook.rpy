@@ -1063,6 +1063,16 @@ screen argument_sharing(prompt):
                             ]
                             xfill True
 
+    $ tooltip = GetTooltip()
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+
+            frame:
+                xalign 0.5
+                text tooltip:
+                    size 15
+
 # ARGUMENT STYLES
 style argument_input:
     background "#ffffff"

@@ -112,6 +112,16 @@ screen map_popup():
             anchor (1.0, 0.0)
             pos (0.98, 0.02)
 
+    $ tooltip = GetTooltip()
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+
+            frame:
+                xalign 0.5
+                text tooltip:
+                    size 15
+
 #### Invisible Character Selection Screen ####
 
 screen characterselect3(c_left, c_center, c_right):
