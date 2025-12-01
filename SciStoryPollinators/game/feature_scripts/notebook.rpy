@@ -413,6 +413,12 @@ init python:
             if callable(fn):
                 fn()
 
+    def recall_argument(prev_arg):
+        """Swap a previous draft into the current argument while archiving the current text."""
+        if prev_arg is None:
+            return
+        save_draft(prev_arg)
+
     def _note_has_meaningful_input(note_text, note_source, note_tags):
         """Return True when the player has entered real content for a new note."""
         text = (note_text or "").strip()
@@ -891,17 +897,39 @@ screen notebook():
                     null height 12
                     text "Previous Drafts:" style "argument_history_header"
                     $ history_max_width = int(config.screen_width * 0.26) - 40
+                    $ iw, ih = renpy.image_size("images/imagebutton_swapargument.png")
+                    $ swapbtn = Transform("images/imagebutton_swapargument.png", zoom=40.0 / ih)
                     for prev_arg in reversed(argument_history):
                         frame:
                             style "argument_history_frame"
                             xmaximum history_max_width
-                            text prev_arg:
-                                style "argument_history_text"
-                                xmaximum history_max_width
-                                xfill True
-                                xalign 0.0
-                                text_align 0.0
+                            hbox:
+                                spacing 8
+                                imagebutton:
+                                    tooltip "use as current argument"
+                                    idle swapbtn
+                                    hover darken_hover(swapbtn)
+                                    action [
+                                        Function(recall_argument, prev_arg),
+                                        SetScreenVariable("argument_edit_text", prev_arg),
+                                    ]
+                                text prev_arg:
+                                    style "argument_history_text"
+                                    xmaximum history_max_width
+                                    xfill True
+                                    xalign 0.0
+                                    text_align 0.0
                         add Solid("#00000033", xsize=history_max_width, ysize=2)
+
+    $ tooltip = GetTooltip()
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+
+            frame:
+                xalign 0.5
+                text tooltip:
+                    size 15
 
 # ##### Shows key bindings for typing in the input box ######
     # screen keyboard_shortcuts():
