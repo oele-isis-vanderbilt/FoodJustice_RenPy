@@ -297,7 +297,7 @@ label start:
     show screen learningbuttons()
     scene expression "empty lot [startplace]"
     with fade
-    $ currentlocation = "emptylot"
+    $ set_current_location("emptylot")
 
     show elliot smile
     with dissolve
@@ -399,7 +399,7 @@ label start:
     label foodlab:
         scene science lab
         with dissolve
-        $ currentlocation = "foodlab"
+        $ set_current_location("foodlab")
         $ visited_list.append("Food Lab")
         $ achieve_visit()
 
@@ -918,7 +918,7 @@ label start:
     label garden:
         scene garden
         with dissolve
-        $ currentlocation = "garden"
+        $ set_current_location("garden")
         $ visited_list.append("Garden")
         $ achieve_visit()
 
@@ -1238,7 +1238,7 @@ label start:
     label bees_chatting:
         scene beehives
         with dissolve
-        $ currentlocation = "beehives"
+        $ set_current_location("beehives")
         $ visited_list.append("Beehives")
         $ achieve_visit()
 
@@ -1515,6 +1515,8 @@ label start:
 
     label sadkid:
         x "Ohh..."
+        $ update_char_stats("Alex")
+        $ achieve_social()
         jump bees_chatting
 
     label x_2:
@@ -1537,6 +1539,9 @@ label start:
         $ call("tulip_help_menu")
         $ unlock_dialogue_advancement("tulip")
 
+        $ update_char_stats("Alex")
+        $ achieve_social()
+
         jump bees_chatting
 
     label cora_chatting:
@@ -1553,8 +1558,6 @@ label start:
 
     label cora_1:
         c "Oh Alex, be careful! Don't get too close to the hives! There's so many of them..."
-        $ update_char_stats("Cora")
-        $ achieve_social()
 
         menu:
             "Not a fan of bees?":
@@ -1609,15 +1612,20 @@ label start:
     label coragarden:
         c "Oh! That's great. Will you tell the Mayor the families in the neighborhood want a garden too?"
         c "Maybe we will get to grow our own food after all. Alex will be so excited! We can learn about growing fresh fruits and vegetables together."
+        $ update_char_stats("Cora")
+        $ achieve_social()
         jump bees_chatting
 
     label coraparking:
         c "Oh. That won't really do anything for my family...we don't have a car anyway. I'd rather build something we can all use."
+        $ update_char_stats("Cora")
+        $ achieve_social()
         jump bees_chatting
 
     label bye_cora:
         c "Thank you, dear. You too."
         $ update_char_stats("Cora")
+        $ achieve_social()
         jump bees_chatting
 
     label cora_2:
@@ -1639,7 +1647,7 @@ label start:
     label emptylot:
         scene expression "empty lot [startplace]"
         with dissolve
-        $ currentlocation = "emptylot"
+        $ set_current_location("emptylot")
         $ visited_list.append("Empty Lot")
         $ achieve_visit()
 
@@ -1996,6 +2004,8 @@ label start:
             $ save_draft(eca)
         else:
             pass
+
+        jump bye_mayor
     
     label bye_mayor:
         m "Thank you for sharing your ideas with me. Engaged citizens make our community stronger!"

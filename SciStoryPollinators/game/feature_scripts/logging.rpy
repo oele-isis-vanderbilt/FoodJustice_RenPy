@@ -109,6 +109,14 @@ init python:
             view=current_label,
             payload=payload,
         )
+        translator = getattr(renpy.store, "__", None) or getattr(renpy.store, "_", None)
+        if callable(translator):
+            history_who = translator("Choice:")
+            history_what = translator(payload.get("text") or "")
+        else:
+            history_who = "Choice:"
+            history_what = payload.get("text") or ""
+        record_history_entry(history_who, history_what, kind="adv")
         last_player_choice = payload
         clear_pending_choice()
 
@@ -168,6 +176,62 @@ init python:
             action="PlayerDialogueLine",
             view=current_label,
             payload=payload,
+        )
+
+    # Helper so gameplay code can update the history log without touching narrator directly.
+    def record_history_entry(who=None, what="", kind="adv"):
+        narrator_character = getattr(renpy.store, "narrator", None)
+        if not narrator_character or not hasattr(narrator_character, "add_history"):
+            return
+        try:
+            narrator_character.add_history(kind=kind, who=who, what=what or "")
+        except Exception:
+            pass
+
+    def log_with_history(action=None, payload=None, view=None, history_who=None, history_what=None, history_kind="adv"):
+        """
+        Unified entry point so callers can log remotely and update the in-game history
+        with a single function call.
+        """
+        if history_who is not None or history_what:
+            record_history_entry(history_who, history_what, kind=history_kind)
+        if action:
+            log_http(
+                current_user,
+                action=action,
+                view=view if view is not None else current_label,
+                payload=payload,
+            )
+
+    def notify_with_history(message, history_who="Notification", history_what=None):
+        renpy.notify(message)
+        record_history_entry(history_who, history_what or message, kind="adv")
+
+    _LOCATION_DISPLAY = {
+        "emptylot": "Empty Lot",
+        "foodlab": "Food Lab",
+        "garden": "Garden",
+        "beehives": "Beehives",
+        "town": "Town",
+    }
+
+    def _location_name(label):
+        if not label:
+            return ""
+        friendly = _LOCATION_DISPLAY.get(label)
+        if friendly:
+            return friendly
+        return str(label).replace("_", " ").title()
+
+    def set_current_location(location, source=None, description=None):
+        renpy.store.currentlocation = location
+        pretty = description or _location_name(location)
+        history_line = f"You traveled to {pretty}" if pretty else "You traveled."
+        log_with_history(
+            action="LocationChanged",
+            payload={"location": location, "source": source, "description": pretty},
+            history_who="Travel",
+            history_what=history_line,
         )
 
     # Listen for Ren'Py's dialogue events, slice the shown text, and log who spoke so conversation history stays complete.
@@ -267,7 +331,7 @@ init python:
         path = os.path.join(config.savedir, filename)
         with open(path, "w", encoding="utf-8") as f:
             f.write(text)
-        renpy.notify(f"Saved log to {path}")
+        notify_with_history(f"Saved log to {path}", history_who="System", history_what=f"Saved log to {path}")
 
     # -------------------------
     # Public logging API
@@ -420,7 +484,7 @@ init python:
     # Bundle every persistent log into a ZIP (plus manifest) so facilitators can pull full transcripts via one download.
     def export_all_logs_zip():
         if not hasattr(persistent, "logs") or not persistent.logs:
-            renpy.notify("No logs to export.")
+            notify_with_history("No logs to export.", history_who="System")
             return
 
         stamp = _now_stamp()
@@ -470,7 +534,7 @@ init python:
             """
             emscripten.run_script(js)
         else:
-            renpy.notify(f"Exported zip: {tmp_path}")
+            notify_with_history(f"Exported zip: {tmp_path}", history_who="System")
 
     # -------------------------
     # Example hooks (call where it makes sense)

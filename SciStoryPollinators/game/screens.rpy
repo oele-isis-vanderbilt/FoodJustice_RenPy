@@ -27,7 +27,7 @@ init python:
         Saves the current line to the notebook without letting the click
         advance the dialogue interaction.
         """
-        new_note(dialogue_text or "", speaker_name or "", [], "character-dialog")
+        _save_dialogue_note(dialogue_text, speaker_name)
         renpy.restart_interaction()
 
 
@@ -259,7 +259,6 @@ screen choice(items):
             textbutton i.caption action [
                 Function(remember_menu_choice, i.caption),
                 i.action,
-                Function(narrator.add_history, kind="adv", who=__("Choice:"), what=__(i.caption)),
                 Function(log_player_choice),
             ]
 

@@ -11,7 +11,7 @@ init python:
         """Utility helper to wipe all achievement progress."""
         persistent.achievements.clear()
         renpy.save_persistent()
-        renpy.notify("All achievements cleared.")
+        notify_with_history("All achievements cleared.", history_who="Achievements")
 
 # This is the list of all achievements in the game.
 # Each achievement has a unique "key", a display "name", "desc" (description), and "icon" path.

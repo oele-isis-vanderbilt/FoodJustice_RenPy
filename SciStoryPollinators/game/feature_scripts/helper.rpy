@@ -63,7 +63,7 @@ init python:
             store.voice_input_contexts = 0
             store.voice_input_available = False
             store.voice_recording_active = False
-        renpy.notify("Voice features {}".format("enabled" if enabled else "disabled"))
+        notify_with_history("Voice features {}".format("enabled" if enabled else "disabled"), history_who="System")
 
     def toggle_voice_features_enabled():
         set_voice_features_enabled(not _voice_features_active())
@@ -143,7 +143,7 @@ init python:
                 annotate_choice(approval_delta=amount, approval_character=char_name)
                 _log_approval_change(char_name, amount, char["approval"], message, "gain")
                 if message:
-                    renpy.notify(message)
+                    notify_with_history(message, history_who="Approval", history_what=message)
                 break
 
     def character_disapproval(char_name, amount, message=None):
@@ -153,7 +153,7 @@ init python:
                 annotate_choice(approval_delta=-amount, approval_character=char_name)
                 _log_approval_change(char_name, -amount, char["approval"], message, "loss")
                 if message:
-                    renpy.notify(message)
+                    notify_with_history(message, history_who="Approval", history_what=message)
                 break
 
     def get_note_by_id(note_id):

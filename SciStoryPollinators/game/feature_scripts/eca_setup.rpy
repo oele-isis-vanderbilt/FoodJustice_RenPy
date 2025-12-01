@@ -7,7 +7,7 @@ init python:
         note_count = len(notebook)
         speakers = ", ".join(spoken_list)
         visits = ", ".join(visited_list)
-        narrator.add_history(kind="adv",who="Player:",what=eca)
+        record_history_entry("Player:", eca)
 
         ca_link = "https://foodjustice-new.soc240019.projects.jetstream-cloud.org/foodjustice/respond"
 
