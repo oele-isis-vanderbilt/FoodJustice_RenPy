@@ -575,7 +575,7 @@ init python:
     def log_http(user: str, payload: Optional[Dict[str, Any]], action: str, view: str = None):
         timestamp = datetime.datetime.now()
         timestamp_str = timestamp.strftime("%Y-%m-%d %H:%M:%S")
-        base_url = (os.getenv("SERVICE_URL") or "").strip()
+        base_url = (os.getenv("SERVICE_URL") or "/").strip()
         log_entry = {
             "action": action,
             "timestamp": timestamp_str,
