@@ -341,7 +341,7 @@ define config.history_length = 250
 
 ## The height of a history screen entry, or None to make the height variable at
 ## the cost of performance.
-define gui.history_height = 210
+define gui.history_height = None
 
 ## Additional space to add between history screen entries.
 define gui.history_spacing = 0
@@ -454,7 +454,7 @@ init python:
         gui.navigation_spacing = 30
         gui.pref_button_spacing = 15
 
-        gui.history_height = 285
+        gui.history_height = None
         gui.history_text_width = 1035
 
         gui.quick_button_text_size = 30
