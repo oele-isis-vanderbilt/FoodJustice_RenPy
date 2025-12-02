@@ -110,17 +110,13 @@ label start:
                         ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers to look at your argument!"
                 # $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "FoodJustice_RileyEvaluation", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
                 
-                $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+                $ sentences = split_eca_sentences(ecaresponse)
 
                 $ start_generated_dialogue("eca", {"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
-                if ecasplit == True:
-                    $ playAudio(ecaresponse1)
-                    t "[ecaresponse1]"
-                    $ playAudio(ecaresponse2)
-                    t "[ecaresponse2]"
-                else:
-                    $ playAudio(ecaresponse)
-                    t "[ecaresponse]"
+                python:
+                    for sentence in sentences:
+                        playAudio(sentence)
+                        renpy.say(t, sentence)
                 $ finish_generated_dialogue()
 
                 $ stopAudio()
@@ -158,18 +154,13 @@ label start:
                                 log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
                                 ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers to look at your argument!"
 
-                        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+                        $ sentences = split_eca_sentences(ecaresponse)
 
                         $ start_generated_dialogue("eca", {"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
-                        if ecasplit == True:
-                            $ playAudio(ecaresponse1)
-                            t "[ecaresponse1]"
-                            $ playAudio(ecaresponse2)
-                            t "[ecaresponse2]"
-
-                        else:
-                            $ playAudio(ecaresponse)
-                            t "[ecaresponse]"
+                        python:
+                            for sentence in sentences:
+                                playAudio(sentence)
+                                renpy.say(t, sentence)
                         $ finish_generated_dialogue()
 
                         $ stopAudio()
@@ -214,18 +205,13 @@ label start:
                         log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
                         ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers your question!"
                 
-                $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
-                
-                $ start_generated_dialogue("eca", {"character": "Tulip", "context": "GameHelp"})
-                if ecasplit == True:
-                    $ playAudio(ecaresponse1)
-                    t "[ecaresponse1]"
-                    $ playAudio(ecaresponse2)
-                    t "[ecaresponse2]"
+                $ sentences = split_eca_sentences(ecaresponse)
 
-                else:
-                    $ playAudio(ecaresponse)
-                    t "[ecaresponse]"
+                $ start_generated_dialogue("eca", {"character": "Tulip", "context": "GameHelp"})
+                python:
+                    for sentence in sentences:
+                        playAudio(sentence)
+                        renpy.say(t, sentence)
                 $ finish_generated_dialogue()
 
                 $ stopAudio()
@@ -254,20 +240,13 @@ label start:
                                 log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
                                 ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers your question!"
                         
-                        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+                        $ sentences = split_eca_sentences(ecaresponse)
 
                         $ start_generated_dialogue("eca", {"character": "Tulip", "context": "GameHelp_Collaboration"})
-                        if ecasplit == True:
-
-                            $ playAudio(ecaresponse1)
-                            t "[ecaresponse1]"
-                            $ playAudio(ecaresponse2)
-                            t "[ecaresponse2]"
-
-                        else:
-
-                            $ playAudio(ecaresponse)
-                            t "[ecaresponse]"
+                        python:
+                            for sentence in sentences:
+                                playAudio(sentence)
+                                renpy.say(t, sentence)
                         $ finish_generated_dialogue()
 
                         $ stopAudio()
@@ -541,19 +520,13 @@ label start:
                                      
         $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
 
-        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+        $ sentences = split_eca_sentences(ecaresponse)
 
         $ start_generated_dialogue("eca", {"character": "Riley", "context": "FoodJustice_RileyEvaluation"})
-        if ecasplit == True:
-
-            $ playAudio(ecaresponse1)
-            r "[ecaresponse1]"
-            $ playAudio(ecaresponse2)
-            r "[ecaresponse2]"
-
-        else:
-            $ playAudio(ecaresponse)
-            r "[ecaresponse]"
+        python:
+            for sentence in sentences:
+                playAudio(sentence)
+                renpy.say(r, sentence)
         $ finish_generated_dialogue()
             
         $ stopAudio()
@@ -624,20 +597,13 @@ label start:
                         log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
                         ecaresponse = "Access to healthy food is important because it helps us grow, stay healthy, and have the energy we need to do the things we love. Healthy food can also prevent diseases like obesity, heart disease, and diabetes."
                   
-                $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+                $ sentences = split_eca_sentences(ecaresponse)
 
                 $ start_generated_dialogue("eca", {"character": "Riley", "context": "Knowledge_FoodJustice"})
-                if ecasplit == True:
-
-                    $ playAudio(ecaresponse1)
-                    r "[ecaresponse1]"
-                    
-                    $ playAudio(ecaresponse2)
-                    r "[ecaresponse2]"
-
-                else:
-                    $ playAudio(ecaresponse)
-                    r "[ecaresponse]"
+                python:
+                    for sentence in sentences:
+                        playAudio(sentence)
+                        renpy.say(r, sentence)
                 $ finish_generated_dialogue()
                 $ stopAudio()
 
@@ -658,18 +624,14 @@ label start:
                         log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
                         ecaresponse = "One way to help everyone get access to affordable and healthy food options is by supporting local farmers markets and community gardens. It's also important to advocate for policies that promote healthy food options."
 
-                $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+                $ sentences = split_eca_sentences(ecaresponse)
 
-                if ecasplit == True:
-                    $ playAudio(ecaresponse1)
-                    r "[ecaresponse1]"
-                    $ playAudio(ecaresponse2)
-                    r "[ecaresponse2]"
-
-                else:
-                    $ playAudio(ecaresponse)
-                    r "[ecaresponse]"
-                
+                $ start_generated_dialogue("eca", {"character": "Riley", "context": "Knowledge_FoodJustice"})
+                python:
+                    for sentence in sentences:
+                        playAudio(sentence)
+                        renpy.say(r, sentence)
+                $ finish_generated_dialogue()
                 $ stopAudio()
 
                 jump foodknowledge_loop
@@ -712,18 +674,12 @@ label start:
                 log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
                 ecaresponse = "I'm struggling a bit right now. Maybe you can chat with Amara about her food science work, and you and I can chat more later?"
 
-        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+        $ sentences = split_eca_sentences(ecaresponse)
 
-        if ecasplit == True:
-
-            $ playAudio(ecaresponse1)
-            r "[ecaresponse1]"
-            $ playAudio(ecaresponse2)
-            r "[ecaresponse2]"
-
-        else:
-            $ playAudio(ecaresponse)
-            r "[ecaresponse]"
+        python:
+            for sentence in sentences:
+                playAudio(sentence)
+                renpy.say(r, sentence)
 
         $ stopAudio()
 
@@ -1150,18 +1106,13 @@ label start:
 
         $ log_http(current_user, action="PlayerECAResponse", view="wes", payload={"eca_response": ecaresponse})
 
-        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+        $ sentences = split_eca_sentences(ecaresponse)
 
         $ start_generated_dialogue("eca", {"character": "Wes", "context": "Knowledge_Pollination"})
-        if ecasplit == True:
-            $ playAudio(ecaresponse1)
-            w "[ecaresponse1]"
-            $ playAudio(ecaresponse2)
-            w "[ecaresponse2]"
-
-        else:
-            $ playAudio(ecaresponse)
-            w "[ecaresponse]"
+        python:
+            for sentence in sentences:
+                playAudio(sentence)
+                renpy.say(w, sentence)
         $ finish_generated_dialogue()
         $ finish_generated_dialogue()
 
@@ -1217,17 +1168,12 @@ label start:
 
         $ log_http(current_user, action="PlayerECAResponse", view="wes", payload={"eca_response": ecaresponse})
 
-        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+        $ sentences = split_eca_sentences(ecaresponse)
 
-        if ecasplit == True:
-            $ playAudio(ecaresponse1)
-            w "[ecaresponse1]"
-            $ playAudio(ecaresponse2)
-            w "[ecaresponse2]"
-
-        else:
-            $ playAudio(ecaresponse)
-            w "[ecaresponse]"
+        python:
+            for sentence in sentences:
+                playAudio(sentence)
+                renpy.say(w, sentence)
 
         $ stopAudio()
         
@@ -1307,18 +1253,13 @@ label start:
                         log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
                         ecaresponse = "Bees help with pollination by transferring pollen from one flower to another while collecting nectar. This helps the plant grow healthy fruits."
 
-                $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+                $ sentences = split_eca_sentences(ecaresponse)
 
                 $ start_generated_dialogue("eca", {"character": "Nadia", "context": "Knowledge_Pollination"})
-                if ecasplit == True:
-                    $ playAudio(ecaresponse1)
-                    n "[ecaresponse1]"
-                    $ playAudio(ecaresponse2)
-                    n "[ecaresponse2]"
-
-                else:
-                    $ playAudio(ecaresponse)
-                    n "[ecaresponse]"
+                python:
+                    for sentence in sentences:
+                        playAudio(sentence)
+                        renpy.say(n, sentence)
                 $ finish_generated_dialogue()
                 $ finish_generated_dialogue()
 
@@ -1342,17 +1283,12 @@ label start:
                         log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
                         ecaresponse = "The flowers on plants can be pollinated by wind, by animals and insects, and by people. A flower is pollinated when pollen is moved from the male part of the flower to the female part of the flower."
 
-                $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+                $ sentences = split_eca_sentences(ecaresponse)
 
-                if ecasplit == True:
-                    $ playAudio(ecaresponse1)
-                    n "[ecaresponse1]"
-                    $ playAudio(ecaresponse2)
-                    n "[ecaresponse2]"
-
-                else:
-                    $ playAudio(ecaresponse)
-                    n "[ecaresponse]"
+                python:
+                    for sentence in sentences:
+                        playAudio(sentence)
+                        renpy.say(n, sentence)
 
                 $ stopAudio()
 
@@ -1392,18 +1328,13 @@ label start:
 
         $ log_http(current_user, action="PlayerECAResponse", view="nadia", payload={"eca_response": ecaresponse})
 
-        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+        $ sentences = split_eca_sentences(ecaresponse)
 
         $ start_generated_dialogue("eca", {"character": "Nadia", "context": "Knowledge_Pollination"})
-        if ecasplit == True:
-            $ playAudio(ecaresponse1)
-            n "[ecaresponse1]"
-            $ playAudio(ecaresponse2)
-            n "[ecaresponse2]"
-
-        else:
-            $ playAudio(ecaresponse)
-            n "[ecaresponse]"
+        python:
+            for sentence in sentences:
+                playAudio(sentence)
+                renpy.say(n, sentence)
         $ finish_generated_dialogue()
 
         $ stopAudio()
@@ -1976,18 +1907,13 @@ label start:
         else:
             pass
 
-        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+        $ sentences = split_eca_sentences(ecaresponse)
 
         $ start_generated_dialogue("eca", {"character": "Mayor Watson", "context": "FoodJustice_MayorEvaluation"})
-        if ecasplit == True:
-            $ playAudio(ecaresponse1)
-            m "[ecaresponse1]"
-            $ playAudio(ecaresponse2)
-            m "[ecaresponse2]"
-
-        else:
-            $ playAudio(ecaresponse)
-            m "[ecaresponse]"
+        python:
+            for sentence in sentences:
+                playAudio(sentence)
+                renpy.say(m, sentence)
         $ finish_generated_dialogue()
 
         $ stopAudio()
@@ -2065,18 +1991,13 @@ label start:
 
         $ log_http(current_user, action="PlayerECAResponse", view="elliot", payload={"eca_response": ecaresponse})
         
-        $ ecasplit, ecaresponse1, ecaresponse2 = eca_length_check(ecaresponse)
+        $ sentences = split_eca_sentences(ecaresponse)
 
         $ start_generated_dialogue("eca", {"character": "Elliot", "context": "FoodJustice_RileyEvaluation"})
-        if ecasplit == True:
-            $ playAudio(ecaresponse1)
-            el "[ecaresponse1]"
-            $ playAudio(ecaresponse2)
-            el "[ecaresponse2]"
-
-        else:
-            $ playAudio(ecaresponse)
-            el "[ecaresponse]"
+        python:
+            for sentence in sentences:
+                playAudio(sentence)
+                renpy.say(el, sentence)
         $ finish_generated_dialogue()
 
         $ stopAudio()

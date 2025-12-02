@@ -1,4 +1,6 @@
 init python:
+    import re
+
     current_label = None
     current_user = "Unknown"
     TIMEOUT = 15
@@ -24,31 +26,15 @@ init python:
             "argument": ""
         }}
         return ca_link, ca_json 
-
-    def eca_length_check(response):
+    def split_eca_sentences(response):
+        """Return the response split into sentence-like fragments for paced dialogue."""
         if response is None:
-            response = ""
-        elif not isinstance(response, str):
-            response = str(response)
-        checker = "." 
-        if len(response) > 200 and checker in response:
-            multi_response = [x.strip() for x in response.split(".")]
-            if len(multi_response[0]+multi_response[1]) > 250:
-                ecaresponse1 = multi_response[0]+"."
-                del multi_response[0]
-                ecaresponse2 = ". ".join(multi_response)
-            else:
-                ecaresponse1 = ". ".join(multi_response[0:2])+"."
-                del multi_response[0:2]
-                ecaresponse2 = ". ".join(multi_response)
-            if len(ecaresponse2) == 0:
-                ecaresponse1 = response
-                ecaresponse2 = response
-                return False, ecaresponse1, ecaresponse2
-            else: 
-                return True, ecaresponse1, ecaresponse2
+            return []
+        text = response if isinstance(response, str) else str(response)
+        text = text.strip().replace("\n", " ")
+        if not text:
+            return []
 
-        else:
-            ecaresponse1 = response
-            ecaresponse2 = response
-            return False, ecaresponse1, ecaresponse2
+        fragments = re.split(r"(?<=[.!?])\s+", text)
+        cleaned = [fragment.strip() for fragment in fragments if fragment.strip()]
+        return cleaned if cleaned else [text]
