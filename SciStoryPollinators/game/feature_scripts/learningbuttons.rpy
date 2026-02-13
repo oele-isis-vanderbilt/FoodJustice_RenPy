@@ -39,9 +39,9 @@ screen learningbuttons():
             idle bee_btn
             hover darken_hover(bee_btn)
             action [
-                Function(lock_dialogue_advancement, "tulip"),
+                Hide("learningbuttons"),
                 Call("tulipchat", from_current = True),
-                Function(unlock_dialogue_advancement, "tulip"),
+                Show("learningbuttons"),
             ]
 
         text "\n":

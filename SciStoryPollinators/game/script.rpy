@@ -69,10 +69,8 @@ label start:
     label tulipchat:
         show tulip at left
         with dissolve
-
         t "Hi human friend! How's it going?"
 
-    label tulip_help_menu:
         menu:
             "I don't know what to do.":
                 t "I would start by talking to people around town to see what they have to say!"
@@ -90,7 +88,7 @@ label start:
             "I'd like some help with persuading the mayor.":
                 t "I'd be happy to help! If you tell me what evidence you've found, I can give you some advice on improving your persuasive writing."
 
-                $ eca = safe_renpy_input("What should the Mayor do with the empty lot, and why?", screen="argument_sharing")
+                $ eca = safe_renpy_input("What evidence have you found so far?", screen="argument_sharing")
                 if not isinstance(eca, str) or not eca.strip():
                     t "No problem. Let me know when you're ready to share!"
                     jump tulip_help_menu

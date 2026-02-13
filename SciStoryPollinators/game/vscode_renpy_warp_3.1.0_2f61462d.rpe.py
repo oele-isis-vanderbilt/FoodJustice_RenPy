@@ -8,7 +8,9 @@
 # This file should not be checked into source control. You can add it to your
 # `.gitignore` file by adding the following line:
 #
-# renpy_warp_*.rpe*
+# vscode_renpy_warp_*.rpe*
+#
+# For more information, see https://github.com/furudean/vscode-renpy-warp
 #
 
 import renpy  # type: ignore
@@ -34,7 +36,7 @@ except ValueError:
 
 def get_meta():
     RPE_FILE_PATTERN = re.compile(
-        r"renpy_warp_(?P<version>\d+\.\d+\.\d+)(?:_(?P<checksum>[a-z0-9]+))?\.rpe(?:\.py)?")
+        r"(?:vscode_)?renpy_warp_(?P<version>\d+\.\d+\.\d+)(?:_(?P<checksum>[a-z0-9]+))?\.rpe(?:\.py)?")
 
     file = Path(__file__) if __file__.endswith(
         '.rpe.py') else Path(__file__).parent
@@ -52,7 +54,7 @@ def get_meta():
     return d["version"], d["checksum"]
 
 
-def py_exec(text: str):
+def py_exec(text):
     while renpy.exports.is_init_phase():
         logger.debug("in init phase, waiting...")
         sleep(0.2)
@@ -202,7 +204,7 @@ def socket_service(port, version, checksum):
         logger.info(f"socket service on :{port} was terminated by server")
         pass
 
-    except ConnectionClosedError as e:
+    except ConnectionClosedError:
         logger.info("connection replaced, service exiting")
         return True
 
