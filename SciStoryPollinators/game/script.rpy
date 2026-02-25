@@ -91,7 +91,7 @@ label start:
                 $ eca = safe_renpy_input("What evidence have you found so far?", screen="argument_sharing")
                 if not isinstance(eca, str) or not eca.strip():
                     t "No problem. Let me know when you're ready to share!"
-                    jump tulip_help_menu
+                    jump tulipchat
                 $ eca = eca.strip()
 
                 $ ca_link, ca_json = agent_setup("FoodJustice_RileyEvaluation", eca, "riley", "Tulip")
@@ -1259,7 +1259,6 @@ label start:
                         playAudio(sentence)
                         renpy.say(n, sentence)
                 $ finish_generated_dialogue()
-                $ finish_generated_dialogue()
 
                 $ stopAudio()
 
@@ -1465,7 +1464,7 @@ label start:
         t "Oh I love that kid. By the way, do you need any help? You can always click my button to say hi if you get bored!"
 
         $ lock_dialogue_advancement("tulip")
-        $ call("tulip_help_menu")
+        $ call("tulipchat")
         $ unlock_dialogue_advancement("tulip")
 
         $ update_char_stats("Alex")

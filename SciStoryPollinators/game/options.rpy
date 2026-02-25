@@ -23,7 +23,7 @@ define gui.show_name = False
 
 ## The version of the game.
 
-define config.version = "v0.0.4"
+define config.version = "2/13/2026 -- 12:34pm"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
@@ -49,7 +49,6 @@ define build.name = "SciStoryPollinators"
 
 #Creates a place for the game events log file
 define config.log = "gamelog.txt"
-
 
 ## Sounds and music ############################################################
 
@@ -111,6 +110,8 @@ define config.end_game_transition = None
 ## A variable to set the transition used when the game starts does not exist.
 ## Instead, use a with statement after showing the initial scene.
 
+## Splash/loading image (shown while the game is starting).
+# define config.loading_image = "gui/bee_menu.png"
 
 ## Window management ###########################################################
 ##
