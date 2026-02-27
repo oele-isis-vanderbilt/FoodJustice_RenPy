@@ -3,18 +3,25 @@ define azureKey = "3da59f8a4fc643ffbec6e4c076c77b7b"
 define ecaVoice = "en-US-JennyNeural"
 
 ##Audio
-define useAudio = False
+define useAudio = True
 init python:
+    import json
+
     def playAudio(dialogLine: str):
         if useAudio:
             if renpy.emscripten:
                 import emscripten
-                test = emscripten.run_script_int(f"window.playAzureAudio(\"{dialogLine}\", \"{ecaVoice}\", \"{azureKey}\", 100);")
+                js_call = "window.playAzureAudio({}, {}, {}, 100);".format(
+                    json.dumps(dialogLine or ""),
+                    json.dumps(ecaVoice),
+                    json.dumps(azureKey),
+                )
+                emscripten.run_script_int(js_call)
     def stopAudio():
         if useAudio:
             if renpy.emscripten:
                 import emscripten
-                test = emscripten.run_script_int(f"window.stopAzureAudio();")
+                emscripten.run_script_int("window.stopAzureAudio();")
     def StartAudioRecord():
         if renpy.emscripten:
                 import emscripten
