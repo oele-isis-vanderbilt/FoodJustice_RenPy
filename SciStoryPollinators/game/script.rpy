@@ -8,6 +8,7 @@ label start:
     with fade
 
     hide screen learningbuttons
+    $ enable_character_tts()
 
     $ current_user = safe_renpy_input("Please enter your player ID")
     
@@ -24,15 +25,15 @@ label start:
 
     narrator "Suddenly, a tiny bee flies around your head and hovers in front of you!"
 
-    "???" "Hey there human friend!"
+    tu_unknown "Hey there human friend!"
 
     menu:
         "Um...hi?":
-            "???" "Hello hello! Don't bee shy. We're going to get along buzzingly!"
+            tu_unknown "Hello hello! Don't bee shy. We're going to get along buzzingly!"
         "You're a talking bee??":
-            "???" "A honey bee, to be exact! But yes!"
+            tu_unknown "A honey bee, to be exact! But yes!"
         "Hello bee friend!":
-            "???" "Hello hello! So glad you're here. I'm absolutely buzzing with excitement!"
+            tu_unknown "Hello hello! So glad you're here. I'm absolutely buzzing with excitement!"
 
     t "I'm Tulip! The hive chose me as your guide for today. If you have any trouble while you're exploring, you can ask me for help!"
     t "Before we get started, tell me about yourself! What kind of place did you come from?"
@@ -113,7 +114,6 @@ label start:
                 $ start_generated_dialogue("eca", {"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
                 python:
                     for sentence in sentences:
-                        playAudio(sentence, "Tulip")
                         renpy.say(t, sentence)
                 $ finish_generated_dialogue()
 
@@ -157,7 +157,6 @@ label start:
                         $ start_generated_dialogue("eca", {"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
                         python:
                             for sentence in sentences:
-                                playAudio(sentence, "Tulip")
                                 renpy.say(t, sentence)
                         $ finish_generated_dialogue()
 
@@ -208,7 +207,6 @@ label start:
                 $ start_generated_dialogue("eca", {"character": "Tulip", "context": "GameHelp"})
                 python:
                     for sentence in sentences:
-                        playAudio(sentence, "Tulip")
                         renpy.say(t, sentence)
                 $ finish_generated_dialogue()
 
@@ -243,7 +241,6 @@ label start:
                         $ start_generated_dialogue("eca", {"character": "Tulip", "context": "GameHelp_Collaboration"})
                         python:
                             for sentence in sentences:
-                                playAudio(sentence, "Tulip")
                                 renpy.say(t, sentence)
                         $ finish_generated_dialogue()
 
@@ -523,7 +520,6 @@ label start:
         $ start_generated_dialogue("eca", {"character": "Riley", "context": "FoodJustice_RileyEvaluation"})
         python:
             for sentence in sentences:
-                playAudio(sentence, "Riley")
                 renpy.say(r, sentence)
         $ finish_generated_dialogue()
             
@@ -600,7 +596,6 @@ label start:
                 $ start_generated_dialogue("eca", {"character": "Riley", "context": "Knowledge_FoodJustice"})
                 python:
                     for sentence in sentences:
-                        playAudio(sentence, "Riley")
                         renpy.say(r, sentence)
                 $ finish_generated_dialogue()
                 $ stopAudio()
@@ -627,7 +622,6 @@ label start:
                 $ start_generated_dialogue("eca", {"character": "Riley", "context": "Knowledge_FoodJustice"})
                 python:
                     for sentence in sentences:
-                        playAudio(sentence, "Riley")
                         renpy.say(r, sentence)
                 $ finish_generated_dialogue()
                 $ stopAudio()
@@ -676,7 +670,6 @@ label start:
 
         python:
             for sentence in sentences:
-                playAudio(sentence, "Riley")
                 renpy.say(r, sentence)
 
         $ stopAudio()
@@ -1109,7 +1102,6 @@ label start:
         $ start_generated_dialogue("eca", {"character": "Wes", "context": "Knowledge_Pollination"})
         python:
             for sentence in sentences:
-                playAudio(sentence, "Wes")
                 renpy.say(w, sentence)
         $ finish_generated_dialogue()
         $ finish_generated_dialogue()
@@ -1170,7 +1162,6 @@ label start:
 
         python:
             for sentence in sentences:
-                playAudio(sentence, "Wes")
                 renpy.say(w, sentence)
 
         $ stopAudio()
@@ -1256,7 +1247,6 @@ label start:
                 $ start_generated_dialogue("eca", {"character": "Nadia", "context": "Knowledge_Pollination"})
                 python:
                     for sentence in sentences:
-                        playAudio(sentence, "Nadia")
                         renpy.say(n, sentence)
                 $ finish_generated_dialogue()
 
@@ -1284,7 +1274,6 @@ label start:
 
                 python:
                     for sentence in sentences:
-                        playAudio(sentence, "Nadia")
                         renpy.say(n, sentence)
 
                 $ stopAudio()
@@ -1330,7 +1319,6 @@ label start:
         $ start_generated_dialogue("eca", {"character": "Nadia", "context": "Knowledge_Pollination"})
         python:
             for sentence in sentences:
-                playAudio(sentence, "Nadia")
                 renpy.say(n, sentence)
         $ finish_generated_dialogue()
 
@@ -1909,7 +1897,6 @@ label start:
         $ start_generated_dialogue("eca", {"character": "Mayor Watson", "context": "FoodJustice_MayorEvaluation"})
         python:
             for sentence in sentences:
-                playAudio(sentence, "Mayor Watson")
                 renpy.say(m, sentence)
         $ finish_generated_dialogue()
 
@@ -1993,7 +1980,6 @@ label start:
         $ start_generated_dialogue("eca", {"character": "Elliot", "context": "FoodJustice_RileyEvaluation"})
         python:
             for sentence in sentences:
-                playAudio(sentence, "Elliot")
                 renpy.say(el, sentence)
         $ finish_generated_dialogue()
 

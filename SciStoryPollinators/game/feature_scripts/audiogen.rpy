@@ -7,13 +7,16 @@ define ecaSpeechRate = "+30%"
 define useAudio = True
 init python:
     import json
+    import re
 
     # Voice presets for character dialogue. Keys are lowercase character names.
     ECA_VOICE_BY_CHARACTER = {
         "tulip": "en-US-AnaNeural",
+        "???": "en-US-AnaNeural",
         "elliot": "en-US-DustinMultilingualNeural",
+        "friendly stranger": "en-US-DustinMultilingualNeural",
         "amara": "en-US-SerenaMultilingualNeural",
-        "riley": "en-US-PhoebeMultilingualNeural",
+        "riley": "en-US-Alloy:DragonHDLatestNeural",
         "wes": "en-US-LewisMultilingualNeural",
         "nadia": "en-US-Emma2:DragonHDLatestNeural",
         "mayor": "en-US-OnyxTurboMultilingualNeural",
@@ -25,11 +28,12 @@ init python:
         "victor": "zh-CN-YunyiMultilingualNeural",
     }
 
+
+
     # Optional speaking style by character.
     ECA_STYLE_BY_CHARACTER = {
         "amara": "serious",
-        "riley": "serious",
-    }
+            }
 
     def _voice_for_speaker(speaker_name):
         if speaker_name is None:
@@ -43,6 +47,9 @@ init python:
         key = str(speaker_name).strip().lower()
         return ECA_STYLE_BY_CHARACTER.get(key, "")
 
+    def _tts_feature_active():
+        return bool(useAudio and getattr(renpy.store, "tts_enabled", True))
+
     def _ensure_web_tts_bridge():
         if not renpy.emscripten:
             return False
@@ -54,6 +61,19 @@ init python:
                     return 1;
                 }
                 window.playAzureAudio = function(utterance, voice, key, volume, rate, style) {
+                    window.AzureTtsRequestId = (window.AzureTtsRequestId || 0) + 1;
+                    const requestId = window.AzureTtsRequestId;
+                    if (window.AzureTtsAbortController) {
+                        try { window.AzureTtsAbortController.abort(); } catch (e) {}
+                    }
+                    window.AzureTtsAbortController = new AbortController();
+                    const abortSignal = window.AzureTtsAbortController.signal;
+                    if (window.AzureAudio != null) {
+                        try {
+                            window.AzureAudio.pause();
+                            window.AzureAudio.currentTime = 0;
+                        } catch (e) {}
+                    }
                     const audio = document.createElement("audio");
                     const url = "https://eastus.tts.speech.microsoft.com/cognitiveservices/v1";
                     const escapedUtterance = (utterance || "")
@@ -73,7 +93,8 @@ init python:
                             "X-Microsoft-OutputFormat": "audio-24khz-160kbitrate-mono-mp3"
                         },
                         "body": ssml,
-                        "method": "POST"
+                        "method": "POST",
+                        "signal": abortSignal
                     })
                     .then(resp => {
                         if (!resp.ok) {
@@ -83,19 +104,37 @@ init python:
                     })
                     .then(URL.createObjectURL)
                     .then(blobUrl => {
+                        if (requestId !== window.AzureTtsRequestId) {
+                            try { URL.revokeObjectURL(blobUrl); } catch (e) {}
+                            throw new Error("Azure TTS superseded by newer request.");
+                        }
                         audio.src = blobUrl;
                         audio.volume = volume / 100;
                         return audio.play();
                     })
                     .then(() => {
+                        if (requestId !== window.AzureTtsRequestId) {
+                            try {
+                                audio.pause();
+                                audio.currentTime = 0;
+                            } catch (e) {}
+                            return;
+                        }
                         window.AzureAudio = audio;
                     })
                     .catch(err => {
+                        if (abortSignal.aborted) {
+                            return;
+                        }
                         console.error("Azure TTS playback failed:", err);
                     });
                 };
 
                 window.stopAzureAudio = function() {
+                    window.AzureTtsRequestId = (window.AzureTtsRequestId || 0) + 1;
+                    if (window.AzureTtsAbortController) {
+                        try { window.AzureTtsAbortController.abort(); } catch (e) {}
+                    }
                     if (window.AzureAudio != null) {
                         window.AzureAudio.pause();
                         window.AzureAudio.currentTime = 0;
@@ -107,7 +146,7 @@ init python:
         """))
 
     def initialize_web_tts_bridge():
-        if useAudio and renpy.emscripten:
+        if _tts_feature_active() and renpy.emscripten:
             try:
                 _ensure_web_tts_bridge()
             except Exception:
@@ -115,7 +154,7 @@ init python:
                 pass
 
     def playAudio(dialogLine: str, speaker_name=None, speech_rate=None, speaking_style=None):
-        if useAudio:
+        if _tts_feature_active():
             if renpy.emscripten:
                 if not _ensure_web_tts_bridge():
                     return
@@ -131,6 +170,82 @@ init python:
                     json.dumps(str(resolved_style or "")),
                 )
                 emscripten.run_script_int(js_call)
+
+    _character_tts_enabled = False
+    _last_dialogue_signature = None
+
+    def _is_predicting_dialogue():
+        try:
+            predictor = getattr(renpy, "predicting", None)
+            if callable(predictor):
+                return bool(predictor())
+        except Exception:
+            pass
+        try:
+            predictor = getattr(renpy, "is_predicting", None)
+            if callable(predictor):
+                return bool(predictor())
+        except Exception:
+            pass
+        return False
+
+    def _clean_tts_text(value):
+        text = value if isinstance(value, str) else str(value or "")
+        # Remove Ren'Py text tags like {i}, {size=*1.5}, etc.
+        text = re.sub(r"\{[^}]*\}", "", text)
+        return text.strip()
+
+    def maybe_play_dialogue_tts(who, what):
+        global _last_dialogue_signature
+        if not _tts_feature_active():
+            return
+        if not _character_tts_enabled:
+            return
+        if who is None or what is None:
+            return
+        if _is_predicting_dialogue():
+            return
+
+        speaker_name = _clean_tts_text(who)
+        spoken = _clean_tts_text(what)
+        if not speaker_name or not spoken:
+            return
+
+        signature = (speaker_name, spoken)
+        if signature == _last_dialogue_signature:
+            return
+
+        _last_dialogue_signature = signature
+        playAudio(spoken, speaker_name=speaker_name)
+
+    def enable_character_tts():
+        global _character_tts_enabled, _last_dialogue_signature
+        if not _tts_feature_active():
+            _character_tts_enabled = False
+            return False
+        if not renpy.emscripten:
+            _character_tts_enabled = False
+            return False
+        initialize_web_tts_bridge()
+        _character_tts_enabled = True
+        _last_dialogue_signature = None
+        return True
+
+    def set_tts_enabled(enabled):
+        global _character_tts_enabled, _last_dialogue_signature
+        enabled = bool(enabled)
+        renpy.store.tts_enabled = enabled
+        _last_dialogue_signature = None
+        if not enabled:
+            _character_tts_enabled = False
+            stopAudio()
+            return False
+        return enable_character_tts()
+
+    def toggle_tts_enabled():
+        current = bool(getattr(renpy.store, "tts_enabled", True))
+        return set_tts_enabled(not current)
+
     def stopAudio():
         if useAudio:
             if renpy.emscripten:

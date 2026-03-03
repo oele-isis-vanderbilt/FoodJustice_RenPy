@@ -9,6 +9,7 @@ define x = Character("Alex")
 define c = Character("Cora")
 define v = Character("Victor")
 define t = Character("Tulip")
+define tu_unknown = Character("???")
 
 define character_directory = [
     { "id": "elliot", "variable": el, "name": "Elliot",        "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
@@ -22,6 +23,7 @@ define character_directory = [
     { "id": "cora",   "variable": c,  "name": "Cora",          "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
     { "id": "victor", "variable": v,  "name": "Victor",        "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
     { "id": "tulip",  "variable": t,  "name": "Tulip",         "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
+    { "id": "tulip_unknown", "variable": tu_unknown, "name": "???", "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
 ]
 
 # GLOBAL NOTEBOOK LISTS 
@@ -42,6 +44,7 @@ default voice_recording_active = False
 default voice_input_contexts = 0
 default voice_input_available = False
 default voice_features_enabled = True
+default tts_enabled = True
 default overlay_dialogue_block_count = 0
 
 ##LOCATION VISIT TRACKING

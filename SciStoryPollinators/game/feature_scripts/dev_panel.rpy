@@ -73,6 +73,8 @@ screen developer_overlay():
                         spacing 4
                         text "Voice Features Enabled? [voice_features_enabled]" style "dev_msg"
                         textbutton "Toggle Voice Features" action Function(toggle_voice_features_enabled) style "dev_jump_button"
+                        text "TTS Enabled? [tts_enabled]" style "dev_msg"
+                        textbutton "Toggle TTS" action Function(toggle_tts_enabled) style "dev_jump_button"
 
                     null height 12
 

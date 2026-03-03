@@ -127,6 +127,9 @@ screen say(who, what):
     if overlay_dialogue_block_count > 0:
         key "dismiss" action NullAction()
 
+    if who is not None and what is not None:
+        $ maybe_play_dialogue_tts(who, what)
+
     window:
         xfill True
         yalign 1.0
