@@ -1,20 +1,134 @@
 # AUDIO 
 define azureKey = "3da59f8a4fc643ffbec6e4c076c77b7b"
 define ecaVoice = "en-US-JennyNeural"
+define ecaSpeechRate = "+30%"
 
 ##Audio
 define useAudio = True
 init python:
     import json
 
-    def playAudio(dialogLine: str):
+    # Voice presets for character dialogue. Keys are lowercase character names.
+    ECA_VOICE_BY_CHARACTER = {
+        "tulip": "en-US-AnaNeural",
+        "elliot": "en-US-DustinMultilingualNeural",
+        "amara": "en-US-SerenaMultilingualNeural",
+        "riley": "en-US-PhoebeMultilingualNeural",
+        "wes": "en-US-LewisMultilingualNeural",
+        "nadia": "en-US-Emma2:DragonHDLatestNeural",
+        "mayor": "en-US-OnyxTurboMultilingualNeural",
+        "mayor watson": "en-US-OnyxTurboMultilingualNeural",
+        "cyrus": "en-US-Andrew3:DragonHDLatestNeural",
+        "cyrus murphy": "en-US-Andrew3:DragonHDLatestNeural",
+        "alex": "zh-CN-XiaoyouMultilingualNeural",
+        "cora": "en-US-LolaMultilingualNeural",
+        "victor": "zh-CN-YunyiMultilingualNeural",
+    }
+
+    # Optional speaking style by character.
+    ECA_STYLE_BY_CHARACTER = {
+        "amara": "serious",
+        "riley": "serious",
+    }
+
+    def _voice_for_speaker(speaker_name):
+        if speaker_name is None:
+            return ecaVoice
+        key = str(speaker_name).strip().lower()
+        return ECA_VOICE_BY_CHARACTER.get(key, ecaVoice)
+
+    def _style_for_speaker(speaker_name):
+        if speaker_name is None:
+            return ""
+        key = str(speaker_name).strip().lower()
+        return ECA_STYLE_BY_CHARACTER.get(key, "")
+
+    def _ensure_web_tts_bridge():
+        if not renpy.emscripten:
+            return False
+
+        import emscripten
+        return bool(emscripten.run_script_int("""
+            (function() {
+                if (typeof window.playAzureAudio === "function" && typeof window.stopAzureAudio === "function") {
+                    return 1;
+                }
+                window.playAzureAudio = function(utterance, voice, key, volume, rate, style) {
+                    const audio = document.createElement("audio");
+                    const url = "https://eastus.tts.speech.microsoft.com/cognitiveservices/v1";
+                    const escapedUtterance = (utterance || "")
+                        .replace(/&/g, "&amp;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;");
+                    const safeRate = (rate || "0%").toString();
+                    const safeStyle = (style || "").toString().trim();
+                    const styleOpen = safeStyle ? "<mstts:express-as style=\\"" + safeStyle + "\\">" : "";
+                    const styleClose = safeStyle ? "</mstts:express-as>" : "";
+                    const ssml = "<speak version=\\"1.0\\" xmlns=\\"http://www.w3.org/2001/10/synthesis\\" xmlns:mstts=\\"http://www.w3.org/2001/mstts\\" xml:lang=\\"en-US\\"><voice name=\\"" + voice + "\\">" + styleOpen + "<prosody rate=\\"" + safeRate + "\\">" + escapedUtterance + "</prosody>" + styleClose + "</voice></speak>";
+
+                    fetch(url, {
+                        "headers": {
+                            "content-type": "application/ssml+xml",
+                            "Ocp-Apim-Subscription-Key": key,
+                            "X-Microsoft-OutputFormat": "audio-24khz-160kbitrate-mono-mp3"
+                        },
+                        "body": ssml,
+                        "method": "POST"
+                    })
+                    .then(resp => {
+                        if (!resp.ok) {
+                            throw new Error("Azure TTS request failed with status " + resp.status);
+                        }
+                        return resp.blob();
+                    })
+                    .then(URL.createObjectURL)
+                    .then(blobUrl => {
+                        audio.src = blobUrl;
+                        audio.volume = volume / 100;
+                        return audio.play();
+                    })
+                    .then(() => {
+                        window.AzureAudio = audio;
+                    })
+                    .catch(err => {
+                        console.error("Azure TTS playback failed:", err);
+                    });
+                };
+
+                window.stopAzureAudio = function() {
+                    if (window.AzureAudio != null) {
+                        window.AzureAudio.pause();
+                        window.AzureAudio.currentTime = 0;
+                    }
+                };
+
+                return 1;
+            })();
+        """))
+
+    def initialize_web_tts_bridge():
+        if useAudio and renpy.emscripten:
+            try:
+                _ensure_web_tts_bridge()
+            except Exception:
+                # Keep gameplay running even if bridge initialization fails.
+                pass
+
+    def playAudio(dialogLine: str, speaker_name=None, speech_rate=None, speaking_style=None):
         if useAudio:
             if renpy.emscripten:
+                if not _ensure_web_tts_bridge():
+                    return
                 import emscripten
-                js_call = "window.playAzureAudio({}, {}, {}, 100);".format(
+                resolved_voice = _voice_for_speaker(speaker_name)
+                resolved_rate = speech_rate if speech_rate is not None else ecaSpeechRate
+                resolved_style = speaking_style if speaking_style is not None else _style_for_speaker(speaker_name)
+                js_call = "window.playAzureAudio({}, {}, {}, 100, {}, {});".format(
                     json.dumps(dialogLine or ""),
-                    json.dumps(ecaVoice),
+                    json.dumps(resolved_voice),
                     json.dumps(azureKey),
+                    json.dumps(str(resolved_rate)),
+                    json.dumps(str(resolved_style or "")),
                 )
                 emscripten.run_script_int(js_call)
     def stopAudio():
@@ -30,6 +144,9 @@ init python:
         if renpy.emscripten:
                 import emscripten
                 test = emscripten.run_script_int(f"window.microphoneUtil.StopRecordingJS();")
+
+init 1 python:
+    initialize_web_tts_bridge()
 
 screen my_button_screen():
     $ recording_tooltip = None
