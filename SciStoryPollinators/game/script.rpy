@@ -184,7 +184,7 @@ label start:
                         with dissolve
                         return
             "I need help with something else.":
-                $ eca = safe_renpy_input("I love questions! What's your question?", screen="argument_sharing")
+                $ eca = safe_renpy_input("I love questions! What's your question?", screen="question_asking")
                 if not isinstance(eca, str) or not eca.strip():
                     t "Okay! I'm here if you need me."
                     hide tulip
@@ -219,7 +219,7 @@ label start:
                 t "Any more questions?"
                 menu:
                     "I have another question.":
-                        $ eca = safe_renpy_input("What's your question?", screen="argument_sharing")
+                        $ eca = safe_renpy_input("What's your question?", screen="question_asking")
                         if not isinstance(eca, str) or not eca.strip():
                             t "No worries! Buzz me again if something comes up."
                             hide tulip
@@ -655,7 +655,7 @@ label start:
                 jump byeriley
 
     label foodknowledge:
-        $ eca = safe_renpy_input("I'm wondering...", screen="argument_sharing")
+        $ eca = safe_renpy_input("I'm wondering...", screen="question_asking")
         if not isinstance(eca, str) or not eca.strip():
             r "No worries. Ask me again anytime."
             jump foodknowledge_loop
@@ -1085,7 +1085,7 @@ label start:
    
     label gardenquestions:
         w "What would you like to know about the garden?"
-        $ eca = safe_renpy_input("I'm wondering...", screen="argument_sharing")
+        $ eca = safe_renpy_input("I'm wondering...", screen="question_asking")
         if not isinstance(eca, str) or not eca.strip():
             w "Alright, just flag me down if you think of something."
             jump wes_choices
@@ -1147,7 +1147,7 @@ label start:
 
     label wes_ca:
         w "What would you like to know?"
-        $ eca = safe_renpy_input("I'm wondering...", screen="argument_sharing")
+        $ eca = safe_renpy_input("I'm wondering...", screen="question_asking")
         if not isinstance(eca, str) or not eca.strip():
             w "All good. Come find me if you have another question."
             jump wes_questions
@@ -1306,7 +1306,7 @@ label start:
         jump nadia_questions
 
     label nadia_ca:
-        $ eca = safe_renpy_input("I'm wondering...", screen="argument_sharing")
+        $ eca = safe_renpy_input("I'm wondering...", screen="question_asking")
         if not isinstance(eca, str) or not eca.strip():
             n "Alright! Come back if you want to talk more about bees."
             jump nadia_questions
