@@ -195,11 +195,23 @@ init python:
         text = re.sub(r"\{[^}]*\}", "", text)
         return text.strip()
 
+    def _is_eca_dialogue_active():
+        origin_reader = getattr(renpy.store, "_current_dialogue_origin", None)
+        if callable(origin_reader):
+            try:
+                origin = origin_reader() or {}
+                return origin.get("source") == "eca"
+            except Exception:
+                return False
+        return False
+
     def maybe_play_dialogue_tts(who, what):
         global _last_dialogue_signature
         if not _tts_feature_active():
             return
         if not _character_tts_enabled:
+            return
+        if not _is_eca_dialogue_active():
             return
         if who is None or what is None:
             return

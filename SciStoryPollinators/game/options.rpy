@@ -59,6 +59,7 @@ define config.log = "gamelog.txt"
 define config.has_sound = True
 define config.has_music = True
 define config.has_voice = True
+define config.auto_voice = "voice/{id}.ogg"
 
 # Disable rollback so scroll gestures can't rewind gameplay.
 define config.rollback_enabled = False
@@ -124,7 +125,6 @@ define config.end_game_transition = None
 ## "window hide", and "window auto" statements.
 
 define config.window = "auto"
-
 
 ## Transitions used to show and hide the dialogue window
 
