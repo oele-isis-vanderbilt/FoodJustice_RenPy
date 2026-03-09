@@ -33,6 +33,7 @@ init python:
         return "city" if s == "urban" else s
 
 screen map_popup():
+    zorder 500
     modal True   # make clicks go only to this screen
     on "show" action Function(lock_dialogue_advancement, "map_popup")
     on "hide" action Function(unlock_dialogue_advancement, "map_popup")
