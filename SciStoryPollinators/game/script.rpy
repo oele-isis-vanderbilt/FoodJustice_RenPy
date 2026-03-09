@@ -67,6 +67,12 @@ label start:
 
     jump begin
 
+    label tulipchat_from_button:
+        hide screen learningbuttons
+        call tulipchat
+        show screen learningbuttons()
+        return
+
     label tulipchat:
         show tulip at left
         with dissolve

@@ -38,11 +38,7 @@ screen learningbuttons():
             tooltip "Ask Tulip"
             idle bee_btn
             hover darken_hover(bee_btn)
-            action [
-                Hide("learningbuttons"),
-                Call("tulipchat", from_current = True),
-                Show("learningbuttons"),
-            ]
+            action Call("tulipchat_from_button", from_current = True)
 
         text "\n":
             size 8
