@@ -1,16 +1,15 @@
 # Enable Ren'Py developer features (console, reloads, error tracing, etc.)
 define config.developer = True
 
-# Persistent store of unlocked achievements (survives saves/new games).
-# 'default' sets an initial value only if none exists yet.
-default persistent.achievements = {}
+# Per-playthrough store of unlocked achievements.
+# 'default' initializes for a new game and is saved/loaded with save files.
+default achievements = {}
 default achievement_popup_uid = 0
 
 init python:
     def clear_all_achievements():
         """Utility helper to wipe all achievement progress."""
-        persistent.achievements.clear()
-        renpy.save_persistent()
+        renpy.store.achievements.clear()
         notify_with_history("All achievements cleared.", history_who="Achievements")
 
 # This is the list of all achievements in the game.
@@ -138,7 +137,7 @@ init python:
         return renpy.store.achievement_popup_uid
 
     def unlock_achievement(key, pause_time=5):
-        persistent.achievements[key] = True
+        renpy.store.achievements[key] = True
         ach = achievement_map.get(key, {})
         log_http(
             current_user,
@@ -167,7 +166,7 @@ init python:
             renpy.hide_screen("achievement_popup")
 
     def ensure_unlocked(key, condition):
-        if condition and not persistent.achievements.get(key, False):
+        if condition and not renpy.store.achievements.get(key, False):
             unlock_achievement(key)
 
     def _character_records():
@@ -283,7 +282,7 @@ screen achievement_row(ach, width=600, height=70):
         xsize width
         ysize height
         
-        $ unlocked = persistent.achievements.get(ach["key"], False)
+        $ unlocked = achievements.get(ach["key"], False)
 
         frame:
             if unlocked:
@@ -294,7 +293,7 @@ screen achievement_row(ach, width=600, height=70):
             ysize height
             padding (8, 6, 8, 6)
 
-            # if not persistent.achievements.get(ach["key"], False):
+            # if not achievements.get(ach["key"], False):
             #     add Solid("#8888", xsize=width, ysize=height) xpos 0 ypos 0
 
             hbox:
