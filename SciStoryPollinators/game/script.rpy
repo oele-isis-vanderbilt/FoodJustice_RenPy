@@ -1298,7 +1298,10 @@ label start:
         $ eca = safe_renpy_input("I'm wondering...", screen="question_asking")
         if not isinstance(eca, str) or not eca.strip():
             n "Alright! Come back if you want to talk more about bees."
-            jump nadia_questions
+            if get_character_chats("Nadia") == 0:
+                jump nadia_questions
+            else:
+                jump nadia_2
         $ eca = eca.strip()
 
         $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
