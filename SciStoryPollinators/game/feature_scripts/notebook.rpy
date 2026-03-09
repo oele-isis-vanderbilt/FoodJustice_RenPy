@@ -387,6 +387,12 @@ init python:
     def argument_edit(newcontent):
         save_draft(newcontent, edited=True)
 
+    def should_prompt_save_draft(newcontent):
+        """Only prompt when the submitted draft differs from the current notebook draft."""
+        submitted = (newcontent or "").strip()
+        current = (notebook_argument or "").strip()
+        return submitted != current
+
     def save_draft(newcontent, edited=False):
         global notebook_argument, last_notebook_argument, argument_edits, argument_history
         previous = notebook_argument

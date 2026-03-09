@@ -127,12 +127,10 @@ label start:
 
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
-                $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
-
-                if savedraft == True:
-                    $ save_draft(eca)
-                else:
-                    pass
+                if should_prompt_save_draft(eca):
+                    $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
+                    if savedraft == True:
+                        $ save_draft(eca)
                
                 t "Do you have other evidence to share?"
                 menu:
@@ -170,12 +168,10 @@ label start:
 
                         $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
-                        $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
-                        
-                        if savedraft == True:
-                            $ save_draft(eca)
-                        else:
-                            pass
+                        if should_prompt_save_draft(eca):
+                            $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
+                            if savedraft == True:
+                                $ save_draft(eca)
 
                         t "You're doing great! Keep exploring and gathering notes, and your argument will get even stronger."
                         hide tulip
@@ -532,12 +528,10 @@ label start:
         $ stopAudio()
         $ achieve_feedback()
 
-        $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
-
-        if savedraft == True:
-            $ save_draft(eca)
-        else:
-            pass
+        if should_prompt_save_draft(eca):
+            $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
+            if savedraft == True:
+                $ save_draft(eca)
 
         r "Are there other ideas you want to run by me?"
 
@@ -1912,12 +1906,10 @@ label start:
         else:
             $ achieve_undecided()
 
-        $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
-
-        if savedraft == True:
-            $ save_draft(eca)
-        else:
-            pass
+        if should_prompt_save_draft(eca):
+            $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
+            if savedraft == True:
+                $ save_draft(eca)
 
         jump bye_mayor
     
@@ -1989,12 +1981,10 @@ label start:
 
         $ stopAudio()
 
-        $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
-
-        if savedraft == True:
-            $ save_draft(eca)
-        else:
-            pass
+        if should_prompt_save_draft(eca):
+            $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")
+            if savedraft == True:
+                $ save_draft(eca)
 
         el "Are there other ideas you want to run by me?"
 
