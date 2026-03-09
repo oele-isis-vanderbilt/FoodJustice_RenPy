@@ -1451,9 +1451,7 @@ label start:
 
         t "Oh I love that kid. By the way, do you need any help? You can always click my button to say hi if you get bored!"
 
-        $ lock_dialogue_advancement("tulip")
-        $ call("tulipchat")
-        $ unlock_dialogue_advancement("tulip")
+        call tulipchat
 
         $ update_char_stats("Alex")
         $ achieve_social()
