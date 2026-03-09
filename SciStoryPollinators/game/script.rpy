@@ -95,7 +95,7 @@ label start:
             "I'd like some help with persuading the mayor.":
                 t "I'd be happy to help! If you tell me what evidence you've found, I can give you some advice on improving your persuasive writing."
 
-                $ eca = safe_renpy_input("What evidence have you found so far?", screen="argument_sharing")
+                $ eca = safe_renpy_input("What evidence have you found so far? How are you thinking about persuading the mayor?", screen="argument_sharing")
                 if not isinstance(eca, str) or not eca.strip():
                     t "No problem. Let me know when you're ready to share!"
                     jump tulipchat
