@@ -6,6 +6,40 @@ init offset = -1
 
 
 init python:
+    import os
+    import subprocess
+
+    _latest_commit_datetime_text = None
+
+    def get_latest_commit_datetime_text():
+        global _latest_commit_datetime_text
+
+        if _latest_commit_datetime_text is not None:
+            return _latest_commit_datetime_text
+
+        repo_root = os.path.abspath(os.path.join(config.gamedir, ".."))
+        git_cmd = [
+            "git",
+            "-C",
+            repo_root,
+            "log",
+            "-1",
+            "--date=format-local:%Y-%m-%d %H:%M",
+            "--format=%cd",
+        ]
+
+        try:
+            output = subprocess.check_output(git_cmd, stderr=subprocess.STDOUT)
+            latest = output.decode("utf-8", "replace").strip()
+            if latest:
+                _latest_commit_datetime_text = "Last commit: {}".format(latest)
+            else:
+                _latest_commit_datetime_text = "Last commit: unavailable"
+        except Exception:
+            _latest_commit_datetime_text = "Last commit: unavailable"
+
+        return _latest_commit_datetime_text
+
     def _save_dialogue_note(dialogue_text, speaker_name):
         tags = []
         allow_auto_tagging = True
@@ -302,16 +336,16 @@ screen quick_menu():
             xalign 0.5
             yalign 1.0
 
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action ShowMenu('preferences')
-            textbutton _("Dev") action Function(toggle_dev_screen)   # <-- Add this line
-            textbutton _("QA Panel") action Call("toggle_qa_panel")
+            textbutton _("Back") action [Function(log_ui_event, "click", screen="quick_menu", element="Back"), Rollback()]
+            textbutton _("History") action [Function(log_ui_event, "click", screen="quick_menu", element="History"), ShowMenu('history')]
+            textbutton _("Skip") action [Function(log_ui_event, "click", screen="quick_menu", element="Skip"), Skip()] alternate [Function(log_ui_event, "click", screen="quick_menu", element="SkipFast"), Skip(fast=True, confirm=True)]
+            textbutton _("Auto") action [Function(log_ui_event, "click", screen="quick_menu", element="Auto"), Preference("auto-forward", "toggle")]
+            textbutton _("Save") action [Function(log_ui_event, "click", screen="quick_menu", element="Save"), ShowMenu('save')]
+            textbutton _("Q.Save") action [Function(log_ui_event, "click", screen="quick_menu", element="Q.Save"), QuickSave()]
+            textbutton _("Q.Load") action [Function(log_ui_event, "click", screen="quick_menu", element="Q.Load"), QuickLoad()]
+            textbutton _("Prefs") action [Function(log_ui_event, "click", screen="quick_menu", element="Prefs"), ShowMenu('preferences')]
+            textbutton _("Dev") action [Function(log_ui_event, "click", screen="quick_menu", element="Dev"), Function(toggle_dev_screen)]   # <-- Add this line
+            textbutton _("QA Panel") action [Function(log_ui_event, "click", screen="quick_menu", element="QA Panel"), Call("toggle_qa_panel")]
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.
@@ -417,6 +451,12 @@ screen main_menu():
     ## contents of the main menu are in the navigation screen.
     use navigation
 
+    frame:
+        style "main_menu_commit_frame"
+
+        text "[get_latest_commit_datetime_text()]":
+            style "main_menu_commit_text"
+
     if gui.show_name:
 
         vbox:
@@ -434,6 +474,8 @@ style main_menu_vbox is vbox
 style main_menu_text is gui_text
 style main_menu_title is main_menu_text
 style main_menu_version is main_menu_text
+style main_menu_commit_frame is frame
+style main_menu_commit_text is gui_text
 
 style main_menu_frame:
     xsize 420
@@ -456,6 +498,21 @@ style main_menu_title:
 
 style main_menu_version:
     properties gui.text_properties("version")
+
+style main_menu_commit_frame:
+    xalign 1.0
+    yalign 1.0
+    xoffset -30
+    yoffset -30
+    left_padding 16
+    right_padding 16
+    top_padding 10
+    bottom_padding 10
+    background Solid("#808080B0")
+
+style main_menu_commit_text:
+    color "#FFFFFF"
+    size 20
 
 
 ## Game Menu screen ############################################################
@@ -1496,10 +1553,10 @@ screen quick_menu():
             xalign 0.5
             yalign 1.0
 
-            textbutton _("Back") action Rollback()
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Menu") action ShowMenu()
+            textbutton _("Back") action [Function(log_ui_event, "click", screen="quick_menu_touch", element="Back"), Rollback()]
+            textbutton _("Skip") action [Function(log_ui_event, "click", screen="quick_menu_touch", element="Skip"), Skip()] alternate [Function(log_ui_event, "click", screen="quick_menu_touch", element="SkipFast"), Skip(fast=True, confirm=True)]
+            textbutton _("Auto") action [Function(log_ui_event, "click", screen="quick_menu_touch", element="Auto"), Preference("auto-forward", "toggle")]
+            textbutton _("Menu") action [Function(log_ui_event, "click", screen="quick_menu_touch", element="Menu"), ShowMenu()]
 
 
 style window:

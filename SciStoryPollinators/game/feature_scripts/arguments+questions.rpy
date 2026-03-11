@@ -2,6 +2,8 @@
 screen argument_sharing(prompt):
     modal True
     zorder 100
+    on "show" action Function(log_ui_event, "show", screen="argument_sharing")
+    on "hide" action Function(log_ui_event, "hide", screen="argument_sharing")
 
     default user_argument = ""
     default argumentinput = ScreenVariableInputValue("user_argument")
@@ -68,7 +70,7 @@ screen argument_sharing(prompt):
                         xsize 195
                         textbutton "Nevermind":
                             style "share_action_button"
-                            action Return(None)
+                            action [Function(log_ui_event, "click", screen="argument_sharing", element="Nevermind"), Return(None)]
                             tooltip "Close"
                             xfill True
 
@@ -78,6 +80,7 @@ screen argument_sharing(prompt):
                         textbutton "Share":
                             style "share_action_button"
                             action [
+                                Function(log_ui_event, "click", screen="argument_sharing", element="Share", payload={"text_length": len((user_argument or "").strip())}),
                                 Function(cache_screen_response, "argument_sharing", user_argument),
                                 Return(user_argument)
                             ]
@@ -93,7 +96,7 @@ screen argument_sharing(prompt):
                         xsize 195
                         textbutton "Use Notebook Draft":
                             style "share_action_button"
-                            action SetScreenVariable("user_argument", notebook_argument)
+                            action [Function(log_ui_event, "click", screen="argument_sharing", element="Use Notebook Draft"), SetScreenVariable("user_argument", notebook_argument)]
                             xfill True
 
                     frame:
@@ -102,6 +105,7 @@ screen argument_sharing(prompt):
                         textbutton "Save to Notbook":
                             style "share_action_button"
                             action [
+                                Function(log_ui_event, "click", screen="argument_sharing", element="Save to Notebook", payload={"text_length": len((user_argument or "").strip())}),
                                 Function(argument_edit, user_argument),
                                 Function(cache_screen_response, "argument_sharing", user_argument),
                             ]
@@ -130,6 +134,8 @@ style share_action_button_text is standard_button_text:
 screen question_asking(prompt):
     modal True
     zorder 100
+    on "show" action Function(log_ui_event, "show", screen="question_asking")
+    on "hide" action Function(log_ui_event, "hide", screen="question_asking")
 
     default user_argument = ""
     default argumentinput = ScreenVariableInputValue("user_argument")
@@ -192,7 +198,7 @@ screen question_asking(prompt):
                     xsize 160
                     textbutton "Nevermind":
                         style "standard_button"
-                        action Return(None)
+                        action [Function(log_ui_event, "click", screen="question_asking", element="Nevermind"), Return(None)]
                         tooltip "Close"
                         xfill True
 
@@ -202,6 +208,7 @@ screen question_asking(prompt):
                     textbutton "Ask Question":
                         style "standard_button"
                         action [
+                            Function(log_ui_event, "click", screen="question_asking", element="Ask Question", payload={"text_length": len((user_argument or "").strip())}),
                             Function(cache_screen_response, "argument_sharing", user_argument),
                             Return(user_argument)
                         ]

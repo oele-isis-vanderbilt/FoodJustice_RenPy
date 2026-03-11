@@ -20,7 +20,7 @@ screen learningbuttons():
             tooltip "Travel"
             idle map_btn
             hover darken_hover(map_btn)
-            action (Function(retaindata), Show("map_popup"))
+            action [Function(log_ui_event, "click", screen="learningbuttons", element="Travel"), Function(retaindata), Show("map_popup")]
 
         text "\n":
             size 8
@@ -29,7 +29,7 @@ screen learningbuttons():
             tooltip "Notebook"
             idle notebook_btn
             hover darken_hover(notebook_btn)
-            action (Function(retaindata), Show("notebook"))
+            action [Function(log_ui_event, "click", screen="learningbuttons", element="Notebook"), Function(retaindata), Show("notebook")]
 
         text "\n":
             size 8
@@ -38,7 +38,7 @@ screen learningbuttons():
             tooltip "Ask Tulip"
             idle bee_btn
             hover darken_hover(bee_btn)
-            action Call("tulipchat_from_button", from_current = True)
+            action [Function(log_ui_event, "click", screen="learningbuttons", element="Ask Tulip"), Call("tulipchat_from_button", from_current = True)]
 
         text "\n":
             size 8
@@ -47,7 +47,7 @@ screen learningbuttons():
             tooltip "Achievements"
             idle achieve_btn
             hover darken_hover(achieve_btn)
-            action (Function(retaindata), Show("achievements_screen"))
+            action [Function(log_ui_event, "click", screen="learningbuttons", element="Achievements"), Function(retaindata), Show("achievements_screen")]
 
     $ tooltip = GetTooltip()
     if tooltip:

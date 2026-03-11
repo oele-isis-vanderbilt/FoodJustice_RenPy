@@ -552,6 +552,21 @@ init 10 python:
 
 
 init python:
+    def _safe_log_value(value):
+        if isinstance(value, (str, int, float, bool)) or value is None:
+            return value
+        if isinstance(value, dict):
+            return {str(k): _safe_log_value(v) for k, v in value.items()}
+        if isinstance(value, (list, tuple)):
+            return [_safe_log_value(v) for v in value]
+        return repr(value)
+
+    def _default_user():
+        return getattr(renpy.store, "current_user", "unknown")
+
+    def _default_view():
+        return getattr(renpy.store, "current_label", None)
+
     def _normalize_timestamp(ts):
         if isinstance(ts, datetime.datetime):
             return ts.strftime("%Y-%m-%d %H:%M:%S")
@@ -559,34 +574,61 @@ init python:
             return str(ts)
         return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    def _log_locally(timestamp, action, payload):
-        stamp = _normalize_timestamp(timestamp)
-        renpy.log(stamp)
-        renpy.log(f"{action}\n")
-        if payload is not None:
-            renpy.log(f"{payload}\n")
+    def _build_log_entry(action, payload=None, user=None, view=None, timestamp=None):
+        return {
+            "action": action,
+            "user": user if user is not None else _default_user(),
+            "view": view if view is not None else _default_view(),
+            "timestamp": _normalize_timestamp(timestamp),
+            "payload": payload,
+        }
+
+    def _sanitize_log_entry(entry):
+        return {
+            "action": _safe_log_value(entry.get("action")),
+            "timestamp": _safe_log_value(entry.get("timestamp")),
+            "user": _safe_log_value(entry.get("user")),
+            "view": _safe_log_value(entry.get("view")),
+            "payload": _safe_log_value(entry.get("payload")),
+        }
+
+    def _log_locally(log_entry):
+        renpy.log(json.dumps(_sanitize_log_entry(log_entry), ensure_ascii=False))
 
     # Write a timestamped string to Ren'Py's developer log so we always mirror important actions locally.
     def log(action):
-        timestamp = datetime.datetime.now()
-        _log_locally(timestamp, action, None)
+        log_entry = _build_log_entry(action, payload=None, timestamp=datetime.datetime.now())
+        _log_locally(log_entry)
+
+    # Standardized UI interaction logger for button presses and screen open/close events.
+    def log_ui_event(event, screen=None, element=None, detail=None, payload=None):
+        data = {"event": event}
+        if screen is not None:
+            data["screen"] = screen
+        if element is not None:
+            data["element"] = element
+        if detail is not None:
+            data["detail"] = detail
+        if payload is not None:
+            data["payload"] = payload
+
+        log_http(
+            _default_user(),
+            action="UIEvent",
+            view=screen if screen is not None else _default_view(),
+            payload=data,
+        )
 
     # Construct the REST payload, POST it via renpy.fetch, and still fall back to renpy.log so every action is recorded.
     def log_http(user: str, payload: Optional[Dict[str, Any]], action: str, view: str = None):
         timestamp = datetime.datetime.now()
-        timestamp_str = timestamp.strftime("%Y-%m-%d %H:%M:%S")
         base_url = (os.getenv("SERVICE_URL") or "").strip()
         if base_url == "/":
             base_url = ""
-        log_entry = {
-            "action": action,
-            "timestamp": timestamp_str,
-            "user": user,
-            "view": view,
-            "payload": payload
-        }
+        log_entry = _build_log_entry(action, payload=payload, user=user, view=view, timestamp=timestamp)
+        safe_entry = _sanitize_log_entry(log_entry)
 
-        _log_locally(timestamp, action, payload)
+        _log_locally(safe_entry)
 
         # Skip remote logging on Web builds unless an explicit SERVICE_URL is provided.
         if renpy.emscripten and not base_url:
@@ -597,7 +639,7 @@ init python:
             renpy.fetch(
                 endpoint,
                 method="POST",
-                json=log_entry,
+                json=safe_entry,
             )
         except Exception:
             # Remote logging failures are tolerated; the local log already captured the entry.

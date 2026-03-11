@@ -35,8 +35,8 @@ init python:
 screen map_popup():
     zorder 500
     modal True   # make clicks go only to this screen
-    on "show" action Function(lock_dialogue_advancement, "map_popup")
-    on "hide" action Function(unlock_dialogue_advancement, "map_popup")
+    on "show" action [Function(log_ui_event, "show", screen="map_popup"), Function(lock_dialogue_advancement, "map_popup")]
+    on "hide" action [Function(log_ui_event, "hide", screen="map_popup"), Function(unlock_dialogue_advancement, "map_popup")]
     default shown_w = 750
     default shown_h = 750
 
@@ -74,7 +74,7 @@ screen map_popup():
             anchor (0.5, 1.0)
             xpos ex
             ypos ey
-            action [Hide("map_popup"), Jump("emptylot")]
+            action [Function(log_ui_event, "click", screen="map_popup", element="emptylot_pin"), Hide("map_popup"), Jump("emptylot")]
 
         $ garden_idle  = Transform("images/map_pin_garden.png")
         $ garden_hover = Transform(
@@ -87,7 +87,7 @@ screen map_popup():
             anchor (0.5, 1.0)
             xpos gx
             ypos gy
-            action [Hide("map_popup"), Jump("garden")]
+            action [Function(log_ui_event, "click", screen="map_popup", element="garden_pin"), Hide("map_popup"), Jump("garden")]
 
         $ food_idle  = Transform("images/map_pin_foodlab.png")
         $ food_hover = Transform(
@@ -100,7 +100,7 @@ screen map_popup():
             anchor (0.5, 1.0)
             xpos fx
             ypos fy
-            action [Hide("map_popup"), Jump("foodlab")]
+            action [Function(log_ui_event, "click", screen="map_popup", element="foodlab_pin"), Hide("map_popup"), Jump("foodlab")]
 
         $ iw, ih = renpy.image_size("images/imagebutton_close.png")
         $ exit_btn = Transform("images/imagebutton_close.png", zoom=50.0 / ih)
@@ -109,7 +109,7 @@ screen map_popup():
             tooltip "Close"
             idle exit_btn
             hover darken_hover(exit_btn, 0.40)
-            action Hide("map_popup")
+            action [Function(log_ui_event, "click", screen="map_popup", element="close"), Hide("map_popup")]
             anchor (1.0, 0.0)
             pos (0.98, 0.02)
 

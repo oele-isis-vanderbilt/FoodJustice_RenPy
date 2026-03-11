@@ -5963,3 +5963,13 @@ PlayerDialogueChoice
 
 Player chose: I need help with something else.
 
+Tulip
+Okay! I'm here if you need me.
+
+Notebook length: 0
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
