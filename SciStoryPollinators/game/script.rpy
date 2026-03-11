@@ -413,7 +413,7 @@ label start:
             jump riley_2
 
     label riley_1:
-        r "Hi there! Elliot texted me and said he recruited you to help us gather notes for the Southport garden project."
+        r "Hi there! Elliot texted me and said he recruited you to help us gather notes for the Westport garden project."
         jump rileyintro
         
     label rileyintro:

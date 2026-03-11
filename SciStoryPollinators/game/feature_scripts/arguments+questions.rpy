@@ -154,22 +154,26 @@ screen question_asking(prompt):
         xsize 500
         ysize 700
         background Transform("images/screen_speaking.png", fit="contain")
-        padding (40, 28, 40, 80)
+        padding (40, 28, 40, 200)
 
         vbox:
             spacing 10
+            xfill True
+            yfill True
 
             text prompt:
                 size 20
                 bold True
                 xalign 0.0
+                xmaximum 400
 
             # Scrollable input container
             viewport:
                 xmaximum 400
-                ymaximum 400
+                yfill True
                 scrollbars "vertical"
                 mousewheel True
+                yalign 0.0
 
                 input:
                     value argumentinput
@@ -178,30 +182,30 @@ screen question_asking(prompt):
                     style "argument_input"
                     xmaximum 600
 
-                hbox:
-                    spacing 10
-                    xsize 320
-                    xalign 0.5
-                    
-                    frame:
-                        background None
-                        xsize 160
-                        textbutton "Nevermind":
-                            style "standard_button"
-                            action Return(None)
-                            tooltip "Close"
-                            xfill True
+            hbox:
+                spacing 10
+                xsize 320
+                xalign 0.5
+                
+                frame:
+                    background None
+                    xsize 160
+                    textbutton "Nevermind":
+                        style "standard_button"
+                        action Return(None)
+                        tooltip "Close"
+                        xfill True
 
-                    frame:
-                        background None
-                        xsize 160
-                        textbutton "Ask Question":
-                            style "standard_button"
-                            action [
-                                Function(cache_screen_response, "argument_sharing", user_argument),
-                                Return(user_argument)
-                            ]
-                            xfill True
+                frame:
+                    background None
+                    xsize 160
+                    textbutton "Ask Question":
+                        style "standard_button"
+                        action [
+                            Function(cache_screen_response, "argument_sharing", user_argument),
+                            Return(user_argument)
+                        ]
+                        xfill True
 
     $ tooltip = GetTooltip()
     if tooltip:

@@ -5552,3 +5552,414 @@ PlayerDialogueChoice
 
 Player chose: I have more ideas to add.
 
+--- Wed Mar 11 14:24:19 2026
+
+--- Wed Mar 11 14:24:26 2026
+
+2026-03-11 14:24:26
+PlayerJumpedLabel(main_menu_screen|True)
+
+2026-03-11 14:24:27
+PlayerJumpedLabel(start|True)
+
+2026-03-11 14:24:30
+PlayerDialogueInput
+
+{'text': '   mo', 'prompt': 'Please enter your player ID', 'screen': None,
+'delivery': 'manual', 'is_question': False, 'metadata': {'source':
+'safe_renpy_input', 'stripped': 'mo'}}
+
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+2026-03-11 14:24:32
+PlayerDialogueChoice
+
+{'text': "You're a talking bee??", 'timestamp': 1773253472.503308, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: You're a talking bee??
+
+???
+A honey bee, to be exact! But yes!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+2026-03-11 14:24:34
+PlayerDialogueChoice
+
+{'text': 'I live in a rural town', 'timestamp': 1773253474.3226938,
+'delivery': 'menu', 'is_question': False, 'question_target': None,
+'auto_generated': False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: I live in a rural town
+
+2026-03-11 14:24:34
+PlayerLocationChoice
+
+{'startplace': 'rural'}
+
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+2026-03-11 14:24:36
+PlayerDialogueChoice
+
+{'text': "Let's go!", 'timestamp': 1773253476.1320121, 'delivery': 'menu',
+'is_question': False, 'question_target': None, 'auto_generated': False,
+'origin': {'source': 'script', 'details': None}}
+
+Player chose: Let's go!
+
+Tulip
+Yay! Let's zoom!
+
+2026-03-11 14:24:36
+PlayerJumpedLabel(begin|True)
+
+2026-03-11 14:24:36
+LocationChanged
+
+{'location': 'emptylot', 'source': None, 'description': 'Empty Lot'}
+
+Notebook length: 0
+2026-03-11 14:24:37
+PlayerJumpedLabel(tulipchat_from_button|True)
+
+2026-03-11 14:24:37
+PlayerJumpedLabel(tulipchat|True)
+
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+2026-03-11 14:24:40
+PlayerDialogueChoice
+
+{'text': 'I need help with something else.', 'timestamp': 1773253480.332318,
+'delivery': 'menu', 'is_question': False, 'question_target': None,
+'auto_generated': False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: I need help with something else.
+
+--- Wed Mar 11 14:39:06 2026
+
+--- Wed Mar 11 14:39:08 2026
+
+2026-03-11 14:39:08
+PlayerJumpedLabel(main_menu_screen|True)
+
+2026-03-11 14:39:33
+PlayerJumpedLabel(start|True)
+
+2026-03-11 14:39:35
+PlayerDialogueInput
+
+{'text': 'mo', 'prompt': 'Please enter your player ID', 'screen': None,
+'delivery': 'manual', 'is_question': False, 'metadata': {'source':
+'safe_renpy_input', 'stripped': 'mo'}}
+
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+2026-03-11 14:39:38
+PlayerDialogueChoice
+
+{'text': 'Hello bee friend!', 'timestamp': 1773254378.3113978, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+2026-03-11 14:39:39
+PlayerDialogueChoice
+
+{'text': 'I live in the suburbs', 'timestamp': 1773254379.6217, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: I live in the suburbs
+
+2026-03-11 14:39:39
+PlayerLocationChoice
+
+{'startplace': 'suburb'}
+
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+2026-03-11 14:39:41
+PlayerDialogueChoice
+
+{'text': 'I guess.', 'timestamp': 1773254381.085641, 'delivery': 'menu',
+'is_question': False, 'question_target': None, 'auto_generated': False,
+'origin': {'source': 'script', 'details': None}}
+
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+2026-03-11 14:39:41
+PlayerJumpedLabel(begin|True)
+
+2026-03-11 14:39:41
+LocationChanged
+
+{'location': 'emptylot', 'source': None, 'description': 'Empty Lot'}
+
+Notebook length: 0
+2026-03-11 14:39:42
+PlayerJumpedLabel(tulipchat_from_button|True)
+
+2026-03-11 14:39:42
+PlayerJumpedLabel(tulipchat|True)
+
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+2026-03-11 14:39:43
+PlayerDialogueChoice
+
+{'text': "I'd like some help with persuading the mayor.", 'timestamp':
+1773254383.744917, 'delivery': 'menu', 'is_question': False,
+'question_target': None, 'auto_generated': False, 'origin': {'source':
+'script', 'details': None}}
+
+Player chose: I'd like some help with persuading the mayor.
+
+Tulip
+I'd be happy to help! If you tell me what evidence you've found, I can give
+you some advice on improving your persuasive writing.
+
+Tulip
+No problem. Let me know when you're ready to share!
+
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+2026-03-11 14:39:49
+PlayerDialogueChoice
+
+{'text': 'I need help with something else.', 'timestamp': 1773254389.285561,
+'delivery': 'menu', 'is_question': False, 'question_target': None,
+'auto_generated': False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: I need help with something else.
+
+--- Wed Mar 11 14:40:14 2026
+
+--- Wed Mar 11 14:40:16 2026
+
+2026-03-11 14:40:17
+PlayerJumpedLabel(main_menu_screen|True)
+
+2026-03-11 14:40:19
+PlayerJumpedLabel(start|True)
+
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+2026-03-11 14:40:22
+PlayerDialogueChoice
+
+{'text': "You're a talking bee??", 'timestamp': 1773254422.1502862,
+'delivery': 'menu', 'is_question': False, 'question_target': None,
+'auto_generated': False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: You're a talking bee??
+
+???
+A honey bee, to be exact! But yes!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+2026-03-11 14:40:23
+PlayerDialogueChoice
+
+{'text': 'I live in a rural town', 'timestamp': 1773254423.301302, 'delivery':
+'menu', 'is_question': False, 'question_target': None, 'auto_generated':
+False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: I live in a rural town
+
+2026-03-11 14:40:23
+PlayerLocationChoice
+
+{'startplace': 'rural'}
+
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+2026-03-11 14:40:24
+PlayerDialogueChoice
+
+{'text': "Let's go!", 'timestamp': 1773254424.874596, 'delivery': 'menu',
+'is_question': False, 'question_target': None, 'auto_generated': False,
+'origin': {'source': 'script', 'details': None}}
+
+Player chose: Let's go!
+
+Tulip
+Yay! Let's zoom!
+
+2026-03-11 14:40:25
+PlayerJumpedLabel(begin|True)
+
+2026-03-11 14:40:25
+LocationChanged
+
+{'location': 'emptylot', 'source': None, 'description': 'Empty Lot'}
+
+2026-03-11 14:40:26
+PlayerJumpedLabel(tulipchat_from_button|True)
+
+2026-03-11 14:40:26
+PlayerJumpedLabel(tulipchat|True)
+
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+2026-03-11 14:40:27
+PlayerDialogueChoice
+
+{'text': 'I need help with something else.', 'timestamp': 1773254427.8591292,
+'delivery': 'menu', 'is_question': False, 'question_target': None,
+'auto_generated': False, 'origin': {'source': 'script', 'details': None}}
+
+Player chose: I need help with something else.
+
