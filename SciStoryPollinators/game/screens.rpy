@@ -344,8 +344,8 @@ screen quick_menu():
             textbutton _("Q.Save") action [Function(log_ui_event, "click", screen="quick_menu", element="Q.Save"), QuickSave()]
             textbutton _("Q.Load") action [Function(log_ui_event, "click", screen="quick_menu", element="Q.Load"), QuickLoad()]
             textbutton _("Prefs") action [Function(log_ui_event, "click", screen="quick_menu", element="Prefs"), ShowMenu('preferences')]
-            textbutton _("Dev") action [Function(log_ui_event, "click", screen="quick_menu", element="Dev"), Function(toggle_dev_screen)]   # <-- Add this line
-            textbutton _("QA Panel") action [Function(log_ui_event, "click", screen="quick_menu", element="QA Panel"), Call("toggle_qa_panel")]
+            # textbutton _("Dev") action [Function(log_ui_event, "click", screen="quick_menu", element="Dev"), Function(toggle_dev_screen)]   # <-- Add this line
+            # textbutton _("QA Panel") action [Function(log_ui_event, "click", screen="quick_menu", element="QA Panel"), Call("toggle_qa_panel")]
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.
@@ -797,6 +797,10 @@ screen file_slots(title):
                         textbutton _("Download Sync"):
                             action DownloadSync()
                             xalign 0.5
+
+                textbutton _("Download Game Log"):
+                    action [Function(log_ui_event, "click", screen="file_slots", element="Download Game Log"), Function(download_gamelog_file)]
+                    xalign 0.5
 
 
 style page_label is gui_label
