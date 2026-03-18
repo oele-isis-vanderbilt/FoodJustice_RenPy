@@ -117,6 +117,9 @@ init python:
             chats = _sync_counter(record, "chats")
             record["chats"] = chats + 1
             record["spoken"] = True
+            canonical_name = record.get("name") or char_name
+            if canonical_name:
+                spoken_list.append(canonical_name)
 
     def get_character_spoken(char_name):
         record = _find_character_record(char_name)
