@@ -622,35 +622,26 @@ init python:
     # Construct the REST payload, POST it via renpy.fetch, and still fall back to renpy.log so every action is recorded.
     def log_http(user: str, payload: Optional[Dict[str, Any]], action: str, view: str = None):
         timestamp = datetime.datetime.now()
-        timestamp_str = timestamp.strftime("%Y-%m-%d %H:%M:%S")
         base_url = (os.getenv("SERVICE_URL") or "").strip()
         if base_url == "/":
             base_url = ""
-        log_entry = {
-            "action": action,
-            "timestamp": timestamp_str,
-            "user": user,
-            "view": view,
-            "payload": payload,
-        }
+        log_entry = _build_log_entry(action, payload=payload, user=user, view=view, timestamp=timestamp)
+        safe_entry = _sanitize_log_entry(log_entry)
 
-        # Keep local mirror logging enabled for downloadable local logs.
-        _log_locally(log_entry)
+        _log_locally(safe_entry)
 
-        # Skip remote logging on Web builds unless an explicit SERVICE_URL is provided.
-        if renpy.emscripten and not base_url:
-            return
-
+        # Preserve the historical same-origin fallback for web deployments when no explicit service URL is set.
         endpoint = "/player-log" if not base_url else f"{base_url.rstrip('/')}/player-log"
         try:
             renpy.fetch(
                 endpoint,
                 method="POST",
-                json=log_entry,
+                json=safe_entry,
             )
         except Exception:
             # Remote logging failures are tolerated; the local log already captured the entry.
             pass
+
 
     # Send friendly notebook activity strings alongside structured logs so facilitators can follow along.
     def log_notebook_event(message, extra=None):
