@@ -5973,3 +5973,58 @@ Hey what's up - you new to the neighborhood?
 Choice: Yeah, just moved here!
 Choice: Maybe.
 
+--- Wed Mar 18 15:09:07 2026
+
+--- Wed Mar 18 15:09:10 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-03-18 15:09:10", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-03-18
+15:09:11", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-03-18 15:09:14", "user":
+"Unknown", "view": "start", "payload": {"text": "mo", "prompt": "Please enter
+your player ID", "screen": null, "delivery": "manual", "is_question": false,
+"metadata": {"source": "safe_renpy_input", "stripped": "mo"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-03-18 15:09:16", "user":
+"mo", "view": "start", "payload": {"text": "Um...hi?", "timestamp":
+1773860956.172068, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Um...hi?
+
+???
+Hello hello! Don't bee shy. We're going to get along buzzingly!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerJumpedLabel(save_screen|True)", "timestamp": "2026-03-18
+15:09:17", "user": "mo", "view": "save_screen", "payload": null}

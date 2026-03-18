@@ -195,8 +195,9 @@
         style=display:none></input>
       <a href="javascript:document.getElementById('ID_SavegamesImport').click();">Import Saves</a>
       <a href="javascript:onSavegamesExport();">Export Saves</a>
-      <a href="javascript:FSDownload('/gamelog.txt', 'text/plain');">Download Log</a>
+      <a href="javascript:FSDownload('/gamelog.txt', 'text/plain');">Download Game Log</a>
       <a href="javascript:FSDownload('/log.txt', 'text/plain');">Download Runtime Log</a>
+      <a href="javascript:debugLogFiles();">Debug Log Files</a>
       <a href="https://www.renpy.org/" target="_blank">
           Powered by Ren'Py
       </a>
@@ -217,6 +218,27 @@
   </div>
 
   <script>
+      function debugLogFiles() {
+          try {
+              const paths = ["/gamelog.txt", "/log.txt"];
+              const lines = [];
+
+              for (const path of paths) {
+                  try {
+                      const content = FS.readFile(path, { encoding: "utf8" });
+                      const preview = (content.split(/\r?\n/, 1)[0] || "<empty>").slice(0, 120);
+                      lines.push(`${path}: exists, ${content.length} chars, preview: ${preview}`);
+                  } catch (err) {
+                      lines.push(`${path}: missing or unreadable, ${err}`);
+                  }
+              }
+
+              alert(lines.join("\n\n"));
+          } catch (err) {
+              alert(`Debug log check failed: ${err}`);
+          }
+      }
+
       // The URL to game.zip, relative to the URL of this file.
       window.gameZipURL = 'game.zip';
 

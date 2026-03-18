@@ -333,6 +333,35 @@ init python:
             f.write(text)
         notify_with_history(f"Saved log to {path}", history_who="System", history_what=f"Saved log to {path}")
 
+    # Export Ren'Py's configured game log file so players can download the live runtime log locally.
+    def download_gamelog_file():
+        log_name = "gamelog.txt"
+        preferred_path = os.path.abspath(os.path.join(config.gamedir, "..", log_name))
+        fallback_path = os.path.abspath(os.path.join(config.savedir, log_name))
+        log_path = preferred_path if os.path.exists(preferred_path) else None
+
+        if log_path is None and os.path.exists(fallback_path):
+            log_path = fallback_path
+
+        if not log_path:
+            notify_with_history(f"Could not find {log_name}.", history_who="System")
+            return
+
+        with open(log_path, "r", encoding="utf-8", errors="replace") as f:
+            content = f.read()
+
+        first_line = ""
+        if content:
+            first_line = content.splitlines()[0][:80]
+        notify_with_history(
+            "Game log source: {} | Preview: {}".format(log_path, first_line or "<empty>"),
+            history_who="System",
+        )
+
+        filename = f"{os.path.splitext(log_name)[0]}_{_now_stamp()}.txt"
+        if not _trigger_web_download(filename, content, mime="text/plain"):
+            _write_native(filename, content)
+
     # -------------------------
     # Public logging API
     # -------------------------

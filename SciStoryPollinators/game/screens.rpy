@@ -343,6 +343,7 @@ screen quick_menu():
             textbutton _("Save") action [Function(log_ui_event, "click", screen="quick_menu", element="Save"), ShowMenu('save')]
             textbutton _("Q.Save") action [Function(log_ui_event, "click", screen="quick_menu", element="Q.Save"), QuickSave()]
             textbutton _("Q.Load") action [Function(log_ui_event, "click", screen="quick_menu", element="Q.Load"), QuickLoad()]
+            textbutton _("Game Log") action [Function(log_ui_event, "click", screen="quick_menu", element="Game Log"), Function(download_gamelog_file)]
             textbutton _("Prefs") action [Function(log_ui_event, "click", screen="quick_menu", element="Prefs"), ShowMenu('preferences')]
             # textbutton _("Dev") action [Function(log_ui_event, "click", screen="quick_menu", element="Dev"), Function(toggle_dev_screen)]   # <-- Add this line
             # textbutton _("QA Panel") action [Function(log_ui_event, "click", screen="quick_menu", element="QA Panel"), Call("toggle_qa_panel")]
@@ -359,9 +360,19 @@ style quick_button_text is button_text
 
 style quick_button:
     properties gui.button_properties("quick_button")
+    background Solid("#FFFFFFCC")
+    hover_background Solid("#FFFFFFE0")
+    selected_background Solid("#FFFFFFE0")
+    insensitive_background Solid("#FFFFFF66")
+    xpadding 12
+    ypadding 6
 
 style quick_button_text:
     properties gui.text_properties("quick_button")
+    color "#111111"
+    hover_color "#000000"
+    selected_color "#000000"
+    insensitive_color "#666666"
 
 
 ################################################################################
@@ -711,6 +722,7 @@ screen load():
 screen file_slots(title):
 
     default page_name_value = FilePageNameInputValue(pattern=_("Page {}"), auto=_("Automatic saves"), quick=_("Quick saves"))
+    on "show" action Function(renpy.notify, "NEW BUILD: file_slots")
 
     use game_menu(title):
 
@@ -1560,6 +1572,7 @@ screen quick_menu():
             textbutton _("Back") action [Function(log_ui_event, "click", screen="quick_menu_touch", element="Back"), Rollback()]
             textbutton _("Skip") action [Function(log_ui_event, "click", screen="quick_menu_touch", element="Skip"), Skip()] alternate [Function(log_ui_event, "click", screen="quick_menu_touch", element="SkipFast"), Skip(fast=True, confirm=True)]
             textbutton _("Auto") action [Function(log_ui_event, "click", screen="quick_menu_touch", element="Auto"), Preference("auto-forward", "toggle")]
+            textbutton _("Game Log") action [Function(log_ui_event, "click", screen="quick_menu_touch", element="Game Log"), Function(download_gamelog_file)]
             textbutton _("Menu") action [Function(log_ui_event, "click", screen="quick_menu_touch", element="Menu"), ShowMenu()]
 
 
