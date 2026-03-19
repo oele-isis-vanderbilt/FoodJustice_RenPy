@@ -722,7 +722,6 @@ screen load():
 screen file_slots(title):
 
     default page_name_value = FilePageNameInputValue(pattern=_("Page {}"), auto=_("Automatic saves"), quick=_("Quick saves"))
-    on "show" action Function(renpy.notify, "NEW BUILD: file_slots")
 
     use game_menu(title):
 

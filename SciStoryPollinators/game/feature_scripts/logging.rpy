@@ -596,6 +596,17 @@ init python:
     def _default_view():
         return getattr(renpy.store, "current_label", None)
 
+    def _is_local_web_runtime():
+        if not renpy.emscripten:
+            return False
+        try:
+            import emscripten
+            host = (emscripten.run_script_string("window.location.hostname || ''") or "").strip().lower()
+            protocol = (emscripten.run_script_string("window.location.protocol || ''") or "").strip().lower()
+            return protocol == "file:" or host in {"", "localhost", "127.0.0.1"}
+        except Exception:
+            return False
+
     def _normalize_timestamp(ts):
         if isinstance(ts, datetime.datetime):
             return ts.strftime("%Y-%m-%d %H:%M:%S")
@@ -659,13 +670,24 @@ init python:
 
         _log_locally(safe_entry)
 
-        # Preserve the historical same-origin fallback for web deployments when no explicit service URL is set.
-        endpoint = "/player-log" if not base_url else f"{base_url.rstrip('/')}/player-log"
+        if base_url:
+            endpoint = f"{base_url.rstrip('/')}/player-log"
+        elif renpy.emscripten:
+            # The Ren'Py local browser launcher serves only static assets, so same-origin logging
+            # would hang on /player-log there. Keep same-origin logging for deployed web builds.
+            if _is_local_web_runtime():
+                return
+            endpoint = "/player-log"
+        else:
+            # Desktop/local runs need an explicit service URL if remote logging is desired.
+            return
+
         try:
             renpy.fetch(
                 endpoint,
                 method="POST",
                 json=safe_entry,
+                timeout=1.0,
             )
         except Exception:
             # Remote logging failures are tolerated; the local log already captured the entry.
