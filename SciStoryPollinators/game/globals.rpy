@@ -45,6 +45,8 @@ default voice_input_contexts = 0
 default voice_input_available = False
 default voice_features_enabled = True
 default tts_enabled = True
+default dialogue_audio_enabled = True
+default dialogue_auto_voice_pattern = "voice/{id}.ogg"
 default overlay_dialogue_block_count = 0
 
 ##LOCATION VISIT TRACKING

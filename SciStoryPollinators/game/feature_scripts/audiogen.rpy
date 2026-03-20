@@ -48,7 +48,11 @@ init python:
         return ECA_STYLE_BY_CHARACTER.get(key, "")
 
     def _tts_feature_active():
-        return bool(useAudio and getattr(renpy.store, "tts_enabled", True))
+        return bool(
+            useAudio
+            and getattr(renpy.store, "tts_enabled", True)
+            and getattr(renpy.store, "dialogue_audio_enabled", True)
+        )
 
     def _ensure_web_tts_bridge():
         if not renpy.emscripten:

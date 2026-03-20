@@ -56,6 +56,53 @@ init python:
     def _voice_features_active():
         return getattr(store, "voice_features_enabled", True)
 
+    def dialogue_audio_is_enabled():
+        return bool(getattr(store, "dialogue_audio_enabled", True))
+
+    def _get_dialogue_auto_voice_pattern():
+        pattern = getattr(store, "dialogue_auto_voice_pattern", None)
+        if isinstance(pattern, str) and pattern:
+            return pattern
+
+        pattern = getattr(config, "auto_voice", None) or "voice/{id}.ogg"
+        if not isinstance(pattern, str) or not pattern:
+            pattern = "voice/{id}.ogg"
+
+        store.dialogue_auto_voice_pattern = pattern
+        return pattern
+
+    def sync_dialogue_audio_state():
+        enabled = dialogue_audio_is_enabled()
+        config.auto_voice = _get_dialogue_auto_voice_pattern() if enabled else None
+
+        if not enabled:
+            try:
+                renpy.music.stop(channel="voice")
+            except Exception:
+                pass
+
+            stop_audio = getattr(store, "stopAudio", None)
+            if callable(stop_audio):
+                try:
+                    stop_audio()
+                except Exception:
+                    pass
+
+        return enabled
+
+    def set_dialogue_audio_enabled(enabled):
+        enabled = bool(enabled)
+        store.dialogue_audio_enabled = enabled
+        sync_dialogue_audio_state()
+        notify_with_history(
+            "Dialogue audio {}".format("enabled" if enabled else "muted"),
+            history_who="System",
+        )
+        return enabled
+
+    def toggle_dialogue_audio_enabled():
+        return set_dialogue_audio_enabled(not dialogue_audio_is_enabled())
+
     def set_voice_features_enabled(enabled):
         enabled = bool(enabled)
         store.voice_features_enabled = enabled
@@ -326,3 +373,13 @@ init python:
 
     def shrink_hover(d, amount=0.20):
         return Transform(d, zoom=max(0.01, 1.0 - float(amount)))
+
+init python:
+    try:
+        config.after_load_callbacks.append(sync_dialogue_audio_state)
+    except Exception:
+        pass
+
+label after_load:
+    $ sync_dialogue_audio_state()
+    return

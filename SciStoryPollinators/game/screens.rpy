@@ -352,11 +352,47 @@ screen quick_menu():
 ## the player has not explicitly hidden the interface.
 init python:
     config.overlay_screens.append("quick_menu")
+    config.overlay_screens.append("dialogue_audio_toggle")
 
 default quick_menu = True
 
+screen dialogue_audio_toggle():
+    zorder 110
+
+    $ dialogue_audio_on = dialogue_audio_is_enabled()
+    $ dialogue_audio_action = "Mute Dialogue Audio" if dialogue_audio_on else "Unmute Dialogue Audio"
+    $ dialogue_audio_tooltip = "Mute dialogue audio" if dialogue_audio_on else "Enable dialogue audio"
+    $ dialogue_audio_icon_path = "icons/icon_unmuted.png" if dialogue_audio_on else "icons/icon_muted.png"
+    $ dialogue_audio_icon = Transform(dialogue_audio_icon_path, fit="contain", xsize=74, ysize=74)
+
+    imagebutton:
+        anchor (1.0, 1.0)
+        pos (0.985, 0.955)
+        idle dialogue_audio_icon
+        hover darken_hover(dialogue_audio_icon, 0.18)
+        action [
+            Function(log_ui_event, "click", screen="dialogue_audio_toggle", element=dialogue_audio_action),
+            Function(toggle_dialogue_audio_enabled),
+        ]
+        tooltip dialogue_audio_tooltip
+        focus_mask True
+
+    $ tooltip = GetTooltip()
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+            prefer_top True
+
+            frame:
+                style "dialogue_audio_tooltip_frame"
+
+                text tooltip:
+                    style "dialogue_audio_tooltip_text"
+
 style quick_button is default
 style quick_button_text is button_text
+style dialogue_audio_tooltip_frame is frame
+style dialogue_audio_tooltip_text is gui_text
 
 style quick_button:
     properties gui.button_properties("quick_button")
@@ -373,6 +409,17 @@ style quick_button_text:
     hover_color "#000000"
     selected_color "#000000"
     insensitive_color "#666666"
+
+style dialogue_audio_tooltip_frame:
+    background Solid("#202020E6")
+    left_padding 12
+    right_padding 12
+    top_padding 8
+    bottom_padding 8
+
+style dialogue_audio_tooltip_text:
+    color "#FFFFFF"
+    size 20
 
 
 ################################################################################
