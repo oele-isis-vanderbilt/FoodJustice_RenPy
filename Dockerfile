@@ -9,11 +9,11 @@ COPY ${RENPY_GAME_DIR} /game/${RENPY_GAME_DIR}
 ENV SERVICE_URL=""
 
 RUN apt-get update && apt-get install -y libgl1 && \
-    wget https://www.renpy.org/dl/8.3.2/renpy-8.3.2-sdk.tar.bz2 && \
-    tar -xf renpy-8.3.2-sdk.tar.bz2 && \
-    mv renpy-8.3.2-sdk renpy && \
-    rm renpy-8.3.2-sdk.tar.bz2 && \
-    cd renpy && wget https://www.renpy.org/dl/8.3.2/renpy-8.3.2-web.zip && unzip renpy-8.3.2-web.zip && rm renpy-8.3.2-web.zip && \
+    wget https://www.renpy.org/dl/8.5.2/renpy-8.5.2-sdk.tar.bz2 && \
+    tar -xf renpy-8.5.2-sdk.tar.bz2 && \
+    mv renpy-8.5.2-sdk renpy && \
+    rm renpy-8.5.2-sdk.tar.bz2 && \
+    cd renpy && wget https://www.renpy.org/dl/8.5.2/renpy-8.5.2-web.zip && unzip renpy-8.5.2-web.zip && rm renpy-8.5.2-web.zip && \
     ./renpy.sh launcher web_build ../${RENPY_GAME_DIR} --dest ../${RENPY_GAME_DIR}1.0-dists 
 
 FROM node:20 AS controlbuilder
