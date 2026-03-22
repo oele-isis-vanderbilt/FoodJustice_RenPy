@@ -673,13 +673,27 @@ init python:
         if base_url:
             endpoint = f"{base_url.rstrip('/')}/player-log"
         elif renpy.emscripten:
-            # The Ren'Py local browser launcher serves only static assets, so same-origin logging
-            # would hang on /player-log there. Keep same-origin logging for deployed web builds.
             if _is_local_web_runtime():
                 return
             endpoint = "/player-log"
         else:
-            # Desktop/local runs need an explicit service URL if remote logging is desired.
+            return
+
+        if renpy.emscripten:
+            try:
+                import emscripten
+                js_payload = json.dumps(safe_entry, ensure_ascii=False)
+                emscripten.run_script(f"""
+                    try {{
+                        fetch('{endpoint}', {{
+                            method: 'POST',
+                            headers: {{'Content-Type': 'application/json'}},
+                            body: JSON.stringify({js_payload})
+                        }}).catch(function(){{}});
+                    }} catch(e) {{}}
+                """)
+            except Exception:
+                pass
             return
 
         try:
@@ -690,7 +704,6 @@ init python:
                 timeout=1.0,
             )
         except Exception:
-            # Remote logging failures are tolerated; the local log already captured the entry.
             pass
 
 
