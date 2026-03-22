@@ -53,7 +53,7 @@ screen argument_sharing(prompt):
                     multiline True
                     copypaste True
                     style "argument_input"
-                    xmaximum 600
+                    xmaximum 370
 
             vbox:
                 spacing 8
@@ -186,7 +186,7 @@ screen question_asking(prompt):
                     multiline True
                     copypaste True
                     style "argument_input"
-                    xmaximum 600
+                    xmaximum 370
 
             hbox:
                 spacing 10
