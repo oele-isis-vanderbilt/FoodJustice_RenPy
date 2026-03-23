@@ -87,6 +87,6 @@
 		<Tooltip class="dark:bg-gray-900" placement="bottom-end">Toggle dark mode</Tooltip>
 
 		<Button color="alternative" size="lg" class="ms-3" on:click={downloadGamelogs}>Download Gamelogs</Button>
-		<Button color="primary" size="lg" class="ms-3" on:click={signOut}>Sign Out</Button>
+		<Button color="alternative" size="lg" class="ms-3" on:click={signOut}>Sign Out</Button>
 	</div>
 </Navbar>

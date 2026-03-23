@@ -24,8 +24,10 @@
 		enableAudio={settings.enableAudio}
 		enableCamera={settings.enableCamera}
 	/> -->
-	<p>
-		Settings management is currently disabled. Please contact the administrator if you need to change any settings.
-	</p>
+	<div class="container mx-auto p-2">
+		<p class="text-center text-gray-900 dark:text-gray-100">
+			Settings management is currently disabled. Please contact the administrator if you need to change any settings.
+		</p>
+	</div>
 	<Footer />
 </main>
