@@ -1,0 +1,21 @@
+services:
+  food-justice-block2-service:
+    build:
+     context: .
+     dockerfile: Dockerfile
+     args:
+        - RENPY_GAME_DIR=SciStoryPollinators
+    image: ${IMAGE_NAME:-foodjustice-block2}:${IMAGE_TAG:-latest}
+    container_name: ${CONTAINER_NAME:-foodjustice-container-block2}
+    ports:
+      - "${EXTERNAL_PORT:-8085}:8080"
+    environment:
+      - GAME_ROOT_DIR=/code/SciStoryPollinators
+    volumes:
+      - SciStoryPollinatorsBlock2:/code/gamelogs
+      - $HOME/.env.app:/code/.env.app
+      - $HOME/.env.syncflow:/code/.env.syncflow
+
+  
+volumes:
+  SciStoryPollinatorsBlock2:
