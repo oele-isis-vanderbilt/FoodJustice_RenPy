@@ -94,6 +94,7 @@ jobs:
               rm -rf FoodJusticeDeploymentBlock3
               mkdir FoodJusticeDeploymentBlock3 && cd FoodJusticeDeploymentBlock3
               git clone https://github.com/oele-isis-vanderbilt/FoodJustice_RenPy.git
+              git checkout -b 69-create-replicated-deployments-for-scistory-nashville-study origin/69-create-replicated-deployments-for-scistory-nashville-study
               cd FoodJustice_RenPy
               sudo chmod 666 /var/run/docker.sock
               export EXTERNAL_PORT=8086
