@@ -46,7 +46,10 @@
 				const url = window.URL.createObjectURL(blob);
 				const a = document.createElement('a');
 				a.href = url;
-				a.download = 'gamelogs.zip';
+				// Read the header to get the filename, default to gamelogs.zip if not present
+				const contentDisposition = response.headers.get('Content-Disposition');
+				const filenameMatch = contentDisposition?.match(/filename="?([^"]+)"?/);
+				a.download = filenameMatch ? filenameMatch[1] : 'gamelogs.zip';
 				document.body.appendChild(a);
 				a.click();
 				document.body.removeChild(a);
