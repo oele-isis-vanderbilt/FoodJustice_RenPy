@@ -1,0 +1,124 @@
+name: Deploy Replicated to JetStream2
+
+on:
+  push:
+    branches:
+      - main
+      - 69-create-replicated-deployments-for-scistory-nashville-study
+  workflow_dispatch: # Trigger the workflow manually
+  
+  schedule:
+    - cron: '0 0 * * *' # Run every day at 00:00 UTC
+
+jobs:
+  DeployBlock1:
+    name: Deploy Block1 to JetStream2
+    runs-on: "ubuntu-latest"
+    steps:
+        - uses: actions/checkout@v4
+        - name: Build and Deploy Block1
+          if: github.event_name == 'push'
+          env:
+            PRIVATE_KEY: ${{ secrets.TNA_PRIVATE_KEY }}
+            HOST: ${{ secrets.TNA_HOST }}
+            USERNAME: ${{ secrets.TNA_USERNAME }}
+        
+          run: |
+            echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            ssh-keygen -y -f private_key > /dev/null
+            ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST} '
+              echo "Deploying Block1"
+              rm -rf FoodJusticeDeploymentBlock1
+              mkdir FoodJusticeDeploymentBlock1 && cd FoodJusticeDeploymentBlock1
+              git clone https://github.com/oele-isis-vanderbilt/FoodJustice_RenPy.git
+              cd FoodJustice_RenPy
+              git checkout -b 69-create-replicated-deployments-for-scistory-nashville-study origin/69-create-replicated-deployments-for-scistory-nashville-study
+              sudo chmod 666 /var/run/docker.sock
+              export EXTERNAL_PORT=8084
+              export IMAGE_NAME=foodjustice-block1
+              export CONTAINER_NAME=foodjustice-container-block1
+              docker compose -p food-justice-block1-deployment -f docker-compose.block1.yml build food-justice-block1-service
+              docker compose -p food-justice-block1-deployment -f docker-compose.block1.yml down food-justice-block1-service
+              docker compose -p food-justice-block1-deployment -f docker-compose.block1.yml up -d food-justice-block1-service
+            '
+
+  DeployBlock2:
+    name: Deploy Block2 to JetStream2
+    runs-on: "ubuntu-latest"
+    steps:
+        - uses: actions/checkout@v4
+        - name: Build and Deploy Block2
+          if: github.event_name == 'push'
+          env:
+            PRIVATE_KEY: ${{ secrets.TNA_PRIVATE_KEY }}
+            HOST: ${{ secrets.TNA_HOST }}
+            USERNAME: ${{ secrets.TNA_USERNAME }}
+        
+          run: |
+            echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            ssh-keygen -y -f private_key > /dev/null
+            ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST} '
+              echo "Deploying Block2"
+              rm -rf FoodJusticeDeploymentBlock2
+              mkdir FoodJusticeDeploymentBlock2 && cd FoodJusticeDeploymentBlock2
+              git clone https://github.com/oele-isis-vanderbilt/FoodJustice_RenPy.git
+              cd FoodJustice_RenPy
+              git checkout -b 69-create-replicated-deployments-for-scistory-nashville-study origin/69-create-replicated-deployments-for-scistory-nashville-study
+              sudo chmod 666 /var/run/docker.sock
+              export EXTERNAL_PORT=8085
+              export IMAGE_NAME=foodjustice-block2
+              export CONTAINER_NAME=foodjustice-container-block2
+              docker compose -p food-justice-block2-deployment -f docker-compose.block2.yml build food-justice-block2-service
+              docker compose -p food-justice-block2-deployment -f docker-compose.block2.yml down food-justice-block2-service
+              docker compose -p food-justice-block2-deployment -f docker-compose.block2.yml up -d food-justice-block2-service
+            '
+
+
+  DeployBlock3:
+    name: Deploy Block3 to JetStream2
+    runs-on: "ubuntu-latest"
+    steps:
+        - uses: actions/checkout@v4
+        - name: Build and Deploy Block3
+          if: github.event_name == 'push'
+          env:
+            PRIVATE_KEY: ${{ secrets.TNA_PRIVATE_KEY }}
+            HOST: ${{ secrets.TNA_HOST }}
+            USERNAME: ${{ secrets.TNA_USERNAME }}
+        
+          run: |
+            echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            ssh-keygen -y -f private_key > /dev/null
+            ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST} '
+              echo "Deploying Block3"
+              rm -rf FoodJusticeDeploymentBlock3
+              mkdir FoodJusticeDeploymentBlock3 && cd FoodJusticeDeploymentBlock3
+              git clone https://github.com/oele-isis-vanderbilt/FoodJustice_RenPy.git
+              cd FoodJustice_RenPy
+              sudo chmod 666 /var/run/docker.sock
+              export EXTERNAL_PORT=8086
+              export IMAGE_NAME=foodjustice-block3
+              export CONTAINER_NAME=foodjustice-container-block3
+              docker compose -p food-justice-block3-deployment -f docker-compose.block3.yml build food-justice-block3-service
+              docker compose -p food-justice-block3-deployment -f docker-compose.block3.yml down food-justice-block3-service
+              docker compose -p food-justice-block3-deployment -f docker-compose.block3.yml up -d food-justice-block3-service
+            '
+
+
+  DockerCleanup:
+    name: Docker Cleanup on JetStream2
+    runs-on: "ubuntu-latest"
+    steps:
+        - name: Docker Cleanup on JetStream2 VM
+          if: github.event_name == 'schedule'
+          env:
+            PRIVATE_KEY: ${{ secrets.TNA_PRIVATE_KEY }}
+            HOST: ${{ secrets.TNA_HOST }}
+            USERNAME: ${{ secrets.TNA_USERNAME }}
+          run: |
+              echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+              ssh-keygen -y -f private_key > /dev/null
+              ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST} '
+                sudo chmod 666 /var/run/docker.sock
+                docker system prune -f
+              '
