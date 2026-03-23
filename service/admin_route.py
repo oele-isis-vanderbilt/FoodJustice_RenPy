@@ -2,6 +2,9 @@ from fastapi import APIRouter, Request, Response, HTTPException
 from .models import AdminLoginRequest, AppSettings, Claims
 from .auth import is_valid_password, is_valid_token
 import time
+import os
+import shutil
+import uuid
 
 router = APIRouter()
 
@@ -40,3 +43,20 @@ async def is_logged_in(request: Request):
 async def logout(response: Response):
     response.delete_cookie("auth_token")
     return {"status": "ok"}
+
+@router.get("/download-gamelogs")
+async def download_gamelogs():
+    timestamp = time.strftime("%Y%m%d-%H%M%S")
+    unique_name = f"gamelogs-{timestamp}-{uuid.uuid4().hex[:8]}"
+    zip_path = shutil.make_archive(unique_name, 'zip', "gamelogs")
+    try:
+        zip_content = open(zip_path, "rb").read()
+    finally:
+        os.remove(zip_path)
+    return Response(
+        content=zip_content,
+        media_type="application/zip",
+        headers={"Content-Disposition": f"attachment; filename=gamelogs-{timestamp}.zip"},
+    )
+
+

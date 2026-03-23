@@ -36,6 +36,28 @@
 			alert('Logout failed\n' + (await resonse.text()));
 		}
 	}
+
+	async function downloadGamelogs() {
+		const baseUrl = dev ? '/api' : '';
+		try {
+			const response = await fetch(`${baseUrl}/admin/download-gamelogs`);
+			if (response.ok) {
+				const blob = await response.blob();
+				const url = window.URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.href = url;
+				a.download = 'gamelogs.zip';
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
+				window.URL.revokeObjectURL(url);
+			} else {
+				alert('Download failed\n' + (await response.text()));
+			}
+		} catch (error) {
+			alert('Download failed\n' + error);
+		}
+	}
 </script>
 
 <Navbar color="default" fluid class="max-w-8xl mx-auto py-1.5 lg:px-0 dark:bg-gray-900" let:toggle>
@@ -45,7 +67,7 @@
 	<NavBrand href={base}>
 		<img src={logo} class="me-3 h-8" alt="Food Justice Logo" />
 		<span class="self-center whitespace-nowrap text-2xl font-semibold text-gray-900 dark:text-white"
-			>FoodJustice Settings</span
+			>Scistory Pollinators</span
 		>
 	</NavBrand>
 
@@ -64,6 +86,7 @@
 		<DarkMode size="lg" class="inline-block hover:text-gray-900 dark:hover:text-white" />
 		<Tooltip class="dark:bg-gray-900" placement="bottom-end">Toggle dark mode</Tooltip>
 
+		<Button color="alternative" size="lg" class="ms-3" on:click={downloadGamelogs}>Download Gamelogs</Button>
 		<Button color="primary" size="lg" class="ms-3" on:click={signOut}>Sign Out</Button>
 	</div>
 </Navbar>
