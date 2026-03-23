@@ -6,9 +6,7 @@ on:
       - main
       - 69-create-replicated-deployments-for-scistory-nashville-study
   workflow_dispatch: # Trigger the workflow manually
-  
-  schedule:
-    - cron: '0 0 * * *' # Run every day at 00:00 UTC
+
 
 jobs:
   DeployBlock1:
@@ -94,8 +92,8 @@ jobs:
               rm -rf FoodJusticeDeploymentBlock3
               mkdir FoodJusticeDeploymentBlock3 && cd FoodJusticeDeploymentBlock3
               git clone https://github.com/oele-isis-vanderbilt/FoodJustice_RenPy.git
-              git checkout -b 69-create-replicated-deployments-for-scistory-nashville-study origin/69-create-replicated-deployments-for-scistory-nashville-study
               cd FoodJustice_RenPy
+              git checkout -b 69-create-replicated-deployments-for-scistory-nashville-study origin/69-create-replicated-deployments-for-scistory-nashville-study
               sudo chmod 666 /var/run/docker.sock
               export EXTERNAL_PORT=8086
               export IMAGE_NAME=foodjustice-block3
