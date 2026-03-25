@@ -968,9 +968,7 @@ label start:
         jump wes_choices
 
     label wes_choices:
-        default wes_menu = set()
         menu:
-            set wes_menu
             "Tell me about the food you're growing.":
                 $ ask_character_question("Wes")
                 $ character_approval("Wes", 1, "Wes grins and starts explaining.")
@@ -993,13 +991,11 @@ label start:
         w "Some of the plants, like tomatoes, we grow in containers, and others like the melons need more space to spread out."
         w "Growing your own food means the fruits and vegetables will be fresher and tastier, because they don't have to travel from other states or countries to get to your plate."
         w "Homegrown fruits and vegetables are also good for our health because we can control the soil quality - and better soil means more nutritious produce."
-        $ AddToSet(wes_menu, "Tell me about the food you're growing.")
         jump wes_choices
 
     label garden_benefits:
         w "Absolutely! Gardens are really useful for people and for the insects and animals that live around here."
         w "The people in the neighborhood can grow fresh fruits and vegetables, and all the different plants and flowers provide food for pollinators."
-        $ AddToSet(wes_menu, "Is the garden good for the neighborhood?")
         jump pollen_questions
 
     label pollen_questions:
@@ -1043,7 +1039,6 @@ label start:
         w "Plants can be pollinated by wind, by insects and animals, and by people. This happens when pollen from a plant's flower is moved from the male part of the flower to the female part of the flower."
         w "People can pollinate some plants by using cotton swabs to help transfer pollen between flowers. This can be helpful when there aren't lots of pollinators around, but it takes a lot of time."
         w "If we want to grow lots of food, it's better to have pollinators nearby who can help the plants grow healthy."
-        $ AddToSet(wes_menu, "How can we pollinate plants in the garden?")
         jump wes_choices
    
     label gardenquestions:
@@ -1089,11 +1084,23 @@ label start:
 
     label wes_questions:
         menu:
-            "I have a question about the garden":
+            "Tell me about the food you're growing.":
+                $ ask_character_question("Wes")
+                $ character_approval("Wes", 1, "Wes grins and starts explaining.")
+                jump growing_food
+            "Is the garden good for the neighborhood?":
+                $ ask_character_question("Wes")
+                $ character_approval("Wes", 1, "Wes brightens at your question.")
+                jump garden_benefits
+            "How can we pollinate plants in the garden?":
+                $ ask_character_question("Wes")
+                $ character_approval("Wes", 1, "Wes seems excited by your enthusiasm.")
+                jump wes_plants
+            "I have a different question.":
                 $ ask_character_question("Wes")
                 $ character_approval("Wes", 1, "Wes listens closely.")
                 jump wes_ca
-            "I should go.":
+            "See you later.":
                 jump bye_wes2
 
     label bye_wes2:
@@ -1178,12 +1185,10 @@ label start:
     label nadia_1:
         n "Hi, I'm Nadia. I'm a beekeeper, though you can probably tell that from the outfit. I take care of the beehives in several community gardens around town." 
         n "If you have any questions about bees, plants, and pollination, I'd be happy to tell you what I know."
-        default nadia_menu = set()
         jump nadia_questions
       
     label nadia_questions:
         menu:
-            set nadia_menu
             "Why did you become a beekeeper?":
                 $ ask_character_question("Nadia")
                 $ character_approval("Nadia", 1, "Nadia smiles warmly.")
@@ -1210,8 +1215,6 @@ label start:
                 $ play_generated_dialogue(n, sentences, metadata={"character": "Nadia", "context": "Knowledge_Pollination"})
 
                 $ stopAudio()
-
-                $ AddToSet(nadia_menu, "How do bees help with pollination?")
                 jump nadia_questions
             "How do plants get pollinated?":
                 $ ask_character_question("Nadia")
@@ -1235,8 +1238,6 @@ label start:
                 $ play_generated_dialogue(n, sentences, metadata={"character": "Nadia", "context": "Knowledge_Pollination"})
 
                 $ stopAudio()
-
-                $ AddToSet(nadia_menu, "How do plants get pollinated?")
                 jump nadia_questions
             "I have a different question.":
                 $ ask_character_question("Nadia")
@@ -1249,17 +1250,13 @@ label start:
         n "Did you know that bees communicate the locations of flowers to each other by dancing? How cool is that?"
         n "Anyway, bees are just such an important part of our ecosystem that I wanted to do something to help take care of them."
         n "Bees are important for pollinating lots of crops, such as almonds, apples, and blueberries. Without bees, many crops would have to be pollinated by hand, which would take a ton of time and money."
-        $ AddToSet(nadia_menu, "Why did you become a beekeeper?")
         jump nadia_questions
 
     label nadia_ca:
         $ eca = safe_renpy_input("I'm wondering...", screen="question_asking")
         if not isinstance(eca, str) or not eca.strip():
             n "Alright! Come back if you want to talk more about bees."
-            if get_character_chats("Nadia") == 0:
-                jump nadia_questions
-            else:
-                jump nadia_2
+            jump nadia_questions
         $ eca = eca.strip()
 
         $ ca_link, ca_json = agent_setup("Knowledge_Pollination", eca, "garden", "Nadia")
@@ -1283,7 +1280,7 @@ label start:
         n "Do you have any other questions?"
         menu:
             "I have more questions.":
-                jump nadia_ca
+                jump nadia_questions
             "No, I should go.":
                 if get_character_chats("Nadia") == 0:                    
                     jump bye_nadia
@@ -1299,13 +1296,7 @@ label start:
 
     label nadia_2:
         n "Hello dear! Can I help you with anything?"
-
-        menu:
-            "I have a question for you.":
-                $ ask_character_question("Nadia")
-                jump nadia_ca
-            "Actually, I'll talk to you later":
-                jump bye_nadia2
+        jump nadia_questions
 
     label bye_nadia2:
         n "No problem at all. Enjoy your visit!"
