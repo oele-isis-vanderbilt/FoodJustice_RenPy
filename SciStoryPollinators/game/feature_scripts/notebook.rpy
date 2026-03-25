@@ -438,13 +438,8 @@ init python:
             return True
         return bool(normalize_tags(note_tags))
 
-    def autosave_notebook_edits(note_id, note_text, note_source, note_tags, editing_argument_active, argument_text):
-        """Persist any in-progress note or argument edits when closing the notebook."""
-        if editing_argument_active:
-            pending_argument = argument_text or ""
-            if pending_argument != notebook_argument:
-                argument_edit(pending_argument)
-
+    def autosave_notebook_edits(note_id, note_text, note_source, note_tags):
+        """Persist any in-progress note edits when closing the notebook."""
         if note_id is None:
             return
 
@@ -454,10 +449,87 @@ init python:
 
         commit_note(note_id, note_text, note_source, note_tags)
 
+screen notebook_argument_editor(initial_argument):
+    modal True
+    zorder 93
+
+    default draft_argument = initial_argument
+
+    $ argument_input_value = ScreenVariableInputValue("draft_argument")
+
+    add Solid("#00000055")
+
+    frame:
+        style "notebook_argument_editor_frame"
+        xalign 0.5
+        yalign 0.5
+
+        vbox:
+            spacing 16
+            xfill True
+            yfill True
+
+            hbox:
+                xfill True
+                spacing 12
+
+                text "Edit Draft Argument" style "argument_header"
+
+                $ iw, ih = renpy.image_size("images/imagebutton_close.png")
+                $ close_btn = Transform("images/imagebutton_close.png", zoom=44.0 / ih)
+
+                imagebutton:
+                    tooltip "Close"
+                    idle close_btn
+                    hover darken_hover(close_btn, 0.40)
+                    action Hide("notebook_argument_editor")
+                    xalign 1.0
+                    yalign 0.5
+
+            text "Update your current argument here. Save to replace the notebook draft." style "argument_editor_help"
+
+            frame:
+                style "notebook_argument_editor_input_frame"
+                xfill True
+                yfill True
+
+                button:
+                    style "argument_input_button"
+                    action argument_input_value.Toggle()
+                    xfill True
+                    yfill True
+
+                    viewport:
+                        xfill True
+                        yfill True
+                        scrollbars "vertical"
+                        mousewheel True
+                        draggable False
+                        has vbox
+                        input:
+                            value argument_input_value
+                            style "argument_input"
+                            multiline True
+                            copypaste True
+                            xmaximum 760
+
+            hbox:
+                spacing 12
+                xalign 1.0
+
+                textbutton "Save":
+                    style "standard_button"
+                    action [
+                        Function(argument_edit, draft_argument),
+                        Hide("notebook_argument_editor"),
+                    ]
+
+                textbutton "Cancel":
+                    style "standard_button"
+                    action Hide("notebook_argument_editor")
+
 #### Notebook ###### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
 screen notebook():
-    default editing_argument = False
-    default argument_edit_text = notebook_argument
     default edit_note_text = ""
     default edit_note_source = ""
     default edit_note_tags = ""
@@ -469,14 +541,13 @@ screen notebook():
     zorder 92
     on "show" action Function(lock_dialogue_advancement, "notebook")
     on "hide" action [
+        Hide("notebook_argument_editor"),
         Function(
             autosave_notebook_edits,
             edited_note_id,
             edit_note_text,
             edit_note_source,
             edit_note_tags,
-            editing_argument,
-            argument_edit_text,
         ),
         Function(unlock_dialogue_advancement, "notebook")
     ]
@@ -487,7 +558,7 @@ screen notebook():
     #     false=SetScreenVariable("voice_request_active", False)
     # )
 
-    # $ has_note_input = editing_argument or (edited_note_id is not None)
+    # $ has_note_input = edited_note_id is not None
     # if has_note_input:
     #     if not voice_request_active:
     #         $ request_voice_input()
@@ -814,7 +885,7 @@ screen notebook():
             ## CURRENT ARGUMENT  FRAME                
             frame:
                 style "editing_note_frame"
-                background (Solid("#d9dcff80") if editing_argument else Solid("#cccccc40"))
+                background Solid("#cccccc40")
                 vbox:
                     spacing 10
 
@@ -828,67 +899,22 @@ screen notebook():
                         $ edit_argument_idle = Transform("images/imagebutton_pencil.png", zoom=50.0 / ih)
                         $ edit_argument_active = Transform("images/imagebutton_pencil.png", zoom=50.0 / ih, alpha=0.65)
 
-                        if not editing_argument:
-                            imagebutton:
-                                tooltip "Edit draft argument"
-                                idle edit_argument_idle
-                                hover darken_hover(edit_argument_idle, 0.40)
-                                action [
-                                    SetScreenVariable("argument_edit_text", notebook_argument),
-                                    SetScreenVariable("editing_argument", True),
-                                    SetScreenVariable("active_input_field", "argument"),
-                                ]
-                                xalign 1.0
-                                yalign 0.5
-
-                    if editing_argument:
-                        $ argument_input_value = ScreenVariableInputValue("argument_edit_text")
-                        $ argument_field_color = "#f1edff" if active_input_field == "argument" else "#ffffff"
-                        frame style "current_argument_edit_frame":
-                            button:
-                                style "argument_input_button"
-                                background argument_field_color
-                                hover_background argument_field_color
-                                action [
-                                    SetScreenVariable("active_input_field", "argument"),
-                                    argument_input_value.Toggle()
-                                ]
-                                viewport:
-                                    xfill True
-                                    ymaximum argument_box_max_height
-                                    scrollbars "vertical"
-                                    mousewheel True
-                                    draggable False
-                                    has vbox
-                                    input value argument_input_value style "argument_input" multiline True xmaximum argument_box_width
-                        null height 10
-                        hbox:
-                            spacing 10
+                        imagebutton:
+                            tooltip "Edit draft argument"
+                            idle edit_argument_idle
+                            hover darken_hover(edit_argument_idle, 0.40)
+                            action Show("notebook_argument_editor", initial_argument=notebook_argument)
                             xalign 1.0
-                            textbutton "Save":
-                                style "standard_button"
-                                action [
-                                    Function(argument_edit, argument_edit_text),
-                                    SetScreenVariable("editing_argument", False),
-                                    SetScreenVariable("argument_edit_text", notebook_argument),
-                                    SetScreenVariable("active_input_field", None),
-                                ]
-                            textbutton "Cancel":
-                                style "standard_button"
-                                action [
-                                    SetScreenVariable("editing_argument", False),
-                                    SetScreenVariable("argument_edit_text", notebook_argument),
-                                    SetScreenVariable("active_input_field", None),
-                                ]
-                    else:
-                        frame style "current_argument_view_frame":
-                            viewport:
-                                xfill True
-                                ymaximum argument_box_max_height
-                                scrollbars "vertical"
-                                mousewheel True
-                                draggable False
-                                text notebook_argument style "current_argument_text" xmaximum argument_box_width
+                            yalign 0.5
+
+                    frame style "current_argument_view_frame":
+                        viewport:
+                            xfill True
+                            ymaximum argument_box_max_height
+                            scrollbars "vertical"
+                            mousewheel True
+                            draggable False
+                            text notebook_argument style "current_argument_text" xmaximum argument_box_width
             ## ARGUMENT HISTORY                
             viewport:
                 xfill True
@@ -917,7 +943,6 @@ screen notebook():
                                     hover darken_hover(swapbtn)
                                     action [
                                         Function(recall_argument, prev_arg),
-                                        SetScreenVariable("argument_edit_text", prev_arg),
                                     ]
                                 text prev_arg:
                                     style "argument_history_text"
@@ -1003,6 +1028,23 @@ style current_argument_view_frame:
     background "#ffffff"
     padding (14, 12)
     xfill True
+
+style notebook_argument_editor_frame:
+    background "#f6f4ef"
+    padding (28, 24)
+    xsize 900
+    ysize 620
+
+style notebook_argument_editor_input_frame:
+    background "#ffffff"
+    padding (14, 12)
+    xfill True
+    yfill True
+
+style argument_editor_help:
+    font "DejaVuSans.ttf"
+    size 18
+    color "#444444"
 
 style current_argument_edit_frame:
     background "#ffffff"

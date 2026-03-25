@@ -401,8 +401,6 @@ default new_note_text_template = "whats your evidence?"
 default manual_note_template_used = False
 
 default notebook_unlocked = False
-default editing_argument = False
-
 default notebook_argument = "Draft your argument here."
 default last_notebook_argument = "Draft your argument here."
 default auto_tag_user_notes = True
