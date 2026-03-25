@@ -399,6 +399,7 @@ label start:
         narrator "Click the person you want to talk to, or click the map to travel somewhere else."
 
         call screen characterselect2("amara", "riley")
+        jump expression _return
 
     label riley_chatting:
         scene science lab
@@ -892,6 +893,7 @@ label start:
         narrator "Click the person you want to talk to, click the button to visit the beehives, or click the map to travel somewhere else."
 
         call screen characterselect3("victor", "wes", "bees")
+        jump expression _return
          
     label victor_chatting:
         scene garden
@@ -1200,6 +1202,7 @@ label start:
         narrator "Click the person you want to talk to, or click the map to travel somewhere else."
 
         call screen characterselect3("nadia", "alex", "cora")
+        jump expression _return
     
     label nadia_chatting:
         scene beehives
@@ -1591,6 +1594,7 @@ label start:
         narrator "Click the person you want to talk to, or click the map to travel somewhere else."
 
         call screen characterselect3("elliot", "watson", "cyrus")
+        jump expression _return
     
     label cyrus_chatting:
         scene expression "empty lot [startplace]"

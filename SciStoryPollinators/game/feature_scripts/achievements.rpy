@@ -322,6 +322,7 @@ screen achievement_row(ach, width=600, height=70):
 # ---------------------------------------------------------------------------
 screen achievements_screen():
     tag menu
+    zorder 92
     modal True
     add Solid("#00000080") 
     on "show" action Function(lock_dialogue_advancement, "achievements")

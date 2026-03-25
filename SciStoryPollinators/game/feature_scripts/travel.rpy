@@ -132,19 +132,19 @@ screen characterselect3(c_left, c_center, c_right):
         xysize (600, 900)
         anchor (0.5, 0.0)
         pos (0.2, 0.25)
-        action Jump(c_left + "_chatting")
+        action Return(c_left + "_chatting")
 
     button:
         xysize (600, 900)
         anchor (0.5, 0.0)
         pos (0.5, 0.25)
-        action Jump(c_center + "_chatting")
+        action Return(c_center + "_chatting")
 
     button:
         xysize (600, 900)
         anchor (0.5, 0.0)
         pos (0.8, 0.25)
-        action Jump(c_right + "_chatting")
+        action Return(c_right + "_chatting")
 
 screen characterselect2(c_left, c_right):
     zorder 80
@@ -153,10 +153,10 @@ screen characterselect2(c_left, c_right):
         xysize (600, 900)
         anchor (0.5, 0.0)
         pos (0.2, 0.25)
-        action Jump(c_left + "_chatting")
+        action Return(c_left + "_chatting")
 
     button:
         xysize (600, 900)
         anchor (0.5, 0.0)
         pos (0.8, 0.25)
-        action Jump(c_right + "_chatting")
+        action Return(c_right + "_chatting")
