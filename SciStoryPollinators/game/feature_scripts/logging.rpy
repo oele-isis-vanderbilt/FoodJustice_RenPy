@@ -75,6 +75,24 @@ init python:
         finally:
             finish_generated_dialogue()
 
+    def play_generated_dialogue(speaker, lines, kind="eca", metadata=None):
+        if speaker is None or lines is None:
+            return
+        if isinstance(lines, (str, bytes)):
+            lines = [lines]
+        try:
+            sequence = list(lines)
+        except TypeError:
+            sequence = [lines]
+
+        with dialogue_origin(kind, metadata):
+            for line in sequence:
+                if line is None:
+                    continue
+                text = line if isinstance(line, str) else str(line)
+                if text.strip():
+                    renpy.say(speaker, text)
+
     # Cache the clicked menu option, storing timestamp and flags so we can ship a complete record once the choice resolves.
     def remember_menu_choice(caption):
         global _active_choice_log

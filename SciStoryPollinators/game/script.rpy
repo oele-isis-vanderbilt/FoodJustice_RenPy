@@ -116,12 +116,7 @@ label start:
                 # $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "FoodJustice_RileyEvaluation", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
                 
                 $ sentences = split_eca_sentences(ecaresponse)
-
-                $ start_generated_dialogue("eca", {"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
-                python:
-                    for sentence in sentences:
-                        renpy.say(t, sentence)
-                $ finish_generated_dialogue()
+                $ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
 
                 $ stopAudio()
 
@@ -157,12 +152,7 @@ label start:
                                 ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers to look at your argument!"
 
                         $ sentences = split_eca_sentences(ecaresponse)
-
-                        $ start_generated_dialogue("eca", {"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
-                        python:
-                            for sentence in sentences:
-                                renpy.say(t, sentence)
-                        $ finish_generated_dialogue()
+                        $ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
 
                         $ stopAudio()
 
@@ -205,12 +195,7 @@ label start:
                         ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers your question!"
                 
                 $ sentences = split_eca_sentences(ecaresponse)
-
-                $ start_generated_dialogue("eca", {"character": "Tulip", "context": "GameHelp"})
-                python:
-                    for sentence in sentences:
-                        renpy.say(t, sentence)
-                $ finish_generated_dialogue()
+                $ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "GameHelp"})
 
                 $ stopAudio()
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
@@ -239,12 +224,7 @@ label start:
                                 ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers your question!"
                         
                         $ sentences = split_eca_sentences(ecaresponse)
-
-                        $ start_generated_dialogue("eca", {"character": "Tulip", "context": "GameHelp_Collaboration"})
-                        python:
-                            for sentence in sentences:
-                                renpy.say(t, sentence)
-                        $ finish_generated_dialogue()
+                        $ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "GameHelp_Collaboration"})
 
                         $ stopAudio()
                         
@@ -519,13 +499,8 @@ label start:
         $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
 
         $ sentences = split_eca_sentences(ecaresponse)
+        $ play_generated_dialogue(r, sentences, metadata={"character": "Riley", "context": "FoodJustice_RileyEvaluation"})
 
-        $ start_generated_dialogue("eca", {"character": "Riley", "context": "FoodJustice_RileyEvaluation"})
-        python:
-            for sentence in sentences:
-                renpy.say(r, sentence)
-        $ finish_generated_dialogue()
-            
         $ stopAudio()
         $ achieve_feedback()
 
@@ -595,12 +570,7 @@ label start:
                 $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
                   
                 $ sentences = split_eca_sentences(ecaresponse)
-
-                $ start_generated_dialogue("eca", {"character": "Riley", "context": "Knowledge_FoodJustice"})
-                python:
-                    for sentence in sentences:
-                        renpy.say(r, sentence)
-                $ finish_generated_dialogue()
+                $ play_generated_dialogue(r, sentences, metadata={"character": "Riley", "context": "Knowledge_FoodJustice"})
                 $ stopAudio()
 
                 jump foodknowledge_loop
@@ -623,12 +593,7 @@ label start:
                 $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
 
                 $ sentences = split_eca_sentences(ecaresponse)
-
-                $ start_generated_dialogue("eca", {"character": "Riley", "context": "Knowledge_FoodJustice"})
-                python:
-                    for sentence in sentences:
-                        renpy.say(r, sentence)
-                $ finish_generated_dialogue()
+                $ play_generated_dialogue(r, sentences, metadata={"character": "Riley", "context": "Knowledge_FoodJustice"})
                 $ stopAudio()
 
                 jump foodknowledge_loop
@@ -674,12 +639,7 @@ label start:
         $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
 
         $ sentences = split_eca_sentences(ecaresponse)
-
-        $ start_generated_dialogue("eca", {"character": "Riley", "context": "Knowledge_FoodJustice"})
-        python:
-            for sentence in sentences:
-                renpy.say(r, sentence)
-        $ finish_generated_dialogue()
+        $ play_generated_dialogue(r, sentences, metadata={"character": "Riley", "context": "Knowledge_FoodJustice"})
 
         $ stopAudio()
 
@@ -1108,13 +1068,7 @@ label start:
         $ log_http(current_user, action="PlayerECAResponse", view="wes", payload={"eca_response": ecaresponse})
 
         $ sentences = split_eca_sentences(ecaresponse)
-
-        $ start_generated_dialogue("eca", {"character": "Wes", "context": "Knowledge_Pollination"})
-        python:
-            for sentence in sentences:
-                renpy.say(w, sentence)
-        $ finish_generated_dialogue()
-        $ finish_generated_dialogue()
+        $ play_generated_dialogue(w, sentences, metadata={"character": "Wes", "context": "Knowledge_Pollination"})
 
         $ stopAudio()
 
@@ -1169,10 +1123,7 @@ label start:
         $ log_http(current_user, action="PlayerECAResponse", view="wes", payload={"eca_response": ecaresponse})
 
         $ sentences = split_eca_sentences(ecaresponse)
-
-        python:
-            for sentence in sentences:
-                renpy.say(w, sentence)
+        $ play_generated_dialogue(w, sentences, metadata={"character": "Wes", "context": "Knowledge_Pollination"})
 
         $ stopAudio()
         
@@ -1256,12 +1207,7 @@ label start:
                 $ log_http(current_user, action="PlayerECAResponse", view="nadia", payload={"eca_response": ecaresponse})
 
                 $ sentences = split_eca_sentences(ecaresponse)
-
-                $ start_generated_dialogue("eca", {"character": "Nadia", "context": "Knowledge_Pollination"})
-                python:
-                    for sentence in sentences:
-                        renpy.say(n, sentence)
-                $ finish_generated_dialogue()
+                $ play_generated_dialogue(n, sentences, metadata={"character": "Nadia", "context": "Knowledge_Pollination"})
 
                 $ stopAudio()
 
@@ -1286,12 +1232,7 @@ label start:
                 $ log_http(current_user, action="PlayerECAResponse", view="nadia", payload={"eca_response": ecaresponse})
 
                 $ sentences = split_eca_sentences(ecaresponse)
-
-                $ start_generated_dialogue("eca", {"character": "Nadia", "context": "Knowledge_Pollination"})
-                python:
-                    for sentence in sentences:
-                        renpy.say(n, sentence)
-                $ finish_generated_dialogue()
+                $ play_generated_dialogue(n, sentences, metadata={"character": "Nadia", "context": "Knowledge_Pollination"})
 
                 $ stopAudio()
 
@@ -1335,12 +1276,7 @@ label start:
         $ log_http(current_user, action="PlayerECAResponse", view="nadia", payload={"eca_response": ecaresponse})
 
         $ sentences = split_eca_sentences(ecaresponse)
-
-        $ start_generated_dialogue("eca", {"character": "Nadia", "context": "Knowledge_Pollination"})
-        python:
-            for sentence in sentences:
-                renpy.say(n, sentence)
-        $ finish_generated_dialogue()
+        $ play_generated_dialogue(n, sentences, metadata={"character": "Nadia", "context": "Knowledge_Pollination"})
 
         $ stopAudio()
 
@@ -1912,12 +1848,7 @@ label start:
             pass
 
         $ sentences = split_eca_sentences(ecaresponse)
-
-        $ start_generated_dialogue("eca", {"character": "Mayor Watson", "context": "FoodJustice_MayorEvaluation"})
-        python:
-            for sentence in sentences:
-                renpy.say(m, sentence)
-        $ finish_generated_dialogue()
+        $ play_generated_dialogue(m, sentences, metadata={"character": "Mayor Watson", "context": "FoodJustice_MayorEvaluation"})
 
         $ stopAudio()
 
@@ -1991,14 +1922,9 @@ label start:
                 ecaresponse = "I'm having some trouble right now. Why don't you try asking Riley about this argument and see if they can give you some feedback?"
 
         $ log_http(current_user, action="PlayerECAResponse", view="elliot", payload={"eca_response": ecaresponse})
-        
-        $ sentences = split_eca_sentences(ecaresponse)
 
-        $ start_generated_dialogue("eca", {"character": "Elliot", "context": "FoodJustice_RileyEvaluation"})
-        python:
-            for sentence in sentences:
-                renpy.say(el, sentence)
-        $ finish_generated_dialogue()
+        $ sentences = split_eca_sentences(ecaresponse)
+        $ play_generated_dialogue(el, sentences, metadata={"character": "Elliot", "context": "FoodJustice_RileyEvaluation"})
 
         $ stopAudio()
 
