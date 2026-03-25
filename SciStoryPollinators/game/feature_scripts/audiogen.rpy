@@ -1,7 +1,7 @@
 # AUDIO 
 define azureKey = "3da59f8a4fc643ffbec6e4c076c77b7b"
-define ecaVoice = "en-US-JennyNeural"
-define ecaSpeechRate = "+30%"
+define fallbackTtsVoice = "en-US-JennyNeural"
+define fallbackTtsRate = "0%"
 
 ##Audio
 define useAudio = True
@@ -9,43 +9,39 @@ init python:
     import json
     import re
 
-    # Voice presets for character dialogue. Keys are lowercase character names.
-    ECA_VOICE_BY_CHARACTER = {
-        "tulip": "en-US-AnaNeural",
-        "???": "en-US-AnaNeural",
-        "elliot": "en-US-DustinMultilingualNeural",
-        "friendly stranger": "en-US-DustinMultilingualNeural",
-        "amara": "en-US-SerenaMultilingualNeural",
-        "riley": "en-US-Alloy:DragonHDLatestNeural",
-        "wes": "en-US-LewisMultilingualNeural",
-        "nadia": "en-US-Emma2:DragonHDLatestNeural",
-        "mayor": "en-US-OnyxTurboMultilingualNeural",
-        "mayor watson": "en-US-OnyxTurboMultilingualNeural",
-        "cyrus": "en-US-Andrew3:DragonHDLatestNeural",
-        "cyrus murphy": "en-US-Andrew3:DragonHDLatestNeural",
-        "alex": "zh-CN-XiaoyouMultilingualNeural",
-        "cora": "en-US-LolaMultilingualNeural",
-        "victor": "zh-CN-YunyiMultilingualNeural",
-    }
+    def _default_tts_profile():
+        profile = getattr(renpy.store, "default_character_tts_profile", None)
+        if not isinstance(profile, dict):
+            profile = {}
 
+        return {
+            "voice": str(profile.get("voice") or fallbackTtsVoice),
+            "rate": str(profile.get("rate") or fallbackTtsRate),
+            "style": str(profile.get("style") or ""),
+        }
 
+    def _tts_profile_for_speaker(speaker_name):
+        key = str(speaker_name or "").strip().lower()
+        aliases = getattr(renpy.store, "character_tts_aliases", {}) or {}
+        resolved_key = aliases.get(key, key)
 
-    # Optional speaking style by character.
-    ECA_STYLE_BY_CHARACTER = {
-        "amara": "serious",
+        for record in getattr(renpy.store, "character_directory", []) or []:
+            if not isinstance(record, dict):
+                continue
+
+            record_id = str(record.get("id") or "").strip().lower()
+            record_name = str(record.get("name") or "").strip().lower()
+            if resolved_key not in (record_id, record_name):
+                continue
+
+            default_profile = _default_tts_profile()
+            return {
+                "voice": str(record.get("tts_voice") or default_profile["voice"]),
+                "rate": str(record.get("tts_rate") or default_profile["rate"]),
+                "style": str(record.get("tts_style") or default_profile["style"]),
             }
 
-    def _voice_for_speaker(speaker_name):
-        if speaker_name is None:
-            return ecaVoice
-        key = str(speaker_name).strip().lower()
-        return ECA_VOICE_BY_CHARACTER.get(key, ecaVoice)
-
-    def _style_for_speaker(speaker_name):
-        if speaker_name is None:
-            return ""
-        key = str(speaker_name).strip().lower()
-        return ECA_STYLE_BY_CHARACTER.get(key, "")
+        return _default_tts_profile()
 
     def _tts_feature_active():
         return bool(
@@ -163,9 +159,10 @@ init python:
                 if not _ensure_web_tts_bridge():
                     return
                 import emscripten
-                resolved_voice = _voice_for_speaker(speaker_name)
-                resolved_rate = speech_rate if speech_rate is not None else ecaSpeechRate
-                resolved_style = speaking_style if speaking_style is not None else _style_for_speaker(speaker_name)
+                tts_profile = _tts_profile_for_speaker(speaker_name)
+                resolved_voice = tts_profile["voice"]
+                resolved_rate = speech_rate if speech_rate is not None else tts_profile["rate"]
+                resolved_style = speaking_style if speaking_style is not None else tts_profile["style"]
                 js_call = "window.playAzureAudio({}, {}, {}, 100, {}, {});".format(
                     json.dumps(dialogLine or ""),
                     json.dumps(resolved_voice),

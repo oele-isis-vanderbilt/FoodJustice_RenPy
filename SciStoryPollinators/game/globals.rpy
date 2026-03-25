@@ -11,19 +11,30 @@ define v = Character("Victor")
 define t = Character("Tulip")
 define tu_unknown = Character("???")
 
+define default_character_tts_profile = {
+    "voice": "en-US-JennyNeural",
+    "rate": "0%",
+    "style": "",
+}
+
+define character_tts_aliases = {
+    "friendly stranger": "elliot",
+    "cyrus murphy": "cyrus",
+}
+
 define character_directory = [
-    { "id": "elliot", "variable": el, "name": "Elliot",        "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
-    { "id": "amara",  "variable": a,  "name": "Amara",         "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
-    { "id": "riley",  "variable": r,  "name": "Riley",         "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
-    { "id": "wes",    "variable": w,  "name": "Wes",           "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
-    { "id": "nadia",  "variable": n,  "name": "Nadia",         "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
-    { "id": "mayor",  "variable": m,  "name": "Mayor Watson",  "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
-    { "id": "cyrus",  "variable": cy, "name": "Cyrus",         "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
-    { "id": "alex",   "variable": x,  "name": "Alex",          "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
-    { "id": "cora",   "variable": c,  "name": "Cora",          "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
-    { "id": "victor", "variable": v,  "name": "Victor",        "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
-    { "id": "tulip",  "variable": t,  "name": "Tulip",         "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
-    { "id": "tulip_unknown", "variable": tu_unknown, "name": "???", "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False },
+    { "id": "elliot", "variable": el, "name": "Elliot",        "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False, "tts_voice": "en-US-DustinMultilingualNeural", "tts_rate": "0%", "tts_style": "" },
+    { "id": "amara",  "variable": a,  "name": "Amara",         "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False, "tts_voice": "en-US-SerenaMultilingualNeural", "tts_rate": "0%", "tts_style": "serious" },
+    { "id": "riley",  "variable": r,  "name": "Riley",         "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False, "tts_voice": "en-US-Alloy:DragonHDLatestNeural", "tts_rate": "0%", "tts_style": "" },
+    { "id": "wes",    "variable": w,  "name": "Wes",           "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False, "tts_voice": "en-US-LewisMultilingualNeural", "tts_rate": "0%", "tts_style": "" },
+    { "id": "nadia",  "variable": n,  "name": "Nadia",         "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False, "tts_voice": "en-US-Emma2:DragonHDLatestNeural", "tts_rate": "0%", "tts_style": "" },
+    { "id": "mayor",  "variable": m,  "name": "Mayor Watson",  "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False, "tts_voice": "en-US-OnyxTurboMultilingualNeural", "tts_rate": "0%", "tts_style": "" },
+    { "id": "cyrus",  "variable": cy, "name": "Cyrus",         "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False, "tts_voice": "en-US-Andrew3:DragonHDLatestNeural", "tts_rate": "0%", "tts_style": "" },
+    { "id": "alex",   "variable": x,  "name": "Alex",          "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False, "tts_voice": "zh-CN-XiaoyouMultilingualNeural", "tts_rate": "0%", "tts_style": "" },
+    { "id": "cora",   "variable": c,  "name": "Cora",          "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False, "tts_voice": "en-US-LolaMultilingualNeural", "tts_rate": "0%", "tts_style": "" },
+    { "id": "victor", "variable": v,  "name": "Victor",        "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False, "tts_voice": "zh-CN-YunyiMultilingualNeural", "tts_rate": "0%", "tts_style": "" },
+    { "id": "tulip",  "variable": t,  "name": "Tulip",         "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False, "tts_voice": "en-US-AnaNeural", "tts_rate": "0%", "tts_style": "" },
+    { "id": "tulip_unknown", "variable": tu_unknown, "name": "???", "role": "npc", "chats": 0, "questions": 0, "approval": 0, "spoken": False, "tts_voice": "en-US-AnaNeural", "tts_rate": "0%", "tts_style": "" },
 ]
 
 # GLOBAL NOTEBOOK LISTS 
