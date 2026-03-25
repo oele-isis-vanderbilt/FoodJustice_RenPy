@@ -591,6 +591,8 @@ label start:
                     except Exception as e:
                         log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
                         ecaresponse = "Access to healthy food is important because it helps us grow, stay healthy, and have the energy we need to do the things we love. Healthy food can also prevent diseases like obesity, heart disease, and diabetes."
+
+                $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
                   
                 $ sentences = split_eca_sentences(ecaresponse)
 
@@ -617,6 +619,8 @@ label start:
                     except Exception as e:
                         log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
                         ecaresponse = "One way to help everyone get access to affordable and healthy food options is by supporting local farmers markets and community gardens. It's also important to advocate for policies that promote healthy food options."
+
+                $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
 
                 $ sentences = split_eca_sentences(ecaresponse)
 
@@ -667,11 +671,15 @@ label start:
                 log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
                 ecaresponse = "I'm struggling a bit right now. Maybe you can chat with Amara about her food science work, and you and I can chat more later?"
 
+        $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
+
         $ sentences = split_eca_sentences(ecaresponse)
 
+        $ start_generated_dialogue("eca", {"character": "Riley", "context": "Knowledge_FoodJustice"})
         python:
             for sentence in sentences:
                 renpy.say(r, sentence)
+        $ finish_generated_dialogue()
 
         $ stopAudio()
 
@@ -1245,6 +1253,8 @@ label start:
                         log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
                         ecaresponse = "Bees help with pollination by transferring pollen from one flower to another while collecting nectar. This helps the plant grow healthy fruits."
 
+                $ log_http(current_user, action="PlayerECAResponse", view="nadia", payload={"eca_response": ecaresponse})
+
                 $ sentences = split_eca_sentences(ecaresponse)
 
                 $ start_generated_dialogue("eca", {"character": "Nadia", "context": "Knowledge_Pollination"})
@@ -1273,11 +1283,15 @@ label start:
                         log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
                         ecaresponse = "The flowers on plants can be pollinated by wind, by animals and insects, and by people. A flower is pollinated when pollen is moved from the male part of the flower to the female part of the flower."
 
+                $ log_http(current_user, action="PlayerECAResponse", view="nadia", payload={"eca_response": ecaresponse})
+
                 $ sentences = split_eca_sentences(ecaresponse)
 
+                $ start_generated_dialogue("eca", {"character": "Nadia", "context": "Knowledge_Pollination"})
                 python:
                     for sentence in sentences:
                         renpy.say(n, sentence)
+                $ finish_generated_dialogue()
 
                 $ stopAudio()
 
