@@ -14,6 +14,11 @@ init python:
         dev_screen_enabled = not dev_screen_enabled
 
     def get_char_stat(char_name, key, default=0):
+        if key in ("chats", "questions", "approval", "spoken"):
+            getter = globals().get("get_character_progress_value")
+            if callable(getter):
+                return getter(char_name, key, default)
+
         for char in character_directory:
             if char.get("name") == char_name:
                 return char.get(key, default)

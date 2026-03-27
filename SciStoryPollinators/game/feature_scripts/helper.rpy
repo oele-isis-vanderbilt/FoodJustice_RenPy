@@ -128,6 +128,21 @@ init python:
                 return char
         return None
 
+    def _coerce_flag(value, default=False):
+        if isinstance(value, bool):
+            return value
+        if isinstance(value, (int, float)):
+            return bool(value)
+        if isinstance(value, str):
+            value = value.strip().lower()
+            if not value:
+                return default
+            if value in ("true", "t", "yes", "y", "1"):
+                return True
+            if value in ("false", "f", "no", "n", "0"):
+                return False
+        return default
+
     def _coerce_counter(value, default=0):
         """
         Normalize stored counters into ints so downstream code never compares
@@ -158,53 +173,132 @@ init python:
             record[key] = value
         return value
 
+    def _normalize_character_progress_entry(entry):
+        if not isinstance(entry, dict):
+            entry = {}
+        return {
+            "chats": _coerce_counter(entry.get("chats", 0), 0),
+            "questions": _coerce_counter(entry.get("questions", 0), 0),
+            "approval": _coerce_counter(entry.get("approval", 0), 0),
+            "spoken": _coerce_flag(entry.get("spoken", False), False),
+        }
+
+    def ensure_character_progress_state():
+        progress_store = getattr(store, "character_progress", None)
+        if not isinstance(progress_store, dict):
+            progress_store = {}
+            store.character_progress = progress_store
+
+        for record in character_directory:
+            if not isinstance(record, dict):
+                continue
+
+            char_id = str(record.get("id") or "").strip()
+            if not char_id:
+                continue
+
+            current = _normalize_character_progress_entry(progress_store.get(char_id))
+
+            legacy_chats = _coerce_counter(record.get("chats", 0), 0)
+            legacy_questions = _coerce_counter(record.get("questions", 0), 0)
+            legacy_approval = _coerce_counter(record.get("approval", 0), 0)
+            legacy_spoken = _coerce_flag(record.get("spoken", False), False)
+
+            current["chats"] = max(current["chats"], legacy_chats)
+            current["questions"] = max(current["questions"], legacy_questions)
+            if current["approval"] == 0 and legacy_approval != 0:
+                current["approval"] = legacy_approval
+            current["spoken"] = current["spoken"] or legacy_spoken
+
+            progress_store[char_id] = current
+
+        for spoken_name in getattr(store, "spoken_list", []) or []:
+            record = _find_character_record(spoken_name)
+            if not record:
+                continue
+
+            char_id = str(record.get("id") or "").strip()
+            if not char_id:
+                continue
+
+            current = _normalize_character_progress_entry(progress_store.get(char_id))
+            current["spoken"] = True
+            current["chats"] = max(current["chats"], 1)
+            progress_store[char_id] = current
+
+        return progress_store
+
+    def _character_progress_for_record(record):
+        if not record:
+            return None
+        progress_store = ensure_character_progress_state()
+        char_id = str(record.get("id") or "").strip()
+        if not char_id:
+            return None
+        entry = progress_store.get(char_id)
+        if not isinstance(entry, dict):
+            entry = _normalize_character_progress_entry({})
+            progress_store[char_id] = entry
+        return entry
+
+    def get_character_progress_value(char_name, key, default=0):
+        record = _find_character_record(char_name)
+        entry = _character_progress_for_record(record)
+        if not entry:
+            return default
+        return entry.get(key, default)
+
     def update_char_stats(char_name):
         record = _find_character_record(char_name)
-        if record:
-            chats = _sync_counter(record, "chats")
-            record["chats"] = chats + 1
-            record["spoken"] = True
+        entry = _character_progress_for_record(record)
+        if entry:
+            chats = _sync_counter(entry, "chats")
+            entry["chats"] = chats + 1
+            entry["spoken"] = True
             canonical_name = record.get("name") or char_name
             if canonical_name:
                 spoken_list.append(canonical_name)
 
     def get_character_spoken(char_name):
         record = _find_character_record(char_name)
-        return bool(record and record.get("spoken"))
+        entry = _character_progress_for_record(record)
+        return bool(entry and _coerce_flag(entry.get("spoken", False), False))
 
     def get_character_chats(char_name):
         record = _find_character_record(char_name)
-        if not record:
+        entry = _character_progress_for_record(record)
+        if not entry:
             return 0
 
-        return _sync_counter(record, "chats")
+        return _sync_counter(entry, "chats")
 
     def ask_character_question(char_name):
         record = _find_character_record(char_name)
-        if record:
-            questions = _sync_counter(record, "questions")
-            record["questions"] = questions + 1
+        entry = _character_progress_for_record(record)
+        if entry:
+            questions = _sync_counter(entry, "questions")
+            entry["questions"] = questions + 1
         mark_choice_as_question(char_name)
 
     def character_approval(char_name, amount, message=None):
-        for char in character_directory:
-            if char["name"] == char_name:
-                char["approval"] = char.get("approval", 0) + amount
-                annotate_choice(approval_delta=amount, approval_character=char_name)
-                _log_approval_change(char_name, amount, char["approval"], message, "gain")
-                if message:
-                    notify_with_history(message, history_who="Approval", history_what=message)
-                break
+        record = _find_character_record(char_name)
+        entry = _character_progress_for_record(record)
+        if entry:
+            entry["approval"] = _coerce_counter(entry.get("approval", 0), 0) + amount
+            annotate_choice(approval_delta=amount, approval_character=char_name)
+            _log_approval_change(char_name, amount, entry["approval"], message, "gain")
+            if message:
+                notify_with_history(message, history_who="Approval", history_what=message)
 
     def character_disapproval(char_name, amount, message=None):
-        for char in character_directory:
-            if char["name"] == char_name:
-                char["approval"] = char.get("approval", 0) - amount
-                annotate_choice(approval_delta=-amount, approval_character=char_name)
-                _log_approval_change(char_name, -amount, char["approval"], message, "loss")
-                if message:
-                    notify_with_history(message, history_who="Approval", history_what=message)
-                break
+        record = _find_character_record(char_name)
+        entry = _character_progress_for_record(record)
+        if entry:
+            entry["approval"] = _coerce_counter(entry.get("approval", 0), 0) - amount
+            annotate_choice(approval_delta=-amount, approval_character=char_name)
+            _log_approval_change(char_name, -amount, entry["approval"], message, "loss")
+            if message:
+                notify_with_history(message, history_who="Approval", history_what=message)
 
     def get_note_by_id(note_id):
         for note in notebook: 
@@ -376,10 +470,12 @@ init python:
 
 init python:
     try:
+        config.after_load_callbacks.append(ensure_character_progress_state)
         config.after_load_callbacks.append(sync_dialogue_audio_state)
     except Exception:
         pass
 
 label after_load:
+    $ ensure_character_progress_state()
     $ sync_dialogue_audio_state()
     return

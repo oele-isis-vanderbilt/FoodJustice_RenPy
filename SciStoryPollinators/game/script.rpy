@@ -1947,7 +1947,7 @@ label start:
 
         $ note_count = len(notebook)  # <-- updated
 
-        if get_character_chats("Riley") > 0 and get_character_chats("Nadia") > 0 and get_character_chats("Wes") > 0 and get_character_chats("Amara") > 0 and note_count > 5:
+        if get_character_chats("Riley") > 0 and get_character_chats("Nadia") > 0 and get_character_chats("Wes") > 0 and get_character_chats("Amara") > 0 and note_count >= 5:
             t "Great job sharing your ideas with the Mayor! How do you think it went?"
             jump choices_eval
         elif get_character_chats("Riley") == 0 or get_character_chats("Nadia") == 0 or get_character_chats("Wes") == 0 or get_character_chats("Amara") == 0:

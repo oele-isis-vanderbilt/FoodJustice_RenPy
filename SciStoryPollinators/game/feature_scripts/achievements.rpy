@@ -170,10 +170,27 @@ init python:
             unlock_achievement(key)
 
     def _character_records():
+        ensure_state = getattr(renpy.store, "ensure_character_progress_state", None)
+        if callable(ensure_state):
+            ensure_state()
+
         directory = character_directory
         if isinstance(directory, dict):
             directory = list(directory.values())
-        return [ch for ch in directory if isinstance(ch, dict)]
+
+        progress_store = getattr(renpy.store, "character_progress", {}) or {}
+        records = []
+        for ch in directory:
+            if not isinstance(ch, dict):
+                continue
+
+            merged = dict(ch)
+            char_id = ch.get("id")
+            progress = progress_store.get(char_id, {})
+            if isinstance(progress, dict):
+                merged.update(progress)
+            records.append(merged)
+        return records
 
     def _spoken_by_name():
         spoken = {}

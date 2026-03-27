@@ -114,6 +114,7 @@ def _install_stub_modules():
     renpy.loadable = lambda path: False
     renpy.image_size = lambda path: (100, 100)
     renpy.retain_after_load = lambda: None
+    renpy.restart_interaction = lambda: None
     renpy.emscripten = False
     renpy.platform = "test"
 
@@ -324,12 +325,17 @@ def reset_stubs():
     renpy.loadable = lambda path: False
     renpy.image_size = lambda path: (100, 100)
     renpy.retain_after_load = lambda: None
+    renpy.restart_interaction = lambda: None
     renpy._saves = {"count": 0}
 
     persistent = _get_persistent_stub()
     persistent.logs = []
     persistent.unsent = []
     persistent.achievements = {}
+    store.achievements = persistent.achievements
+    store.achievement_popup_uid = 0
+    store.spoken_list = []
+    store.character_progress = {}
     yield
 
 
