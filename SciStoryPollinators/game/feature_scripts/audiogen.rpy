@@ -257,7 +257,8 @@ init python:
 
     def toggle_tts_enabled():
         current = bool(getattr(renpy.store, "tts_enabled", True))
-        return set_tts_enabled(not current)
+        set_tts_enabled(not current)
+        return None
 
     def stopAudio():
         if useAudio:

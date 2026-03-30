@@ -98,10 +98,13 @@ init python:
             "Dialogue audio {}".format("enabled" if enabled else "muted"),
             history_who="System",
         )
-        return enabled
+        # Screen actions should not return a value here, or Ren'Py may treat it
+        # as the result of the active interaction.
+        return None
 
     def toggle_dialogue_audio_enabled():
-        return set_dialogue_audio_enabled(not dialogue_audio_is_enabled())
+        set_dialogue_audio_enabled(not dialogue_audio_is_enabled())
+        return None
 
     def set_voice_features_enabled(enabled):
         enabled = bool(enabled)
