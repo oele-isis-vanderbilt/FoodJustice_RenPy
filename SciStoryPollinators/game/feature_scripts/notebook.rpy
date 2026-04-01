@@ -155,6 +155,17 @@ init python:
         _last_notebook_length_logged = length
         renpy.log("Notebook length: {}".format(length))
 
+    def next_selected_filter(current_filter, selected_tag):
+        if current_filter == selected_tag:
+            return None
+        return selected_tag
+
+    def next_selected_tags(tags_value, tag_name):
+        tags = normalize_tags(tags_value)
+        if tag_name in tags:
+            return ", ".join([tag for tag in tags if tag != tag_name])
+        return ", ".join(tags + [tag_name])
+
     def _tag_origin(manual, auto_added):
         if auto_added and manual:
             return "mixed"
@@ -263,6 +274,12 @@ init python:
         if new_tag and new_tag not in tagLibrary:
             tagLibrary.append(new_tag)
             refresh_character_note_tags()
+            log_http(
+                current_user,
+                action="PlayerCreatedTag",
+                view=current_label,
+                payload={"tag": new_tag}
+            )
         
         narrator.add_history(kind="adv", who="You created a new tag: ", what=new_tag or tag)
     
@@ -373,16 +390,35 @@ init python:
             renpy.block_rollback()
             edited_note_id = None
             return True
-        else:
-            note = next((n for n in notebook if n["id"] == note_id), None)
-            if note and note.get("type") == "user-written":
-                is_valid, message = validate_user_note_inputs(newnote, newsource, tags_list)
-                if not is_valid:
-                    renpy.notify(message)
-                    return False
-            save_note(note_id, newnote, newsource, tags_list)
-            renpy.block_rollback()
-            edited_note_id = None
+
+        note = next((n for n in notebook if n["id"] == note_id), None)
+        if note is None:
+            return False
+
+        if note.get("type") == "user-written":
+            is_valid, message = validate_user_note_inputs(newnote, newsource, tags_list)
+            if not is_valid:
+                renpy.notify(message)
+                return False
+
+        save_note(note_id, newnote, newsource, tags_list)
+        renpy.block_rollback()
+        edited_note_id = None
+        return True
+
+    def commit_note_from_screen(note_id, newnote, newsource, newtags):
+        """
+        Screen actions should not return a value, and double-clicks after a
+        successful save should be ignored until the screen refreshes.
+        """
+        if getattr(store, "edited_note_id", None) != note_id:
+            return None
+
+        did_save = commit_note(note_id, newnote, newsource, newtags)
+        if did_save:
+            renpy.restart_interaction()
+
+        return None
 
     def argument_edit(newcontent):
         save_draft(newcontent, edited=True)
@@ -452,6 +488,8 @@ init python:
 screen notebook_argument_editor(initial_argument):
     modal True
     zorder 93
+    on "show" action Function(log_ui_event, "show", screen="notebook_argument_editor")
+    on "hide" action Function(log_ui_event, "hide", screen="notebook_argument_editor")
 
     default draft_argument = initial_argument
 
@@ -482,7 +520,10 @@ screen notebook_argument_editor(initial_argument):
                     tooltip "Close"
                     idle close_btn
                     hover darken_hover(close_btn, 0.40)
-                    action Hide("notebook_argument_editor")
+                    action [
+                        Function(log_ui_event, "click", screen="notebook_argument_editor", element="Close"),
+                        Hide("notebook_argument_editor")
+                    ]
                     xalign 1.0
                     yalign 0.5
 
@@ -520,13 +561,26 @@ screen notebook_argument_editor(initial_argument):
                 textbutton "Save":
                     style "standard_button"
                     action [
+                        Function(
+                            log_ui_event,
+                            "click",
+                            screen="notebook_argument_editor",
+                            element="Save",
+                            payload={
+                                "draft_length": len((draft_argument or "").strip()),
+                                "changed": draft_argument != initial_argument,
+                            }
+                        ),
                         Function(argument_edit, draft_argument),
                         Hide("notebook_argument_editor"),
                     ]
 
                 textbutton "Cancel":
                     style "standard_button"
-                    action Hide("notebook_argument_editor")
+                    action [
+                        Function(log_ui_event, "click", screen="notebook_argument_editor", element="Cancel"),
+                        Hide("notebook_argument_editor")
+                    ]
 
 #### Notebook ###### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
 screen notebook():
@@ -539,7 +593,11 @@ screen notebook():
 
     modal True
     zorder 92
-    on "show" action Function(lock_dialogue_advancement, "notebook")
+    on "show" action [
+        Function(lock_dialogue_advancement, "notebook"),
+        Function(log_ui_event, "show", screen="notebook"),
+        Function(log_notebook_opened),
+    ]
     on "hide" action [
         Hide("notebook_argument_editor"),
         Function(
@@ -549,7 +607,9 @@ screen notebook():
             edit_note_source,
             edit_note_tags,
         ),
-        Function(unlock_dialogue_advancement, "notebook")
+        Function(unlock_dialogue_advancement, "notebook"),
+        Function(log_ui_event, "hide", screen="notebook", payload={"active_filter": filter_tag}),
+        Function(log_notebook_closed),
     ]
 
     # on "hide" action If(
@@ -581,7 +641,10 @@ screen notebook():
         idle exit_btn
         hover darken_hover(exit_btn, 0.40)
 
-        action Hide("notebook")
+        action [
+            Function(log_ui_event, "click", screen="notebook", element="Close"),
+            Hide("notebook")
+        ]
         anchor (0.5, 0.5)
         pos (0.792, 0.17)
 
@@ -627,13 +690,40 @@ screen notebook():
                     $ all_selected = filter_tag is None
                     textbutton "All":
                         style all_selected and "selected_tag_button" or "tag_button"
-                        action SetScreenVariable("filter_tag", None)
+                        action [
+                            Function(
+                                log_ui_event,
+                                "click",
+                                screen="notebook",
+                                element="Filter All",
+                                payload={
+                                    "previous_filter": filter_tag,
+                                    "new_filter": None,
+                                }
+                            ),
+                            SetScreenVariable("filter_tag", None)
+                        ]
 
                     for tag_name in all_tags:
                         $ selected = filter_tag == tag_name
+                        $ next_filter = next_selected_filter(filter_tag, tag_name)
                         textbutton tag_name:
                             style selected and "selected_tag_button" or "tag_button"
-                            action SetScreenVariable("filter_tag", None if selected else tag_name)
+                            action [
+                                Function(
+                                    log_ui_event,
+                                    "click",
+                                    screen="notebook",
+                                    element="Filter Tag",
+                                    payload={
+                                        "tag": tag_name,
+                                        "selected": not selected,
+                                        "previous_filter": filter_tag,
+                                        "new_filter": next_filter,
+                                    }
+                                ),
+                                SetScreenVariable("filter_tag", next_filter)
+                            ]
             
             ##ADD NEW NOTE
             button:
@@ -644,6 +734,7 @@ screen notebook():
                 padding (12, 20)
 
                 action [
+                    Function(log_ui_event, "click", screen="notebook", element="Add Note"),
                     SetVariable("edited_note_id", NEW_NOTE_ID),
                     SetScreenVariable(
                         "edit_note_text",
@@ -751,20 +842,25 @@ screen notebook():
 
                                             for tag in tagLibrary:
                                                 $ selected = tag in [t.strip() for t in edit_note_tags.split(",") if t.strip()]
+                                                $ updated_tags_text = next_selected_tags(edit_note_tags, tag)
                                                 textbutton tag:
                                                     style selected and "selected_tag_button" or "tag_button"
                                                     selected selected
-                                                    action If(
-                                                        selected,
-                                                        SetScreenVariable(
-                                                            "edit_note_tags",
-                                                            ", ".join([t for t in [tt.strip() for tt in edit_note_tags.split(",") if tt.strip()] if t != tag])
+                                                    action [
+                                                        Function(
+                                                            log_ui_event,
+                                                            "click",
+                                                            screen="notebook",
+                                                            element="Toggle Note Tag",
+                                                            payload={
+                                                                "note_id": note_id,
+                                                                "tag": tag,
+                                                                "selected": not selected,
+                                                                "result_tags": normalize_tags(updated_tags_text),
+                                                            }
                                                         ),
-                                                        SetScreenVariable(
-                                                            "edit_note_tags",
-                                                            ", ".join([t for t in [tt.strip() for tt in edit_note_tags.split(",") if tt.strip()] if t] + [tag])
-                                                        )
-                                                    )
+                                                        SetScreenVariable("edit_note_tags", updated_tags_text)
+                                                    ]
 
                                             default creating_tag = False
                                             default new_tag_name = "YOUR TAG"
@@ -787,6 +883,13 @@ screen notebook():
                                                     textbutton "Save":
                                                         style "edit_tag_support"
                                                         action [
+                                                            Function(
+                                                                log_ui_event,
+                                                                "click",
+                                                                screen="notebook",
+                                                                element="Save Tag",
+                                                                payload={"tag": (new_tag_name or "").strip()}
+                                                            ),
                                                             Function(add_tag, new_tag_name),
                                                             SetScreenVariable("creating_tag", False),
                                                             SetScreenVariable("active_input_field", None)
@@ -795,6 +898,7 @@ screen notebook():
                                                     textbutton "Cancel":
                                                         style "edit_tag_support"
                                                         action [
+                                                            Function(log_ui_event, "click", screen="notebook", element="Cancel Tag Creation"),
                                                             SetScreenVariable("creating_tag", False),
                                                             SetScreenVariable("active_input_field", None)
                                                         ]
@@ -802,6 +906,7 @@ screen notebook():
                                                 textbutton "Create Tag":
                                                     style "create_tag_box"
                                                     action [
+                                                        Function(log_ui_event, "click", screen="notebook", element="Create Tag"),
                                                         SetScreenVariable("creating_tag", True),
                                                         SetScreenVariable("active_input_field", "tags")
                                                     ]
@@ -811,10 +916,32 @@ screen notebook():
                                     xalign 1.0
                                     textbutton "Save Note":
                                         style "standard_button"
-                                        action Function(commit_note, note_id, edit_note_text, edit_note_source, edit_note_tags)
+                                        action [
+                                            Function(
+                                                log_ui_event,
+                                                "click",
+                                                screen="notebook",
+                                                element="Save Note",
+                                                payload={
+                                                    "note_id": note_id,
+                                                    "is_new_note": note_id == NEW_NOTE_ID,
+                                                }
+                                            ),
+                                            Function(commit_note_from_screen, note_id, edit_note_text, edit_note_source, edit_note_tags)
+                                        ]
                                     textbutton "Cancel":
                                         style "standard_button"
                                         action [
+                                            Function(
+                                                log_ui_event,
+                                                "click",
+                                                screen="notebook",
+                                                element="Cancel Note Edit",
+                                                payload={
+                                                    "note_id": note_id,
+                                                    "is_new_note": note_id == NEW_NOTE_ID,
+                                                }
+                                            ),
                                             SetVariable("edited_note_id", None),
                                             SetScreenVariable("active_input_field", None)
                                         ]
@@ -850,12 +977,40 @@ screen notebook():
                                             tooltip "Delete note"
                                             idle delete_btn
                                             hover darken_hover(delete_btn)
-                                            action Confirm("Are you sure you want to delete this note?", yes=Function(deletenote, note_id))
+                                            action [
+                                                Function(
+                                                    log_ui_event,
+                                                    "click",
+                                                    screen="notebook",
+                                                    element="Delete Note",
+                                                    payload={"note_id": note_id}
+                                                ),
+                                                Confirm(
+                                                    "Are you sure you want to delete this note?",
+                                                    yes=[
+                                                        Function(
+                                                            log_ui_event,
+                                                            "click",
+                                                            screen="notebook",
+                                                            element="Confirm Delete Note",
+                                                            payload={"note_id": note_id}
+                                                        ),
+                                                        Function(deletenote, note_id)
+                                                    ]
+                                                )
+                                            ]
                                         imagebutton:
                                             tooltip "Edit note"
                                             idle edit_btn
                                             hover darken_hover(edit_btn)
                                             action [
+                                                Function(
+                                                    log_ui_event,
+                                                    "click",
+                                                    screen="notebook",
+                                                    element="Edit Note",
+                                                    payload={"note_id": note_id}
+                                                ),
                                                 SetScreenVariable("edit_note_text", n),
                                                 SetScreenVariable("edit_note_source", s),
                                                 SetScreenVariable("edit_note_tags", t),
@@ -903,7 +1058,10 @@ screen notebook():
                             tooltip "Edit draft argument"
                             idle edit_argument_idle
                             hover darken_hover(edit_argument_idle, 0.40)
-                            action Show("notebook_argument_editor", initial_argument=notebook_argument)
+                            action [
+                                Function(log_ui_event, "click", screen="notebook", element="Edit Current Argument"),
+                                Show("notebook_argument_editor", initial_argument=notebook_argument)
+                            ]
                             xalign 1.0
                             yalign 0.5
 
@@ -942,6 +1100,16 @@ screen notebook():
                                     idle swapbtn
                                     hover darken_hover(swapbtn)
                                     action [
+                                        Function(
+                                            log_ui_event,
+                                            "click",
+                                            screen="notebook",
+                                            element="Recall Argument Draft",
+                                            payload={
+                                                "selected_length": len(prev_arg or ""),
+                                                "current_length": len(notebook_argument or ""),
+                                            }
+                                        ),
                                         Function(recall_argument, prev_arg),
                                     ]
                                 text prev_arg:
