@@ -21,6 +21,7 @@ sh.setLevel(DEBUG)
 sh.setFormatter(formatter)
 logger.addHandler(sh)
 
+Path("gamelogs").mkdir(parents=True, exist_ok=True)
 rfh = RotatingFileHandler("gamelogs/service.log", maxBytes=1000000, backupCount=100)
 rfh.setFormatter(formatter)
 rfh.setLevel(DEBUG)

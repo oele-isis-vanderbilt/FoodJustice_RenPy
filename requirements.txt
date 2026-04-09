@@ -1,4 +1,5 @@
 fastapi[all]
 bcrypt
-pyjwt
+PyJWT
+pydantic-settings
 git+https://github.com/oele-isis-vanderbilt/syncflow-python-client.git
