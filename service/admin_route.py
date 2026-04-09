@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Response, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from .models import AdminLoginRequest, AppSettings, Claims
 from .auth import is_valid_password, is_valid_token
 import time
@@ -7,6 +7,13 @@ import shutil
 import uuid
 
 router = APIRouter()
+
+
+def require_logged_in(request: Request):
+    settings = AppSettings()
+    token = request.cookies.get("auth_token")
+    if token is None or not is_valid_token(token, settings.jwt_secret):
+        raise HTTPException(status_code=401, detail="Unauthorized")
 
 
 @router.post("/login")
@@ -44,7 +51,7 @@ async def logout(response: Response):
     response.delete_cookie("auth_token")
     return {"status": "ok"}
 
-@router.get("/download-gamelogs")
+@router.get("/download-gamelogs", dependencies=[Depends(require_logged_in)])
 async def download_gamelogs():
     timestamp = time.strftime("%Y%m%d-%H%M%S")
     unique_name = f"gamelogs-{timestamp}-{uuid.uuid4().hex[:8]}"
@@ -58,5 +65,3 @@ async def download_gamelogs():
         media_type="application/zip",
         headers={"Content-Disposition": f"attachment; filename=gamelogs-{timestamp}.zip"},
     )
-
-
