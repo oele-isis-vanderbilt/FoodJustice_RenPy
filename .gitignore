@@ -3,6 +3,7 @@
 ########################################
 cache/
 saves/
+**/saves/
 .DS_Store
 
 
@@ -209,4 +210,5 @@ pyrightconfig.json
 *dist*
 *.zip
 gamelogs
+control-dashboard/build/
 .env*
