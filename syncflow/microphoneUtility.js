@@ -40,13 +40,11 @@ class MicrophoneUtility {
                     const fullBlob = new Blob(MicrophoneUtilityGlobals.chunks, {type:'audio/wav'});
                     MicrophoneUtilityGlobals.blob = fullBlob;
                     
-                    var base_url = "https://nleprototype-rlengine-asr.soc240019.projects.jetstream-cloud.org";
-                    
                     const formData = new FormData();
                     formData.append("InputAudioRecording", fullBlob, "InputAudioRecording");
                     try{
 
-                        fetch(base_url + "/GetTranscribedAudio", 
+                        fetch("/asr/transcribe", 
                             {
                                 method: 'POST',
                                 body: formData
@@ -91,4 +89,3 @@ class MicrophoneUtility {
 
 
 window.microphoneUtil = new MicrophoneUtility();
-

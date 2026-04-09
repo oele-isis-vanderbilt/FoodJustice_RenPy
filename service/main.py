@@ -1,9 +1,10 @@
 import html
 import os
+import uuid
 from urllib.error import HTTPError, URLError
 from urllib.request import Request as UrlRequest, urlopen
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, HTMLResponse, Response
 from logging import getLogger, StreamHandler, Formatter, DEBUG
@@ -95,6 +96,81 @@ async def azure_tts(request: AzureTtsRequest):
         raise HTTPException(status_code=exc.code, detail=detail) from exc
     except URLError as exc:
         raise HTTPException(status_code=502, detail=f"Azure TTS request failed: {exc.reason}") from exc
+
+
+def _proxy_response(upstream: UrlRequest, timeout: int = 30) -> Response:
+    try:
+        with urlopen(upstream, timeout=timeout) as response:
+            media_type = response.headers.get_content_type()
+            return Response(
+                content=response.read(),
+                status_code=response.status,
+                media_type=media_type,
+                headers={"Cache-Control": "no-store"},
+            )
+    except HTTPError as exc:
+        detail = exc.read()
+        media_type = exc.headers.get_content_type() if exc.headers else "text/plain"
+        return Response(
+            content=detail,
+            status_code=exc.code,
+            media_type=media_type,
+            headers={"Cache-Control": "no-store"},
+        )
+    except URLError as exc:
+        raise HTTPException(status_code=502, detail=f"Upstream request failed: {exc.reason}") from exc
+
+
+def _build_file_upload_body(field_name: str, filename: str, content_type: str, payload: bytes):
+    boundary = f"foodjustice-{uuid.uuid4().hex}"
+    start = (
+        f"--{boundary}\r\n"
+        f'Content-Disposition: form-data; name="{field_name}"; filename="{filename}"\r\n'
+        f"Content-Type: {content_type}\r\n\r\n"
+    ).encode("utf-8")
+    end = f"\r\n--{boundary}--\r\n".encode("utf-8")
+    return boundary, start + payload + end
+
+
+@app.post("/foodjustice/respond")
+async def foodjustice_proxy(request: Request):
+    upstream_url = (settings.foodjustice_ca_url or "").strip()
+    if not upstream_url:
+        raise HTTPException(status_code=503, detail="FoodJustice CA proxy is not configured")
+
+    body = await request.body()
+    content_type = request.headers.get("content-type", "application/json")
+    upstream = UrlRequest(
+        upstream_url,
+        data=body,
+        method="POST",
+        headers={"Content-Type": content_type},
+    )
+    return _proxy_response(upstream)
+
+
+@app.post("/asr/transcribe")
+async def asr_proxy(input_audio_recording: UploadFile = File(..., alias="InputAudioRecording")):
+    upstream_url = (settings.foodjustice_asr_url or "").strip()
+    if not upstream_url:
+        raise HTTPException(status_code=503, detail="FoodJustice ASR proxy is not configured")
+
+    file_bytes = await input_audio_recording.read()
+    filename = input_audio_recording.filename or "InputAudioRecording"
+    content_type = input_audio_recording.content_type or "application/octet-stream"
+    boundary, body = _build_file_upload_body(
+        "InputAudioRecording",
+        filename,
+        content_type,
+        file_bytes,
+    )
+    upstream = UrlRequest(
+        upstream_url,
+        data=body,
+        method="POST",
+        headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
+    )
+    return _proxy_response(upstream)
 
 
 if settings.game_root_dir is not None:

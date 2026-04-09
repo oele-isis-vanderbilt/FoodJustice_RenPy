@@ -409,7 +409,6 @@ default tagBuckets = {
 default note_id_counter = 0
 default edited_note_id = None
 default argument_edits = 0
-default customnotecount = 0
 default copied_argument = ""
 
 default new_note_text_template = "whats your evidence?"

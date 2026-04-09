@@ -13,6 +13,8 @@ class AppSettings(BaseSettings):
     jwt_secret: str
     azure_tts_key: Optional[str] = None
     azure_tts_region: str = "eastus"
+    foodjustice_ca_url: Optional[str] = None
+    foodjustice_asr_url: Optional[str] = None
 
     model_config = SettingsConfigDict(
         env_file=".env.app",
