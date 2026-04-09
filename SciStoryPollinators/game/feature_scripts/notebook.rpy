@@ -81,7 +81,11 @@ init python:
         text = re.sub(r"[\[\]]", " ", content)
 
         def matches(keyword):
-            pattern = r"\b{}\b".format(re.escape(keyword))
+            keyword_text = str(keyword).strip()
+            if keyword_text.isalpha() and " " not in keyword_text:
+                pattern = r"\b{}(?:s|es)?\b".format(re.escape(keyword_text))
+            else:
+                pattern = r"\b{}\b".format(re.escape(keyword_text))
             return re.search(pattern, text, flags=re.IGNORECASE)
 
         for bucket, keywords in bucket_map.items():
@@ -204,11 +208,10 @@ init python:
         if not allow_auto_tagging:
             note_record["auto_tagging_locked"] = True
         notebook.append(note_record)
-        # renpy.block_rollback()
         
         if note_type == "user-written":
             narrator.add_history(kind="adv", who="You wrote a note: ", what=content)
-        if note_type == "character-dialog":
+        elif note_type == "character-dialog":
             narrator.add_history(kind="adv", who="You saved a note from " + speaker + ": ", what=content)
         else:
             edited_note_id = None
@@ -239,6 +242,7 @@ init python:
 
         renpy.take_screenshot()
         renpy.save("1-1", save_name)
+        renpy.block_rollback()
 
         for achievement_fn in ("achieve_notes5", "achieve_notes10"):
             fn = globals().get(achievement_fn)
