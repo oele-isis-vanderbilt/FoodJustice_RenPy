@@ -22,19 +22,17 @@ WORKDIR /control
 
 COPY control-dashboard /control/control-dashboard
 
-RUN cd control-dashboard && npm install && npm run build
+RUN cd control-dashboard && npm ci && npm run build
 
 FROM python:3.12
 
-ARG RENPY_GAME_DIR="SciStoryTeacherDemo"
+ARG RENPY_GAME_DIR="SciStoryPollinators"
 
 WORKDIR /code
 
 COPY ./requirements.txt /code/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-
-RUN git clone https://github.com/oele-isis-vanderbilt/syncflow-python-client.git && cd syncflow-python-client && pip install .
 
 COPY --from=renpybuilder /game/${RENPY_GAME_DIR}1.0-dists /code/${RENPY_GAME_DIR}
 
