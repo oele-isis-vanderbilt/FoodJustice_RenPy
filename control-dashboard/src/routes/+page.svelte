@@ -1,12 +1,6 @@
 <script lang="ts">
 	import Footer from '$lib/components/footer.svelte';
 	import Navbar from '$lib/components/navbar.svelte';
-	import Settings from '$lib/components/syncflow-settings.svelte';
-	import type { PageData } from '$lib/types';
-
-	let { data }: { data: PageData } = $props();
-
-	let settings = data.settings;
 </script>
 
 <header
@@ -17,13 +11,6 @@
 <main
 	class="h-full min-w-0 flex-auto divide-y lg:static lg:max-h-full lg:overflow-visible dark:divide-gray-700 dark:bg-gray-900"
 >
-	<!-- <Settings
-		enableScreenShare={settings.enableScreenShare}
-		sessionName={settings.sessionName}
-		enabled={settings.enabled}
-		enableAudio={settings.enableAudio}
-		enableCamera={settings.enableCamera}
-	/> -->
 	<div class="container mx-auto p-2">
 		<p class="text-center text-gray-900 dark:text-gray-100">
 			Settings management is currently disabled. Please contact the administrator if you need to change any settings.
