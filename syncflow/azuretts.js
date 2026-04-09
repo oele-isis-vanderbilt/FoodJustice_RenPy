@@ -1,5 +1,5 @@
 class AzureTTS{
-    static playAzureAudio (utterance, voice, key, volume, rate, style, fallbackVoice) {
+    static playAzureAudio (utterance, voice, volume, rate, style, fallbackVoice) {
         window.AzureTtsRequestId = (window.AzureTtsRequestId || 0) + 1;
         const requestId = window.AzureTtsRequestId;
         if (window.AzureTtsAbortController) {
@@ -14,15 +14,9 @@ class AzureTTS{
             } catch (e) {}
         }
         const audio = document.createElement("audio");		
-        var url = "https://eastus.tts.speech.microsoft.com/cognitiveservices/v1";
-        const escapedUtterance = (utterance || "")
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
+        const url = "/tts/azure";
         const safeRate = (rate || "0%").toString();
         const safeStyle = (style || "").toString().trim();
-        const styleOpen = safeStyle ? "<mstts:express-as style=\"" + safeStyle + "\">" : "";
-        const styleClose = safeStyle ? "</mstts:express-as>" : "";
         const voicesToTry = [voice];
         if (fallbackVoice && fallbackVoice !== voice) {
             voicesToTry.push(fallbackVoice);
@@ -34,15 +28,17 @@ class AzureTTS{
                 return;
             }
             const voiceName = voicesToTry[index];
-            const ssml = "<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xmlns:mstts=\"http://www.w3.org/2001/mstts\" xml:lang=\"en-US\"><voice name=\"" + voiceName + "\">" + styleOpen + "<prosody rate=\"" + safeRate + "\">" + escapedUtterance + "</prosody>" + styleClose + "</voice></speak>";
 
             fetch(url, {
                 "headers": {
-                    "content-type": "application/ssml+xml",
-                    "Ocp-Apim-Subscription-Key": key,
-                    "X-Microsoft-OutputFormat": "audio-24khz-160kbitrate-mono-mp3"
+                    "content-type": "application/json"
                 },
-                "body": ssml,
+                "body": JSON.stringify({
+                    utterance: utterance || "",
+                    voice: voiceName,
+                    rate: safeRate,
+                    style: safeStyle
+                }),
                 "method": "POST",
                 "signal": abortSignal,
             })

@@ -1,5 +1,4 @@
-# AUDIO 
-define azureKey = "3da59f8a4fc643ffbec6e4c076c77b7b"
+# AUDIO
 define fallbackTtsVoice = "en-US-JennyNeural"
 define fallbackTtsRate = "0%"
 
@@ -60,7 +59,7 @@ init python:
                 if (typeof window.playAzureAudio === "function" && typeof window.stopAzureAudio === "function") {
                     return 1;
                 }
-                window.playAzureAudio = function(utterance, voice, key, volume, rate, style) {
+                window.playAzureAudio = function(utterance, voice, volume, rate, style) {
                     window.AzureTtsRequestId = (window.AzureTtsRequestId || 0) + 1;
                     const requestId = window.AzureTtsRequestId;
                     if (window.AzureTtsAbortController) {
@@ -75,24 +74,19 @@ init python:
                         } catch (e) {}
                     }
                     const audio = document.createElement("audio");
-                    const url = "https://eastus.tts.speech.microsoft.com/cognitiveservices/v1";
-                    const escapedUtterance = (utterance || "")
-                        .replace(/&/g, "&amp;")
-                        .replace(/</g, "&lt;")
-                        .replace(/>/g, "&gt;");
                     const safeRate = (rate || "0%").toString();
                     const safeStyle = (style || "").toString().trim();
-                    const styleOpen = safeStyle ? "<mstts:express-as style=\\"" + safeStyle + "\\">" : "";
-                    const styleClose = safeStyle ? "</mstts:express-as>" : "";
-                    const ssml = "<speak version=\\"1.0\\" xmlns=\\"http://www.w3.org/2001/10/synthesis\\" xmlns:mstts=\\"http://www.w3.org/2001/mstts\\" xml:lang=\\"en-US\\"><voice name=\\"" + voice + "\\">" + styleOpen + "<prosody rate=\\"" + safeRate + "\\">" + escapedUtterance + "</prosody>" + styleClose + "</voice></speak>";
 
-                    fetch(url, {
+                    fetch("/tts/azure", {
                         "headers": {
-                            "content-type": "application/ssml+xml",
-                            "Ocp-Apim-Subscription-Key": key,
-                            "X-Microsoft-OutputFormat": "audio-24khz-160kbitrate-mono-mp3"
+                            "content-type": "application/json"
                         },
-                        "body": ssml,
+                        "body": JSON.stringify({
+                            utterance: utterance || "",
+                            voice: voice,
+                            rate: safeRate,
+                            style: safeStyle
+                        }),
                         "method": "POST",
                         "signal": abortSignal
                     })
@@ -163,10 +157,9 @@ init python:
                 resolved_voice = tts_profile["voice"]
                 resolved_rate = speech_rate if speech_rate is not None else tts_profile["rate"]
                 resolved_style = speaking_style if speaking_style is not None else tts_profile["style"]
-                js_call = "window.playAzureAudio({}, {}, {}, 100, {}, {});".format(
+                js_call = "window.playAzureAudio({}, {}, 100, {}, {});".format(
                     json.dumps(dialogLine or ""),
                     json.dumps(resolved_voice),
-                    json.dumps(azureKey),
                     json.dumps(str(resolved_rate)),
                     json.dumps(str(resolved_style or "")),
                 )

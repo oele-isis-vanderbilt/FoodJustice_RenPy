@@ -11,6 +11,8 @@ class AppSettings(BaseSettings):
     game_root_dir: Optional[str] = None
     admin_build_dir: Optional[str] = None
     jwt_secret: str
+    azure_tts_key: Optional[str] = None
+    azure_tts_region: str = "eastus"
 
     model_config = SettingsConfigDict(
         env_file=".env.app",
@@ -23,6 +25,13 @@ class LogEntry(BaseModel):
     user: str
     view: Optional[str] = None
     payload: Optional[Dict[str, Any]] = None
+
+
+class AzureTtsRequest(BaseModel):
+    utterance: str
+    voice: str
+    rate: str = "0%"
+    style: str = ""
 
 
 class SyncflowSettings(BaseSettings):
