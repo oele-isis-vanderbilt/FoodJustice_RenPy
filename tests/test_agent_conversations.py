@@ -4,15 +4,23 @@ import pytest
 
 
 def _prep_agent_state(eca_module):
-    eca_module.notebook = [{"id": 1}, {"id": 2}]
+    eca_module.notebook = [
+        {"id": 1, "type": "user-written"},
+        {"id": 2, "type": "character-dialog"},
+    ]
     eca_module.spoken_list = ["Elliot", "Tulip"]
     eca_module.visited_list = ["Garden", "Empty Lot"]
-    eca_module.customnotecount = 1
     eca_module.argument_attempts = 2
     eca_module.currentlocation = "garden"
+    eca_module.current_user = "test-user"
     history = []
     eca_module.narrator = SimpleNamespace(
         add_history=lambda **kwargs: history.append(kwargs)
+    )
+    eca_module.record_history_entry = (
+        lambda who=None, what="", kind="adv": history.append(
+            {"kind": kind, "who": who, "what": what}
+        )
     )
     return history
 
@@ -39,51 +47,38 @@ def test_agent_setup_builds_context(
     state = payload["gameState"]
     assert state["contextType"] == ca_type
     assert state["numNotes"] == len(eca_module.notebook)
-    assert state["customNotes"] == eca_module.customnotecount
+    assert state["customNotes"] == 1
     assert state["currentSpeaker"] == character
     assert state["spokeToNPC"] == ", ".join(eca_module.spoken_list)
     assert state["visitLocation"] == ", ".join(eca_module.visited_list)
     assert state["currentLocation"] == eca_module.currentlocation
-    if expect_argument:
-        assert state["argument"] == utterance
-    else:
-        assert state["argument"] == ""
+    assert state["argument"] == ""
 
-    assert payload["agent_role"] == ca_type
-    assert payload["agent_id"] == llama
-    assert payload["user_query"] == utterance
-    if expect_argument:
-        assert payload["query"] == "argument evaluation"
-    else:
-        assert payload["query"] == utterance
+    assert payload["userID"] == eca_module.current_user
+    assert payload["query"] == utterance
 
     assert history, "Player utterance should be recorded in narrator history."
 
 
-# Validates that long LLM replies are split into chunks while short/plain ones stay intact.
-def test_eca_length_check_handles_varied_llm_responses(eca_module):
+# Validates that long LLM replies are split into sentence chunks while short/plain ones stay intact.
+def test_split_eca_sentences_handles_varied_llm_responses(eca_module):
     long_response = (
         "First sentence offers praise. Second sentence gives advice. "
         "Third sentence elaborates on evidence. " * 5
     )
-    split, first, second = eca_module.eca_length_check(long_response)
-    assert split is True
-    assert first.endswith(".")
-    assert second
+    sentences = eca_module.split_eca_sentences(long_response)
+    assert len(sentences) > 2
+    assert sentences[0].endswith(".")
 
     short_response = "Great job!"
-    split, first, second = eca_module.eca_length_check(short_response)
-    assert split is False
-    assert first == second == short_response
+    sentences = eca_module.split_eca_sentences(short_response)
+    assert sentences == [short_response]
 
     no_period_response = "This response has no punctuation despite being long" * 5
-    split, first, second = eca_module.eca_length_check(no_period_response)
-    assert split is False
-    assert first == second == no_period_response
+    sentences = eca_module.split_eca_sentences(no_period_response)
+    assert sentences == [no_period_response]
 
 
-# Ensures missing/None responses from external ECAs still return safe strings.
-def test_eca_length_check_handles_missing_response(eca_module):
-    split, first, second = eca_module.eca_length_check(None)
-    assert split is False
-    assert first == second == ""
+# Ensures missing/None responses from external ECAs still return safe chunks.
+def test_split_eca_sentences_handles_missing_response(eca_module):
+    assert eca_module.split_eca_sentences(None) == []

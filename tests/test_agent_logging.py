@@ -39,15 +39,23 @@ def test_label_callback_updates_current_label(logging_module):
 
 # Spot-checks agent_setup payload contents for argument-sharing contexts.
 def test_agent_setup_argument_context(eca_module, renpy_module):
-    eca_module.notebook = [{"id": 1}, {"id": 2}]
+    eca_module.notebook = [
+        {"id": 1, "type": "user-written"},
+        {"id": 2, "type": "character-dialog"},
+    ]
     eca_module.spoken_list = ["Elliot", "Riley"]
     eca_module.visited_list = ["Garden", "Food Lab"]
-    eca_module.customnotecount = 1
     eca_module.argument_attempts = 3
     eca_module.currentlocation = "garden"
+    eca_module.current_user = "test-user"
     history = []
     eca_module.narrator = SimpleNamespace(
         add_history=lambda **kwargs: history.append(kwargs)
+    )
+    eca_module.record_history_entry = (
+        lambda who=None, what="", kind="adv": history.append(
+            {"kind": kind, "who": who, "what": what}
+        )
     )
 
     link, payload = eca_module.agent_setup(
@@ -55,22 +63,18 @@ def test_agent_setup_argument_context(eca_module, renpy_module):
     )
 
     assert link.endswith("/foodjustice/respond")
-    assert payload["agent_role"] == "FoodJustice_RileyEvaluation"
-    assert payload["agent_id"] == "riley"
-    assert payload["user_query"] == "Text"
-    assert payload["query"] == "argument evaluation"
+    assert payload["userID"] == "test-user"
+    assert payload["query"] == "Text"
     assert payload["gameState"]["contextType"] == "FoodJustice_RileyEvaluation"
-    assert payload["gameState"]["agent_role"] == "FoodJustice_RileyEvaluation"
-    assert payload["gameState"]["agent_id"] == "riley"
     assert payload["gameState"]["numNotes"] == 2
-    assert payload["gameState"]["argument"] == "Text"
+    assert payload["gameState"]["customNotes"] == 1
+    assert payload["gameState"]["argument"] == ""
     assert history, "Narrator history should capture the utterance."
 
 
 # Asserts long responses are split into sequential voice lines for playback.
-def test_eca_length_check_splits_long_response(eca_module):
+def test_split_eca_sentences_splits_long_response(eca_module):
     long_response = ("Sentence one. Sentence two is also here. Sentence three continues. " * 5).strip()
-    split, first, second = eca_module.eca_length_check(long_response)
-    assert split is True
-    assert first.endswith(".")
-    assert second
+    sentences = eca_module.split_eca_sentences(long_response)
+    assert len(sentences) > 2
+    assert sentences[0].endswith(".")
