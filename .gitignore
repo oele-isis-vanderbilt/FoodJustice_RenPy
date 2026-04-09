@@ -3,6 +3,7 @@
 ########################################
 cache/
 saves/
+.DS_Store
 
 
 # Compiled source #
@@ -16,6 +17,7 @@ saves/
 
 *.rpyc
 *.rpymc
+*.rpyc.bak
 
 
 # The log file and other misc things #
@@ -24,6 +26,7 @@ log.txt
 errors.txt
 traceback.txt
 files.txt
+gamelog.txt
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
