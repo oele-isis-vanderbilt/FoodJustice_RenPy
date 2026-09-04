@@ -76,6 +76,10 @@ init python:
             finish_generated_dialogue()
 
     def play_generated_dialogue(speaker, lines, kind="eca", metadata=None):
+        print(speaker)
+        print(lines)
+        print(kind)
+        print(metadata)
         if speaker is None or lines is None:
             return
         if isinstance(lines, (str, bytes)):

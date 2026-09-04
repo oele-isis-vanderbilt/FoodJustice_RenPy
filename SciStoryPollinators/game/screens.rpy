@@ -345,8 +345,8 @@ screen quick_menu():
             textbutton _("Q.Load") action [Function(log_ui_event, "click", screen="quick_menu", element="Q.Load"), QuickLoad()]
             textbutton _("Game Log") action [Function(log_ui_event, "click", screen="quick_menu", element="Game Log"), Function(download_gamelog_file)]
             textbutton _("Prefs") action [Function(log_ui_event, "click", screen="quick_menu", element="Prefs"), ShowMenu('preferences')]
-            # textbutton _("Dev") action [Function(log_ui_event, "click", screen="quick_menu", element="Dev"), Function(toggle_dev_screen)]   # <-- Add this line
-            # textbutton _("QA Panel") action [Function(log_ui_event, "click", screen="quick_menu", element="QA Panel"), Call("toggle_qa_panel")]
+            textbutton _("Dev") action [Function(log_ui_event, "click", screen="quick_menu", element="Dev"), Function(toggle_dev_screen)]   # <-- Add this line
+            textbutton _("QA Panel") action [Function(log_ui_event, "click", screen="quick_menu", element="QA Panel"), Call("toggle_qa_panel")]
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.

@@ -8,6 +8,9 @@ define useAudio = True
 init python:
     import json
     import re
+    import requests
+    import threading
+    import os
 
     def _default_tts_profile():
         profile = getattr(renpy.store, "default_character_tts_profile", None)
@@ -44,133 +47,141 @@ init python:
         return _default_tts_profile()
 
     def _tts_feature_active():
-        return bool(
+        testbool = bool(
             useAudio
             and getattr(renpy.store, "tts_enabled", True)
             and getattr(renpy.store, "dialogue_audio_enabled", True)
         )
+        return testbool
 
-    def _ensure_web_tts_bridge():
-        if not renpy.emscripten:
-            return False
+    # def _ensure_web_tts_bridge():
+    #     if not renpy.emscripten:
+    #         return False
 
-        import emscripten
-        return bool(emscripten.run_script_int("""
-            (function() {
-                if (typeof window.playAzureAudio === "function" && typeof window.stopAzureAudio === "function") {
-                    return 1;
-                }
-                window.playAzureAudio = function(utterance, voice, key, volume, rate, style) {
-                    window.AzureTtsRequestId = (window.AzureTtsRequestId || 0) + 1;
-                    const requestId = window.AzureTtsRequestId;
-                    if (window.AzureTtsAbortController) {
-                        try { window.AzureTtsAbortController.abort(); } catch (e) {}
-                    }
-                    window.AzureTtsAbortController = new AbortController();
-                    const abortSignal = window.AzureTtsAbortController.signal;
-                    if (window.AzureAudio != null) {
-                        try {
-                            window.AzureAudio.pause();
-                            window.AzureAudio.currentTime = 0;
-                        } catch (e) {}
-                    }
-                    const audio = document.createElement("audio");
-                    const url = "https://eastus.tts.speech.microsoft.com/cognitiveservices/v1";
-                    const escapedUtterance = (utterance || "")
-                        .replace(/&/g, "&amp;")
-                        .replace(/</g, "&lt;")
-                        .replace(/>/g, "&gt;");
-                    const safeRate = (rate || "0%").toString();
-                    const safeStyle = (style || "").toString().trim();
-                    const styleOpen = safeStyle ? "<mstts:express-as style=\\"" + safeStyle + "\\">" : "";
-                    const styleClose = safeStyle ? "</mstts:express-as>" : "";
-                    const ssml = "<speak version=\\"1.0\\" xmlns=\\"http://www.w3.org/2001/10/synthesis\\" xmlns:mstts=\\"http://www.w3.org/2001/mstts\\" xml:lang=\\"en-US\\"><voice name=\\"" + voice + "\\">" + styleOpen + "<prosody rate=\\"" + safeRate + "\\">" + escapedUtterance + "</prosody>" + styleClose + "</voice></speak>";
+    #     import emscripten
+    #     return bool(emscripten.run_script_int("""
+    #         (function() {
+    #             if (typeof window.playAzureAudio === "function" && typeof window.stopAzureAudio === "function") {
+    #                 return 1;
+    #             }
+    #             window.playAzureAudio = function(utterance, voice, key, volume, rate, style) {
+    #                 window.AzureTtsRequestId = (window.AzureTtsRequestId || 0) + 1;
+    #                 const requestId = window.AzureTtsRequestId;
+    #                 if (window.AzureTtsAbortController) {
+    #                     try { window.AzureTtsAbortController.abort(); } catch (e) {}
+    #                 }
+    #                 window.AzureTtsAbortController = new AbortController();
+    #                 const abortSignal = window.AzureTtsAbortController.signal;
+    #                 if (window.AzureAudio != null) {
+    #                     try {
+    #                         window.AzureAudio.pause();
+    #                         window.AzureAudio.currentTime = 0;
+    #                     } catch (e) {}
+    #                 }
+    #                 const audio = document.createElement("audio");
+    #                 const url = "https://eastus.tts.speech.microsoft.com/cognitiveservices/v1";
+    #                 const escapedUtterance = (utterance || "")
+    #                     .replace(/&/g, "&amp;")
+    #                     .replace(/</g, "&lt;")
+    #                     .replace(/>/g, "&gt;");
+    #                 const safeRate = (rate || "0%").toString();
+    #                 const safeStyle = (style || "").toString().trim();
+    #                 const styleOpen = safeStyle ? "<mstts:express-as style=\\"" + safeStyle + "\\">" : "";
+    #                 const styleClose = safeStyle ? "</mstts:express-as>" : "";
+    #                 const ssml = "<speak version=\\"1.0\\" xmlns=\\"http://www.w3.org/2001/10/synthesis\\" xmlns:mstts=\\"http://www.w3.org/2001/mstts\\" xml:lang=\\"en-US\\"><voice name=\\"" + voice + "\\">" + styleOpen + "<prosody rate=\\"" + safeRate + "\\">" + escapedUtterance + "</prosody>" + styleClose + "</voice></speak>";
 
-                    fetch(url, {
-                        "headers": {
-                            "content-type": "application/ssml+xml",
-                            "Ocp-Apim-Subscription-Key": key,
-                            "X-Microsoft-OutputFormat": "audio-24khz-160kbitrate-mono-mp3"
-                        },
-                        "body": ssml,
-                        "method": "POST",
-                        "signal": abortSignal
-                    })
-                    .then(resp => {
-                        if (!resp.ok) {
-                            throw new Error("Azure TTS request failed with status " + resp.status);
-                        }
-                        return resp.blob();
-                    })
-                    .then(URL.createObjectURL)
-                    .then(blobUrl => {
-                        if (requestId !== window.AzureTtsRequestId) {
-                            try { URL.revokeObjectURL(blobUrl); } catch (e) {}
-                            throw new Error("Azure TTS superseded by newer request.");
-                        }
-                        audio.src = blobUrl;
-                        audio.volume = volume / 100;
-                        return audio.play();
-                    })
-                    .then(() => {
-                        if (requestId !== window.AzureTtsRequestId) {
-                            try {
-                                audio.pause();
-                                audio.currentTime = 0;
-                            } catch (e) {}
-                            return;
-                        }
-                        window.AzureAudio = audio;
-                    })
-                    .catch(err => {
-                        if (abortSignal.aborted) {
-                            return;
-                        }
-                        console.error("Azure TTS playback failed:", err);
-                    });
-                };
+    #                 fetch(url, {
+    #                     "headers": {
+    #                         "content-type": "application/ssml+xml",
+    #                         "Ocp-Apim-Subscription-Key": key,
+    #                         "X-Microsoft-OutputFormat": "audio-24khz-160kbitrate-mono-mp3"
+    #                     },
+    #                     "body": ssml,
+    #                     "method": "POST",
+    #                     "signal": abortSignal
+    #                 })
+    #                 .then(resp => {
+    #                     if (!resp.ok) {
+    #                         throw new Error("Azure TTS request failed with status " + resp.status);
+    #                     }
+    #                     return resp.blob();
+    #                 })
+    #                 .then(URL.createObjectURL)
+    #                 .then(blobUrl => {
+    #                     if (requestId !== window.AzureTtsRequestId) {
+    #                         try { URL.revokeObjectURL(blobUrl); } catch (e) {}
+    #                         throw new Error("Azure TTS superseded by newer request.");
+    #                     }
+    #                     audio.src = blobUrl;
+    #                     audio.volume = volume / 100;
+    #                     return audio.play();
+    #                 })
+    #                 .then(() => {
+    #                     if (requestId !== window.AzureTtsRequestId) {
+    #                         try {
+    #                             audio.pause();
+    #                             audio.currentTime = 0;
+    #                         } catch (e) {}
+    #                         return;
+    #                     }
+    #                     window.AzureAudio = audio;
+    #                 })
+    #                 .catch(err => {
+    #                     if (abortSignal.aborted) {
+    #                         return;
+    #                     }
+    #                     console.error("Azure TTS playback failed:", err);
+    #                 });
+    #             };
 
-                window.stopAzureAudio = function() {
-                    window.AzureTtsRequestId = (window.AzureTtsRequestId || 0) + 1;
-                    if (window.AzureTtsAbortController) {
-                        try { window.AzureTtsAbortController.abort(); } catch (e) {}
-                    }
-                    if (window.AzureAudio != null) {
-                        window.AzureAudio.pause();
-                        window.AzureAudio.currentTime = 0;
-                    }
-                };
+    #             window.stopAzureAudio = function() {
+    #                 window.AzureTtsRequestId = (window.AzureTtsRequestId || 0) + 1;
+    #                 if (window.AzureTtsAbortController) {
+    #                     try { window.AzureTtsAbortController.abort(); } catch (e) {}
+    #                 }
+    #                 if (window.AzureAudio != null) {
+    #                     window.AzureAudio.pause();
+    #                     window.AzureAudio.currentTime = 0;
+    #                 }
+    #             };
 
-                return 1;
-            })();
-        """))
+    #             return 1;
+    #         })();
+    #     """))
 
-    def initialize_web_tts_bridge():
-        if _tts_feature_active() and renpy.emscripten:
-            try:
-                _ensure_web_tts_bridge()
-            except Exception:
-                # Keep gameplay running even if bridge initialization fails.
-                pass
+    # def initialize_web_tts_bridge():
+    #     if _tts_feature_active() and renpy.emscripten:
+    #         try:
+    #             _ensure_web_tts_bridge()
+    #         except Exception:
+    #             # Keep gameplay running even if bridge initialization fails.
+    #             pass
 
     def playAudio(dialogLine: str, speaker_name=None, speech_rate=None, speaking_style=None):
+        print("play audio")
+
         if _tts_feature_active():
-            if renpy.emscripten:
-                if not _ensure_web_tts_bridge():
-                    return
-                import emscripten
-                tts_profile = _tts_profile_for_speaker(speaker_name)
-                resolved_voice = tts_profile["voice"]
-                resolved_rate = speech_rate if speech_rate is not None else tts_profile["rate"]
-                resolved_style = speaking_style if speaking_style is not None else tts_profile["style"]
-                js_call = "window.playAzureAudio({}, {}, {}, 100, {}, {});".format(
-                    json.dumps(dialogLine or ""),
-                    json.dumps(resolved_voice),
-                    json.dumps(azureKey),
-                    json.dumps(str(resolved_rate)),
-                    json.dumps(str(resolved_style or "")),
-                )
-                emscripten.run_script_int(js_call)
+            #add GPT audio gen
+            play_openai_tts(dialogLine, speaker_name)
+
+
+
+            # if renpy.emscripten:
+            #     if not _ensure_web_tts_bridge():
+            #         return
+            #     import emscripten
+            #     tts_profile = _tts_profile_for_speaker(speaker_name)
+            #     resolved_voice = tts_profile["voice"]
+            #     resolved_rate = speech_rate if speech_rate is not None else tts_profile["rate"]
+            #     resolved_style = speaking_style if speaking_style is not None else tts_profile["style"]
+            #     js_call = "window.playAzureAudio({}, {}, {}, 100, {}, {});".format(
+            #         json.dumps(dialogLine or ""),
+            #         json.dumps(resolved_voice),
+            #         json.dumps(azureKey),
+            #         json.dumps(str(resolved_rate)),
+            #         json.dumps(str(resolved_style or "")),
+            #     )
+            #     emscripten.run_script_int(js_call)
 
     _character_tts_enabled = False
     _last_dialogue_signature = None
@@ -236,10 +247,10 @@ init python:
         if not _tts_feature_active():
             _character_tts_enabled = False
             return False
-        if not renpy.emscripten:
-            _character_tts_enabled = False
-            return False
-        initialize_web_tts_bridge()
+        #if not renpy.emscripten:
+        #    _character_tts_enabled = False
+        #    return False
+        #initialize_web_tts_bridge()
         _character_tts_enabled = True
         _last_dialogue_signature = None
         return True
@@ -274,13 +285,79 @@ init python:
                 import emscripten
                 test = emscripten.run_script_int(f"window.microphoneUtil.StopRecordingJS();")
 
-init 1 python:
-    initialize_web_tts_bridge()
+
+
+    def play_openai_tts(text, voice="alloy"):
+        print(text)
+        print(voice)
+        print(open_ai_key)
+        """Runs in a background thread to fetch audio from OpenAI."""
+        url = "https://api.openai.com/v1/audio/speech"
+        headers = {
+            "Authorization": f"Bearer {open_ai_key}",
+            "Content-Type": "application/json"
+        }
+        data = {
+            "model": "tts-1",
+            "input": text,
+            "voice": voice
+        }
+        
+        payload = {
+            "model": "tts-1",
+            "input": text,
+            "voice": voice,
+            "response_format": "mp3" # Ren'Py handles MP3 seamlessly
+        }
+
+        print(headers)
+        print(data)
+        print(payload)
+        
+        try:
+            # 1. Fetch raw audio bytes via Ren'Py's native HTTP utility
+            audio_bytes = renpy.fetch(
+                url, 
+                method="POST", 
+                headers=headers, 
+                json=payload, 
+                result="bytes",
+                timeout=10
+            )
+
+
+            print(audio_bytes)
+            
+            # 2. Convert the byte string into an in-memory file-like object
+            memory_file = io.BytesIO(audio_bytes)
+            print(memory_file)
+            # 3. Stream the memory file directly to Ren'Py's voice channel
+            # This plays the audio without writing anything to the user's disk
+            renpy.sound.play(memory_file, channel="voice")
+            
+        except Exception as e:
+            # Handle potential connection issues or invalid API keys gracefully
+            print("TTS Error: " + str(e))
+            renpy.notify("TTS Error: " + str(e))
+
+
+
+
+
+
+# init 1 python:
+#     initialize_web_tts_bridge()
 
 screen my_button_screen():
     $ recording_tooltip = None
     if not renpy.emscripten:
         $ recording_tooltip = "This feature isn't available on desktop."
+
+
+
+
+
+
 
     # vbox:
     #     spacing 20 

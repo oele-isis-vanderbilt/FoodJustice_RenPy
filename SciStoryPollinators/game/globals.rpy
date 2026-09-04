@@ -420,3 +420,6 @@ default notebook_unlocked = False
 default notebook_argument = "Draft your argument here."
 default last_notebook_argument = "Draft your argument here."
 default auto_tag_user_notes = True
+
+
+default open_ai_key = ""
