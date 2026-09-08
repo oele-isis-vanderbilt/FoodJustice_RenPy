@@ -423,3 +423,4 @@ default auto_tag_user_notes = True
 
 
 default open_ai_key = ""
+default agent_sidecar = None

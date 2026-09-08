@@ -1,5 +1,4 @@
 label start:
-
     # if useAudio: 
     #     play music "JaracandaLoop.wav" volume 0.1
 
@@ -10,7 +9,8 @@ label start:
     hide screen learningbuttons
     $ enable_character_tts()
     $ open_ai_key = loadAPIKey()
-    $ start_agent_sidecar(open_ai_key)
+    $ agent_sidecar = start_agent_sidecar(open_ai_key)
+    $ print(agent_sidecar)
 
     $ current_user = safe_renpy_input("Please enter your player ID")
     
@@ -191,16 +191,24 @@ label start:
 
                 python:
                     try:
-                        ecaresponse = "testing audio" #getGPTResponse(ca_json)
+                        ecaresponse = getGPTResponse(ca_json)
                     except Exception as e:
                         print(e)
                         log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
                         ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers your question!"
                 
                 $ sentences = split_eca_sentences(ecaresponse)
-                $ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "GameHelp"})
+                $ i = 0
+                while i < len(sentences):
+                    $ line = sentences[i]
+                    $ audio = play_openai_tts(line, "coral")
+                    play sound audio
+                    t "[line]"
+                    $ i+= 1
 
-                $ stopAudio()
+                #$ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "GameHelp"})
+
+                #$ stopAudio()
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
                 
@@ -2111,8 +2119,14 @@ label start:
 
         jump end
 
+
+    label quit_hook:
+        $ stop_agent_sidecar(agent_sidecar)
+        $ renpy.quit()        
+
     label end:
         narrator "Thanks for playing! Raise your hand to let the researchers know that you're finished."
+        $ stop_agent_sidecar(agent_sidecar)
 
     # This ends the game.
 

@@ -11108,3 +11108,2660 @@ love questions! What's your question?", "screen": "question_asking",
 [], "visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
 {"action": "Player input to ECA: dfgdfg", "timestamp": "2026-09-02 18:52:26",
 "user": "dfghdfgh", "view": "tulipchat", "payload": null}
+--- Tue Sep  8 11:46:42 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 11:46:44", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+11:46:46", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 11:47:44", "user":
+"Unknown", "view": "start", "payload": {"text": "asdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:47:47", "user":
+"asdf", "view": "start", "payload": {"text": "Hello bee friend!", "timestamp":
+1788882467.885322, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:47:49", "user":
+"asdf", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788882469.5292356, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 11:47:49", "user":
+"asdf", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:47:51", "user":
+"asdf", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788882471.1775079, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+11:47:51", "user": "asdf", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 11:47:51", "user":
+"asdf", "view": "begin", "payload": {"location": "emptylot", "source": null,
+"description": "Empty Lot"}}
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+{"action": "UIEvent", "timestamp": "2026-09-08 11:47:52", "user": "asdf",
+"view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 11:47:52", "user": "asdf", "view": "tulipchat_from_button",
+"payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+11:47:52", "user": "asdf", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:47:55", "user":
+"asdf", "view": "tulipchat", "payload": {"text": "I need help with something
+else.", "timestamp": 1788882475.9236639, "delivery": "menu", "is_question":
+false, "question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 11:47:55", "user": "asdf",
+"view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 11:47:58", "user": "asdf",
+"view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 4}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 11:47:58", "user": "asdf",
+"view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 11:47:58", "user":
+"asdf", "view": "tulipchat", "payload": {"text": "test", "prompt": "I love
+questions! What's your question?", "screen": "question_asking", "delivery":
+"manual", "is_question": true, "metadata": {"source": "safe_renpy_input",
+"stripped": "test"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 11:47:58", "user":
+"asdf", "view": "tulip", "payload": {"userID": "asdf", "query": "test",
+"gameState": {"contextType": "GameHelp", "numNotes": 0, "customNotes": 0,
+"numArgument": 0, "currentSpeaker": "tulip", "spokeToNPC": [],
+"visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: test", "timestamp": "2026-09-08 11:47:58",
+"user": "asdf", "view": "tulipchat", "payload": null}
+{"action": "PlayerECAResponse", "timestamp": "2026-09-08 11:48:01", "user":
+"asdf", "view": "tulip", "payload": {"eca_response": "testing audio"}}
+Tulip
+Any more questions?
+
+Choice: I have another question.
+Choice: No, that's all.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:50:13", "user":
+"asdf", "view": "tulipchat", "payload": {"text": "I have another question.",
+"timestamp": 1788882613.8357759, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I have another question.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 11:50:13", "user": "asdf",
+"view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 11:50:21", "user": "asdf",
+"view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 13}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 11:50:21", "user": "asdf",
+"view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 11:50:21", "user":
+"asdf", "view": "tulipchat", "payload": {"text": "testing audio", "prompt":
+"What's your question?", "screen": "question_asking", "delivery": "manual",
+"is_question": true, "metadata": {"source": "safe_renpy_input", "stripped":
+"testing audio"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 11:50:21", "user":
+"asdf", "view": "tulip", "payload": {"userID": "asdf", "query": "testing
+audio", "gameState": {"contextType": "GameHelp_Collaboration", "numNotes": 0,
+"customNotes": 0, "numArgument": 0, "currentSpeaker": "tulip", "spokeToNPC":
+[], "visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: testing audio", "timestamp": "2026-09-08
+11:50:21", "user": "asdf", "view": "tulipchat", "payload": null}
+Tulip
+It seems like you might be off-task.
+
+Tulip
+Let's focus on the learning activity at hand.
+
+Tulip
+If you have any questions or need help with the topic, feel free to ask!
+
+{"action": "PlayerECAResponse", "timestamp": "2026-09-08 11:50:36", "user":
+"asdf", "view": "tulip", "payload": {"eca_response": "It seems like you might
+be off-task. Let's focus on the learning activity at hand. If you have any
+questions or need help with the topic, feel free to ask!"}}
+Tulip
+Let me know if you need anything else!
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 11:50:39", "user": "asdf",
+"view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 11:50:39", "user": "asdf", "view": "tulipchat_from_button",
+"payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+11:50:39", "user": "asdf", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:50:42", "user":
+"asdf", "view": "tulipchat", "payload": {"text": "I need help with something
+else.", "timestamp": 1788882642.1484778, "delivery": "menu", "is_question":
+false, "question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 11:50:42", "user": "asdf",
+"view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 11:50:47", "user": "asdf",
+"view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 13}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 11:50:47", "user": "asdf",
+"view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 11:50:47", "user":
+"asdf", "view": "tulipchat", "payload": {"text": "testing audio", "prompt": "I
+love questions! What's your question?", "screen": "question_asking",
+"delivery": "manual", "is_question": true, "metadata": {"source":
+"safe_renpy_input", "stripped": "testing audio"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 11:50:47", "user":
+"asdf", "view": "tulip", "payload": {"userID": "asdf", "query": "testing
+audio", "gameState": {"contextType": "GameHelp", "numNotes": 0, "customNotes":
+0, "numArgument": 0, "currentSpeaker": "tulip", "spokeToNPC": [],
+"visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: testing audio", "timestamp": "2026-09-08
+11:50:47", "user": "asdf", "view": "tulipchat", "payload": null}
+{"action": "PlayerECAResponse", "timestamp": "2026-09-08 11:50:50", "user":
+"asdf", "view": "tulip", "payload": {"eca_response": "testing audio"}}
+--- Tue Sep  8 11:55:51 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 11:55:52", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+11:55:57", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 11:56:01", "user":
+"Unknown", "view": "start", "payload": {"text": "asdfasdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdfasdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:56:08", "user":
+"asdfasdf", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788882968.1404252, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:56:09", "user":
+"asdfasdf", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788882969.823782, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 11:56:09", "user":
+"asdfasdf", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:56:11", "user":
+"asdfasdf", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788882971.3638115, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+11:56:11", "user": "asdfasdf", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 11:56:11", "user":
+"asdfasdf", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+{"action": "UIEvent", "timestamp": "2026-09-08 11:56:12", "user": "asdfasdf",
+"view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 11:56:12", "user": "asdfasdf", "view": "tulipchat_from_button",
+"payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+11:56:12", "user": "asdfasdf", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:56:15", "user":
+"asdfasdf", "view": "tulipchat", "payload": {"text": "I need help with
+something else.", "timestamp": 1788882975.0873623, "delivery": "menu",
+"is_question": false, "question_target": null, "auto_generated": false,
+"origin": {"source": "script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 11:56:15", "user": "asdfasdf",
+"view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 11:56:21", "user": "asdfasdf",
+"view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 13}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 11:56:21", "user": "asdfasdf",
+"view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 11:56:21", "user":
+"asdfasdf", "view": "tulipchat", "payload": {"text": "testing audio",
+"prompt": "I love questions! What's your question?", "screen":
+"question_asking", "delivery": "manual", "is_question": true, "metadata":
+{"source": "safe_renpy_input", "stripped": "testing audio"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 11:56:21", "user":
+"asdfasdf", "view": "tulip", "payload": {"userID": "asdfasdf", "query":
+"testing audio", "gameState": {"contextType": "GameHelp", "numNotes": 0,
+"customNotes": 0, "numArgument": 0, "currentSpeaker": "tulip", "spokeToNPC":
+[], "visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: testing audio", "timestamp": "2026-09-08
+11:56:21", "user": "asdfasdf", "view": "tulipchat", "payload": null}
+{"action": "PlayerECAResponse", "timestamp": "2026-09-08 11:56:22", "user":
+"asdfasdf", "view": "tulip", "payload": {"eca_response": "testing audio"}}
+Tulip
+Any more questions?
+
+Choice: I have another question.
+Choice: No, that's all.
+
+--- Tue Sep  8 11:57:06 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 11:57:07", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+11:57:10", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 11:57:13", "user":
+"Unknown", "view": "start", "payload": {"text": "assdfasdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "assdfasdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:57:20", "user":
+"assdfasdf", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788883040.9180312, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:57:21", "user":
+"assdfasdf", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788883041.9253712, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 11:57:21", "user":
+"assdfasdf", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:57:22", "user":
+"assdfasdf", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788883042.8957355, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+11:57:23", "user": "assdfasdf", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 11:57:23", "user":
+"assdfasdf", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Notebook length: 0
+{"action": "UIEvent", "timestamp": "2026-09-08 11:57:24", "user": "assdfasdf",
+"view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 11:57:24", "user": "assdfasdf", "view": "tulipchat_from_button",
+"payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+11:57:24", "user": "assdfasdf", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 11:57:26", "user":
+"assdfasdf", "view": "tulipchat", "payload": {"text": "I need help with
+something else.", "timestamp": 1788883046.5059752, "delivery": "menu",
+"is_question": false, "question_target": null, "auto_generated": false,
+"origin": {"source": "script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 11:57:26", "user": "assdfasdf",
+"view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 11:57:31", "user": "assdfasdf",
+"view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 13}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 11:57:31", "user": "assdfasdf",
+"view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 11:57:31", "user":
+"assdfasdf", "view": "tulipchat", "payload": {"text": "testing audio",
+"prompt": "I love questions! What's your question?", "screen":
+"question_asking", "delivery": "manual", "is_question": true, "metadata":
+{"source": "safe_renpy_input", "stripped": "testing audio"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 11:57:31", "user":
+"assdfasdf", "view": "tulip", "payload": {"userID": "assdfasdf", "query":
+"testing audio", "gameState": {"contextType": "GameHelp", "numNotes": 0,
+"customNotes": 0, "numArgument": 0, "currentSpeaker": "tulip", "spokeToNPC":
+[], "visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: testing audio", "timestamp": "2026-09-08
+11:57:31", "user": "assdfasdf", "view": "tulipchat", "payload": null}
+{"action": "PlayerECAResponse", "timestamp": "2026-09-08 11:57:33", "user":
+"assdfasdf", "view": "tulip", "payload": {"eca_response": "testing audio"}}
+--- Tue Sep  8 12:00:32 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 12:00:32", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+12:00:34", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:00:39", "user":
+"Unknown", "view": "start", "payload": {"text": "dsgfsfdg  ssdfg ", "prompt":
+"Please enter your player ID", "screen": null, "delivery": "manual",
+"is_question": false, "metadata": {"source": "safe_renpy_input", "stripped":
+"dsgfsfdg  ssdfg"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:00:42", "user":
+"dsgfsfdg  ssdfg ", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788883242.5098028, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:00:43", "user":
+"dsgfsfdg  ssdfg ", "view": "start", "payload": {"text": "I live in the
+suburbs", "timestamp": 1788883243.460306, "delivery": "menu", "is_question":
+false, "question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 12:00:43", "user":
+"dsgfsfdg  ssdfg ", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:00:45", "user":
+"dsgfsfdg  ssdfg ", "view": "start", "payload": {"text": "I guess.",
+"timestamp": 1788883245.0270836, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+12:00:45", "user": "dsgfsfdg  ssdfg ", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 12:00:45", "user":
+"dsgfsfdg  ssdfg ", "view": "begin", "payload": {"location": "emptylot",
+"source": null, "description": "Empty Lot"}}
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+{"action": "UIEvent", "timestamp": "2026-09-08 12:00:46", "user": "dsgfsfdg
+ssdfg ", "view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 12:00:46", "user": "dsgfsfdg  ssdfg ", "view":
+"tulipchat_from_button", "payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+12:00:46", "user": "dsgfsfdg  ssdfg ", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:00:49", "user":
+"dsgfsfdg  ssdfg ", "view": "tulipchat", "payload": {"text": "I need help with
+something else.", "timestamp": 1788883249.0935752, "delivery": "menu",
+"is_question": false, "question_target": null, "auto_generated": false,
+"origin": {"source": "script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 12:00:49", "user": "dsgfsfdg
+ssdfg ", "view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:00:52", "user": "dsgfsfdg
+ssdfg ", "view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 15}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:00:52", "user": "dsgfsfdg
+ssdfg ", "view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:00:52", "user":
+"dsgfsfdg  ssdfg ", "view": "tulipchat", "payload": {"text": "sdf hgsfg hdfgh
+", "prompt": "I love questions! What's your question?", "screen":
+"question_asking", "delivery": "manual", "is_question": true, "metadata":
+{"source": "safe_renpy_input", "stripped": "sdf hgsfg hdfgh"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 12:00:52", "user":
+"dsgfsfdg  ssdfg ", "view": "tulip", "payload": {"userID": "dsgfsfdg  ssdfg ",
+"query": "sdf hgsfg hdfgh", "gameState": {"contextType": "GameHelp",
+"numNotes": 0, "customNotes": 0, "numArgument": 0, "currentSpeaker": "tulip",
+"spokeToNPC": [], "visitLocation": [], "currentLocation": "emptylot",
+"argument": ""}}}
+{"action": "Player input to ECA: sdf hgsfg hdfgh", "timestamp": "2026-09-08
+12:00:52", "user": "dsgfsfdg  ssdfg ", "view": "tulipchat", "payload": null}
+--- Tue Sep  8 12:01:45 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 12:01:46", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+12:01:51", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:01:55", "user":
+"Unknown", "view": "start", "payload": {"text": "sdfgsdfgdfg", "prompt":
+"Please enter your player ID", "screen": null, "delivery": "manual",
+"is_question": false, "metadata": {"source": "safe_renpy_input", "stripped":
+"sdfgsdfgdfg"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:01:57", "user":
+"sdfgsdfgdfg", "view": "start", "payload": {"text": "You're a talking bee??",
+"timestamp": 1788883317.8684492, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: You're a talking bee??
+
+???
+A honey bee, to be exact! But yes!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:01:59", "user":
+"sdfgsdfgdfg", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788883319.252013, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 12:01:59", "user":
+"sdfgsdfgdfg", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:02:00", "user":
+"sdfgsdfgdfg", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788883320.9833865, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+12:02:01", "user": "sdfgsdfgdfg", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 12:02:01", "user":
+"sdfgsdfgdfg", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Notebook length: 0
+{"action": "UIEvent", "timestamp": "2026-09-08 12:02:02", "user":
+"sdfgsdfgdfg", "view": "learningbuttons", "payload": {"event": "click",
+"screen": "learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 12:02:02", "user": "sdfgsdfgdfg", "view": "tulipchat_from_button",
+"payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+12:02:02", "user": "sdfgsdfgdfg", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:02:04", "user":
+"sdfgsdfgdfg", "view": "tulipchat", "payload": {"text": "I need help with
+something else.", "timestamp": 1788883324.5703, "delivery": "menu",
+"is_question": false, "question_target": null, "auto_generated": false,
+"origin": {"source": "script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 12:02:04", "user":
+"sdfgsdfgdfg", "view": "question_asking", "payload": {"event": "show",
+"screen": "question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:02:07", "user":
+"sdfgsdfgdfg", "view": "question_asking", "payload": {"event": "click",
+"screen": "question_asking", "element": "Ask Question", "payload":
+{"text_length": 14}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:02:07", "user":
+"sdfgsdfgdfg", "view": "question_asking", "payload": {"event": "hide",
+"screen": "question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:02:07", "user":
+"sdfgsdfgdfg", "view": "tulipchat", "payload": {"text": "sdfg sdfg sdfg ",
+"prompt": "I love questions! What's your question?", "screen":
+"question_asking", "delivery": "manual", "is_question": true, "metadata":
+{"source": "safe_renpy_input", "stripped": "sdfg sdfg sdfg"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 12:02:07", "user":
+"sdfgsdfgdfg", "view": "tulip", "payload": {"userID": "sdfgsdfgdfg", "query":
+"sdfg sdfg sdfg", "gameState": {"contextType": "GameHelp", "numNotes": 0,
+"customNotes": 0, "numArgument": 0, "currentSpeaker": "tulip", "spokeToNPC":
+[], "visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: sdfg sdfg sdfg", "timestamp": "2026-09-08
+12:02:07", "user": "sdfgsdfgdfg", "view": "tulipchat", "payload": null}
+{"action": "PlayerECAResponse", "timestamp": "2026-09-08 12:02:08", "user":
+"sdfgsdfgdfg", "view": "tulip", "payload": {"eca_response": "testing audio"}}
+--- Tue Sep  8 12:22:54 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 12:22:56", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+12:23:00", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:23:02", "user":
+"Unknown", "view": "start", "payload": {"text": "asdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:23:05", "user":
+"asdf", "view": "start", "payload": {"text": "Hello bee friend!", "timestamp":
+1788884585.362828, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:23:06", "user":
+"asdf", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788884586.3236096, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 12:23:06", "user":
+"asdf", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:23:07", "user":
+"asdf", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788884587.912693, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+12:23:08", "user": "asdf", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 12:23:08", "user":
+"asdf", "view": "begin", "payload": {"location": "emptylot", "source": null,
+"description": "Empty Lot"}}
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+{"action": "UIEvent", "timestamp": "2026-09-08 12:23:09", "user": "asdf",
+"view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 12:23:09", "user": "asdf", "view": "tulipchat_from_button",
+"payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+12:23:09", "user": "asdf", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:23:11", "user":
+"asdf", "view": "tulipchat", "payload": {"text": "I need help with something
+else.", "timestamp": 1788884591.5688288, "delivery": "menu", "is_question":
+false, "question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 12:23:11", "user": "asdf",
+"view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:23:13", "user": "asdf",
+"view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 12}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:23:13", "user": "asdf",
+"view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:23:13", "user":
+"asdf", "view": "tulipchat", "payload": {"text": "asdfasdfasdf", "prompt": "I
+love questions! What's your question?", "screen": "question_asking",
+"delivery": "manual", "is_question": true, "metadata": {"source":
+"safe_renpy_input", "stripped": "asdfasdfasdf"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 12:23:13", "user":
+"asdf", "view": "tulip", "payload": {"userID": "asdf", "query":
+"asdfasdfasdf", "gameState": {"contextType": "GameHelp", "numNotes": 0,
+"customNotes": 0, "numArgument": 0, "currentSpeaker": "tulip", "spokeToNPC":
+[], "visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: asdfasdfasdf", "timestamp": "2026-09-08
+12:23:13", "user": "asdf", "view": "tulipchat", "payload": null}
+--- Tue Sep  8 12:23:29 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 12:23:30", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+12:23:53", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:23:57", "user":
+"Unknown", "view": "start", "payload": {"text": "sdfgsdfg", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "sdfgsdfg"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:24:02", "user":
+"sdfgsdfg", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788884642.531603, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:24:04", "user":
+"sdfgsdfg", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788884644.733265, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 12:24:04", "user":
+"sdfgsdfg", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:24:07", "user":
+"sdfgsdfg", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788884647.0835178, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+12:24:07", "user": "sdfgsdfg", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 12:24:07", "user":
+"sdfgsdfg", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Notebook length: 0
+{"action": "UIEvent", "timestamp": "2026-09-08 12:24:08", "user": "sdfgsdfg",
+"view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 12:24:08", "user": "sdfgsdfg", "view": "tulipchat_from_button",
+"payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+12:24:08", "user": "sdfgsdfg", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:24:10", "user":
+"sdfgsdfg", "view": "tulipchat", "payload": {"text": "I need help with
+something else.", "timestamp": 1788884650.6373181, "delivery": "menu",
+"is_question": false, "question_target": null, "auto_generated": false,
+"origin": {"source": "script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 12:24:10", "user": "sdfgsdfg",
+"view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:24:12", "user": "sdfgsdfg",
+"view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 15}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:24:12", "user": "sdfgsdfg",
+"view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:24:12", "user":
+"sdfgsdfg", "view": "tulipchat", "payload": {"text": "asdfasdfasfsdaf",
+"prompt": "I love questions! What's your question?", "screen":
+"question_asking", "delivery": "manual", "is_question": true, "metadata":
+{"source": "safe_renpy_input", "stripped": "asdfasdfasfsdaf"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 12:24:12", "user":
+"sdfgsdfg", "view": "tulip", "payload": {"userID": "sdfgsdfg", "query":
+"asdfasdfasfsdaf", "gameState": {"contextType": "GameHelp", "numNotes": 0,
+"customNotes": 0, "numArgument": 0, "currentSpeaker": "tulip", "spokeToNPC":
+[], "visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: asdfasdfasfsdaf", "timestamp": "2026-09-08
+12:24:12", "user": "sdfgsdfg", "view": "tulipchat", "payload": null}
+Tulip
+testing audio
+
+{"action": "PlayerECAResponse", "timestamp": "2026-09-08 12:24:17", "user":
+"sdfgsdfg", "view": "tulip", "payload": {"eca_response": "testing audio"}}
+Tulip
+Any more questions?
+
+Choice: I have another question.
+Choice: No, that's all.
+
+--- Tue Sep  8 12:24:36 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 12:24:38", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+12:25:14", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:25:20", "user":
+"Unknown", "view": "start", "payload": {"text": "adsfasdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "adsfasdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:25:24", "user":
+"adsfasdf", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788884724.2905276, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:25:25", "user":
+"adsfasdf", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788884725.5124393, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 12:25:25", "user":
+"adsfasdf", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:25:27", "user":
+"adsfasdf", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788884727.3096032, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+12:25:27", "user": "adsfasdf", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 12:25:27", "user":
+"adsfasdf", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Notebook length: 0
+{"action": "UIEvent", "timestamp": "2026-09-08 12:25:29", "user": "adsfasdf",
+"view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 12:25:29", "user": "adsfasdf", "view": "tulipchat_from_button",
+"payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+12:25:29", "user": "adsfasdf", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:25:31", "user":
+"adsfasdf", "view": "tulipchat", "payload": {"text": "I need help with
+something else.", "timestamp": 1788884731.3317578, "delivery": "menu",
+"is_question": false, "question_target": null, "auto_generated": false,
+"origin": {"source": "script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 12:25:31", "user": "adsfasdf",
+"view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:26:23", "user": "adsfasdf",
+"view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 16}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:26:23", "user": "adsfasdf",
+"view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:26:23", "user":
+"adsfasdf", "view": "tulipchat", "payload": {"text": "asdfasdfasdfsadf",
+"prompt": "I love questions! What's your question?", "screen":
+"question_asking", "delivery": "manual", "is_question": true, "metadata":
+{"source": "safe_renpy_input", "stripped": "asdfasdfasdfsadf"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 12:26:23", "user":
+"adsfasdf", "view": "tulip", "payload": {"userID": "adsfasdf", "query":
+"asdfasdfasdfsadf", "gameState": {"contextType": "GameHelp", "numNotes": 0,
+"customNotes": 0, "numArgument": 0, "currentSpeaker": "tulip", "spokeToNPC":
+[], "visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: asdfasdfasdfsadf", "timestamp": "2026-09-08
+12:26:23", "user": "adsfasdf", "view": "tulipchat", "payload": null}
+Tulip
+testing audio
+
+{"action": "PlayerECAResponse", "timestamp": "2026-09-08 12:26:34", "user":
+"adsfasdf", "view": "tulip", "payload": {"eca_response": "testing audio"}}
+--- Tue Sep  8 12:26:59 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 12:27:00", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+12:27:03", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:27:05", "user":
+"Unknown", "view": "start", "payload": {"text": "fdghsh dfg h", "prompt":
+"Please enter your player ID", "screen": null, "delivery": "manual",
+"is_question": false, "metadata": {"source": "safe_renpy_input", "stripped":
+"fdghsh dfg h"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:27:08", "user":
+"fdghsh dfg h", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788884828.3844168, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:27:09", "user":
+"fdghsh dfg h", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788884829.4334886, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 12:27:09", "user":
+"fdghsh dfg h", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:27:11", "user":
+"fdghsh dfg h", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788884831.4306312, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+12:27:11", "user": "fdghsh dfg h", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 12:27:12", "user":
+"fdghsh dfg h", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+{"action": "UIEvent", "timestamp": "2026-09-08 12:27:13", "user": "fdghsh dfg
+h", "view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 12:27:13", "user": "fdghsh dfg h", "view":
+"tulipchat_from_button", "payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+12:27:13", "user": "fdghsh dfg h", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:27:15", "user":
+"fdghsh dfg h", "view": "tulipchat", "payload": {"text": "I need help with
+something else.", "timestamp": 1788884835.1872575, "delivery": "menu",
+"is_question": false, "question_target": null, "auto_generated": false,
+"origin": {"source": "script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 12:27:15", "user": "fdghsh dfg
+h", "view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:27:17", "user": "fdghsh dfg
+h", "view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 12}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:27:17", "user": "fdghsh dfg
+h", "view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:27:17", "user":
+"fdghsh dfg h", "view": "tulipchat", "payload": {"text": "kjljkljkljkl",
+"prompt": "I love questions! What's your question?", "screen":
+"question_asking", "delivery": "manual", "is_question": true, "metadata":
+{"source": "safe_renpy_input", "stripped": "kjljkljkljkl"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 12:27:17", "user":
+"fdghsh dfg h", "view": "tulip", "payload": {"userID": "fdghsh dfg h",
+"query": "kjljkljkljkl", "gameState": {"contextType": "GameHelp", "numNotes":
+0, "customNotes": 0, "numArgument": 0, "currentSpeaker": "tulip",
+"spokeToNPC": [], "visitLocation": [], "currentLocation": "emptylot",
+"argument": ""}}}
+{"action": "Player input to ECA: kjljkljkljkl", "timestamp": "2026-09-08
+12:27:17", "user": "fdghsh dfg h", "view": "tulipchat", "payload": null}
+Tulip
+testing audio
+
+{"action": "PlayerECAResponse", "timestamp": "2026-09-08 12:27:22", "user":
+"fdghsh dfg h", "view": "tulip", "payload": {"eca_response": "testing audio"}}
+Tulip
+Any more questions?
+
+Choice: I have another question.
+Choice: No, that's all.
+
+--- Tue Sep  8 12:29:31 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 12:29:32", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+12:29:34", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:29:38", "user":
+"Unknown", "view": "start", "payload": {"text": "dfgdfg", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "dfgdfg"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:29:41", "user":
+"dfgdfg", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788884981.0414853, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:29:41", "user":
+"dfgdfg", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788884981.8059766, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 12:29:41", "user":
+"dfgdfg", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:29:43", "user":
+"dfgdfg", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788884983.174545, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+12:29:43", "user": "dfgdfg", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 12:29:43", "user":
+"dfgdfg", "view": "begin", "payload": {"location": "emptylot", "source": null,
+"description": "Empty Lot"}}
+Notebook length: 0
+{"action": "UIEvent", "timestamp": "2026-09-08 12:29:44", "user": "dfgdfg",
+"view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 12:29:44", "user": "dfgdfg", "view": "tulipchat_from_button",
+"payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+12:29:44", "user": "dfgdfg", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:29:46", "user":
+"dfgdfg", "view": "tulipchat", "payload": {"text": "I need help with something
+else.", "timestamp": 1788884986.5045068, "delivery": "menu", "is_question":
+false, "question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 12:29:46", "user": "dfgdfg",
+"view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:29:48", "user": "dfgdfg",
+"view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 12}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:29:48", "user": "dfgdfg",
+"view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:29:48", "user":
+"dfgdfg", "view": "tulipchat", "payload": {"text": "sadfsadfsadf", "prompt":
+"I love questions! What's your question?", "screen": "question_asking",
+"delivery": "manual", "is_question": true, "metadata": {"source":
+"safe_renpy_input", "stripped": "sadfsadfsadf"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 12:29:48", "user":
+"dfgdfg", "view": "tulip", "payload": {"userID": "dfgdfg", "query":
+"sadfsadfsadf", "gameState": {"contextType": "GameHelp", "numNotes": 0,
+"customNotes": 0, "numArgument": 0, "currentSpeaker": "tulip", "spokeToNPC":
+[], "visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: sadfsadfsadf", "timestamp": "2026-09-08
+12:29:48", "user": "dfgdfg", "view": "tulipchat", "payload": null}
+Tulip
+testing audio
+
+{"action": "PlayerECAResponse", "timestamp": "2026-09-08 12:29:51", "user":
+"dfgdfg", "view": "tulip", "payload": {"eca_response": "testing audio"}}
+Tulip
+Any more questions?
+
+Choice: I have another question.
+Choice: No, that's all.
+
+--- Tue Sep  8 12:51:40 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 12:51:41", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+12:51:45", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:51:48", "user":
+"Unknown", "view": "start", "payload": {"text": "    asdfasdf", "prompt":
+"Please enter your player ID", "screen": null, "delivery": "manual",
+"is_question": false, "metadata": {"source": "safe_renpy_input", "stripped":
+"asdfasdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:51:51", "user":
+"    asdfasdf", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788886311.4309404, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:51:52", "user":
+"    asdfasdf", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788886312.4611468, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 12:51:52", "user":
+"    asdfasdf", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:51:54", "user":
+"    asdfasdf", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788886314.3304667, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+12:51:54", "user": "    asdfasdf", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 12:51:55", "user": "
+asdfasdf", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Notebook length: 0
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 12:51:56", "user": "
+asdfasdf", "view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 12:51:56", "user": "    asdfasdf", "view":
+"tulipchat_from_button", "payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+12:51:56", "user": "    asdfasdf", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:52:02", "user":
+"    asdfasdf", "view": "tulipchat", "payload": {"text": "I need help with
+something else.", "timestamp": 1788886322.1234138, "delivery": "menu",
+"is_question": false, "question_target": null, "auto_generated": false,
+"origin": {"source": "script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 12:52:02", "user": "
+asdfasdf", "view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:52:03", "user": "
+asdfasdf", "view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 8}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:52:03", "user": "
+asdfasdf", "view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:52:03", "user":
+"    asdfasdf", "view": "tulipchat", "payload": {"text": "asdfasdf", "prompt":
+"I love questions! What's your question?", "screen": "question_asking",
+"delivery": "manual", "is_question": true, "metadata": {"source":
+"safe_renpy_input", "stripped": "asdfasdf"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 12:52:03", "user": "
+asdfasdf", "view": "tulip", "payload": {"userID": "    asdfasdf", "query":
+"asdfasdf", "gameState": {"contextType": "GameHelp", "numNotes": 0,
+"customNotes": 0, "numArgument": 0, "currentSpeaker": "tulip", "spokeToNPC":
+[], "visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: asdfasdf", "timestamp": "2026-09-08
+12:52:03", "user": "    asdfasdf", "view": "tulipchat", "payload": null}
+Tulip
+testing audio
+
+Tulip
+testing audio
+
+Tulip
+testing audio
+
+Tulip
+testing audio
+
+--- Tue Sep  8 12:53:37 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 12:53:38", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+12:53:40", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:53:43", "user":
+"Unknown", "view": "start", "payload": {"text": "sdfgsdfg", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "sdfgsdfg"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:53:46", "user":
+"sdfgsdfg", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788886426.1999495, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:53:47", "user":
+"sdfgsdfg", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788886427.1625297, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 12:53:47", "user":
+"sdfgsdfg", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:53:48", "user":
+"sdfgsdfg", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788886428.8465114, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+12:53:49", "user": "sdfgsdfg", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 12:53:49", "user":
+"sdfgsdfg", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+{"action": "UIEvent", "timestamp": "2026-09-08 12:53:50", "user": "sdfgsdfg",
+"view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 12:53:50", "user": "sdfgsdfg", "view": "tulipchat_from_button",
+"payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+12:53:50", "user": "sdfgsdfg", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:53:53", "user":
+"sdfgsdfg", "view": "tulipchat", "payload": {"text": "I need help with
+something else.", "timestamp": 1788886433.9599524, "delivery": "menu",
+"is_question": false, "question_target": null, "auto_generated": false,
+"origin": {"source": "script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 12:53:53", "user": "sdfgsdfg",
+"view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:53:55", "user": "sdfgsdfg",
+"view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 8}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:53:55", "user": "sdfgsdfg",
+"view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:53:55", "user":
+"sdfgsdfg", "view": "tulipchat", "payload": {"text": "sdfgsdfg", "prompt": "I
+love questions! What's your question?", "screen": "question_asking",
+"delivery": "manual", "is_question": true, "metadata": {"source":
+"safe_renpy_input", "stripped": "sdfgsdfg"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 12:53:55", "user":
+"sdfgsdfg", "view": "tulip", "payload": {"userID": "sdfgsdfg", "query":
+"sdfgsdfg", "gameState": {"contextType": "GameHelp", "numNotes": 0,
+"customNotes": 0, "numArgument": 0, "currentSpeaker": "tulip", "spokeToNPC":
+[], "visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: sdfgsdfg", "timestamp": "2026-09-08
+12:53:55", "user": "sdfgsdfg", "view": "tulipchat", "payload": null}
+Tulip
+testing audio.
+
+Tulip
+new sentence here.
+
+Tulip
+antoher one too.
+
+{"action": "PlayerECAResponse", "timestamp": "2026-09-08 12:54:07", "user":
+"sdfgsdfg", "view": "tulip", "payload": {"eca_response": "testing audio. new
+sentence here. antoher one too."}}
+Tulip
+Any more questions?
+
+Choice: I have another question.
+Choice: No, that's all.
+
+--- Tue Sep  8 12:57:22 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 12:57:23", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+12:57:24", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:57:27", "user":
+"Unknown", "view": "start", "payload": {"text": "fvghfgh", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "fvghfgh"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:57:30", "user":
+"fvghfgh", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788886650.700602, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:57:32", "user":
+"fvghfgh", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788886652.4367104, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 12:57:32", "user":
+"fvghfgh", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:57:34", "user":
+"fvghfgh", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788886654.0671916, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+12:57:34", "user": "fvghfgh", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 12:57:34", "user":
+"fvghfgh", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Notebook length: 0
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 12:57:35", "user": "fvghfgh",
+"view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 12:57:35", "user": "fvghfgh", "view": "tulipchat_from_button",
+"payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+12:57:35", "user": "fvghfgh", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 12:57:39", "user":
+"fvghfgh", "view": "tulipchat", "payload": {"text": "I need help with
+something else.", "timestamp": 1788886659.5744467, "delivery": "menu",
+"is_question": false, "question_target": null, "auto_generated": false,
+"origin": {"source": "script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 12:57:39", "user": "fvghfgh",
+"view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:57:41", "user": "fvghfgh",
+"view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 12}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 12:57:41", "user": "fvghfgh",
+"view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 12:57:41", "user":
+"fvghfgh", "view": "tulipchat", "payload": {"text": "sdfgsdfgdsfg", "prompt":
+"I love questions! What's your question?", "screen": "question_asking",
+"delivery": "manual", "is_question": true, "metadata": {"source":
+"safe_renpy_input", "stripped": "sdfgsdfgdsfg"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 12:57:41", "user":
+"fvghfgh", "view": "tulip", "payload": {"userID": "fvghfgh", "query":
+"sdfgsdfgdsfg", "gameState": {"contextType": "GameHelp", "numNotes": 0,
+"customNotes": 0, "numArgument": 0, "currentSpeaker": "tulip", "spokeToNPC":
+[], "visitLocation": [], "currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: sdfgsdfgdsfg", "timestamp": "2026-09-08
+12:57:41", "user": "fvghfgh", "view": "tulipchat", "payload": null}
+Tulip
+testing audio.
+
+Tulip
+new sentence here.
+
+--- Tue Sep  8 14:37:25 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 14:37:26", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+14:37:28", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 14:37:31", "user":
+"Unknown", "view": "start", "payload": {"text": "dsfghdfgh", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "dsfghdfgh"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 14:37:34", "user":
+"dsfghdfgh", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788892654.7588341, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 14:37:35", "user":
+"dsfghdfgh", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788892655.6865747, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 14:37:35", "user":
+"dsfghdfgh", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 14:37:37", "user":
+"dsfghdfgh", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788892657.464118, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+14:37:37", "user": "dsfghdfgh", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 14:37:38", "user":
+"dsfghdfgh", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Notebook length: 0
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 14:37:39", "user": "dsfghdfgh",
+"view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-08 14:37:39", "user": "dsfghdfgh", "view": "tulipchat_from_button",
+"payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-08
+14:37:39", "user": "dsfghdfgh", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 14:37:42", "user":
+"dsfghdfgh", "view": "tulipchat", "payload": {"text": "I need help with
+something else.", "timestamp": 1788892662.535769, "delivery": "menu",
+"is_question": false, "question_target": null, "auto_generated": false,
+"origin": {"source": "script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-08 14:37:42", "user": "dsfghdfgh",
+"view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-08 14:37:55", "user": "dsfghdfgh",
+"view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 40}}}
+{"action": "UIEvent", "timestamp": "2026-09-08 14:37:55", "user": "dsfghdfgh",
+"view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 14:37:55", "user":
+"dsfghdfgh", "view": "tulipchat", "payload": {"text": "what do I need to say
+to this character?", "prompt": "I love questions! What's your question?",
+"screen": "question_asking", "delivery": "manual", "is_question": true,
+"metadata": {"source": "safe_renpy_input", "stripped": "what do I need to say
+to this character?"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-08 14:37:55", "user":
+"dsfghdfgh", "view": "tulip", "payload": {"userID": "dsfghdfgh", "query":
+"what do I need to say to this character?", "gameState": {"contextType":
+"GameHelp", "numNotes": 0, "customNotes": 0, "numArgument": 0,
+"currentSpeaker": "tulip", "spokeToNPC": [], "visitLocation": [],
+"currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: what do I need to say to this character?",
+"timestamp": "2026-09-08 14:37:55", "user": "dsfghdfgh", "view": "tulipchat",
+"payload": null}
+Tulip
+Try talking to Riley about food security and access to healthy food.
+
+Tulip
+They can share important insights on how a community garden could help.
+
+{"action": "PlayerECAResponse", "timestamp": "2026-09-08 14:38:16", "user":
+"dsfghdfgh", "view": "tulip", "payload": {"eca_response": "Try talking to
+Riley about food security and access to healthy food. They can share important
+insights on how a community garden could help."}}
+Tulip
+Any more questions?
+
+Choice: I have another question.
+Choice: No, that's all.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 14:38:21", "user":
+"dsfghdfgh", "view": "tulipchat", "payload": {"text": "No, that's all.",
+"timestamp": 1788892701.3777466, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: No, that's all.
+
+Tulip
+Okay! I'm here if you need me.
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 14:38:24", "user":
+"dsfghdfgh", "view": "tulipchat", "payload": {"text": "Yeah, just moved
+here!", "timestamp": 1788892704.9858277, "delivery": "menu", "is_question":
+false, "question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Yeah, just moved here!
+
+Friendly Stranger
+Welcome to the neighborhood! I live right down the street.
+
+Friendly Stranger
+Anyway, I'm glad you're here, new kid.
+
+Elliot
+I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our
+lot to those parking guys.
+
+Choice: What parking guys?
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 14:38:28", "user":
+"dsfghdfgh", "view": "tulipchat", "payload": {"text": "What parking guys?",
+"timestamp": 1788892708.8669524, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: What parking guys?
+
+{"action": "CharacterApprovalChanged", "timestamp": "2026-09-08 14:38:28",
+"user": "dsfghdfgh", "view": "tulipchat", "payload": {"character": "Elliot",
+"delta": 0, "new_total": 0, "change_type": "gain", "choice": "What parking
+guys?", "message": null}}
+{"action": "PlayerJumpedLabel(parkingguys|True)", "timestamp": "2026-09-08
+14:38:28", "user": "dsfghdfgh", "view": "parkingguys", "payload": null}
+Elliot
+That guy over there in the suit is from CityPark. They want to turn our empty
+lot into a big parking lot for the neighborhood.
+
+Elliot
+But me and the other Community Gardeners have been trying to convince Mayor
+Watson to donate the lot to our food justice project instead.
+
+Elliot
+The parking lot makes money, but a community garden would be huge for this
+neighborhood!
+
+Tulip
+Hey! Sorry to interrupt - but this seems like a good time to show you your
+notebook!
+
+--- Tue Sep  8 14:49:45 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 14:49:46", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+14:49:48", "user": "Unknown", "view": "start", "payload": null}
+--- Tue Sep  8 14:52:23 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 14:52:24", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+14:52:29", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 14:53:17", "user":
+"Unknown", "view": "start", "payload": {"text": "asdfasdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdfasdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-08
+14:53:22", "user": "asdfasdf", "view": "quit_hook", "payload": null}
+--- Tue Sep  8 14:57:56 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 14:57:57", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+14:57:58", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 14:58:47", "user":
+"Unknown", "view": "start", "payload": {"text": "asdfasdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdfasdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 14:58:50", "user":
+"asdfasdf", "view": "start", "payload": {"text": "You're a talking bee??",
+"timestamp": 1788893930.580192, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: You're a talking bee??
+
+???
+A honey bee, to be exact! But yes!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-08
+14:58:57", "user": "asdfasdf", "view": "quit_hook", "payload": null}
+--- Tue Sep  8 14:59:53 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 14:59:54", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+15:00:21", "user": "Unknown", "view": "start", "payload": null}
+--- Tue Sep  8 15:01:53 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 15:01:55", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+15:01:56", "user": "Unknown", "view": "start", "payload": null}
+--- Tue Sep  8 15:08:38 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 15:08:40", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+15:08:43", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerJumpedLabel(save_screen|True)", "timestamp": "2026-09-08
+15:08:45", "user": "Unknown", "view": "save_screen", "payload": null}
+--- Tue Sep  8 15:10:10 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 15:10:12", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+15:10:14", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-08
+15:10:22", "user": "Unknown", "view": "quit_hook", "payload": null}
+--- Tue Sep  8 15:12:56 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 15:12:58", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+15:12:59", "user": "Unknown", "view": "start", "payload": null}
+--- Tue Sep  8 15:26:16 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 15:26:17", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+15:26:23", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 15:27:55", "user":
+"Unknown", "view": "start", "payload": {"text": "dfghdfgh", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "dfghdfgh"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 15:27:58", "user":
+"dfghdfgh", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788895678.6405394, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 15:28:00", "user":
+"dfghdfgh", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788895680.4208443, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-08 15:28:00", "user":
+"dfghdfgh", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 15:28:01", "user":
+"dfghdfgh", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788895681.9327729, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-08
+15:28:02", "user": "dfghdfgh", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-08 15:28:02", "user":
+"dfghdfgh", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Notebook length: 0
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-08 15:28:02", "user":
+"dfghdfgh", "view": "begin", "payload": {"text": "Maybe.", "timestamp":
+1788895682.873645, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Maybe.
+
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-08
+15:28:07", "user": "dfghdfgh", "view": "quit_hook", "payload": null}
+--- Tue Sep  8 15:28:51 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 15:28:52", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+15:28:55", "user": "Unknown", "view": "start", "payload": null}
+--- Tue Sep  8 15:29:22 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 15:29:23", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+15:29:26", "user": "Unknown", "view": "start", "payload": null}
+--- Tue Sep  8 15:44:50 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 15:44:52", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+15:44:53", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-08
+15:45:01", "user": "Unknown", "view": "quit_hook", "payload": null}
+--- Tue Sep  8 15:45:14 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 15:45:15", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+15:45:20", "user": "Unknown", "view": "start", "payload": null}
+--- Tue Sep  8 15:46:22 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 15:46:23", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+15:47:13", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 15:47:27", "user":
+"Unknown", "view": "start", "payload": {"text": "asdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdf"}}}
+--- Tue Sep  8 15:48:01 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 15:48:03", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+15:48:11", "user": "Unknown", "view": "start", "payload": null}
+--- Tue Sep  8 19:04:22 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 19:04:23", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+19:04:26", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-08
+19:04:29", "user": "Unknown", "view": "quit_hook", "payload": null}
+--- Tue Sep  8 19:04:48 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 19:04:49", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+19:04:51", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 19:05:59", "user":
+"Unknown", "view": "start", "payload": {"text": "asdfasdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdfasdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerJumpedLabel(save_screen|True)", "timestamp": "2026-09-08
+19:06:18", "user": "asdfasdf", "view": "save_screen", "payload": null}
+--- Tue Sep  8 19:12:54 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 19:12:55", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+19:12:57", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 19:13:53", "user":
+"Unknown", "view": "start", "payload": {"text": "asdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-08
+19:14:17", "user": "asdf", "view": "quit_hook", "payload": null}
+--- Tue Sep  8 19:15:58 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 19:15:59", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+19:16:01", "user": "Unknown", "view": "start", "payload": null}
+--- Tue Sep  8 19:16:52 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 19:16:53", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+19:17:01", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerJumpedLabel(save_screen|True)", "timestamp": "2026-09-08
+19:17:02", "user": "Unknown", "view": "save_screen", "payload": null}
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-08
+19:17:04", "user": "Unknown", "view": "quit_hook", "payload": null}
+--- Tue Sep  8 19:17:18 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 19:17:19", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+19:17:20", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 19:18:26", "user":
+"Unknown", "view": "start", "payload": {"text": "sdfg", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "sdfg"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-08
+19:20:45", "user": "sdfg", "view": "quit_hook", "payload": null}
+--- Tue Sep  8 19:21:03 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 19:21:04", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+19:21:06", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 19:21:43", "user":
+"Unknown", "view": "start", "payload": {"text": "asdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+--- Tue Sep  8 19:22:29 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-08 19:22:30", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-08
+19:22:35", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-08 19:23:21", "user":
+"Unknown", "view": "start", "payload": {"text": "asdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-08
+19:25:25", "user": "asdf", "view": "quit_hook", "payload": null}

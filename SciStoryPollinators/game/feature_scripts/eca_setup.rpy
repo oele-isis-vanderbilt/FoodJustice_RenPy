@@ -34,7 +34,6 @@ init python:
         return ca_link, ca_json 
     
     def split_eca_sentences(response):
-        """Return the response split into sentence-like fragments for paced dialogue."""
         if response is None:
             return []
         text = response if isinstance(response, str) else str(response)
@@ -48,7 +47,6 @@ init python:
     
     def loadAPIKey():
         import os
-        print("loading api key")
         apikey = ""
         message = ""
         file_path = os.path.join(config.basedir, "apikey.txt")
@@ -61,33 +59,24 @@ init python:
             apikey = "API key file not found!"
         if apikey != "":
             open_ai_key = apikey
-        print("done loading api key")
         return open_ai_key     
 
     def getGPTResponse(prompt):
-        print(prompt)
-        print("test test")
-        print(SIDECAR_URL)
-        print(prompt["gameState"])
         jsonobj={
                 "session_id": prompt["userID"],
                 "npc_id": prompt["gameState"]["currentSpeaker"].lower(),
                 "player_text": prompt["query"],
                 "game_state": prompt["gameState"],
             }
-        print(jsonobj)
         result = renpy.fetch(
             SIDECAR_URL + "/v1/reply",
             json=jsonobj,
             result="json",
             timeout=30,
         )
-        print(result)
-        print(result["text"])
         return result["text"]
 
-    def start_agent_sidecar(openai_api_key):
-        print("starting sidecar")
+    def start_agent_sidecar(openai_api_key):        
         sidecar_path = os.path.join(renpy.config.gamedir, "agent", "agent_sidecar.exe")
 
         if not os.path.isfile(sidecar_path):
@@ -97,8 +86,8 @@ init python:
         # in an .rpy file or distribute it with the game.
         sidecar_environment = os.environ.copy()
         sidecar_environment["OPENAI_API_KEY"] = openai_api_key
-        subprocess.Popen([sidecar_path], env=sidecar_environment)
-
+        new_agent_sidecar = subprocess.Popen([sidecar_path], env=sidecar_environment)
+        
         # The one-file executable needs time to unpack its embedded resources.
         for _ in range(40):
             try:
@@ -106,9 +95,55 @@ init python:
                     SIDECAR_URL + "/health", result="json", timeout=1
                 )
                 if health.get("status") == "ok":
-                    return
+                    return new_agent_sidecar
             except renpy.FetchError:
                 pass
             renpy.pause(0.25)
 
         raise RuntimeError("The local conversational agent did not start.")
+
+    def stop_agent_sidecar(agent_sidecar):
+        if agent_sidecar and agent_sidecar.poll() is None:
+            try:
+                agent_sidecar.terminate()
+                agent_sidecar.wait()       # Prevents leaving a zombie process
+                agent_sidecar = None
+            except:
+                agent_sidecar.kill()
+
+
+    def play_openai_tts(line, voice="alloy"):
+        text = line if isinstance(line, str) else str(line)
+        if text.strip():
+            url = "https://api.openai.com/v1/audio/speech"
+            headers = {
+                "Authorization": f"Bearer {open_ai_key}",
+                "Content-Type": "application/json"
+            }
+            data = {
+                "model": "tts-1",
+                "input": text,
+                "voice": voice
+            }
+            payload = {
+                "model": "tts-1",
+                "input": text,
+                "voice": voice,
+                "response_format": "mp3"
+            }
+
+            try:
+                audio_bytes = renpy.fetch(
+                    url, 
+                    method="POST", 
+                    headers=headers, 
+                    json=payload, 
+                    result="bytes",
+                    timeout=10
+                )
+                
+                sound_file = AudioData(audio_bytes, "dynamic_sound.mp3")
+                return sound_file
+                
+            except Exception as e:
+                print("TTS Error: " + str(e))\
