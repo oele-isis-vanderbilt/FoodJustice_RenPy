@@ -13765,3 +13765,1289 @@ and {size=*2}closer...{/size}
 
 {"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-08
 19:25:25", "user": "asdf", "view": "quit_hook", "payload": null}
+--- Wed Sep  9 15:46:07 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-09 15:46:08", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-09
+15:46:10", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-09
+15:47:22", "user": "Unknown", "view": "quit_hook", "payload": null}
+--- Wed Sep  9 16:44:03 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-09 16:44:05", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-09
+16:44:15", "user": "Unknown", "view": "start", "payload": null}
+--- Wed Sep  9 16:45:25 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-09 16:45:27", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-09
+16:45:29", "user": "Unknown", "view": "start", "payload": null}
+--- Wed Sep  9 16:51:04 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-09 16:51:06", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-09
+16:51:16", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-09
+16:51:21", "user": "Unknown", "view": "quit_hook", "payload": null}
+--- Wed Sep  9 16:51:42 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-09 16:51:43", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-09
+16:51:45", "user": "Unknown", "view": "start", "payload": null}
+--- Wed Sep  9 16:53:42 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-09 16:53:44", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-09
+16:53:45", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-09
+16:54:46", "user": "Unknown", "view": "quit_hook", "payload": null}
+--- Wed Sep  9 16:55:03 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-09 16:55:05", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-09
+16:55:06", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-09 16:56:08", "user":
+"Unknown", "view": "start", "payload": {"text": "asdf asdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdf asdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+--- Wed Sep  9 16:57:18 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-09 16:57:20", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-09
+16:57:21", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-09
+16:58:13", "user": "asdf asdf", "view": "quit_hook", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-09 16:58:25", "user":
+"Unknown", "view": "start", "payload": {"text": "dfgh dfg h", "prompt":
+"Please enter your player ID", "screen": null, "delivery": "manual",
+"is_question": false, "metadata": {"source": "safe_renpy_input", "stripped":
+"dfgh dfg h"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-09
+16:59:09", "user": "dfgh dfg h", "view": "quit_hook", "payload": null}
+--- Wed Sep  9 16:59:49 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-09 16:59:50", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-09
+16:59:52", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-09 17:06:02", "user":
+"Unknown", "view": "start", "payload": {"text": "asdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+--- Wed Sep  9 17:23:33 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-09 17:23:35", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-09
+17:23:40", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-09 17:26:08", "user":
+"Unknown", "view": "start", "payload": {"text": "asdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+--- Wed Sep  9 17:27:00 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-09 17:27:01", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-09
+17:27:05", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-09 17:28:11", "user":
+"Unknown", "view": "start", "payload": {"text": "dfgh  ", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "dfgh"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+--- Wed Sep  9 17:29:04 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-09 17:29:05", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-09
+17:29:08", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-09 17:30:06", "user":
+"Unknown", "view": "start", "payload": {"text": "xcdvxdvc", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "xcdvxdvc"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-09 17:30:40", "user":
+"xcdvxdvc", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788989440.5842001, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-09 17:30:42", "user":
+"xcdvxdvc", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788989442.3935325, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-09 17:30:42", "user":
+"xcdvxdvc", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-09 17:30:43", "user":
+"xcdvxdvc", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788989443.5483317, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-09
+17:30:43", "user": "xcdvxdvc", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-09 17:30:44", "user":
+"xcdvxdvc", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+--- Wed Sep  9 17:32:05 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-09 17:32:06", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-09
+17:32:17", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-09 17:33:19", "user":
+"Unknown", "view": "start", "payload": {"text": "gjyfghjhkj", "prompt":
+"Please enter your player ID", "screen": null, "delivery": "manual",
+"is_question": false, "metadata": {"source": "safe_renpy_input", "stripped":
+"gjyfghjhkj"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-09 17:33:24", "user":
+"gjyfghjhkj", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1788989604.450536, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-09 17:33:25", "user":
+"gjyfghjhkj", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1788989605.7141287, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-09 17:33:25", "user":
+"gjyfghjhkj", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-09 17:33:27", "user":
+"gjyfghjhkj", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1788989607.02089, "delivery": "menu", "is_question": false, "question_target":
+null, "auto_generated": false, "origin": {"source": "script", "details":
+null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-09
+17:33:27", "user": "gjyfghjhkj", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-09 17:33:27", "user":
+"gjyfghjhkj", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+--- Thu Sep 10 15:23:51 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-10 15:23:52", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-10
+15:24:04", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-10 15:24:58", "user":
+"Unknown", "view": "start", "payload": {"text": "asedf fdas", "prompt":
+"Please enter your player ID", "screen": null, "delivery": "manual",
+"is_question": false, "metadata": {"source": "safe_renpy_input", "stripped":
+"asedf fdas"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 15:25:34", "user":
+"asedf fdas", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1789068334.8726735, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 15:25:36", "user":
+"asedf fdas", "view": "start", "payload": {"text": "I live in a rural town",
+"timestamp": 1789068336.6076941, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in a rural town
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-10 15:25:36", "user":
+"asedf fdas", "view": "tulip", "payload": {"startplace": "rural"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 15:25:38", "user":
+"asedf fdas", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1789068338.3400161, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-10
+15:25:38", "user": "asedf fdas", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-10 15:25:38", "user":
+"asedf fdas", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+--- Thu Sep 10 15:28:20 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-10 15:28:21", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-10
+15:28:25", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-10 15:29:16", "user":
+"Unknown", "view": "start", "payload": {"text": "asdfasdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdfasdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-10
+15:29:42", "user": "asdfasdf", "view": "quit_hook", "payload": null}
+--- Thu Sep 10 15:30:08 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-10 15:30:09", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-10
+15:30:32", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-10 15:31:31", "user":
+"Unknown", "view": "start", "payload": {"text": "asdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-10
+15:31:47", "user": "asdf", "view": "quit_hook", "payload": null}
+--- Thu Sep 10 15:35:07 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-10 15:35:08", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-10
+15:35:17", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-10 15:36:05", "user":
+"Unknown", "view": "start", "payload": {"text": "asdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-10
+15:36:23", "user": "asdf", "view": "quit_hook", "payload": null}
+--- Thu Sep 10 16:03:22 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-10 16:03:23", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-10
+16:03:26", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-10 16:04:13", "user":
+"Unknown", "view": "start", "payload": {"text": "asdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerJumpedLabel(quit_hook|True)", "timestamp": "2026-09-10
+16:04:42", "user": "asdf", "view": "quit_hook", "payload": null}
+--- Thu Sep 10 16:09:09 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-10 16:09:10", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-10
+16:09:44", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-10 16:11:02", "user":
+"Unknown", "view": "start", "payload": {"text": "xcdfvbxcvb", "prompt":
+"Please enter your player ID", "screen": null, "delivery": "manual",
+"is_question": false, "metadata": {"source": "safe_renpy_input", "stripped":
+"xcdfvbxcvb"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:11:11", "user":
+"xcdfvbxcvb", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1789071071.0676107, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:11:12", "user":
+"xcdfvbxcvb", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1789071072.0409796, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-10 16:11:12", "user":
+"xcdfvbxcvb", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:11:13", "user":
+"xcdfvbxcvb", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1789071073.6395476, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-10
+16:11:14", "user": "xcdfvbxcvb", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-10 16:11:14", "user":
+"xcdfvbxcvb", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+--- Thu Sep 10 16:16:11 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-10 16:16:12", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-10
+16:16:14", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-10 16:16:53", "user":
+"Unknown", "view": "start", "payload": {"text": "ojhcfg", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "ojhcfg"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:16:57", "user":
+"ojhcfg", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1789071417.8861732, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:16:58", "user":
+"ojhcfg", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1789071418.8800263, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-10 16:16:58", "user":
+"ojhcfg", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:17:00", "user":
+"ojhcfg", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1789071420.7789948, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-10
+16:17:01", "user": "ojhcfg", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-10 16:17:01", "user":
+"ojhcfg", "view": "begin", "payload": {"location": "emptylot", "source": null,
+"description": "Empty Lot"}}
+--- Thu Sep 10 16:19:17 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-10 16:19:18", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-10
+16:19:19", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerJumpedLabel(save_screen|True)", "timestamp": "2026-09-10
+16:19:21", "user": "Unknown", "view": "save_screen", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-10 16:19:59", "user":
+"Unknown", "view": "save_screen", "payload": {"text": "asdf", "prompt":
+"Please enter your player ID", "screen": null, "delivery": "manual",
+"is_question": false, "metadata": {"source": "safe_renpy_input", "stripped":
+"asdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:20:02", "user":
+"asdf", "view": "save_screen", "payload": {"text": "Hello bee friend!",
+"timestamp": 1789071602.9592404, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:20:03", "user":
+"asdf", "view": "save_screen", "payload": {"text": "I live in the suburbs",
+"timestamp": 1789071603.9877071, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-10 16:20:03", "user":
+"asdf", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:20:05", "user":
+"asdf", "view": "save_screen", "payload": {"text": "I guess.", "timestamp":
+1789071605.6660166, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-10
+16:20:06", "user": "asdf", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-10 16:20:07", "user":
+"asdf", "view": "begin", "payload": {"location": "emptylot", "source": null,
+"description": "Empty Lot"}}
+--- Thu Sep 10 16:27:12 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-10 16:27:13", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-10
+16:27:19", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-10 16:27:24", "user":
+"Unknown", "view": "start", "payload": {"text": "asdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:27:28", "user":
+"asdf", "view": "start", "payload": {"text": "Hello bee friend!", "timestamp":
+1789072048.7195554, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:27:29", "user":
+"asdf", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1789072049.6525614, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-10 16:27:29", "user":
+"asdf", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:27:31", "user":
+"asdf", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1789072051.668225, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-10
+16:27:31", "user": "asdf", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-10 16:27:32", "user":
+"asdf", "view": "begin", "payload": {"location": "emptylot", "source": null,
+"description": "Empty Lot"}}
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+Notebook length: 0
+--- Thu Sep 10 16:28:26 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-10 16:28:27", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-10
+16:28:36", "user": "Unknown", "view": "start", "payload": null}
+--- Thu Sep 10 16:29:45 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-10 16:29:46", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-10
+16:29:51", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-10 16:33:22", "user":
+"Unknown", "view": "start", "payload": {"text": "dfghdfgh", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "dfghdfgh"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:33:25", "user":
+"dfghdfgh", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1789072405.5414464, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:33:26", "user":
+"dfghdfgh", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1789072406.5394845, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-10 16:33:26", "user":
+"dfghdfgh", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:33:28", "user":
+"dfghdfgh", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1789072408.1889374, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-10
+16:33:28", "user": "dfghdfgh", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-10 16:33:28", "user":
+"dfghdfgh", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Notebook length: 0
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+{"action": "UIEvent", "timestamp": "2026-09-10 16:33:31", "user": "dfghdfgh",
+"view": "learningbuttons", "payload": {"event": "click", "screen":
+"learningbuttons", "element": "Ask Tulip"}}
+{"action": "PlayerJumpedLabel(tulipchat_from_button|True)", "timestamp":
+"2026-09-10 16:33:31", "user": "dfghdfgh", "view": "tulipchat_from_button",
+"payload": null}
+{"action": "PlayerJumpedLabel(tulipchat|True)", "timestamp": "2026-09-10
+16:33:31", "user": "dfghdfgh", "view": "tulipchat", "payload": null}
+Tulip
+Hi human friend! How's it going?
+
+Choice: I don't know what to do.
+Choice: I'd like some help with persuading the mayor.
+Choice: I need help with something else.
+Choice: Buzz ya later.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:33:35", "user":
+"dfghdfgh", "view": "tulipchat", "payload": {"text": "I need help with
+something else.", "timestamp": 1789072415.0882833, "delivery": "menu",
+"is_question": false, "question_target": null, "auto_generated": false,
+"origin": {"source": "script", "details": null}}}
+Player chose: I need help with something else.
+
+{"action": "UIEvent", "timestamp": "2026-09-10 16:33:35", "user": "dfghdfgh",
+"view": "question_asking", "payload": {"event": "show", "screen":
+"question_asking"}}
+{"action": "UIEvent", "timestamp": "2026-09-10 16:33:48", "user": "dfghdfgh",
+"view": "question_asking", "payload": {"event": "click", "screen":
+"question_asking", "element": "Ask Question", "payload": {"text_length": 41}}}
+{"action": "UIEvent", "timestamp": "2026-09-10 16:33:48", "user": "dfghdfgh",
+"view": "question_asking", "payload": {"event": "hide", "screen":
+"question_asking"}}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-10 16:33:48", "user":
+"dfghdfgh", "view": "tulipchat", "payload": {"text": "why is growing your own
+food a good idea?", "prompt": "I love questions! What's your question?",
+"screen": "question_asking", "delivery": "manual", "is_question": true,
+"metadata": {"source": "safe_renpy_input", "stripped": "why is growing your
+own food a good idea?"}}}
+{"action": "PlayerInputToECA", "timestamp": "2026-09-10 16:33:48", "user":
+"dfghdfgh", "view": "tulip", "payload": {"userID": "dfghdfgh", "query": "why
+is growing your own food a good idea?", "gameState": {"contextType":
+"GameHelp", "numNotes": 0, "customNotes": 0, "numArgument": 0,
+"currentSpeaker": "tulip", "spokeToNPC": [], "visitLocation": [],
+"currentLocation": "emptylot", "argument": ""}}}
+{"action": "Player input to ECA: why is growing your own food a good idea?",
+"timestamp": "2026-09-10 16:33:48", "user": "dfghdfgh", "view": "tulipchat",
+"payload": null}
+Tulip
+Growing your own food is a good idea because it helps improve food security,
+giving people access to healthy, fresh produce.
+
+Tulip
+It also allows the community to learn valuable skills for growing their own
+food, which is important for staying healthy.
+
+{"action": "PlayerECAResponse", "timestamp": "2026-09-10 16:34:13", "user":
+"dfghdfgh", "view": "tulip", "payload": {"eca_response": "Growing your own
+food is a good idea because it helps improve food security, giving people
+access to healthy, fresh produce. It also allows the community to learn
+valuable skills for growing their own food, which is important for staying
+healthy."}}
+Tulip
+Any more questions?
+
+Choice: I have another question.
+Choice: No, that's all.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:34:18", "user":
+"dfghdfgh", "view": "tulipchat", "payload": {"text": "No, that's all.",
+"timestamp": 1789072458.4123795, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: No, that's all.
+
+Tulip
+Okay! I'm here if you need me.
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+{"action": "PlayerJumpedLabel(save_screen|True)", "timestamp": "2026-09-10
+16:34:33", "user": "dfghdfgh", "view": "save_screen", "payload": null}
+--- Thu Sep 10 16:46:07 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-10 16:46:08", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-10
+16:46:10", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-10 16:48:23", "user":
+"Unknown", "view": "start", "payload": {"text": "asdfasdf", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "asdfasdf"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:48:26", "user":
+"asdfasdf", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1789073306.8070917, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:48:27", "user":
+"asdfasdf", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1789073307.7921138, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-10 16:48:27", "user":
+"asdfasdf", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:48:29", "user":
+"asdfasdf", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1789073309.3683107, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-10
+16:48:29", "user": "asdfasdf", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-10 16:48:29", "user":
+"asdfasdf", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Notebook length: 0
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+
+{"action": "PlayerJumpedLabel(save_screen|True)", "timestamp": "2026-09-10
+16:48:37", "user": "asdfasdf", "view": "save_screen", "payload": null}
+--- Thu Sep 10 16:50:09 2026
+
+{"action": "PlayerJumpedLabel(main_menu_screen|True)", "timestamp":
+"2026-09-10 16:50:10", "user": "Unknown", "view": "main_menu_screen",
+"payload": null}
+{"action": "PlayerJumpedLabel(start|True)", "timestamp": "2026-09-10
+16:50:31", "user": "Unknown", "view": "start", "payload": null}
+{"action": "PlayerDialogueInput", "timestamp": "2026-09-10 16:51:35", "user":
+"Unknown", "view": "start", "payload": {"text": "sdfgsdfg", "prompt": "Please
+enter your player ID", "screen": null, "delivery": "manual", "is_question":
+false, "metadata": {"source": "safe_renpy_input", "stripped": "sdfgsdfg"}}}
+You open your eyes and find yourself surrounded by bright flowers and sweet-
+smelling fresh air. How did you get here?
+
+You hear a quiet buzzing noise getting closer...
+
+and {size=*1.5}closer...{/size}
+
+and {size=*2}closer...{/size}
+
+Suddenly, a tiny bee flies around your head and hovers in front of you!
+
+???
+Hey there human friend!
+
+Choice: Um...hi?
+Choice: You're a talking bee??
+Choice: Hello bee friend!
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:51:38", "user":
+"sdfgsdfg", "view": "start", "payload": {"text": "Hello bee friend!",
+"timestamp": 1789073498.3290253, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: Hello bee friend!
+
+???
+Hello hello! So glad you're here. I'm absolutely buzzing with excitement!
+
+Tulip
+I'm Tulip! The hive chose me as your guide for today. If you have any trouble
+while you're exploring, you can ask me for help!
+
+Tulip
+Before we get started, tell me about yourself! What kind of place did you come
+from?
+
+Choice: I live in a city
+Choice: I live in a rural town
+Choice: I live in the suburbs
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:51:39", "user":
+"sdfgsdfg", "view": "start", "payload": {"text": "I live in the suburbs",
+"timestamp": 1789073499.304637, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I live in the suburbs
+
+{"action": "PlayerLocationChoice", "timestamp": "2026-09-10 16:51:39", "user":
+"sdfgsdfg", "view": "tulip", "payload": {"startplace": "suburb"}}
+Tulip
+Wonderful! We'll explore a neighborhood that's kinda like yours that needs
+your help.
+
+Tulip
+I'm here as your guide, so if you get stuck or need advice, just click on my
+button and I'll buzz on by.
+
+Tulip
+We should get going then. Lots to do, lots to see! Are you ready?
+
+Choice: Let's go!
+Choice: I guess.
+
+{"action": "PlayerDialogueChoice", "timestamp": "2026-09-10 16:51:41", "user":
+"sdfgsdfg", "view": "start", "payload": {"text": "I guess.", "timestamp":
+1789073501.777721, "delivery": "menu", "is_question": false,
+"question_target": null, "auto_generated": false, "origin": {"source":
+"script", "details": null}}}
+Player chose: I guess.
+
+Tulip
+Don't worry, I'll be right by your side if you need help! We're two bees in a
+pod. Hehe.
+
+{"action": "PlayerJumpedLabel(begin|True)", "timestamp": "2026-09-10
+16:51:42", "user": "sdfgsdfg", "view": "begin", "payload": null}
+{"action": "LocationChanged", "timestamp": "2026-09-10 16:51:42", "user":
+"sdfgsdfg", "view": "begin", "payload": {"location": "emptylot", "source":
+null, "description": "Empty Lot"}}
+Notebook length: 0
+Friendly Stranger
+Hey what's up - you new to the neighborhood?
+
+Choice: Yeah, just moved here!
+Choice: Maybe.
+

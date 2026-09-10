@@ -95,23 +95,27 @@ init python:
                     SIDECAR_URL + "/health", result="json", timeout=1
                 )
                 if health.get("status") == "ok":
-                    return new_agent_sidecar
+                    return
             except renpy.FetchError:
                 pass
             renpy.pause(0.25)
 
         raise RuntimeError("The local conversational agent did not start.")
 
-    def stop_agent_sidecar(agent_sidecar):
-        if agent_sidecar and agent_sidecar.poll() is None:
-            try:
-                agent_sidecar.terminate()
-                agent_sidecar.wait()       # Prevents leaving a zombie process
-                agent_sidecar = None
-            except:
-                agent_sidecar.kill()
+    def stop_agent_sidecar():
+        print("shutting down agent")
+        try:
+            renpy.fetch(
+                SIDECAR_URL + "/shutdown",
+                method="POST",
+                result="json",
+                timeout=5,
+            )
+        except renpy.FetchError:
+            pass
 
-
+    config.quit_callbacks.append(stop_agent_sidecar)
+    
     def play_openai_tts(line, voice="alloy"):
         text = line if isinstance(line, str) else str(line)
         if text.strip():

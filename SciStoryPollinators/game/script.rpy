@@ -1,3 +1,5 @@
+default external_launched = False
+
 label start:
     # if useAudio: 
     #     play music "JaracandaLoop.wav" volume 0.1
@@ -7,10 +9,11 @@ label start:
     with fade
 
     hide screen learningbuttons
-    $ enable_character_tts()
-    $ open_ai_key = loadAPIKey()
-    $ agent_sidecar = start_agent_sidecar(open_ai_key)
-    $ print(agent_sidecar)
+    if not external_launched:
+        $ external_launched = True
+        $ enable_character_tts()
+        $ open_ai_key = loadAPIKey()
+        $ start_agent_sidecar(open_ai_key)
 
     $ current_user = safe_renpy_input("Please enter your player ID")
     
@@ -2119,14 +2122,8 @@ label start:
 
         jump end
 
-
-    label quit_hook:
-        $ stop_agent_sidecar(agent_sidecar)
-        $ renpy.quit()        
-
     label end:
         narrator "Thanks for playing! Raise your hand to let the researchers know that you're finished."
-        $ stop_agent_sidecar(agent_sidecar)
 
     # This ends the game.
 

@@ -169,12 +169,6 @@ define config.save_directory = "SciStoryPollinators-1726852896"
 
 define config.window_icon = "gui/bee_icon.png"
 
-
-## Quit Action #################################################################
-##
-## This is the quit action hook
-define config.quit_action = renpy.curried_call_in_new_context("quit_hook")
-
 ## Build configuration #########################################################
 ##
 ## This section controls how Ren'Py turns your project into distribution files.
