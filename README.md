@@ -1,3 +1,12 @@
+# Note
+The OpenAI enabled version requires an agent sidecar exe that isn't store in the repo. It is build from the package found here:
+https://drive.google.com/drive/folders/1hcZLf55nxlIOmujpKMdFHVnVBYvw7aLe
+
+The resulting exe must be place in:
+SciStoryPollinators\game\agent\
+
+and be called: "agent_sidecar.exe"
+
 # FoodJustice_RenPy
 
 A repo for developing the lightweight, RenPy version of the Food Justice environment.
