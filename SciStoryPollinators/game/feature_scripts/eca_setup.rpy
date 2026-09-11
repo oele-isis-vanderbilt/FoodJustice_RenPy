@@ -89,7 +89,7 @@ init python:
         new_agent_sidecar = subprocess.Popen([sidecar_path], env=sidecar_environment)
         
         # The one-file executable needs time to unpack its embedded resources.
-        for _ in range(40):
+        for _ in range(200):
             try:
                 health = renpy.fetch(
                     SIDECAR_URL + "/health", result="json", timeout=1
@@ -115,7 +115,7 @@ init python:
             pass
 
     config.quit_callbacks.append(stop_agent_sidecar)
-    
+
     def play_openai_tts(line, voice="alloy"):
         text = line if isinstance(line, str) else str(line)
         if text.strip():

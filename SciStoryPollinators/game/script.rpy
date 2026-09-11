@@ -74,7 +74,7 @@ label start:
 
     label tulipchat_from_button:
         hide screen learningbuttons
-        call tulipchat
+        call tulipchat from _call_tulipchat
         show screen learningbuttons()
         return
 
@@ -121,9 +121,19 @@ label start:
                 # $ ecaresponse = renpy.fetch("https://tracedata-01.csc.ncsu.edu/GetECAResponse", method="POST", json={"ECAType": "FoodJustice_RileyEvaluation", "Context": "", "Utterance": eca, "ConfidenceThreshold": 0.3}, content_type="application/json", result="text")
                 
                 $ sentences = split_eca_sentences(ecaresponse)
-                $ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
-
-                $ stopAudio()
+                #$ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
+                #$ stopAudio()
+                #######################################################################
+                # New openai gpt text and audio generation 
+                $ i = 0
+                while i < len(sentences):
+                    $ line = sentences[i]
+                    $ audiofile = play_openai_tts(line, _find_character_record("Tulip")["gpt_voice"])
+                    play sound audiofile
+                    t "[line]"
+                    stop sound
+                    $ i+= 1
+                stop sound
 
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
@@ -157,9 +167,20 @@ label start:
                                 ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers to look at your argument!"
 
                         $ sentences = split_eca_sentences(ecaresponse)
-                        $ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
-
-                        $ stopAudio()
+                        
+                        #$ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "FoodJustice_RileyEvaluation"})
+                        #$ stopAudio()
+                        #######################################################################
+                        # New openai gpt text and audio generation 
+                        $ i = 0
+                        while i < len(sentences):
+                            $ line = sentences[i]
+                            $ audiofile = play_openai_tts(line, _find_character_record("Tulip")["gpt_voice"])
+                            play sound audiofile
+                            t "[line]"
+                            stop sound
+                            $ i+= 1
+                        stop sound
 
                         $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
@@ -196,22 +217,25 @@ label start:
                     try:
                         ecaresponse = getGPTResponse(ca_json)
                     except Exception as e:
-                        print(e)
                         log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
                         ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers your question!"
                 
                 $ sentences = split_eca_sentences(ecaresponse)
+
+                #$ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "GameHelp"})
+                #$ stopAudio()
+                #######################################################################
+                # New openai gpt text and audio generation 
                 $ i = 0
                 while i < len(sentences):
                     $ line = sentences[i]
-                    $ audio = play_openai_tts(line, "coral")
-                    play sound audio
+                    $ audiofile = play_openai_tts(line, _find_character_record("Tulip")["gpt_voice"])
+                    play sound audiofile
                     t "[line]"
+                    stop sound
                     $ i+= 1
+                stop sound
 
-                #$ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "GameHelp"})
-
-                #$ stopAudio()
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
                 
@@ -238,9 +262,19 @@ label start:
                                 ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers your question!"
                         
                         $ sentences = split_eca_sentences(ecaresponse)
-                        $ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "GameHelp_Collaboration"})
-
-                        $ stopAudio()
+                        #$ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "GameHelp_Collaboration"})
+                        #$ stopAudio()
+                        #######################################################################
+                        # New openai gpt text and audio generation 
+                        $ i = 0
+                        while i < len(sentences):
+                            $ line = sentences[i]
+                            $ audiofile = play_openai_tts(line, _find_character_record("Tulip")["gpt_voice"])
+                            play sound audiofile
+                            t "[line]"
+                            stop sound
+                            $ i+= 1
+                        stop sound
                         
                         $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
@@ -513,9 +547,20 @@ label start:
         $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
 
         $ sentences = split_eca_sentences(ecaresponse)
-        $ play_generated_dialogue(r, sentences, metadata={"character": "Riley", "context": "FoodJustice_RileyEvaluation"})
+        #$ play_generated_dialogue(r, sentences, metadata={"character": "Riley", "context": "FoodJustice_RileyEvaluation"})
+        #$ stopAudio()
+        #######################################################################
+        # New openai gpt text and audio generation 
+        $ i = 0
+        while i < len(sentences):
+            $ line = sentences[i]
+            $ audiofile = play_openai_tts(line, _find_character_record("Riley")["gpt_voice"])
+            play sound audiofile
+            r "[line]"
+            stop sound
+            $ i+= 1
+        stop sound
 
-        $ stopAudio()
         $ achieve_feedback()
 
         if should_prompt_save_draft(eca):
@@ -584,8 +629,19 @@ label start:
                 $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
                   
                 $ sentences = split_eca_sentences(ecaresponse)
-                $ play_generated_dialogue(r, sentences, metadata={"character": "Riley", "context": "Knowledge_FoodJustice"})
-                $ stopAudio()
+                #$ play_generated_dialogue(r, sentences, metadata={"character": "Riley", "context": "Knowledge_FoodJustice"})
+                #$ stopAudio()
+                #######################################################################
+                # New openai gpt text and audio generation 
+                $ i = 0
+                while i < len(sentences):
+                    $ line = sentences[i]
+                    $ audiofile = play_openai_tts(line, _find_character_record("Riley")["gpt_voice"])
+                    play sound audiofile
+                    r "[line]"
+                    stop sound
+                    $ i+= 1
+                stop sound
 
                 jump foodknowledge_loop
             "How can we help everyone have access to healthy food?":
@@ -607,8 +663,19 @@ label start:
                 $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
 
                 $ sentences = split_eca_sentences(ecaresponse)
-                $ play_generated_dialogue(r, sentences, metadata={"character": "Riley", "context": "Knowledge_FoodJustice"})
-                $ stopAudio()
+                #$ play_generated_dialogue(r, sentences, metadata={"character": "Riley", "context": "Knowledge_FoodJustice"})
+                #$ stopAudio()
+                #######################################################################
+                # New openai gpt text and audio generation 
+                $ i = 0
+                while i < len(sentences):
+                    $ line = sentences[i]
+                    $ audiofile = play_openai_tts(line, _find_character_record("Riley")["gpt_voice"])
+                    play sound audiofile
+                    r "[line]"
+                    stop sound
+                    $ i+= 1
+                stop sound
 
                 jump foodknowledge_loop
             "I have another question.":
@@ -652,8 +719,19 @@ label start:
 
         $ log_http(current_user, action="PlayerECAResponse", view="riley", payload={"eca_response": ecaresponse})
 
-        $ sentences = split_eca_sentences(ecaresponse)
-        $ play_generated_dialogue(r, sentences, metadata={"character": "Riley", "context": "Knowledge_FoodJustice"})
+        #$ sentences = split_eca_sentences(ecaresponse)
+        #$ play_generated_dialogue(r, sentences, metadata={"character": "Riley", "context": "Knowledge_FoodJustice"})
+        #######################################################################
+        # New openai gpt text and audio generation 
+        $ i = 0
+        while i < len(sentences):
+            $ line = sentences[i]
+            $ audiofile = play_openai_tts(line, _find_character_record("Riley")["gpt_voice"])
+            play sound audiofile
+            r "[line]"
+            stop sound
+            $ i+= 1
+        stop sound
 
         $ stopAudio()
 
@@ -1077,9 +1155,19 @@ label start:
         $ log_http(current_user, action="PlayerECAResponse", view="wes", payload={"eca_response": ecaresponse})
 
         $ sentences = split_eca_sentences(ecaresponse)
-        $ play_generated_dialogue(w, sentences, metadata={"character": "Wes", "context": "Knowledge_Pollination"})
-
-        $ stopAudio()
+        #$ play_generated_dialogue(w, sentences, metadata={"character": "Wes", "context": "Knowledge_Pollination"})
+        #$ stopAudio()
+        #######################################################################
+        # New openai gpt text and audio generation 
+        $ i = 0
+        while i < len(sentences):
+            $ line = sentences[i]
+            $ audiofile = play_openai_tts(line, _find_character_record("Wes")["gpt_voice"])
+            play sound audiofile
+            w "[line]"
+            stop sound
+            $ i+= 1
+        stop sound
 
         jump wes_choices
 
@@ -1144,9 +1232,19 @@ label start:
         $ log_http(current_user, action="PlayerECAResponse", view="wes", payload={"eca_response": ecaresponse})
 
         $ sentences = split_eca_sentences(ecaresponse)
-        $ play_generated_dialogue(w, sentences, metadata={"character": "Wes", "context": "Knowledge_Pollination"})
-
-        $ stopAudio()
+        #$ play_generated_dialogue(w, sentences, metadata={"character": "Wes", "context": "Knowledge_Pollination"})
+        #$ stopAudio()
+        #######################################################################
+        # New openai gpt text and audio generation 
+        $ i = 0
+        while i < len(sentences):
+            $ line = sentences[i]
+            $ audiofile = play_openai_tts(line, _find_character_record("Wes")["gpt_voice"])
+            play sound audiofile
+            w "[line]"
+            stop sound
+            $ i+= 1
+        stop sound
         
         w "Would you like to know anything else?"
 
@@ -1226,9 +1324,20 @@ label start:
                 $ log_http(current_user, action="PlayerECAResponse", view="nadia", payload={"eca_response": ecaresponse})
 
                 $ sentences = split_eca_sentences(ecaresponse)
-                $ play_generated_dialogue(n, sentences, metadata={"character": "Nadia", "context": "Knowledge_Pollination"})
+                #$ play_generated_dialogue(n, sentences, metadata={"character": "Nadia", "context": "Knowledge_Pollination"})
+                #$ stopAudio()
+                #######################################################################
+                # New openai gpt text and audio generation 
+                $ i = 0
+                while i < len(sentences):
+                    $ line = sentences[i]
+                    $ audiofile = play_openai_tts(line, _find_character_record("Nadia")["gpt_voice"])
+                    play sound audiofile
+                    n "[line]"
+                    stop sound
+                    $ i+= 1
+                stop sound
 
-                $ stopAudio()
                 jump nadia_questions
             "How do plants get pollinated?":
                 $ ask_character_question("Nadia")
@@ -1249,9 +1358,20 @@ label start:
                 $ log_http(current_user, action="PlayerECAResponse", view="nadia", payload={"eca_response": ecaresponse})
 
                 $ sentences = split_eca_sentences(ecaresponse)
-                $ play_generated_dialogue(n, sentences, metadata={"character": "Nadia", "context": "Knowledge_Pollination"})
+                #$ play_generated_dialogue(n, sentences, metadata={"character": "Nadia", "context": "Knowledge_Pollination"})
+                #$ stopAudio()
+                #######################################################################
+                # New openai gpt text and audio generation 
+                $ i = 0
+                while i < len(sentences):
+                    $ line = sentences[i]
+                    $ audiofile = play_openai_tts(line, _find_character_record("Nadia")["gpt_voice"])
+                    play sound audiofile
+                    n "[line]"
+                    stop sound
+                    $ i+= 1
+                stop sound
 
-                $ stopAudio()
                 jump nadia_questions
             "I have a different question.":
                 $ ask_character_question("Nadia")
@@ -1287,9 +1407,19 @@ label start:
         $ log_http(current_user, action="PlayerECAResponse", view="nadia", payload={"eca_response": ecaresponse})
 
         $ sentences = split_eca_sentences(ecaresponse)
-        $ play_generated_dialogue(n, sentences, metadata={"character": "Nadia", "context": "Knowledge_Pollination"})
-
-        $ stopAudio()
+        #$ play_generated_dialogue(n, sentences, metadata={"character": "Nadia", "context": "Knowledge_Pollination"})
+        #$ stopAudio()
+        #######################################################################
+        # New openai gpt text and audio generation 
+        $ i = 0
+        while i < len(sentences):
+            $ line = sentences[i]
+            $ audiofile = play_openai_tts(line, _find_character_record("Nadia")["gpt_voice"])
+            play sound audiofile
+            n "[line]"
+            stop sound
+            $ i+= 1
+        stop sound
 
         n "Do you have any other questions?"
         menu:
@@ -1412,7 +1542,7 @@ label start:
 
         t "Oh I love that kid. By the way, do you need any help? You can always click my button to say hi if you get bored!"
 
-        call tulipchat
+        call tulipchat from _call_tulipchat_1
 
         $ update_char_stats("Alex")
         $ achieve_social()
@@ -1853,9 +1983,19 @@ label start:
             pass
 
         $ sentences = split_eca_sentences(ecaresponse)
-        $ play_generated_dialogue(m, sentences, metadata={"character": "Mayor Watson", "context": "FoodJustice_MayorEvaluation"})
-
-        $ stopAudio()
+        #$ play_generated_dialogue(m, sentences, metadata={"character": "Mayor Watson", "context": "FoodJustice_MayorEvaluation"})
+        #$ stopAudio()
+        #######################################################################
+        # New openai gpt text and audio generation 
+        $ i = 0
+        while i < len(sentences):
+            $ line = sentences[i]
+            $ audiofile = play_openai_tts(line, _find_character_record("Mayor Watson")["gpt_voice"])
+            play sound audiofile
+            m "[line]"
+            stop sound
+            $ i+= 1
+        stop sound
 
         $ mayor_attempts = mayor_attempts + 1
         if mayorconvinced == True:
@@ -1929,9 +2069,19 @@ label start:
         $ log_http(current_user, action="PlayerECAResponse", view="elliot", payload={"eca_response": ecaresponse})
 
         $ sentences = split_eca_sentences(ecaresponse)
-        $ play_generated_dialogue(el, sentences, metadata={"character": "Elliot", "context": "FoodJustice_RileyEvaluation"})
-
-        $ stopAudio()
+        #$ play_generated_dialogue(el, sentences, metadata={"character": "Elliot", "context": "FoodJustice_RileyEvaluation"})
+        #$ stopAudio()
+        #######################################################################
+        # New openai gpt text and audio generation 
+        $ i = 0
+        while i < len(sentences):
+            $ line = sentences[i]
+            $ audiofile = play_openai_tts(line, _find_character_record("Elliot")["gpt_voice"])
+            play sound audiofile
+            el "[line]"
+            stop sound
+            $ i+= 1
+        stop sound
 
         if should_prompt_save_draft(eca):
             $ savedraft = renpy.confirm("Do you want to save this argument as your new draft? This will replace your existing argument in the notebook.")

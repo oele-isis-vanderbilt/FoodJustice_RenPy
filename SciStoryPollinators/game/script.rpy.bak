@@ -1,5 +1,6 @@
-label start:
+default external_launched = False
 
+label start:
     # if useAudio: 
     #     play music "JaracandaLoop.wav" volume 0.1
 
@@ -8,31 +9,11 @@ label start:
     with fade
 
     hide screen learningbuttons
-    $ enable_character_tts()
-    $ apikey = safe_renpy_input("What is your api key?")
-
-    python:
-        import os
-        import requests
-        os.environ["OPENAI_API_KEY"] = apikey
-
-        prompt = "test message"
-        url = "https://openai.com"
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer "+apikey
-        }
-        payload = {
-            "model": "gpt-4o",
-            "messages": [{"role": "user", "content": prompt}]
-        }
-
-        try:
-            response = requests.post(url, headers=headers, data=json.dumps(payload))
-            message = response.json()['choices'][0]['message']['content']
-        except Exception as e:
-            message ="Error connecting to AI."
-    t "[message]"
+    if not external_launched:
+        $ external_launched = True
+        $ enable_character_tts()
+        $ open_ai_key = loadAPIKey()
+        $ start_agent_sidecar(open_ai_key)
 
     $ current_user = safe_renpy_input("Please enter your player ID")
     
@@ -133,7 +114,7 @@ label start:
 
                 python:
                     try:
-                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                        ecaresponse = getGPTResponse(ca_json) #renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
                     except Exception as e:
                         log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
                         ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers to look at your argument!"
@@ -213,15 +194,24 @@ label start:
 
                 python:
                     try:
-                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                        ecaresponse = getGPTResponse(ca_json)
                     except Exception as e:
+                        print(e)
                         log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
                         ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers your question!"
                 
                 $ sentences = split_eca_sentences(ecaresponse)
-                $ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "GameHelp"})
+                $ i = 0
+                while i < len(sentences):
+                    $ line = sentences[i]
+                    $ audio = play_openai_tts(line, "coral")
+                    play sound audio
+                    t "[line]"
+                    $ i+= 1
 
-                $ stopAudio()
+                #$ play_generated_dialogue(t, sentences, metadata={"character": "Tulip", "context": "GameHelp"})
+
+                #$ stopAudio()
                 $ log_http(current_user, action="PlayerECAResponse", view="tulip", payload={"eca_response": ecaresponse})
 
                 
@@ -242,7 +232,7 @@ label start:
 
                         python:
                             try:
-                                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                                ecaresponse = getGPTResponse(ca_json)#renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
                             except Exception as e:
                                 log_http(current_user, action="AgentError", view="tulip", payload={"details": str(e)})
                                 ecaresponse = "I'm having some trouble right now. Try raising your hand and asking one of the researchers your question!"
@@ -274,31 +264,31 @@ label start:
                 
                 return
     label begin:
-    show screen learningbuttons()
-    scene expression "empty lot [startplace]"
-    with fade
-    $ set_current_location("emptylot")
+        show screen learningbuttons()
+        scene expression "empty lot [startplace]"
+        with fade
+        $ set_current_location("emptylot")
 
-    show elliot smile
-    with dissolve
+        show elliot smile
+        with dissolve
 
-    $ renpy.take_screenshot()
-    $ renpy.save("1-1", save_name)
+        $ renpy.take_screenshot()
+        $ renpy.save("1-1", save_name)
 
-    "Friendly Stranger" "Hey what's up - you new to the neighborhood?"
+        "Friendly Stranger" "Hey what's up - you new to the neighborhood?"
 
-    menu:
-        "Yeah, just moved here!":
-            "Friendly Stranger" "Welcome to the neighborhood! I live right down the street."
-        "Maybe.":
-            "Friendly Stranger" "I dunno where you moved from, but we don't do the whole 'mysterious stranger' thing here."
-    "Friendly Stranger" "Anyway, I'm glad you're here, new kid." 
-    el "I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our lot to those parking guys."
+        menu:
+            "Yeah, just moved here!":
+                "Friendly Stranger" "Welcome to the neighborhood! I live right down the street."
+            "Maybe.":
+                "Friendly Stranger" "I dunno where you moved from, but we don't do the whole 'mysterious stranger' thing here."
+        "Friendly Stranger" "Anyway, I'm glad you're here, new kid." 
+        el "I'm Elliot. I'm hoping you'll help me convince Mayor Watson not to sell our lot to those parking guys."
 
-    menu:
-        "What parking guys?":
-            $ character_approval("Elliot", 0)
-            jump parkingguys
+        menu:
+            "What parking guys?":
+                $ character_approval("Elliot", 0)
+                jump parkingguys
     
     label parkingguys:
         el "That guy over there in the suit is from CityPark. They want to turn our empty lot into a big parking [structure] for the neighborhood."
@@ -515,7 +505,7 @@ label start:
 
         python:
             try:
-                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                ecaresponse = getGPTResponse(ca_json)#renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
             except Exception as e:
                 log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
                 ecaresponse = "I'm a little overwhelmed right now. You can ask one of the researchers to read your argument, or you can try again in a little while."
@@ -586,7 +576,7 @@ label start:
 
                 python:
                     try:
-                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                        ecaresponse = getGPTResponse(ca_json)#renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
                     except Exception as e:
                         log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
                         ecaresponse = "Access to healthy food is important because it helps us grow, stay healthy, and have the energy we need to do the things we love. Healthy food can also prevent diseases like obesity, heart disease, and diabetes."
@@ -609,7 +599,7 @@ label start:
 
                 python:
                     try:
-                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                        ecaresponse = getGPTResponse(ca_json)#renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
                     except Exception as e:
                         log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
                         ecaresponse = "One way to help everyone get access to affordable and healthy food options is by supporting local farmers markets and community gardens. It's also important to advocate for policies that promote healthy food options."
@@ -655,7 +645,7 @@ label start:
 
         python:
             try:
-                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                ecaresponse = getGPTResponse(ca_json)#renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
             except Exception as e:
                 log_http(current_user, action="AgentError", view="riley", payload={"details": str(e)})
                 ecaresponse = "I'm struggling a bit right now. Maybe you can chat with Amara about her food science work, and you and I can chat more later?"
@@ -1079,7 +1069,7 @@ label start:
 
         python:
             try:
-                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                ecaresponse = getGPTResponse(ca_json)#renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
             except Exception as e:
                 log_http(current_user, action="AgentError", view="wes", payload={"details": str(e)})
                 ecaresponse = "Sorry kid, I'm having a bit of trouble, actually. Why don't you go check out the beehives, and you and I can catch up more later."
@@ -1146,7 +1136,7 @@ label start:
 
         python:
             try:
-                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                ecaresponse = getGPTResponse(ca_json)#renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
             except Exception as e:
                 log_http(current_user, action="AgentError", view="wes", payload={"details": str(e)})
                 ecaresponse = "Sorry kid, I'm having a bit of trouble, actually. Why don't you go check out the beehives, and you and I can catch up more later."
@@ -1228,7 +1218,7 @@ label start:
 
                 python:
                     try:
-                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                        ecaresponse = getGPTResponse(ca_json)#renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
                     except Exception as e:
                         log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
                         ecaresponse = "Bees help with pollination by transferring pollen from one flower to another while collecting nectar. This helps the plant grow healthy fruits."
@@ -1251,7 +1241,7 @@ label start:
 
                 python:
                     try:
-                        ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                        ecaresponse = getGPTResponse(ca_json)#renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
                     except Exception as e:
                         log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
                         ecaresponse = "The flowers on plants can be pollinated by wind, by animals and insects, and by people. A flower is pollinated when pollen is moved from the male part of the flower to the female part of the flower."
@@ -1289,7 +1279,7 @@ label start:
 
         python:
             try:
-                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                ecaresponse = getGPTResponse(ca_json)#renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
             except Exception as e:
                 log_http(current_user, action="AgentError", view="nadia", payload={"details": str(e)})
                 ecaresponse = "Oh, I'm having a bit of trouble. Can you chat with others in the garden and come back later? Sorry about that!"
@@ -1843,7 +1833,7 @@ label start:
         $ achieve_argument()
         python:
             try:
-                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                ecaresponse = getGPTResponse(ca_json)#renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
             except Exception as e:
                 log_http(current_user, action="AgentError", view="mayor", payload={"details": str(e)})
                 ecaresponse = "Thank you for sharing your ideas with me! I can't give you feedback right now, but please do come back and share more later."
@@ -1931,7 +1921,7 @@ label start:
 
         python:
             try:
-                ecaresponse = renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
+                ecaresponse = getGPTResponse(ca_json)#renpy.fetch(ca_link, method="POST", json=ca_json, content_type="application/json", result="text", timeout=TIMEOUT)
             except Exception as e:
                 log_http(current_user, action="AgentError", view="elliot", payload={"details": str(e)})
                 ecaresponse = "I'm having some trouble right now. Why don't you try asking Riley about this argument and see if they can give you some feedback?"
