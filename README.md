@@ -1,5 +1,5 @@
 # Note
-The OpenAI enabled version requires an agent sidecar exe that isn't store in the repo. It is build from the package found here:
+The OpenAI enabled version requires an agent sidecar exe that isn't stored in the repo. It is built from the python package found here:
 https://drive.google.com/drive/folders/1hcZLf55nxlIOmujpKMdFHVnVBYvw7aLe
 
 The resulting exe must be place in:
